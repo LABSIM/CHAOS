@@ -35,4 +35,12 @@ export BOOST_ROOT="/home/elips/Progiciels/boost_1_45_0/"
 export BOOST_INCLUDEDIR="/home/elips/Progiciels/boost_1_45_0/"
 export BOOST_LIBRARYDIR="/home/elips/Progiciels/boost_1_45_0/stage/lib/"
 
+###
+# QT Dir
+###
+
+###
+# Lib-embeded Dir
+###
+
 #######################
