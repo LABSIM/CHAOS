@@ -15,15 +15,8 @@
 source "/home/elips/ELIPS2010/gener.macro"
 
 ###
-# OSG Dir
+# Global environment mapping
 ###
-export OSG_DIR="/home/elips/Progiciels/OSG/"
-
-###
-# Boost Dir
-###
-export BOOST_ROOT="/home/elips/Progiciels/boost_1_45_0/"
-export BOOST_INCLUDEDIR="/home/elips/Progiciels/boost_1_45_0/"
-export BOOST_LIBRARYDIR="/home/elips/Progiciels/boost_1_45_0/stage/lib/"
+source "/home/elips/dev_conf/env/global_env_conf"
 
 #######################

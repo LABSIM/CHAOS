@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#######################
+# global environment config
+#
+# Ce fichier est inclu depuis /etc/profile au demarrage de la machine
+# ou alors par le fichier .bashrc lors de l'ouverture d'un terminal
+#
+# 07/02/12 - Kinani Nawfel
+#######################
+
+###
+# OSG Dir
+###
+export OSG_DIR="/home/elips/Progiciels/OSG/"
+
+###
+# Boost Dir
+###
+export BOOST_ROOT="/home/elips/Progiciels/boost_1_45_0/"
+export BOOST_INCLUDEDIR="/home/elips/Progiciels/boost_1_45_0/"
+export BOOST_LIBRARYDIR="/home/elips/Progiciels/boost_1_45_0/stage/lib/"
+
+###
+# TAO - OpenFusionTAO
+###
+export ACE_ROOT="/home/elips/Progiciels/OpenFusionTAO"
+export TAO_ROOT="/home/elips/Progiciels/OpenFusionTAO"
+export TAO_IDL="/home/elips/Progiciels/OpenFusionTAO/bin/tao_idl"
+
+###
+# Global Variable
+###
+export PATH=$PATH:/home/elips/Progiciels/OpenFusionTAO/bin
+export LD_LIBRARY_PATH=/home/elips/Progiciels/OpenFusionTAO/lib:/lib/:/usr/lib/:$LD_LIBRARY_PATH
+export INSLIB=/home/elips/Progiciels/OpenFusionTAO/lib
+
+#######################
