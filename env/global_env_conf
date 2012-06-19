@@ -24,15 +24,35 @@ export BOOST_LIBRARYDIR="/home/elips/Progiciels/boost_1_45_0/stage/lib/"
 ###
 # TAO - OpenFusionTAO
 ###
+# ACE ROOT - The home of the ADAPTIVE Communication Environment
+# TAO ROOT - The home of The Ace Orb
+# TAO IDL - The Interface Definition Language compiler 
+###
 export ACE_ROOT="/home/elips/Progiciels/OpenFusionTAO"
 export TAO_ROOT="/home/elips/Progiciels/OpenFusionTAO"
 export TAO_IDL="/home/elips/Progiciels/OpenFusionTAO/bin/tao_idl"
 
 ###
+# OpenSpliceDDS
+###
+# OSPL ROOT - The home of the Open SPLice global project
+# OSPL HDE ROOT - The home of the OSPL project Host Development Environment (Configured)
+# We source the release.com file generated which contain all the variable definition
+###
+export OSPL_ROOT="/home/elips/Progiciels/OpenSpliceDDS"
+export OSPL_HDE_ROOT="/home/elips/Progiciels/OpenSpliceDDS/HDE/x86_64.linux2.6-dev"
+source "$OSPL_HDE_ROOT/release.com"
+
+###
+# Java Home
+###
+export JAVA_HOME="/home/elips/dev_env/jre/jre1.6.0_31/"
+
+###
 # Global Variable
 ###
-export PATH=$PATH:/home/elips/Progiciels/OpenFusionTAO/bin
-export LD_LIBRARY_PATH=/home/elips/Progiciels/OpenFusionTAO/lib:/lib/:/usr/lib/:$LD_LIBRARY_PATH
-export INSLIB=/home/elips/Progiciels/OpenFusionTAO/lib
+export PATH=$PATH:$TAO_ROOT/bin:$OSPL_HDE_ROOT/bin
+export LD_LIBRARY_PATH=$TAO_ROOT/lib:$OSPL_HDE_ROOT/lib:/lib/:/usr/lib/:$LD_LIBRARY_PATH
+export INSLIB=$TAO_ROOT/lib:$OSPL_HDE_ROOT/lib
 
 #######################
