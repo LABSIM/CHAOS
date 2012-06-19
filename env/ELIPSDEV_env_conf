@@ -28,4 +28,9 @@ source "/home/elips/dev/ELIPS/gener.macro"
 ###
 source "/home/elips/dev_conf/env/global_env_conf"
 
+###
+# Print UI
+###
+info_printing "ELIPS Dev Environment config"
+
 #######################

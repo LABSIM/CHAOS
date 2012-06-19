@@ -10,6 +10,16 @@
 #######################
 
 ###
+# Info
+###
+function info_printing ()
+{
+	clear
+	echo "<< Environment de dev courant : $1 >>"
+}
+
+
+###
 # Progiciel Home path
 ### 
 PRO_HOME=/home/elips/Progiciels

@@ -19,4 +19,9 @@ source "/home/elips/ELIPS2010/gener.macro"
 ###
 source "/home/elips/dev_conf/env/global_env_conf"
 
+###
+# Print UI
+###
+info_printing "ELIPS 2010 Environment config"
+
 #######################
