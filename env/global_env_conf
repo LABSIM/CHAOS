@@ -52,10 +52,12 @@ TAO_IDL=$PRO_HOME/OpenFusionTAO/bin/tao_idl
 ###
 # OSPL ROOT - The home of the Open SPLice global project
 # OSPL HDE ROOT - The home of the OSPL project Host Development Environment (Configured)
+# OSPL RTS ROOT - The home of the OSPL project RunTime Sofware (Configured)
 # We source the release.com file generated which contain all the variable definition
 ###
 OSPL_ROOT=$PRO_HOME/OpenSpliceDDS
-OSPL_HDE_ROOT=$PRO_HOME/OpenSpliceDDS/install/HDE/x86_64.linux2.6-dev
+OSPL_RTS_ROOT=$PRO_HOME/OpenSpliceDDS/RTS/x86_64.linux2.6-dev
+OSPL_HDE_ROOT=$PRO_HOME/OpenSpliceDDS/HDE/x86_64.linux2.6-dev
 
 ###
 # Java Home
@@ -72,7 +74,7 @@ INSLIB=$TAO_ROOT/lib:$INSLIB
 ###
 # Export & sourcing
 ###
-export OSG_DIR BOOST_ROOT BOOST_INCLUDEDIR BOOST_LIBRARYDIR ACE_ROOT TAO_ROOT TAO_IDL OSPL_ROOT OSPL_HDE_ROOT JAVA_HOME PATH LD_LIBRARY_PATH INSLIB
-. "$OSPL_HDE_ROOT/release.com"
+export OSG_DIR BOOST_ROOT BOOST_INCLUDEDIR BOOST_LIBRARYDIR ACE_ROOT TAO_ROOT TAO_IDL OSPL_ROOT OSPL_RTS_ROOT OSPL_HDE_ROOT JAVA_HOME PATH LD_LIBRARY_PATH INSLIB
+source "$OSPL_HDE_ROOT/release.com"
 
 #######################
