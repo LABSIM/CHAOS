@@ -22,6 +22,9 @@ if [ -f /home/elips/dev_conf/ELIPS_env_conf ]; then
 	. "/home/elips/dev_conf/ELIPS_env_conf"
 fi
 
+# On affiche quelque informations à l'utilisateur
+infor_printing $ELIPS_CURRENT_DIST
+
 # On active le traitement des commandes tierces avec xhost
 xhost +
 

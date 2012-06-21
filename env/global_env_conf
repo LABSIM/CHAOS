@@ -15,7 +15,11 @@
 function info_printing ()
 {
 	clear
-	echo "<< Environment de dev courant : $1 >>"
+	
+	echo ">>"
+	echo ">> Environment de dev courant : $1"
+	echo ">>"
+	
 }
 
 

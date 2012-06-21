@@ -9,6 +9,9 @@
 # 07/02/12 - Kinani Nawfel
 #######################
 
+# La chaine d'information de l'environment courant
+export ELIPS_CURRENT_DIST="ELIPS 2010 Environment config"
+
 ###
 # ELIPS Dir
 ###
@@ -18,10 +21,5 @@ source "/home/elips/ELIPS2010/gener.macro"
 # Global environment mapping
 ###
 source "/home/elips/dev_conf/env/global_env_conf"
-
-###
-# Print UI
-###
-info_printing "ELIPS 2010 Environment config"
 
 #######################

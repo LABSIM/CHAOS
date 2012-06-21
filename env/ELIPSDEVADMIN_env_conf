@@ -10,13 +10,15 @@
 #######################
 
 ###
-# Admin file recovery
+# File recovery
 ###
 # Ces variables servent pour la construction des chemins relatif au types de l'environment de dev utilisé -> type foo/src seulement ou foo/branch/src
 # Le path relatif a ELIPSHOME pour recuperer /dev/ (!! pas de slash de début et de fin)
 export ELIPS_RELATIVE="../.."
 # Le path relatif a chaque sous-projet (!! pas de slash de début et de fin)
 export ELIPS_SUBDIR="trunk"
+# La chaine d'information de l'environment courant
+export ELIPS_CURRENT_DIST="ELIPS Dev Administrator Environment config"
 
 ###
 # ELIPS Dir
@@ -27,10 +29,5 @@ source "/home/elips/dev/ELIPS/trunk/gener.macro"
 # Global environment mapping
 ###
 source "/home/elips/dev_conf/env/global_env_conf"
-
-###
-# Print UI
-###
-info_printing "ELIPS Dev Administrator Environment config"
 
 #######################
