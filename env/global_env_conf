@@ -10,17 +10,23 @@
 #######################
 
 ###
-# Info
+# Informations
 ###
-function info_printing ()
+function infoelips ()
 {
-	clear
+	echo "=========================================================================="
+	echo " Environment de dev courant :" $ELIPS_CURRENT_DIST
+	echo "=========================================================================="
 	
-	echo ">>"
-	echo ">> Environment de dev courant : $1"
-	echo ">>"
-	
+	exit 0
 }
+
+###
+# On check l'existance du script de changement de l'environment ELIPS
+###
+if [ -f /home/elips/dev_conf/scripts/ELIPS_switch.sh ]; then 
+	alias switchelips="/home/elips/dev_conf/scripts/ELIPS_switch.sh"
+fi
 
 
 ###
@@ -81,5 +87,8 @@ INSLIB=$TAO_ROOT/lib:$INSLIB
 ###
 export OSG_DIR BOOST_ROOT BOOST_INCLUDEDIR BOOST_LIBRARYDIR ACE_ROOT TAO_ROOT TAO_IDL OSPL_ROOT OSPL_RTS_ROOT OSPL_HDE_ROOT OSPL_LOGPATH JAVA_HOME PATH LD_LIBRARY_PATH INSLIB
 source "$OSPL_HDE_ROOT/release.com"
+
+# On active le traitement des commandes tierces avec xhost
+xhost + > /dev/null
 
 #######################

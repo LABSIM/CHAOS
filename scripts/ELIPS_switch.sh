@@ -17,7 +17,7 @@ argument="$1"
 
 major_version=1
 minor_version=1
-patch_version=9
+patch_version=10
 
 script_version="v.${major_version}.${minor_version}.${patch_version}"
 
@@ -40,9 +40,6 @@ declare -a env_file_lst
 # Comme l'indique son nom, son but est d'afficher un message utilisateur su l'utilisation du script
 function info_printing ()
 {
- 	# Clear screen :)
-	clear
-
 	echo
 	echo "======================================================"
 	echo " 	      ELIPS Switch Script ${script_version}"

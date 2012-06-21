@@ -12,21 +12,10 @@
 # 13/02/12 - Kinani Nawfel
 #######################
 
-# On check l'existance du script de changement de l'environment ELIPS
-if [ -f /home/elips/dev_conf/scripts/ELIPS_switch.sh ]; then 
-	alias switchelips="/home/elips/dev_conf/scripts/ELIPS_switch.sh"
-fi
-
 # On check l'existance du lien symbolique qui sera modifié par la suite 
 if [ -f /home/elips/dev_conf/ELIPS_env_conf ]; then 
 	. "/home/elips/dev_conf/ELIPS_env_conf"
 fi
-
-# On affiche quelque informations à l'utilisateur
-info_printing "$ELIPS_CURRENT_DIST"
-
-# On active le traitement des commandes tierces avec xhost
-xhost + > /dev/null
 
 # ======================================================================== #
 # A ajouter dans ~/.bash_profile
