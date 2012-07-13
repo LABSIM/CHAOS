@@ -76,7 +76,6 @@ OSPL_CONFPATH=$OSPL_ROOT/config
 # SimD - Simple DDS API
 ###
 SIMD_INSTALL_DIR=$PRO_HOME/SimD
-SIMD_HOME=$SIMD_INSTALL_DIR
 
 ###
 # OpenSpliceDDS Daemon configuration
