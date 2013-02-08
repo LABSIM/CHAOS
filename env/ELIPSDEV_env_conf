@@ -16,7 +16,7 @@
 # Le path relatif a ELIPSHOME pour recuperer /dev/ (!! pas de slash de début et de fin)
 export ELIPS_RELATIVE=".."
 # Le path relatif a chaque sous-projet (!! pas de slash de début et de fin)
-export ELIPS_SUBDIR=""
+export ELIPS_SUBDIR="."
 # La chaine d'information de l'environment courant
 export ELIPS_CURRENT_DIST="ELIPS Dev Environment config"
 
