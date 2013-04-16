@@ -21,11 +21,6 @@ export ELIPS_SUBDIR="trunk"
 export ELIPS_CURRENT_DIST="ELIPS Dev Administrator Environment config"
 
 ###
-# ELIPS Dir
-###
-source "/home/elips/dev/ELIPS/trunk/gener.macro"
-
-###
 # Global environment mapping
 ###
 source "/home/elips/dev_conf/env/global_env_conf"
