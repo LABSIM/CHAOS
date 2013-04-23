@@ -17,7 +17,7 @@ argument="$1"
 
 major_version=1
 minor_version=0
-patch_version=31    
+patch_version=33    
 
 script_version="v.${major_version}.${minor_version}.${patch_version}"
 
@@ -26,7 +26,7 @@ rsh_login=$(whoami)
 root_directory=$(readlink -f "${PWD}/../")
 
 link_base_name=${rsh_login}
-link_path_directory="~/."
+link_path_directory="/home/${rsh_login}/."
 
 env_decoration="_env_file_lst"
 env_file_decoration=".conf.sh"
