@@ -138,7 +138,7 @@ export BOOST_ROOT BOOST_INCLUDEDIR BOOST_LIBRARYDIR
 # Global Variable
 ###
 
-PATH=:$PATH\
+PATH=$PATH\
 :$ELIPS_HOME/bin\
 :$OSG_ROOT/bin\
 :$QT_ROOT/bin
