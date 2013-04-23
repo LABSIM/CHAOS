@@ -1,9 +1,10 @@
 #!/bin/bash
+
 # ======================================================================== #
 # A ajouter dans ~/.bashrc 
 
 #######################
-# Source Elips
+# Sourcing Env
 #
 # Préparation au mode distant pour le déploiement
 # rapide des differents modes d'utilisation
@@ -13,26 +14,9 @@
 #######################
 
 # On check l'existance du lien symbolique qui sera modifié par la suite 
-if [ -f /home/elips/dev_conf/ELIPS_env_conf ]; then 
-	. "/home/elips/dev_conf/ELIPS_env_conf"
-fi
-
-# ======================================================================== #
-# A ajouter dans ~/.bash_profile
-
-#######################
-# Source Elips
-#
-# Préparation au mode distant pour le déploiement
-# rapide des differents modes d'utilisation
-# 
-# (J-1)
-# 13/02/12 - Kinani Nawfel
-#######################
-
-# On check l'existance du lien symbolique qui sera modifié par la suite 
-if [ -f /home/elips/dev_conf/ELIPS_env_conf ]; then 
-	. "/home/elips/dev_conf/ELIPS_env_conf"
+login=whoami
+if [ -f ~/dev_conf/${login}_env_conf ]; then 
+	source "~/dev_conf/${login}_env_conf"
 fi
 
 # ======================================================================== #

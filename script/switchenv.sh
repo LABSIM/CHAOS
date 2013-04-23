@@ -21,14 +21,16 @@ patch_version=26
 
 script_version="v.${major_version}.${minor_version}.${patch_version}"
 
+rsh_login=$(whoami)
+
+root_directory=$(readlink -f "${PWD}/../")
+
+link_base_name=${rsh_login}
+link_path_directory="${root_directory}/"
+
 env_decoration="_env_file_lst"
 env_file_decoration=".conf.sh"
-env_path_directory="${PWD##*/}../env/"
-
-link_base_name="ELIPS"
-link_path_directory="${PWD##*/}../"
-
-rsh_login="elips"
+env_path_directory="${root_directory}/env/"
 
 declare -a env_file_lst
 
@@ -48,18 +50,18 @@ function info_printing ()
 	echo " > L'objectif de ce script est de permettre la"
 	echo " diffusion d'un environment de travail sur"
 	echo " l'ensemble du réseau configuré dans le fichier"
-	echo " ${PWD##*/}networkMap.conf.sh"
+	echo " ${root_directory}/script/networkMap.conf.sh"
 	echo
 	echo " > Les différentes configurations des environments"
 	echo " de travail sont répertoriées sous"
-	echo " ${PWD##*/}../env/* et doivent adopter "
+	echo " ${env_path_directory}* et doivent adopter "
 	echo " la synthaxe {[CONFIGNAME].conf.sh}"
 	echo
 	echo " ===[ATTENTION]"
 	echo 
 	echo " > si aucune machine n'est definie dans le fichier "
 	echo "   de configuration du réseau, la diffusion sera "
-	echo "   locale seulement.
+	echo "   locale seulement. "
 	echo
 	echo " > le script rebootera la/les machine(s) à configurer"
 	echo
@@ -91,8 +93,8 @@ function info_printing ()
 # On check l'existance du fichier de mapping et on le source
 function check_ntwk_conf () 
 {
-	if [ -f ${PWD##*/}networkMap.conf.sh ];  then
-		source ${PWD##*/}networkMap.conf.sh
+	if [ -f "${root_directory}/script/networkMap.conf.sh" ];  then
+		source "${root_directory}/script/networkMap.conf.sh"
 		echo ">> Fichier de configuration du réseau : trouvé"
 	else
 		echo; echo "Aucun fichier de mapping du résau trouvé ! Abandon de la diffusion ..."; echo
@@ -106,7 +108,7 @@ function check_ntwk_conf ()
 function check_ntwk_sz () 
 {
 	if ((${#internal_ntwk[@]} == 0 )); then
-		echo; echo "Aucun element trouvé dans la liste de configuration du réseau, cf. networkMap.conf.sh ! diffusion locale seulement ..."; echo
+		echo "Aucun element trouvé dans la liste de configuration du réseau, cf. networkMap.conf.sh ! diffusion locale seulement ...";
 	else 
 		echo ">> ${#internal_ntwk[@]} ordinateur(s) distant(s) trouvé(s)"
 	fi
@@ -120,7 +122,7 @@ function check_env_conf ()
 	# On récupère nos environments locaux disponibles
 	i=0
 	for filename in $(ls ${env_path_directory}); do
-		env_file_lst[$i]=${filename%*_env_conf}
+		env_file_lst[$i]=${filename%*${env_file_decoration}}
 		i=$(($i + 1))
 	done
 	echo ">> Types d'environment a disposition  sur la machine locale : ${i} (${env_file_lst[@]})"
@@ -129,7 +131,7 @@ function check_env_conf ()
 	for remote_host in ${internal_ntwk[@]}; do
 		k=0
 		for filename in $(rsh ${remote_host} ls ${env_path_directory}); do
-			eval ${remote_host}${env_decoration}[$k]=${filename%*_env_conf}
+			eval ${remote_host}${env_decoration}[$k]=${filename%*${env_file_decoration}}
 			k=$(($k + 1))
 		done
 		echo -n ">> Types d'environment a disposition  sur la machine distante "; eval echo -n ${remote_host}; echo -n " : ${k} ("; eval echo -n \${$remote_host$env_decoration[@]}; echo ")"
