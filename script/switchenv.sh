@@ -17,7 +17,7 @@ argument="$1"
 
 major_version=1
 minor_version=0
-patch_version=26    
+patch_version=30    
 
 script_version="v.${major_version}.${minor_version}.${patch_version}"
 
