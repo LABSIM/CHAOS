@@ -20,6 +20,6 @@ source "/home/elips/ELIPS2010/gener.macro"
 ###
 # Global environment mapping
 ###
-source "/home/elips/dev_conf/env/global_env_conf"
+source "/home/elips/dev/ELIPSTK/env/global_env_conf"
 
 #######################

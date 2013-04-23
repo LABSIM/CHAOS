@@ -23,6 +23,6 @@ export ELIPS_CURRENT_DIST="ELIPS Dev Administrator Environment config"
 ###
 # Global environment mapping
 ###
-source "/home/elips/dev_conf/env/global_env_conf"
+source "~/dev/ELIPSTK/${ELIPS_SUBDIR}/env/global.conf.sh"
 
 #######################

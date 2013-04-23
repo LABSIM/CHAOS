@@ -26,11 +26,12 @@ rsh_login=$(whoami)
 root_directory=$(readlink -f "${PWD}/../")
 
 link_base_name=${rsh_login}
-link_path_directory="${root_directory}/"
+link_path_directory="~/"
 
 env_decoration="_env_file_lst"
 env_file_decoration=".conf.sh"
 env_path_directory="${root_directory}/env/"
+
 
 declare -a env_file_lst
 

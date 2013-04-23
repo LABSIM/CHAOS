@@ -24,8 +24,8 @@ function infoenv()
 ###
 function switchenv()
 {
-	if [ -f /home/elips/dev_conf/scripts/switchenv.sh ]; then 
-		$(cd "/home/elips/dev_conf/scripts/" && sh "switchenv.sh")
+	if [ -f "~/dev/ELIPSTK/${ELIPS_SUBDIR}/script/switchenv.sh" ]; then 
+		$(cd "~/dev/ELIPSTK/${ELIPS_SUBDIR}/script/switchenv.sh" && sh "switchenv.sh")
 	fi
 }
 
@@ -34,8 +34,8 @@ function switchenv()
 # Home path
 ###
  
-PRO_HOME=/home/elips/Progiciels
-CODES_HOME=/home/elips/CODES
+PRO_HOME=~/Progiciels
+CODES_HOME=~/CODES
 BDD_HOME=/data/bdd
 
 export PRO_HOME CODES_HOME BDD_HOME
@@ -63,17 +63,6 @@ alias ELIPShelp="konqueror $ELIPS_HOME/doc/html/index.html"
 IMAGE_PA_PATH=$BDD_HOME/IMAGE_PA
 
 export IMAGE_PA_PATH
-
-###################################################################
-# CERTI & GENESIS
-###
-CERTI_HOME=$CODES_HOME/certi-3.4.2-dev1-x86_64-linux2.6-centos
-GENESIS_HOME=$CODES_HOME/genesis-x86_64-linux2.6-centos
-CERTI_HTTP_PROXY=
-CERTI_UDP_PORT=55555
-CERTI_TCP_PORT=55555
-
-export CERTI_HOME GENESIS_HOME CERTI_HTTP_PROXY CERTI_UDP_PORT CERTI_TCP_PORT
 
 ###################################################################
 # OpenSceneGraph
@@ -145,56 +134,6 @@ BOOST_INCLUDEDIR=$PRO_HOME/boost_$BOOST_VERSION/
 BOOST_LIBRARYDIR=$PRO_HOME/boost_$BOOST_VERSION/stage/lib/
 
 export BOOST_VERSION BOOST_ROOT BOOST_INCLUDEDIR BOOST_LIBRARYDIR
-
-###################################################################
-# TAO - OpenFusionTAO
-###
-# ACE ROOT - The home of the ADAPTIVE Communication Environment
-# TAO ROOT - The home of The Ace Orb
-# TAO IDL - The Interface Definition Language compiler 
-###
-
-ACE_ROOT=$PRO_HOME/OpenFusionTAO
-TAO_ROOT=$PRO_HOME/OpenFusionTAO
-TAO_IDL=$PRO_HOME/OpenFusionTAO/bin/tao_idl
-
-export ACE_ROOT TAO_ROOT TAO_IDL
-
-###################################################################
-# OpenSpliceDDS
-###
-# OSPL ROOT - The home of the Open SPLice global project
-# OSPL HDE ROOT - The home of the OSPL project Host Development Environment (Configured)
-# OSPL RTS ROOT - The home of the OSPL project RunTime Sofware (Configured)
-# We source the release.com file generated which contain all the variable definition
-###
-
-OSPL_ROOT=$PRO_HOME/OpenSpliceDDS
-OSPL_RTS_ROOT=$OSPL_ROOT/RTS/x86_64.linux2.6-dev
-OSPL_HDE_ROOT=$OSPL_ROOT/HDE/x86_64.linux2.6-dev
-OSPL_LOGPATH=$OSPL_ROOT/log
-OSPL_STOREPATH=$OSPL_ROOT/store
-OSPL_CONFPATH=$OSPL_ROOT/config
-
-export OSPL_ROOT OSPL_RTS_ROOT OSPL_HDE_ROOT OSPL_LOGPATH OSPL_STOREPATH OSPL_CONFPATH
-
-###################################################################
-# OpenSpliceDDS Daemon configuration
-###
-# OSPL_LIPS_CONF_URI - The URI to the global ospl daemon configuration xml file
-###
-
-OSPL_URI=file://$OSPL_CONFPATH/ospl_simulation_conf.xml
-
-export OSPL_URI
-
-###################################################################
-# SimD - Simple DDS API
-###
-
-SIMD_INSTALL_DIR=$PRO_HOME/SimD
-
-export SIMD_INSTALL_DIR
 
 ###################################################################
 # Tcl/tk
