@@ -12,7 +12,7 @@
 ###
 # Informations
 ###
-function infoelips()
+function infoenv()
 {
 	echo "=========================================================================="
  	echo " Environment de dev courant : ${ELIPS_CURRENT_DIST}"
@@ -20,11 +20,14 @@ function infoelips()
 }
 
 ###
-# On check l'existance du script de changement de l'environment ELIPS
+# Switch
 ###
-if [ -f /home/elips/dev_conf/scripts/ELIPS_switch.sh ]; then 
-	alias switchelips="/home/elips/dev_conf/scripts/ELIPS_switch.sh"
-fi
+function switchenv()
+{
+	if [ -f /home/elips/dev_conf/scripts/switchenv.sh ]; then 
+		$(cd "/home/elips/dev_conf/scripts/" && sh "switchenv.sh")
+	fi
+}
 
 
 ###################################################################

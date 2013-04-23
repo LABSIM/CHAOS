@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-# ELIPS Switch Script
+# Switch Environment Script
 #
 # L'objectif de ce scipt est de permettre la diffusion d'un environment de travail sur
-# l'ensemble du réseau LIPS configuré dans le fichier ELIPS_NetworkMap
+# l'ensemble du réseau configuré dans le fichier networkMap.conf.sh
 #
 # (Valentines's Day)
 # 14/02/2012 - Kinani Nawfel
@@ -17,16 +17,16 @@ argument="$1"
 
 major_version=1
 minor_version=0
-patch_version=24    
+patch_version=26    
 
 script_version="v.${major_version}.${minor_version}.${patch_version}"
 
 env_decoration="_env_file_lst"
-env_file_decoration="_env_conf"
-env_path_directory="/home/elips/dev_conf/env/"
+env_file_decoration=".conf.sh"
+env_path_directory="${PWD##*/}../env/"
 
 link_base_name="ELIPS"
-link_path_directory="/home/elips/dev_conf/"
+link_path_directory="${PWD##*/}../"
 
 rsh_login="elips"
 
@@ -42,34 +42,33 @@ function info_printing ()
 {
 	echo
 	echo "======================================================"
-	echo " 	      ELIPS Switch Script ${script_version}"
+	echo " 	    Switch Environment Script ${script_version}"
 	echo "======================================================"
 	echo
 	echo " > L'objectif de ce script est de permettre la"
 	echo " diffusion d'un environment de travail sur"
-	echo " l'ensemble du réseau LIPS configuré dans le fichier"
-	echo " /home/elips/dev_conf/scripts/ELIPS_NetworkMap"
+	echo " l'ensemble du réseau configuré dans le fichier"
+	echo " ${PWD##*/}networkMap.conf.sh"
 	echo
 	echo " > Les différentes configurations des environments"
 	echo " de travail sont répertoriées sous"
-	echo " /home/elips/dev_conf/env/* et doivent adopter "
-	echo " la synthaxe {[CONFIGNAME]_env_conf}"
+	echo " ${PWD##*/}../env/* et doivent adopter "
+	echo " la synthaxe {[CONFIGNAME].conf.sh}"
 	echo
 	echo " ===[ATTENTION]"
-	echo " Etant donné que le fichier /etc/profile source au"
-	echo " demmarage du système le fichier de "
-	echo " configuration de l'environment ELIPS,"
-	echo " une mauvaise configuration entrainera un"
-	echo " plantage durant cette phase"
-	echo " Dans cette situation vim est là pour vous aider..."
-	echo " En dernier recours [et entre deux pause café]"
-	echo " les informaticiens vous sauverons !" 
+	echo 
+	echo " > si aucune machine n'est definie dans le fichier "
+	echo "   de configuration du réseau, la diffusion sera "
+	echo "   locale seulement.
+	echo
+	echo " > le script rebootera la/les machine(s) à configurer"
+	echo
 	echo " ===[/ATTENTION]"
 	echo
 	echo "======================================================"
 	echo
 	echo "Usage:"
-	echo "  switchelips ARG | OPTION"
+	echo "  switchenv ARG | OPTION"
 	echo
 	echo "ARG:"
 	echo "  - Le type de l'environment de travail a"
@@ -92,14 +91,14 @@ function info_printing ()
 # On check l'existance du fichier de mapping et on le source
 function check_ntwk_conf () 
 {
-	if [ -f /home/elips/dev_conf/scripts/ELIPS_NetworkMap ];  then
-		. /home/elips/dev_conf/scripts/ELIPS_NetworkMap
+	if [ -f ${PWD##*/}networkMap.conf.sh ];  then
+		source ${PWD##*/}networkMap.conf.sh
 		echo ">> Fichier de configuration du réseau : trouvé"
 	else
-		echo; echo "Aucun fichier de mapping du résau ELIPS trouvé ! Abandon de la diffusion ..."; echo
+		echo; echo "Aucun fichier de mapping du résau trouvé ! Abandon de la diffusion ..."; echo
 		exit 1
 	fi
-	internal_ntwk=("${ELIPSNTWK[@]}")	# On récupère une copie de travail interne
+	internal_ntwk=("${NTWK[@]}")	# On récupère une copie de travail interne
 }
 
 ###
@@ -107,8 +106,7 @@ function check_ntwk_conf ()
 function check_ntwk_sz () 
 {
 	if ((${#internal_ntwk[@]} == 0 )); then
-		echo; echo "Aucun element trouvé dans la liste de configuration du réseau ELIPS, cf. ELIPS_NetworkMap ! Abandon de la diffusion ..."; echo
-		exit 1
+		echo; echo "Aucun element trouvé dans la liste de configuration du réseau, cf. networkMap.conf.sh ! diffusion locale seulement ..."; echo
 	else 
 		echo ">> ${#internal_ntwk[@]} ordinateur(s) distant(s) trouvé(s)"
 	fi
@@ -231,7 +229,7 @@ function pre_parse_routines ()
 		;;
 		# Version
   		"--version"|"-v")
-			echo; echo "ELIPS_script ${script_version}"; echo
+			echo; echo "Switch Environment Script ${script_version}"; echo
 			exit 1
 		;;
 		# Erreur options non-traité
