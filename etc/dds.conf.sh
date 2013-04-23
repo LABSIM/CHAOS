@@ -71,6 +71,12 @@ CERTI_TCP_PORT=55555
 export CERTI_HOME GENESIS_HOME CERTI_HTTP_PROXY CERTI_UDP_PORT CERTI_TCP_PORT
 
 ###################################################################
+# Sourcing
+###
+
+source "$OSPL_HDE_ROOT/release.com"
+
+###################################################################
 # Global Variable
 ###
 
