@@ -68,7 +68,7 @@ export IMAGE_PA_PATH
 # OpenSceneGraph
 ###
 
-OSG_ROOT=$PRO_HOME/OSG-$OSG_VERSION/
+OSG_ROOT=$PRO_HOME/OSG-$OSG_VERSION
 OSGDIR=$OSG_ROOT
 
 OSG_TEXTURE=$BDD_HOME/VEHICULES/Txt\
@@ -128,28 +128,11 @@ export QT_ROOT QTDIR QTINC QTLIB QTEMBEDDEDDIR
 # Boost
 ###
 
-BOOST_ROOT=$PRO_HOME/boost-$BOOST_VERSION/
-BOOST_INCLUDEDIR=$PRO_HOME/boost-_$BOOST_VERSION/
-BOOST_LIBRARYDIR=$PRO_HOME/boost-$BOOST_VERSION/stage/lib/
+BOOST_ROOT=$PRO_HOME/boost-$BOOST_VERSION
+BOOST_INCLUDEDIR=$BOOST_ROOT/include
+BOOST_LIBRARYDIR=$BOOST_ROOT/lib
 
 export BOOST_ROOT BOOST_INCLUDEDIR BOOST_LIBRARYDIR
-
-###################################################################
-# Tcl/tk
-###
-
-export PATH=/usr/local/ActiveTcl/bin:$PATH
-export LD_LIBRARY_PATH=/usr/local/ActiveTcl/lib:/usr/local/ActiveTcl/lib/itcl3.3:/usr/local/ActiveTcl/lib/itk3.3:$LD_LIBRARY_PATH
-
-###################################################################
-# Java 
-###
-
-JAVA_VERSION=1.6.0_31
-JAVA_HOME=$PRO_HOME/jre/jre$JAVA_VERSION/
-JAVAPATH=$JAVA_HOME/bin
-
-export JAVA_VERSION JAVA_HOME JAVAPATH
 
 ###################################################################
 # Global Variable
@@ -157,27 +140,17 @@ export JAVA_VERSION JAVA_HOME JAVAPATH
 
 PATH=:$PATH\
 :$ELIPS_HOME/bin\
-:$JAVA_HOME/bin\
 :$OSG_ROOT/bin\
-:$QT_ROOT/bin\
-:$TAO_ROOT/bin\
-:$CERTI_HOME/bin
+:$QT_ROOT/bin
 
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
 :$OSG_ROOT/lib\
 :$OSG_ROOT/lib64\
 :$QT_ROOT/lib\
-:$TAO_ROOT/lib\
 :/lib/\
-:/usr/lib/\
-:$CERTI_HOME/lib\
-:$GENESIS_HOME/CERTI32/lib
+:/usr/lib/
 
-MANPATH=$QT_ROOT/doc/man:$MANPATH
-
-INSLIB=$TAO_ROOT/lib:$INSLIB
-
-export PATH MANPATH LD_LIBRARY_PATH INSLIB
+export PATH LD_LIBRARY_PATH
 
 ###################################################################
 # Other

@@ -71,6 +71,16 @@ CERTI_TCP_PORT=55555
 export CERTI_HOME GENESIS_HOME CERTI_HTTP_PROXY CERTI_UDP_PORT CERTI_TCP_PORT
 
 ###################################################################
+# Java 
+###
+
+JAVA_VERSION=1.6.0_31
+JAVA_HOME=$PRO_HOME/jre/jre$JAVA_VERSION
+JAVAPATH=$JAVA_HOME/bin
+
+export JAVA_VERSION JAVA_HOME JAVAPATH
+
+###################################################################
 # Sourcing
 ###
 
@@ -81,11 +91,14 @@ source "$OSPL_HDE_ROOT/release.com"
 ###
 
 PATH=:$PATH\
+:$JAVA_HOME/bin\
 :$TAO_ROOT/bin\
 :$CERTI_HOME/bin
 
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
 :$TAO_ROOT/lib\
+:/lib/\
+:/usr/lib/\
 :$CERTI_HOME/lib\
 :$GENESIS_HOME/CERTI32/lib
 
