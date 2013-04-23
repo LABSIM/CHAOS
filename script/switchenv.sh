@@ -17,7 +17,7 @@ argument="$1"
 
 major_version=1
 minor_version=0
-patch_version=30    
+patch_version=31    
 
 script_version="v.${major_version}.${minor_version}.${patch_version}"
 
@@ -331,8 +331,8 @@ for remote_host in ${internal_ntwk[@]}; do
 	echo; echo "[${remote_host}]"
 
 	# Redirection du lien symbolique 
-	echo " > rsh -l ${rsh_login} ${remote_host} ln -sf -T ${env_path_directory}${argument}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}"
-	rsh -l ${rsh_login} ${remote_host} ln -sf -T ${env_path_directory}${argument}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}
+	echo " > rsh -l ${rsh_login} ${remote_host} ln -sf ${env_path_directory}${argument}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}"
+	rsh -l ${rsh_login} ${remote_host} ln -sf ${env_path_directory}${argument}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}
 
 	# Reboot
 	echo " > rsh -l ${rsh_login} ${remote_host} reboot"
@@ -344,8 +344,8 @@ done
 echo; echo "[localhost]"
 
 # Redirection du lien symbolique 
-echo " > ln -sf -T ${env_path_directory}${argument}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}"
-ln -sf -T ${env_path_directory}${argument}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}
+echo " > ln -sf ${env_path_directory}${argument}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}"
+ln -sf ${env_path_directory}${argument}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}
 
 # Reboot
 echo -n " > localhost redemmarera dans environ"
