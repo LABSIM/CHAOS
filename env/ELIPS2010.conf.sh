@@ -15,11 +15,11 @@ export ELIPS_CURRENT_DIST="ELIPS 2010 Environment config"
 ###
 # ELIPS Dir
 ###
-source "/home/elips/ELIPS2010/gener.macro"
+. "/home/elips/ELIPS2010/gener.macro"
 
 ###
 # Global environment mapping
 ###
-source "/home/elips/dev/ELIPSTK/env/global_env_conf"
+. "/home/elips/dev/ELIPSTK/etc/global.conf.sh"
 
 #######################

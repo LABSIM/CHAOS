@@ -23,11 +23,11 @@ export ELIPS_CURRENT_DIST="ELIPS DDS Administrator Environment config"
 ###
 # Global environment mapping
 ###
-source "~/dev/ELIPSTK/${ELIPS_SUBDIR}/env/global.conf.sh"
+. "/home/$(whoami)/dev/ELIPSTK/${ELIPS_SUBDIR}/etc/global.conf.sh"
 
 ###
 # DDS Specific environment mapping
 ###
-source "~/dev/ELIPSTK/${ELIPS_SUBDIR}/env/dds.conf.sh"
+. "/home/$(whoami)/dev/ELIPSTK/${ELIPS_SUBDIR}/etc/dds.conf.sh"
 
 #######################

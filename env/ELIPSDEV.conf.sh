@@ -23,6 +23,6 @@ export ELIPS_CURRENT_DIST="ELIPS Dev Environment config"
 ###
 # Global environment mapping
 ###
-source "~/dev/ELIPSTK/${ELIPS_SUBDIR}/env/global.conf.sh"
+. "/home/$(whoami)/dev/ELIPSTK/${ELIPS_SUBDIR}/etc/global.conf.sh"
 
 #######################

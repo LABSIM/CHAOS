@@ -24,8 +24,8 @@ function infoenv()
 ###
 function switchenv()
 {
-	if [ -f "~/dev/ELIPSTK/${ELIPS_SUBDIR}/script/switchenv.sh" ]; then 
-		$(cd "~/dev/ELIPSTK/${ELIPS_SUBDIR}/script/switchenv.sh" && sh "switchenv.sh")
+	if [ -f "/home/$(whoami)/dev/ELIPSTK/${ELIPS_SUBDIR}/script/switchenv.sh" ]; then 
+		$(cd "/home/$(whoami)/dev/ELIPSTK/${ELIPS_SUBDIR}/script/" && sh "switchenv.sh" $1)
 	fi
 }
 
@@ -34,8 +34,8 @@ function switchenv()
 # Home path
 ###
  
-PRO_HOME=~/Progiciels
-CODES_HOME=~/CODES
+PRO_HOME=/home/$(whoami)/Progiciels
+CODES_HOME=/home/$(whoami)/CODES
 BDD_HOME=/data/bdd
 
 export PRO_HOME CODES_HOME BDD_HOME
@@ -44,7 +44,7 @@ export PRO_HOME CODES_HOME BDD_HOME
 # ELIPS 
 ###
 
-ELIPS_HOME=~/dev/ELIPS/$ELIPS_SUBDIR
+ELIPS_HOME=/home/$(whoami)/dev/ELIPS/$ELIPS_SUBDIR
 ELIPSHOME=$ELIPS_HOME
 LC_NUMERIC=en_US
 
@@ -68,8 +68,7 @@ export IMAGE_PA_PATH
 # OpenSceneGraph
 ###
 
-OSG_VERSION=
-OSG_ROOT=$PRO_HOME/OSG$OSG_VERSION/
+OSG_ROOT=$PRO_HOME/OSG-$OSG_VERSION/
 OSGDIR=$OSG_ROOT
 
 OSG_TEXTURE=$BDD_HOME/VEHICULES/Txt\
@@ -111,29 +110,29 @@ OSG_FILE_PATH=$OSG_TEXTURE:$OSG_OBJ
 OSG_NOTIFY_LEVEL=NOTICE
 OSG_OPTIMIZER="DEFAULT ~MAKE_FAST_GEOMETRY"
 
-export OSG_VERSION OSG_ROOT OSGDIR OSG_TEXTURE OSG_OBJ OSG_FILE_PATH OSG_NOTIFY_LEVEL OSG_OPTIMIZER
+export OSG_ROOT OSGDIR OSG_TEXTURE OSG_OBJ OSG_FILE_PATH OSG_NOTIFY_LEVEL OSG_OPTIMIZER
 
 ###################################################################
 # QT
 ###
 
-QT_VERSION=4
 QT_ROOT=$PRO_HOME/QT$QT_VERSION
 QTDIR=$QT_ROOT
+QTINC=$QT_ROOT/include
+QTLIB=$QT_ROOT/lib
 QTEMBEDDEDDIR=$QT_ROOT/libembedded-widget
 
-export QT_VERSION QT_ROOT QTDIR QTEMBEDDEDDIR
+export QT_ROOT QTDIR QTINC QTLIB QTEMBEDDEDDIR
 
 ###################################################################
 # Boost
 ###
 
-BOOST_VERSION=1_45_0
 BOOST_ROOT=$PRO_HOME/boost_$BOOST_VERSION/
 BOOST_INCLUDEDIR=$PRO_HOME/boost_$BOOST_VERSION/
 BOOST_LIBRARYDIR=$PRO_HOME/boost_$BOOST_VERSION/stage/lib/
 
-export BOOST_VERSION BOOST_ROOT BOOST_INCLUDEDIR BOOST_LIBRARYDIR
+export BOOST_ROOT BOOST_INCLUDEDIR BOOST_LIBRARYDIR
 
 ###################################################################
 # Tcl/tk

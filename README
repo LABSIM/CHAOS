@@ -14,9 +14,9 @@
 #######################
 
 # On check l'existance du lien symbolique qui sera modifié par la suite 
-login=whoami
+login=$(whoami)
 if [ -f ~/.${login}_env_conf ]; then 
-	source "~/.${login}_env_conf"
+	. "~/.${login}_env_conf"
 fi
 
 # ======================================================================== #
