@@ -107,9 +107,12 @@ export BOOST_ROOT BOOST_INCLUDEDIR BOOST_LIBRARYDIR BOOSTINC
 # Global Variable
 ###
 
-PATH=$PATH\
+# prepone the new QT to inhibit the installed one 
+# & postpone others progiciels
+PATH=$QT_ROOT/bin\
+:$PATH\
 :$OSG_ROOT/bin\
-:$QT_ROOT/bin
+
 
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
 :$OSG_ROOT/lib\
