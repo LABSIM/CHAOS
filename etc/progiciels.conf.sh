@@ -16,7 +16,7 @@
 OSG_ROOT=$PRO_HOME/OSG-$OSG_VERSION
 
 # alternative (normally koffi only)
-if [ -d $OSG_ROOT ]; then 
+if [ ! -d $OSG_ROOT ]; then 
 	OSG_ROOT=$PRO_HOME/OSG
 fi
 
@@ -72,7 +72,7 @@ export OSG_ROOT OSGDIR OSGINC OSG_TEXTURE OSG_OBJ OSG_FILE_PATH OSG_NOTIFY_LEVEL
 QT_ROOT=$PRO_HOME/QT-$QT_VERSION
 
 # alternative (normally koffi only)
-if [ -d $QT_ROOT ]; then 
+if [ ! -d $QT_ROOT ]; then 
 	QT_ROOT=$PRO_HOME/QT4
 fi
 
@@ -91,7 +91,7 @@ BOOST_ROOT=$PRO_HOME/boost-$BOOST_VERSION
 
 
 # alternative (normally koffi only)
-if [ -d $BOOST_ROOT ]; then 
+if [ ! -d $BOOST_ROOT ]; then 
 	BOOST_ROOT=$PRO_HOME/boost_1_45_0
 	BOOST_LIBRARYDIR=$BOOST_ROOT/stage/lib
 else
