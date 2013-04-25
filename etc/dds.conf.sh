@@ -1,13 +1,44 @@
 #!/bin/bash
 
 #######################
-# global environment config
+# DDS environment config
 #
-# Ce fichier est inclu depuis /etc/profile au demarrage de la machine
-# ou alors par le fichier .bashrc lors de l'ouverture d'un terminal
+# Ce fichier defini les variables necessaires aux projet RHEA & KRONOS 
+# ainsi que celles necessaires aux Progiciels OpenSpliceDDS, 
+# OpenFusionTAO & SimD
 #
 # 07/02/12 - Kinani Nawfel
 #######################
+
+###################################################################
+# RHEA 
+###
+
+RHEA_ROOT=$DEV_HOME/RHEA/$DEV_SUBDIR
+
+export RHEA_ROOT
+
+alias rhea="$RHEA_ROOT/script/RHEA.sh"
+
+###################################################################
+# KRONOS-DDS 
+###
+
+KRONOSDDS_ROOT=$DEV_HOME/KRONOS-DDS/$DEV_SUBDIR
+KRONOSDDS_INCLUDEDIR=$KRONOSDDS_ROOT/include
+KRONOSDDS_LIBRARYDIR=$KRONOSDDS_ROOT/lib
+KRONOSDDS_BINARYDIR=$KRONOSDDS_ROOT/bin
+
+export KRONOSDDS_ROOT KRONOSDDS_INCLUDEDIR KRONOSDDS_LIBRARYDIR KRONOSDDS_BINARYDIR
+
+###################################################################
+# KRONOS-IDL
+###
+
+KRONOSIDL_ROOT=$KRONOSDDS_ROOT/idl
+KRONOSIDL_INCLUDEDIR=$KRONOSIDL_ROOT/include
+
+export KRONOSDDS_ROOT KRONOSDDS_INCLUDEDIR
 
 ###################################################################
 # TAO - OpenFusionTAO
@@ -19,7 +50,7 @@
 
 ACE_ROOT=$PRO_HOME/OpenFusionTAO
 TAO_ROOT=$PRO_HOME/OpenFusionTAO
-TAO_IDL=$PRO_HOME/OpenFusionTAO/bin/tao_idl
+TAO_IDL=$TAO_ROOT/bin/tao_idl
 
 export ACE_ROOT TAO_ROOT TAO_IDL
 
@@ -60,27 +91,6 @@ SIMD_INSTALL_DIR=$PRO_HOME/SimD
 export SIMD_INSTALL_DIR
 
 ###################################################################
-# CERTI & GENESIS
-###
-CERTI_HOME=$CODES_HOME/certi-3.4.2-dev1-x86_64-linux2.6-centos
-GENESIS_HOME=$CODES_HOME/genesis-x86_64-linux2.6-centos
-CERTI_HTTP_PROXY=
-CERTI_UDP_PORT=55555
-CERTI_TCP_PORT=55555
-
-export CERTI_HOME GENESIS_HOME CERTI_HTTP_PROXY CERTI_UDP_PORT CERTI_TCP_PORT
-
-###################################################################
-# Java 
-###
-
-JAVA_VERSION=1.6.0_31
-JAVA_HOME=$PRO_HOME/jre/jre$JAVA_VERSION
-JAVAPATH=$JAVA_HOME/bin
-
-export JAVA_VERSION JAVA_HOME JAVAPATH
-
-###################################################################
 # Sourcing
 ###
 
@@ -90,18 +100,15 @@ source "$OSPL_HDE_ROOT/release.com"
 # Global Variable
 ###
 
-PATH=:$PATH\
-:$JAVA_HOME/bin\
-:$TAO_ROOT/bin\
-:$CERTI_HOME/bin
+PATH=$PATH\
+:$KRONOSDDS/bin\
+:$TAO_ROOT/bin
 
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
-:$TAO_ROOT/lib\
-:/lib/\
-:/usr/lib/\
-:$CERTI_HOME/lib\
-:$GENESIS_HOME/CERTI32/lib
+:$KRONOSDDS_LIBRARYDIR\
+:$TAO_ROOT/lib
 
-INSLIB=$TAO_ROOT/lib:$INSLIB
+INSLIB=$INSLIB\
+:$TAO_ROOT/lib
 
 export PATH LD_LIBRARY_PATH INSLIB

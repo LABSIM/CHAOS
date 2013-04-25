@@ -3,8 +3,7 @@
 #######################
 # ELIPS 2010 Environment config
 #
-# Ce fichier est inclu depuis /etc/profile au demarrage de la machine
-# ou alors par le fichier .bashrc lors de l'ouverture d'un terminal
+# Ce fichier est inclu par le .bashrc lors de l'ouverture d'un terminal
 #
 # 07/02/12 - Kinani Nawfel
 #######################
