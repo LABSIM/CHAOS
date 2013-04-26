@@ -17,7 +17,7 @@ PRO_HOME=/home/$(whoami)/Progiciels
 CODES_HOME=/home/$(whoami)/CODES
 BDD_HOME=/data/bdd
 
-export PRO_HOME CODES_HOME BDD_HOME
+export PRO_HOME CODES_HOME BDD_HOME DEV_HOME
 
 ###
 # Informations
