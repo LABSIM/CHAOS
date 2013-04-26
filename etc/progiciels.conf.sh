@@ -23,23 +23,27 @@ fi
 OSGDIR=$OSG_ROOT
 OSGINCDIR=$OSG_ROOT/include
 
-for path in $(find -L ${BDD_HOME}/bdt/ -maxdepth 1 -type d); do
-	OSG_BDD=$path:$OSG_BDD
+OSG_BDT=${BDD_HOME}/Bdt/
+for path in $(find -L ${OSG_BDT} -maxdepth 1 -type d ! -name Bdt); do
+	OSG_BDT=$OSG_BDT:$path
 done
 
-for path in $(find -L ${BDD_HOME}/texture/ -type d); do
-	OSG_TEXTURE=$path:$OSG_TEXTURE
+OSG_TEXTURE=${BDD_HOME}/Texture/
+for path in $(find -L ${OSG_TEXTURE} -type d ! -name Texture); do
+	OSG_TEXTURE=$OSG_TEXTURE:$path
 done
 
-for path in $(find -L ${BDD_HOME}/mobile/ -type d); do
-	OSG_MOBILE=$path:$OSG_MOBILE
+OSG_DYNAMIC=${BDD_HOME}/Dynamic/
+for path in $(find -L ${OSG_DYNAMIC} -type d ! -name Dynamic); do
+	OSG_DYNAMIC=$OSG_DYNAMIC:$path
 done
 
-for path in $(find -L ${BDD_HOME}/static/ -type d); do
-	OSG_STATIC=$path:$OSG_STATIC
+OSG_STATIC=${BDD_HOME}/Static/
+for path in $(find -L ${OSG_STATIC} -type d ! -name Static); do
+	OSG_STATIC=$OSG_STATIC:$path
 done
 
-OSG_FILE_PATH=$OSG_BDD:$OSG_TEXTURE:$OSG_MOBILE:$OSG_STATIC
+OSG_FILE_PATH=$OSG_BDT:$OSG_TEXTURE:$OSG_DYNAMIC:$OSG_STATIC
 OSG_NOTIFY_LEVEL=NOTICE
 OSG_OPTIMIZER="DEFAULT ~MAKE_FAST_GEOMETRY"
 
