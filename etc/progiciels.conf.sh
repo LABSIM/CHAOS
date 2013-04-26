@@ -23,43 +23,23 @@ fi
 OSGDIR=$OSG_ROOT
 OSGINCDIR=$OSG_ROOT/include
 
-OSG_TEXTURE=$BDD_HOME/VEHICULES/Txt\
-:$BDD_HOME/BLAGNAC_IVE/texture/rgb\
-:$BDD_HOME/VANESSA/Texture\
-:$BDD_HOME/BDD_DREAM/Txt\
-:$BDD_HOME/VESA_TEXTURE\
-:$BDD_HOME/VESA_TEXTURE/sky_dusk\
+for path in $(find -L ${BDD_HOME}/bdt/ -maxdepth 1 -type d); do
+	OSG_BDD=$path:$OSG_BDD
+done
 
-OSG_OBJ=$BDD_HOME/RESSAC/\
-:$BDD_HOME/VEHICULES/ive/\
-:$BDD_HOME/DIVERS/Transport/\
-:$BDD_HOME/DIVERS/Military/\
-:$BDD_HOME/DIVERS/Agriculture\
-:$BDD_HOME/DIVERS/Aicraft\
-:$BDD_HOME/DIVERS/Airport\
-:$BDD_HOME/DIVERS/Boundaries\
-:$BDD_HOME/DIVERS/Commercial\
-:$BDD_HOME/DIVERS/Communications\
-:$BDD_HOME/DIVERS/Industrial\
-:$BDD_HOME/DIVERS/Maritime\
-:$BDD_HOME/DIVERS/Misc\
-:$BDD_HOME/DIVERS/Power\
-:$BDD_HOME/DIVERS/Residential\
-:$BDD_HOME/DIVERS/Sport\
-:$BDD_HOME/DIVERS/StreetFurniture\
-:$BDD_HOME/DIVERS/Trees\
-:$BDD_HOME/BLAGNAC_IVE/agt_LFBO\
-:$BDD_HOME/RESSAC/\
-:$BDD_HOME/BDD_DREAM/BDD/ive\
-:$BDD_HOME/VANESSA/\
-:$BDD_HOME/BLAGNAC/\
-:$BDD_HOME/INSTRUMENT/\
-:$BDD_HOME/Iser/\
-:$BDD_HOME/MARIGNANE/\
-:$BDD_HOME/MARSEILLE/\
-:$BDD_HOME/MARSEILLE/marseillemipmaphard09dds_root_L0_X0_Y0\
+for path in $(find -L ${BDD_HOME}/texture/ -type d); do
+	OSG_TEXTURE=$path:$OSG_TEXTURE
+done
 
-OSG_FILE_PATH=$OSG_TEXTURE:$OSG_OBJ
+for path in $(find -L ${BDD_HOME}/mobile/ -type d); do
+	OSG_MOBILE=$path:$OSG_MOBILE
+done
+
+for path in $(find -L ${BDD_HOME}/static/ -type d); do
+	OSG_STATIC=$path:$OSG_STATIC
+done
+
+OSG_FILE_PATH=$OSG_BDD:$OSG_TEXTURE:$OSG_MOBILE:$OSG_STATIC
 OSG_NOTIFY_LEVEL=NOTICE
 OSG_OPTIMIZER="DEFAULT ~MAKE_FAST_GEOMETRY"
 
