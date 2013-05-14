@@ -72,6 +72,25 @@ alias VENUShelp="konqueror $ELIPS_ROOT/doc/html/PDF/VENUS-RT2005.pdf"
 alias ELIPShelp="konqueror $ELIPS_ROOT/doc/html/index.html"
 
 ###################################################################
+# ELIPS-TK
+###
+
+ELIPSTK_ROOT=$DEV_HOME/ELIPS-TK/$DEV_SUBDIR
+ELIPSTK_INCLUDEDIR=$ELIPSTK_ROOT/include
+ELIPSTK_LIBRARYDIR=$ELIPSTK_ROOT/lib
+ELIPSTK_BINARYDIR=$ELIPSTK_ROOT/bin
+
+export ELIPSTK_ROOT ELIPSTK_INCLUDEDIR ELIPSTK_LIBRARYDIR ELIPSTK_BINARYDIR
+
+###################################################################
+# ELIPS-DEMO
+###
+
+ELIPSDEMO_ROOT=$DEV_HOME/ELIPS-DEMO/$DEV_SUBDIR
+
+export ELIPSDEMO_ROOT
+
+###################################################################
 # VISUEL PA 
 ###
 

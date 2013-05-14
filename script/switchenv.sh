@@ -17,7 +17,7 @@ argument="$1"
 
 major_version=1
 minor_version=1
-patch_version=51   
+patch_version=52   
 
 script_version="v.${major_version}.${minor_version}.${patch_version}"
 
@@ -75,7 +75,7 @@ function info_printing ()
 	echo
 	echo "ARG:"
 	echo "  - Le type de l'environment de travail a"
-	echo "  diffuser, ex: ELIPSDEV"
+	echo "  diffuser, ex: DEV"
 	echo
 	echo "OPTION :"
 	echo 
@@ -117,7 +117,7 @@ function check_ntwk_sz ()
 }
 
 ###
-# On va lister l'enssemble de nos Environment a disposition dans le répertoire /home/elips/dev_conf/env/*
+# On va lister l'enssemble de nos Environment a disposition dans le répertoire /env/*
 function check_env_conf ()
 {
 	# On récupère nos environments locaux disponibles
