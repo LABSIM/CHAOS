@@ -32,12 +32,9 @@ function infoenv()
 ###
 # Switch
 ###
-function switchenv()
-{
-	if [ -f "${DEV_HOME}/ELIPSTK/${DEV_SUBDIR}/script/switchenv.sh" ]; then 
-		$(cd "${DEV_HOME}/ELIPSTK/${DEV_SUBDIR}/script/" && sh "switchenv.sh" $1)
-	fi
-}
+if [ -f "${DEV_HOME}/ELIPSTK/${DEV_SUBDIR}/script/switchenv.sh" ]; then 
+	alias switchenv="sh ${DEV_HOME}/ELIPSTK/${DEV_SUBDIR}/script/switchenv.sh"
+fi
 
 
 ###################################################################
