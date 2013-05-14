@@ -11,13 +11,13 @@
 #################################################
 
 # ============================================================== #
-# 							BASIC VARIABLES DECLARATION							#
+# 				BASIC VARIABLES DECLARATION						 #
 # ============================================================== #
 argument="$1"
 
 major_version=1
 minor_version=1
-patch_version=52   
+patch_version=53   
 
 script_version="v.${major_version}.${minor_version}.${patch_version}"
 
@@ -36,7 +36,7 @@ env_path_directory="${root_directory}/env/"
 declare -a env_file_lst
 
 # ============================================================== #
-# 							BASIC FUNCTIONS DECLARATION							#
+# 				BASIC FUNCTIONS DECLARATION						 #
 # ============================================================== #
 
 ###
@@ -266,7 +266,7 @@ function check_arg_lst ()
 }
 
 # ============================================================== #
-# 						ROUTINES FUNCTIONS DECLARATION							#
+# 				ROUTINES FUNCTIONS DECLARATION					 #
 # ============================================================== #
 
 ###
@@ -286,8 +286,8 @@ function perform_checkout_routines ()
 
 
 
-# ============================================================== #read
-# 								SCRIPT STARTING POINT								#
+# ============================================================== #
+# 					SCRIPT STARTING POINT						 #
 # ============================================================== #
 
 # On pré-parse 

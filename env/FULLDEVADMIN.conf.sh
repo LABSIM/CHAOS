@@ -23,7 +23,7 @@ export DEV_CURRENT_DIST="Full Administrator Dev Environment config"
 ###
 # Developpement ToolKit Root Path
 ###
-DEVTK_ROOT=~/dev/ELIPSTK/${DEV_SUBDIR}
+DEVTK_ROOT=~/dev/DEV-TK/${DEV_SUBDIR}
 
 ###
 # Global environment mapping
