@@ -45,4 +45,9 @@ DEVTK_ROOT=~/dev/DEV-TK/${DEV_SUBDIR}
 ###
 . ${DEVTK_ROOT}/etc/dds.conf.sh
 
+###
+# Developpment environment application support 
+###
+. ${DEVTK_ROOT}/etc/devenv.conf.sh
+
 #######################

@@ -13,11 +13,12 @@
 ###
 
 DEV_HOME=/home/$(whoami)/dev
+DEVENV_HOME=/home/$(whoami)/dev_env
 PRO_HOME=/home/$(whoami)/Progiciels
 CODES_HOME=/home/$(whoami)/CODES
 BDD_HOME=/data/bdd
 
-export PRO_HOME CODES_HOME BDD_HOME DEV_HOME
+export PRO_HOME CODES_HOME BDD_HOME DEV_HOME DEVENV_HOME
 
 ###
 # Informations
@@ -43,5 +44,14 @@ fi
 
 # On active le traitement des commandes tierces avec xhost
 xhost + > /dev/null 2>&1
+
+###################################################################
+# Versions deployment
+###
+if [ -f "/home/$(whoami)/.versions.sh" ]; then 
+	. /home/$(whoami)/.versions.sh
+else
+	echo "Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
+fi
 
 ###################################################################

@@ -51,10 +51,8 @@ DEVTK_ROOT=~/dev/DEV-TK/${DEV_SUBDIR}
 . ${DEVTK_ROOT}/etc/hla.conf.sh
 
 ###
-# Java (koffi specific)
+# Developpment environment application support 
 ###
-if [ -d $PRO_HOME/jre ]; then 
-	. $DEVTK_ROOT/etc/java.conf.sh
-fi
+. ${DEVTK_ROOT}/etc/devenv.conf.sh
 
 #######################
