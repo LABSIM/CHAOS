@@ -3,7 +3,7 @@
 #######################
 # Developpment environment application support config
 #
-# Ce fichier defini les variables necessaires a configuration de lénvironment de developement logiciel
+# Ce fichier defini les variables necessaires a configuration de l'environment de developement logiciel (IDE, web & mail ...)
 #
 # 07/02/12 - Kinani Nawfel
 #######################
@@ -14,7 +14,23 @@
 
 ECLIPSE_HOME=$DEVENV_HOME/eclipse-$ECLIPSE_VERSION
 
-export ECLIPSE_VERSION ECLIPSE_HOME
+export ECLIPSE_HOME
+
+###################################################################
+# Firefox configuration
+###
+
+FIREFOX_HOME=$DEVENV_HOME/firefox
+
+export FIREFOX_HOME
+
+###################################################################
+# Thunderbird configuration
+###
+
+THUNDERBIRD_HOME=$DEVENV_HOME/thunderbird
+
+export THUNDERBIRD_HOME
 
 ###################################################################
 # Java Runtime Environment configuration
@@ -23,7 +39,7 @@ export ECLIPSE_VERSION ECLIPSE_HOME
 JAVA_HOME=$DEVENV_HOME/jre/jre$JAVA_VERSION
 JAVAPATH=$JAVA_HOME/bin
 
-export JAVA_VERSION JAVA_HOME JAVAPATH
+export JAVA_HOME
 
 ###################################################################
 # Global Variable
