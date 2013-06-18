@@ -55,3 +55,14 @@ else
 fi
 
 ###################################################################
+# System Library path
+###
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
+:/lib64/\
+:/usr/lib64/\
+:/lib/\
+:/usr/lib/
+
+export LD_LIBRARY_PATH
+
+###################################################################

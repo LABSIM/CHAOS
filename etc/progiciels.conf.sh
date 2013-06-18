@@ -99,13 +99,10 @@ PATH=$QT_ROOT/bin\
 :$PATH\
 :$OSG_ROOT/bin\
 
-
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
 :$OSG_ROOT/lib\
 :$OSG_ROOT/lib64\
-:$QT_ROOT/lib\
-:/lib/\
-:/usr/lib/
+:$QT_ROOT/lib
 
 export PATH LD_LIBRARY_PATH
 
