@@ -23,7 +23,7 @@ export PRO_HOME CODES_HOME BDD_HOME DEV_HOME DEVENV_HOME
 ###
 # Informations
 ###
-function infoenv()
+function whichDevTK()
 {
 	echo "=========================================================================="
  	echo " Environment de dev courant : ${DEV_CURRENT_DIST}"

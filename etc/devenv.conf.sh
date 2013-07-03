@@ -20,7 +20,7 @@ export ECLIPSE_HOME
 # Firefox configuration
 ###
 
-FIREFOX_HOME=$DEVENV_HOME/firefox
+FIREFOX_HOME=$DEVENV_HOME/firefox-$FIREFOX_VERSION
 
 export FIREFOX_HOME
 
@@ -28,7 +28,7 @@ export FIREFOX_HOME
 # Thunderbird configuration
 ###
 
-THUNDERBIRD_HOME=$DEVENV_HOME/thunderbird
+THUNDERBIRD_HOME=$DEVENV_HOME/thunderbird-$THUNDERBIRD_VERSION
 
 export THUNDERBIRD_HOME
 
