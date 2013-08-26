@@ -90,6 +90,16 @@ fi
 export BOOST_ROOT BOOST_INCLUDEDIR BOOST_LIBRARYDIR
 
 ###################################################################
+# Leap Motion SDK
+###
+
+LEAPMOTION_ROOT=$PRO_HOME/Leap_Developer_Kit_$LEAPMOTION_VERSION
+LEAPMOTION_LIBRARYDIR=$LEAPMOTION_ROOT/LeapSDK/lib
+LEAPMOTION_INCLUDEDIR=$LEAPMOTION_ROOT/LeapSDK/include
+
+export LEAPMOTION_ROOT LEAPMOTION_LIBRARYDIR LEAPMOTION_INCLUDEDIR
+
+###################################################################
 # Global Variable
 ###
 
