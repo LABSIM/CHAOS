@@ -113,4 +113,18 @@ LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
 INSLIB=$INSLIB\
 :$TAO_ROOT/lib
 
+###################################################################
+# Auxilliary stuff - RHEL5 Compatibility header under CentOS
+###
+
+if [ -d /usr/lib/x86_64-redhat-linux5E/include/ ]
+then
+	RHEL5_COMPAT_HEADER_INCLUDEDIR=/usr/lib/x86_64-redhat-linux5E/include/
+	PATH=$PATH:$RHEL5_COMPAT_HEADER_INCLUDEDIR
+fi
+
+###################################################################
+# Exporting
+###
+
 export PATH LD_LIBRARY_PATH INSLIB
