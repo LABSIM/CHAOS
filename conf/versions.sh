@@ -1,4 +1,19 @@
 #!/bin/bash
+#
+# Versions files
+#
+# On place ici chacune des versions des outils utilisés 
+#
+# (Valentines's Day)
+# 14/02/2012 - Kinani Nawfel
+#
+#################################################
+
+# QT versions
+#QT_MAJ_VER=4
+#QT_MIN_VER=
+#QT_REV_VER=
+#QT_VERSION=${QT_MAJ_VER}
 
 # MPC versions
 MPC_MAJ_VER=1
@@ -30,17 +45,17 @@ GCC_MIN_VER=7
 GCC_REV_VER=2
 GCC_VERSION=${GCC_MAJ_VER}.${GCC_MIN_VER}.${GCC_REV_VER}
 
+# CMAKE versions
+CMAKE_MAJ_VER=2
+CMAKE_MIN_VER=8
+CMAKE_REV_VER=12
+CMAKE_VERSION=$CMAKE_MAJ_VER.$CMAKE_MIN_VER.$CMAKE_REV_VER
+
 # Boost versions
 BOOST_MAJ_VER=1
-BOOST_MIN_VER=53
+BOOST_MIN_VER=55
 BOOST_REV_VER=0
 BOOST_VERSION=${BOOST_MAJ_VER}.${BOOST_MIN_VER}.${BOOST_REV_VER}
-
-# QT versions
-QT_MAJ_VER=4
-QT_MIN_VER=
-QT_REV_VER=
-QT_VERSION=${QT_MAJ_VER}
 
 # Nvidia Texture Tools versions
 NVTT_MAJ_VER=2
@@ -50,9 +65,15 @@ NVTT_VERSION=${NVTT_MAJ_VER}.${NVTT_MIN_VER}.${NVTT_REV_VER}
 
 # OpenSceneGraph versions
 OSG_MAJ_VER=3
-OSG_MIN_VER=0
-OSG_REV_VER=1
+OSG_MIN_VER=2
+OSG_REV_VER=0
 OSG_VERSION=${OSG_MAJ_VER}.${OSG_MIN_VER}.${OSG_REV_VER}
+
+# CEGUI versions
+CEGUI_MAJ_VER=0
+CEGUI_MIN_VER=8
+CEGUI_REV_VER=3
+CEGUI_VERSION=$CEGUI_MAJ_VER.$CEGUI_MIN_VER.$CEGUI_REV_VER
 
 # JAVA versions
 JAVA_MAJ_VER=1

@@ -49,13 +49,13 @@ xhost + > /dev/null 2>&1
 # Versions deployment
 ###
 if [ -f "/home/$(whoami)/.versions.sh" ]; then 
-	. /home/$(whoami)/.versions.sh
+	. ${DEVTK_ROOT}/conf/versions.sh
 else
 	echo "Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
 fi
 
 ###################################################################
-# System Library path
+# Default System Library path
 ###
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
 :/lib64/\

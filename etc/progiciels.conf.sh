@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bashd mpmakeegui
 
 #######################
 # Progiciels environment config
@@ -10,18 +10,117 @@
 #######################
 
 ###################################################################
+# QT
+###
+#QT_ROOT=$PRO_HOME/QT-$QT_VERSION
+#
+## alternative (normally koffi only)
+#if [ ! -d $QT_ROOT ]; then 
+#	QT_ROOT=$PRO_HOME/QT4
+#fi
+#
+#QT_INCLUDEDIR=$QT_ROOT/include
+#QT_LIBRARYDIR=$QT_ROOT/lib
+#QT_BINARYDIR=$QT_ROOT/bin
+#
+#QTEMBEDDED_ROOT=$QT_ROOT/libembedded-widget
+#QTEMBEDDED_INCLUDEDIR=$QTEMBEDDED_ROOT/include
+#QTEMBEDDED_LIBRARYDIR=$QTEMBEDDED_ROOT/lib
+#
+#export QT_ROOT QT_INCLUDEDIR QT_LIBRARYDIR QT_BINARYDIR QTEMBEDDED_ROOT QTEMBEDDED_INCLUDEDIR QTEMBEDDED_LIBRARYDIR
+
+###################################################################
+# MPC
+###
+
+MPC_ROOT=$PRO_HOME/mpc-$MPC_VERSION
+MPC_LIBRARYDIR=$MPC_ROOT/lib
+MPC_INCLUDEDIR=$MPC_ROOT/include
+
+export MPC_ROOT MPC_LIBRARYDIR MPC_INCLUDEDIR
+
+###################################################################
+# MPFR
+###
+
+MPFR_ROOT=$PRO_HOME/mpfr-$MPFR_VERSION
+MPFR_LIBRARYDIR=$MPFR_ROOT/lib
+MPFR_INCLUDEDIR=$MPFR_ROOT/include
+
+export MPFR_ROOT MPFR_LIBRARYDIR MPFR_INCLUDEDIR
+
+###################################################################
+# GMP
+###
+
+GMP_ROOT=$PRO_HOME/gmp-$GMP_VERSION
+GMP_LIBRARYDIR=$GMP_ROOT/lib
+GMP_INCLUDEDIR=$GMP_ROOT/include
+
+export GMP_ROOT GMP_LIBRARYDIR GMP_INCLUDEDIR
+
+###################################################################
+# AutoGen
+###
+
+AUTOGEN_ROOT=$PRO_HOME/autogen-$AUTOGEN_VERSION
+AUTOGEN_BINARYDIR=$AUTOGEN_ROOT/bin
+AUTOGEN_LIBRARYDIR=$AUTOGEN_ROOT/lib
+AUTOGEN_INCLUDEDIR=$AUTOGEN_ROOT/include
+
+export AUTOGEN_ROOT AUTOGEN_BINARYDIR AUTOGEN_LIBRARYDIR AUTOGEN_INCLUDEDIR
+
+###################################################################
+# GCC
+###
+
+GCC_ROOT=$PRO_HOME/gcc-$GCC_VERSION
+GCC_BINARYDIR=$GCC_ROOT/bin
+GCC_LIBRARYDIR=$GCC_ROOT/lib
+GCC_LIBRARY64DIR=$GCC_ROOT/lib64
+GCC_LIBRARYEXECDIR=$GCC_ROOT/libexec/gcc-$GCC_VERSION/x86_64-unknown-linux-gnu/$GCC_VERSION
+GCC_INCLUDEDIR=$GCC_ROOT/include
+
+CC=$GCC_BINARYDIR/gcc
+CXX=$GCC_BINARYDIR/g++
+
+export GCC_ROOT GCC_BINARYDIR GCC_LIBRARYDIR GCC_LIBRARY64DIR GCC_LIBRARYEXECDIR GCC_INCLUDEDIR CC CXX
+
+###################################################################
+# CMake/Ctest/CPack
+###
+
+CMAKE_ROOT=$PRO_HOME/cmake-$CMAKE_VERSION
+export CMAKE_ROOT
+
+###################################################################
+# Boost
+###
+
+BOOST_ROOT=$PRO_HOME/boost-$BOOST_VERSION
+BOOST_LIBRARYDIR=$BOOST_ROOT/lib
+BOOST_INCLUDEDIR=$BOOST_ROOT/include
+
+export BOOST_ROOT BOOST_INCLUDEDIR BOOST_LIBRARYDIR
+
+###################################################################
+# Nvidia Texture Tools
+###
+
+NVTT_ROOT=$PRO_HOME/nvidia-texture-tools-$NVTT_VERSION
+NVTT_BINARYDIR=$NVTT_ROOT/bin
+NVTT_LIBRARYDIR=$NVTT_ROOT/lib
+NVTT_INCLUDEDIR=$NVTT_ROOT/include
+
+export NVTT_ROOT NVTT_BINARYDIR NVTT_LIBRARYDIR NVTT_INCLUDEDIR
+
+###################################################################
 # OpenSceneGraph
 ###
 
 OSG_ROOT=$PRO_HOME/OSG-$OSG_VERSION
-
-# alternative (normally koffi only)
-if [ ! -d $OSG_ROOT ]; then 
-	OSG_ROOT=$PRO_HOME/OSG
-fi
-
 OSG_INCLUDEDIR=$OSG_ROOT/include
-OSG_LIBRARYDIR=$OSG_ROOT/lib64
+OSG_LIBRARY64DIR=$OSG_ROOT/lib64
 OSG_BINARYDIR=$OSG_ROOT/bin
 
 OSG_BDT=${BDD_HOME}/Bdt/
@@ -51,43 +150,15 @@ OSG_OPTIMIZER="DEFAULT ~MAKE_FAST_GEOMETRY"
 export OSG_ROOT OSG_INCLUDEDIR OSG_LIBRARYDIR OSG_BINARYDIR OSG_BDT OSG_TEXTURE OSG_DYNAMIC OSG_STATIC OSG_FILE_PATH OSG_NOTIFY_LEVEL OSG_OPTIMIZER
 
 ###################################################################
-# QT
+# CEGUI
 ###
 
-QT_ROOT=$PRO_HOME/QT-$QT_VERSION
+CEGUI_ROOT=$PRO_HOME/cegui-$CEGUI_VERSION
+CEGUI_BINARYDIR=$CEGUI_ROOT/bin
+CEGUI_LIBRARYDIR=$CEGUI_ROOT/lib
+CEGUI_INCLUDEDIR=$CEGUI_ROOT/include
 
-# alternative (normally koffi only)
-if [ ! -d $QT_ROOT ]; then 
-	QT_ROOT=$PRO_HOME/QT4
-fi
-
-QT_INCLUDEDIR=$QT_ROOT/include
-QT_LIBRARYDIR=$QT_ROOT/lib
-QT_BINARYDIR=$QT_ROOT/bin
-
-QTEMBEDDED_ROOT=$QT_ROOT/libembedded-widget
-QTEMBEDDED_INCLUDEDIR=$QTEMBEDDED_ROOT/include
-QTEMBEDDED_LIBRARYDIR=$QTEMBEDDED_ROOT/lib
-
-export QT_ROOT QT_INCLUDEDIR QT_LIBRARYDIR QT_BINARYDIR QTEMBEDDED_ROOT QTEMBEDDED_INCLUDEDIR QTEMBEDDED_LIBRARYDIR
-
-###################################################################
-# Boost
-###
-
-BOOST_ROOT=$PRO_HOME/boost-$BOOST_VERSION
-
-# alternative (normally koffi only)
-if [ ! -d $BOOST_ROOT ]; then 
-	BOOST_ROOT=$PRO_HOME/boost_1_45_0
-	BOOST_LIBRARYDIR=$BOOST_ROOT/stage/lib
-	BOOST_INCLUDEDIR=$BOOST_ROOT/
-else
-	BOOST_LIBRARYDIR=$BOOST_ROOT/lib
-	BOOST_INCLUDEDIR=$BOOST_ROOT/include
-fi
-
-export BOOST_ROOT BOOST_INCLUDEDIR BOOST_LIBRARYDIR
+export CEGUI_ROOT CEGUI_BINARYDIR CEGUI_LIBRARYDIR CEGUI_INCLUDEDIR
 
 ###################################################################
 # Leap Motion SDK
@@ -103,16 +174,38 @@ export LEAPMOTION_ROOT LEAPMOTION_LIBRARYDIR LEAPMOTION_INCLUDEDIR
 # Global Variable
 ###
 
-# prepone the new QT to inhibit the installed one 
-# & postpone others progiciels
-PATH=$QT_ROOT/bin\
-:$PATH\
-:$OSG_ROOT/bin\
 
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
-:$OSG_ROOT/lib\
-:$OSG_ROOT/lib64\
-:$QT_ROOT/lib
+#################
+# GCC Variables #
+#################
+export PATH=/home/nkinani/Progiciels/gcc-$GCC_VERSION/bin:/home/nkinani/Progiciels/gcc-$GCC_VERSION/libexec/gcc-4.7.2/x86_64-unknown-linux-gnu/4.7.2:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
+export LD_LIBRARY_PATH=/home/nkinani/Progiciels/gcc-$GCC_VERSION/lib64:/home/nkinani/Progiciels/gcc-$GCC_VERSION/lib:/lib:/lib64:/usr/lib:/usr/lib64:$LD_LIBRARY_PATH
+export CC=/home/nkinani/Progiciels/gcc-$GCC_VERSION/bin/gcc
+export CXX=/home/nkinani/Progiciels/gcc-$GCC_VERSION/bin/g++
+
+
+# prepone the new GCC to inhibit the installed one 
+# & postpone others progiciels
+PATH=$GCC_BINARYDIR\
+:$GCC_LIBRARYEXECDIR\
+:$PATH\
+:$AUTOGEN_BINARYDIR\
+:$NVTT_BINARYDIR\
+:$OSG_BINARYDIR\
+:$CEGUI_BINARYDIR
+
+LD_LIBRARY_PATH=$GCC_LIBRARYDIR\
+:$GCC_LIBRARY64DIR\
+:$LD_LIBRARY_PATH\
+:$MPC_LIBRARYDIR\
+:$MPFR_LIBRARYDIR\
+:$GMP_LIBRARYDIR\
+:$AUTOGEN_LIBRARYDIR\
+:$OSG_LIBRARYDIR\
+:$BOOST_LIBRARYDIR\
+:$NVTT_LIBRARYDIR\
+:$CEGUI_LIBRARYDIR\
+:$LEAPMOTION_LIBRARYDIR
 
 export PATH LD_LIBRARY_PATH
 
