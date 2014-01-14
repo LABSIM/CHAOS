@@ -48,7 +48,7 @@ xhost + > /dev/null 2>&1
 ###################################################################
 # Versions deployment
 ###
-if [ -f "/home/$(whoami)/.versions.sh" ]; then 
+if [ -f "${DEVTK_ROOT}/conf/versions.sh" ]; then 
 	. ${DEVTK_ROOT}/conf/versions.sh
 else
 	echo "Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
