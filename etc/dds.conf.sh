@@ -100,6 +100,20 @@ export SIMD_INSTALL_DIR
 source "$OSPL_HDE_ROOT/release.com"
 
 ###################################################################
+# Auxilliary stuff - RHEL5 Compatibility header under CentOS
+###
+
+if [ -d /usr/lib/x86_64-redhat-linux5E/include/ ]; then
+	RHEL5_COMPAT_HEADER_INCLUDEDIR=/usr/lib/x86_64-redhat-linux5E/include/
+	C_INCLUDE_PATH=$RHEL5_COMPAT_HEADER_INCLUDEDIR:$C_INCLUDE_PATH
+	CPLUS_INCLUDE_PATH=$RHEL5_COMPAT_HEADER_INCLUDEDIR:$CPLUS_INCLUDE_PATH
+	export C_INCLUDE_PATH CPLUS_INCLUDE_PATH RHEL5_COMPAT_HEADER_INCLUDEDIR
+else
+	echo "!! installation du package compat-glibc-headers-2.5-46.2.x86_64 nécéssaire afin d'assurer la compatibilité RHEL !!"
+fi
+
+
+###################################################################
 # Global Variable
 ###
 
