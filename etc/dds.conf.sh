@@ -78,7 +78,7 @@ export OSPL_TARGET OSPL_ROOT OSPL_RTS_ROOT OSPL_HDE_ROOT OSPL_LOGPATH OSPL_STORE
 ###################################################################
 # OpenSpliceDDS Daemon configuration
 ###
-# OSPL_LIPS_CONF_URI - The URI to the global ospl daemon configuration xml file
+# OSPL_URI - The URI to the global ospl daemon configuration xml file
 ###
 
 OSPL_URI=file://$OSPL_CONFPATH/ospl_simulation_conf.xml

@@ -91,7 +91,9 @@ export GCC_ROOT GCC_BINARYDIR GCC_LIBRARYDIR GCC_LIBRARY64DIR GCC_LIBRARYEXECDIR
 ###
 
 CMAKE_ROOT=$PRO_HOME/cmake-$CMAKE_VERSION
-export CMAKE_ROOT
+CMAKE_BINARYDIR=$CMAKE_ROOT/bin
+
+export CMAKE_ROOT CMAKE_BINARYDIR
 
 ###################################################################
 # Boost
@@ -188,6 +190,7 @@ export CXX=/home/nkinani/Progiciels/gcc-$GCC_VERSION/bin/g++
 # & postpone others progiciels
 PATH=$GCC_BINARYDIR\
 :$GCC_LIBRARYEXECDIR\
+:$CMAKE_BINARYDIR\
 :$PATH\
 :$AUTOGEN_BINARYDIR\
 :$NVTT_BINARYDIR\
