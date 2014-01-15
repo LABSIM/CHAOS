@@ -1,4 +1,4 @@
-#!/bin/bashd mpmakeegui
+#!/bin/bash
 
 #######################
 # Progiciels environment config
