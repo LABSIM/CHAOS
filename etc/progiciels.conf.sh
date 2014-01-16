@@ -10,26 +10,6 @@
 #######################
 
 ###################################################################
-# QT
-###
-#QT_ROOT=$PRO_HOME/QT-$QT_VERSION
-#
-## alternative (normally koffi only)
-#if [ ! -d $QT_ROOT ]; then 
-#	QT_ROOT=$PRO_HOME/QT4
-#fi
-#
-#QT_INCLUDEDIR=$QT_ROOT/include
-#QT_LIBRARYDIR=$QT_ROOT/lib
-#QT_BINARYDIR=$QT_ROOT/bin
-#
-#QTEMBEDDED_ROOT=$QT_ROOT/libembedded-widget
-#QTEMBEDDED_INCLUDEDIR=$QTEMBEDDED_ROOT/include
-#QTEMBEDDED_LIBRARYDIR=$QTEMBEDDED_ROOT/lib
-#
-#export QT_ROOT QT_INCLUDEDIR QT_LIBRARYDIR QT_BINARYDIR QTEMBEDDED_ROOT QTEMBEDDED_INCLUDEDIR QTEMBEDDED_LIBRARYDIR
-
-###################################################################
 # MPC
 ###
 
@@ -92,8 +72,9 @@ export GCC_ROOT GCC_BINARYDIR GCC_LIBRARYDIR GCC_LIBRARY64DIR GCC_LIBRARYEXECDIR
 
 CMAKE_ROOT=$PRO_HOME/cmake-$CMAKE_VERSION
 CMAKE_BINARYDIR=$CMAKE_ROOT/bin
+CMAKE_MODULE_PATH=$CMAKE_ROOT/share/cmake-$CMAKE_MAJ_VER.$CMAKE_MIN_VER/Modules
 
-export CMAKE_ROOT CMAKE_BINARYDIR
+export CMAKE_ROOT CMAKE_BINARYDIR CMAKE_MODULE_PATH
 
 ###################################################################
 # Boost
@@ -161,6 +142,22 @@ CEGUI_LIBRARYDIR=$CEGUI_ROOT/lib
 CEGUI_INCLUDEDIR=$CEGUI_ROOT/include
 
 export CEGUI_ROOT CEGUI_BINARYDIR CEGUI_LIBRARYDIR CEGUI_INCLUDEDIR
+
+###################################################################
+# QT
+###
+
+QT_ROOT=$PRO_HOME/QT-$QT_VERSION
+QT_INCLUDEDIR=$QT_ROOT/include
+QT_LIBRARYDIR=$QT_ROOT/lib
+QT_BINARYDIR=$QT_ROOT/bin
+
+QTEMBEDDED_ROOT=$QT_ROOT/libembedded-widget
+QTEMBEDDED_INCLUDEDIR=$QTEMBEDDED_ROOT/include
+QTEMBEDDED_LIBRARYDIR=$QTEMBEDDED_ROOT/lib
+
+export QT_ROOT QT_INCLUDEDIR QT_LIBRARYDIR QT_BINARYDIR QTEMBEDDED_ROOT QTEMBEDDED_INCLUDEDIR QTEMBEDDED_LIBRARYDIR
+
 
 ###################################################################
 # Leap Motion SDK

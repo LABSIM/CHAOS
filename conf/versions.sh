@@ -9,12 +9,6 @@
 #
 #################################################
 
-# QT versions
-#QT_MAJ_VER=4
-#QT_MIN_VER=
-#QT_REV_VER=
-#QT_VERSION=${QT_MAJ_VER}
-
 # MPC versions
 MPC_MAJ_VER=1
 MPC_MIN_VER=0
@@ -74,6 +68,12 @@ CEGUI_MAJ_VER=0
 CEGUI_MIN_VER=8
 CEGUI_REV_VER=3
 CEGUI_VERSION=$CEGUI_MAJ_VER.$CEGUI_MIN_VER.$CEGUI_REV_VER
+
+# QT versions
+QT_MAJ_VER=4
+QT_MIN_VER=8
+QT_REV_VER=4
+QT_VERSION=$QT_MAJ_VER.$QT_MIN_VER.$QT_REV_VER
 
 # JAVA versions
 JAVA_MAJ_VER=1
