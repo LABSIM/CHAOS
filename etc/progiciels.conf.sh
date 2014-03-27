@@ -177,16 +177,6 @@ export LEAPMOTION_ROOT LEAPMOTION_LIBRARYDIR LEAPMOTION_INCLUDEDIR
 # Global Variable
 ###
 
-
-#################
-# GCC Variables #
-#################
-export PATH=/home/nkinani/Progiciels/gcc-$GCC_VERSION/bin:/home/nkinani/Progiciels/gcc-$GCC_VERSION/libexec/gcc-4.7.2/x86_64-unknown-linux-gnu/4.7.2:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
-export LD_LIBRARY_PATH=/home/nkinani/Progiciels/gcc-$GCC_VERSION/lib64:/home/nkinani/Progiciels/gcc-$GCC_VERSION/lib:/lib:/lib64:/usr/lib:/usr/lib64:$LD_LIBRARY_PATH
-export CC=/home/nkinani/Progiciels/gcc-$GCC_VERSION/bin/gcc
-export CXX=/home/nkinani/Progiciels/gcc-$GCC_VERSION/bin/g++
-
-
 # prepone the new GCC to inhibit the installed one 
 # & postpone others progiciels
 PATH=$GCC_BINARYDIR\
