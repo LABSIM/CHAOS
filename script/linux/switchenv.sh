@@ -13,7 +13,8 @@
 # ============================================================== #
 # 				BASIC VARIABLES DECLARATION						 #
 # ============================================================== #
-argument="$1"
+env_requested="$1"
+devtk_home_path="$2"
 
 major_version=1
 minor_version=1
@@ -23,7 +24,7 @@ script_version="v.${major_version}.${minor_version}.${patch_version}"
 
 rsh_login=$(whoami)
 
-root_directory=$(readlink -f "${PWD}/../../")
+root_directory=$(readlink -f "${devtk_home_path}")
 
 link_base_name=${rsh_login}
 link_path_directory="/home/${rsh_login}/."
@@ -70,11 +71,13 @@ function info_printing ()
 	echo "======================================================"
 	echo
 	echo "Usage:"
-	echo "  switchenv ARG | OPTION"
+	echo "  switchenv [[ARG1 ARG2] | OPTION]"
 	echo
 	echo "ARG:"
-	echo "  - Le type de l'environment de travail a"
+	echo "  - ARG1 > Le type de l'environment de travail a"
 	echo "  diffuser, ex: DEV"
+	echo "  - ARG2 > Le path vers le home projet DEV-TK "
+	echo "	!! Attention !! path SVN inclu (trunk/ branches/ tags/)" 
 	echo
 	echo "OPTION :"
 	echo 
@@ -160,10 +163,10 @@ function parse_local_arg ()
 	# On stocke notre résultat en local
 	local __result=0
 
-	#On regarde le type de l'argument d'après notre liste locale
-	echo -n ">> Fichier de configuration local correspondant à l'argument \"${argument}\" :"
+	#On regarde le type de l'env_requested d'après notre liste locale
+	echo -n ">> Fichier de configuration local correspondant à l'env_requested \"${env_requested}\" :"
 	for (( i=0; i<${#env_file_lst[@]}; i++ )); do
-		if [ "${env_file_lst[$i]}" = "${argument}" ] ; then
+		if [ "${env_file_lst[$i]}" = "${env_requested}" ] ; then
 			# "trouvé"
 			__result=1
 		fi
@@ -177,16 +180,16 @@ function parse_local_arg ()
 # Fonction de verification de nos environments distants
 function parse_remote_arg ()
 {
-	# On stocke notre résultat en local & l'argument
+	# On stocke notre résultat en local & l'env_requested
 	local __remote_host=$1
 	local __result=0
 
 	# On scan
-	echo -n ">> Fichier de configuration distant sur $remote_host correspondant à l'argument \"${argument}\" :"
+	echo -n ">> Fichier de configuration distant sur $remote_host correspondant à l'env_requested \"${env_requested}\" :"
 	eval internal_sub_sz=\${#$__remote_host$env_decoration[@]}
 	for (( i=0; i<$internal_sub_sz; i++)); do
 		eval internal_sub_buffer=\${$__remote_host$env_decoration[$i]}
-		if [  "$internal_sub_buffer" = "${argument}" ] ; then
+		if [  "$internal_sub_buffer" = "${env_requested}" ] ; then
 			__result=1
 		fi
 	done 
@@ -223,8 +226,8 @@ function remote_parse_routines ()
 function pre_parse_routines ()
 {
 	# On determine le type <----- On rajoutera ici les options utlérieures pour le script !
-	# On ne traite pas l'argument
-	case ${argument} in	
+	# On ne traite pas l'env_requested
+	case ${env_requested} in	
 		# Aide
   		"--help"|"-h")
 			info_printing
@@ -235,11 +238,11 @@ function pre_parse_routines ()
 			exit 1
 		;;
 		# Erreur options non-traité
-		$(echo "${argument}" | grep -e "\-[a-zA-Z0-9]*"))
+		$(echo "${env_requested}" | grep -e "\-[a-zA-Z0-9]*"))
 			echo; echo "Aucune option correspondante trouvée ! Abandon de la diffusion ... voir --help ou -h pour l'usage"; echo
 			exit 1
 		;;
-		# Aucun argument
+		# Aucun env_requested
 		"")
 			echo; echo "Aucun(e) paramètre/option correspondant(e) trouvé(e) ! Abandon de la diffusion ... voir --help ou -h pour l'usage"; echo
 			exit 1
@@ -248,12 +251,12 @@ function pre_parse_routines ()
 }
 
 ###
-# On check que la liste d'argument est non-nulle
-# > Normalement un seul argument est accepté a savoir la version a diffuser
+# On check que la liste d'env_requested est non-nulle
+# > Normalement un seul env_requested est accepté a savoir la version a diffuser
 function check_arg_lst ()
 {
 	# SI on est pas en pré-parsing
-	if [ $1 != 1 ] ; then
+	if [ -f $1 ]; then
 		# Procedure de parsing local
 		local_parse_routines
 		# Procedure de parsing ditsant
@@ -279,7 +282,7 @@ function perform_checkout_routines ()
 	echo "----  Scan Environment"
 	check_env_conf
 
-	echo "----  Parse & Check argument"
+	echo "----  Parse & Check env_requested"
 	check_arg_lst 0
 }
 
@@ -330,8 +333,8 @@ for remote_host in ${internal_ntwk[@]}; do
 	echo; echo "[${remote_host}]"
 
 	# Redirection du lien symbolique 
-	echo " > rsh -l ${rsh_login} ${remote_host} ln -sf ${env_path_directory}${argument}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}"
-	rsh -l ${rsh_login} ${remote_host} ln -sf ${env_path_directory}${argument}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}
+	echo " > rsh -l ${rsh_login} ${remote_host} ln -sf ${env_path_directory}${env_requested}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}"
+	rsh -l ${rsh_login} ${remote_host} ln -sf ${env_path_directory}${env_requested}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}
 
 	# Reboot
 	echo " > rsh -l ${rsh_login} ${remote_host} reboot"
@@ -343,8 +346,8 @@ done
 echo; echo "[localhost]"
 
 # Redirection du lien symbolique 
-echo " > ln -sf ${env_path_directory}${argument}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}"
-ln -sf ${env_path_directory}${argument}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}
+echo " > ln -sf ${env_path_directory}${env_requested}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}"
+ln -sf ${env_path_directory}${env_requested}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}
 
 # Reboot
 echo -n " > localhost redemmarera dans environ"
