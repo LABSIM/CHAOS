@@ -13,12 +13,12 @@
 ###
 
 DEV_HOME=/home/$(whoami)/dev
-DEVENV_HOME=/home/$(whoami)/dev_env
+IDE_HOME=/home/$(whoami)/IDE
 PRO_HOME=/home/$(whoami)/Progiciels
 CODES_HOME=/home/$(whoami)/CODES
 BDD_HOME=/data/bdd
 
-export PRO_HOME CODES_HOME BDD_HOME DEV_HOME DEVENV_HOME
+export PRO_HOME CODES_HOME BDD_HOME DEV_HOME IDE_HOME
 
 ###
 # Informations
@@ -33,7 +33,7 @@ function whichDevTK()
 ###
 # Switch
 ###
-if [ -f "${DEV_HOME}/DEV-TK/${DEV_SUBDIR}/script/switchenv.sh" ]; then 
+if [ -f "${DEV_HOME}/DEV-TK/${DEV_SUBDIR}/script/linux/switchenv.sh" ]; then 
 	alias switchenv="sh ${DEV_HOME}/DEV-TK/${DEV_SUBDIR}/script/linux/switchenv.sh"
 fi
 
