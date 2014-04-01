@@ -34,7 +34,7 @@ function whichDevTK()
 # Switch
 ###
 if [ -f "${DEV_HOME}/DEV-TK/${DEV_SUBDIR}/script/switchenv.sh" ]; then 
-	alias switchenv="sh ${DEV_HOME}/DEV-TK/${DEV_SUBDIR}/script/switchenv.sh"
+	alias switchenv="sh ${DEV_HOME}/DEV-TK/${DEV_SUBDIR}/script/linux/switchenv.sh"
 fi
 
 

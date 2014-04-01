@@ -19,6 +19,6 @@ export ELIPS_CURRENT_DIST="ELIPS 2010 Environment config"
 ###
 # Global environment mapping
 ###
-. "/home/elips/dev/ELIPSTK/etc/global.conf.sh"
+. "/home/elips/dev/ELIPSTK/script/linux/package/global.conf.sh"
 
 #######################

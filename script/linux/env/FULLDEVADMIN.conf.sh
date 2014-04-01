@@ -28,26 +28,26 @@ DEVTK_ROOT=~/dev/DEV-TK/${DEV_SUBDIR}
 ###
 # Global environment mapping
 ###
-. ${DEVTK_ROOT}/etc/global.conf.sh
+. ${DEVTK_ROOT}/script/linux/package/global.conf.sh
 
 ###
 # Progiciels specific environment mapping
 ###
-. ${DEVTK_ROOT}/etc/progiciels.conf.sh
+. ${DEVTK_ROOT}/script/linux/package/progiciels.conf.sh
 
 ###
 # Project specific environment mapping
 ###
-. ${DEVTK_ROOT}/etc/dev.conf.sh
+. ${DEVTK_ROOT}/script/linux/package/dev.conf.sh
 
 ###
 # DDS Specific environment mapping
 ###
-. ${DEVTK_ROOT}/etc/dds.conf.sh
+. ${DEVTK_ROOT}/script/linux/package/dds.conf.sh
 
 ###
 # HLA (BLING, BLADE, CERTI & GENESIS) project specific environment mapping
 ###
-. ${DEVTK_ROOT}/etc/hla.conf.sh
+. ${DEVTK_ROOT}/script/linux/package/hla.conf.sh
 
 #######################

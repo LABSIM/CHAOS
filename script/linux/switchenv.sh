@@ -17,21 +17,20 @@ argument="$1"
 
 major_version=1
 minor_version=1
-patch_version=60   
+patch_version=72   
 
 script_version="v.${major_version}.${minor_version}.${patch_version}"
 
 rsh_login=$(whoami)
 
-root_directory=$(readlink -f "${PWD}/../")
+root_directory=$(readlink -f "${PWD}/../../")
 
 link_base_name=${rsh_login}
 link_path_directory="/home/${rsh_login}/."
 
 env_decoration="_env_file_lst"
 env_file_decoration=".conf.sh"
-env_path_directory="${root_directory}/env/"
-
+env_path_directory="${root_directory}/script/linux/env/"
 
 declare -a env_file_lst
 
