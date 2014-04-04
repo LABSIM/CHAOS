@@ -220,9 +220,8 @@ PATH=$GCC_BINARYDIR\
 :$CEED_BINARYDIR
 
 # add Ceed to PYTHONPATH module
-PYTHONPATH=\
-:~/ceguiinst/cegui-0.8.3/\
-:~/ceedinst/ceed-snapshot11\
+PYTHONPATH=:$CEGUI_ROOT\
+:$CEED_ROOT\
 :$PYTHONPATH
 
 LD_LIBRARY_PATH=$GCC_LIBRARYDIR\
