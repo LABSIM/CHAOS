@@ -1,21 +1,13 @@
 #!/bin/bash
 
-if [ $# != 1 ]
-then 
-	echo "Veuillez spécifier le CD inseré en argument"
-	exit
-fi
+# montage du repo EPEL
+yum install /data/CentOS_6.3/rpms/epel-release-6.8.noarch.rpm
 
 # Script d'installation des dependances necessaires aux differents codes
-
-if [ $1 == 1 ]
-then
-
 yum install \
 	glib2-devel.x86_64 \
 	glibc-devel.x86_64 \
-	glibc-devel.y686   \
-	giflib.x86_64 \
+	glibc-devel.i686   \
 	freetype-devel.x86_64 \
 	freeglut-devel.x86_64 \
 	gmp-devel.x86_64 \
@@ -24,19 +16,15 @@ yum install \
 	libjpeg-devel.x86_64 \
 	libpng-devel.x86_64 \
 	libtiff-devel.x86_64 \
-	guile.x86_64 \
-	SDL.x86_64 \
+	guile-devel.x86_64 \
 	SDL-devel.x86_64 \
 	rsh.x86_64 \
-	/data/CentOS_6.3/rpms/openal-soft-1.12.854-1.el6.x86_64.rpm \
-	/data/CentOS_6.3/rpms/openal-soft-devel-1.12.854-1.el6.x86_64.rpm
-
-else
-
-yum install \
-	guile-devel.x86_64 \
+	openal-soft-devel.x86_64 \
+	pcre-devel.x86_64 \
+	lua-devel.x86_64 \
+	tolua++-devel.x86_64 \
+	glew-devel.x86_64 \
 	giflib-devel.x86_64 \
-	libsndfile-devel.x86_64
-
-fi
+	libsndfile-devel.x86_64 \
+	compat-glibc-headers-2.5-46.2.x86_64
 

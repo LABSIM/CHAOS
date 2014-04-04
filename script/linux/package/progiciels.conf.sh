@@ -67,6 +67,25 @@ CXX=$GCC_BINARYDIR/g++
 export GCC_ROOT GCC_BINARYDIR GCC_LIBRARYDIR GCC_LIBRARY64DIR GCC_LIBRARYEXECDIR GCC_INCLUDEDIR CC CXX
 
 ###################################################################
+# GLM
+###
+
+GLM_ROOT=$PRO_HOME/glm-$GLM_VERSION
+GLM_INCLUDEDIR=$GLM_ROOT/include
+
+export GLM_ROOT GLM_INCLUDEDIR
+
+###################################################################
+# GLFW
+###
+
+GLFW_ROOT=$PRO_HOME/glfw-$GLFW_VERSION
+GLFW_INCLUDEDIR=$GLFW_ROOT/include
+GLFW_LIBRARYDIR=$GLFW_ROOT/lib
+
+export GLFW_ROOT GLFW_INCLUDEDIR GLFW_LIBRARYDIR
+
+###################################################################
 # CMake/Ctest/CPack
 ###
 
@@ -144,6 +163,16 @@ CEGUI_INCLUDEDIR=$CEGUI_ROOT/include
 export CEGUI_ROOT CEGUI_BINARYDIR CEGUI_LIBRARYDIR CEGUI_INCLUDEDIR
 
 ###################################################################
+# CEED
+###
+
+CEED_ROOT=$PRO_HOME/ceed-$CEED_VERSION
+CEED_BINARYDIR=$CEED_ROOT/bin
+CEED_LIBRARYDIR=$CEED_ROOT/lib
+
+export CEED_ROOT CEED_BINARYDIR CEED_LIBRARYDIR
+
+###################################################################
 # QT
 ###
 
@@ -187,7 +216,14 @@ PATH=$GCC_BINARYDIR\
 :$AUTOGEN_BINARYDIR\
 :$NVTT_BINARYDIR\
 :$OSG_BINARYDIR\
-:$CEGUI_BINARYDIR
+:$CEGUI_BINARYDIR\
+:$CEED_BINARYDIR
+
+# add Ceed to PYTHONPATH module
+PYTHONPATH=\
+:~/ceguiinst/cegui-0.8.3/\
+:~/ceedinst/ceed-snapshot11\
+:$PYTHONPATH
 
 LD_LIBRARY_PATH=$GCC_LIBRARYDIR\
 :$GCC_LIBRARY64DIR\
@@ -197,12 +233,14 @@ LD_LIBRARY_PATH=$GCC_LIBRARYDIR\
 :$MPFR_LIBRARYDIR\
 :$GMP_LIBRARYDIR\
 :$AUTOGEN_LIBRARYDIR\
+:$GLFW_LIBRARYDIR\
 :$OSG_LIBRARYDIR\
 :$BOOST_LIBRARYDIR\
 :$NVTT_LIBRARYDIR\
 :$CEGUI_LIBRARYDIR\
+:$CEED_LIBRARYDIR\
 :$LEAPMOTION_LIBRARYDIR
 
-export PATH LD_LIBRARY_PATH
+export PATH PYTHONPATH LD_LIBRARY_PATH
 
 ###################################################################
