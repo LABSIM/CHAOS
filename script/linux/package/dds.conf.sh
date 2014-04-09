@@ -18,7 +18,7 @@ RHEA_ROOT=$DEV_HOME/Titans/RHEA/$DEV_SUBDIR
 
 export RHEA_ROOT
 
-alias rhea="$RHEA_ROOT/script/RHEA.sh"
+alias rhea="perl $RHEA_ROOT/bin/v2/RHEA.pl"
 
 ###################################################################
 # KRONOS-DDS 

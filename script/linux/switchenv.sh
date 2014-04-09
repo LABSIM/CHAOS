@@ -17,8 +17,8 @@ env_requested="$1"
 devtk_home_path="$2"
 
 major_version=1
-minor_version=1
-patch_version=72   
+minor_version=2
+patch_version=77   
 
 script_version="v.${major_version}.${minor_version}.${patch_version}"
 
