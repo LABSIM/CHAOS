@@ -150,23 +150,27 @@ macro(ospl_scoped_procedure)
 
     # Extract path
     set(OpenSplice_IDLGEN_PATH ${tmp_idlpath})
-    message("Liste des headers & src générés pour la cible ${tmp_target}:\n\t > ${OpenSplice_IDLGEN_PATH}")
+    message("-- Generating files for target ${tmp_target} :")
     
     # Extract headers 
-    message("\t\t/include")
+    message("\t>-+ ${OpenSplice_IDLGEN_PATH}/")
+    message("\t  +-+ include/")
     foreach(headerfullpath ${tmp_header})
         get_filename_component(headerfullpath ${headerfullpath} NAME)
         set(OpenSplice_IDLGEN_HEADER ${OpenSplice_IDLGEN_HEADER} "${OpenSplice_IDLGEN_PATH}/include/${headerfullpath}")
-        message("\t\t\t${headerfullpath}")
+        message("\t  | |-> ${headerfullpath}")
     endforeach(headerfullpath ${tmp_header})
+    message("\t  | +")
     
     # Extract srcs 
-    message("\t\t/src")
+    message("\t  +-+ src/")
     foreach(srcfullpath ${tmp_src})
         get_filename_component(srcfullpath ${srcfullpath} NAME)
         set(OpenSplice_IDLGEN_SRC ${OpenSplice_IDLGEN_SRC} "${OpenSplice_IDLGEN_PATH}/src/${srcfullpath}")
-        message("\t\t\t${srcfullpath}")
+        message("\t  | |-> ${srcfullpath}")
     endforeach(srcfullpath ${tmp_src})
+    message("\t  | +")
+    message("\t  +")
     
 endmacro(ospl_scoped_procedure)
 

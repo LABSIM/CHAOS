@@ -82,4 +82,4 @@ ELSE (OpenSplice_FOUND)
 ENDIF (OpenSplice_FOUND)
 
 MARK_AS_ADVANCED(OpenSplice_INCLUDE_DIRS OpenSplice_LIBRARIES OpenSplice_IDLGEN_BINARY)
-INCLUDE(MacroOpenSplice.cmake)
+INCLUDE($ENV{CMAKE_MODULE_PATH}/MacroOpenSplice.cmake)
