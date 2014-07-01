@@ -28,7 +28,7 @@ DEVTK_ROOT=~/dev/DEV-TK/${DEV_SUBDIR}
 ###
 # Global environment mapping
 ###
-. ${DEVTK_ROOT}/script/linux/etc/global.conf.sh
+. ${DEVTK_ROOT}/script/linux/package/global.conf.sh
 
 ###
 # Progiciels specific environment mapping
