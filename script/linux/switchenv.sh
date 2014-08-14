@@ -18,7 +18,7 @@ devtk_home_path="$2"
 
 major_version=1
 minor_version=2
-patch_version=77   
+patch_version=81   
 
 script_version="v.${major_version}.${minor_version}.${patch_version}"
 
@@ -77,7 +77,6 @@ function info_printing ()
 	echo "  - ARG1 > Le type de l'environment de travail a"
 	echo "  diffuser, ex: DEV"
 	echo "  - ARG2 > Le path vers le home projet DEV-TK "
-	echo "	!! Attention !! path SVN inclu (trunk/ branches/ tags/)" 
 	echo
 	echo "OPTION :"
 	echo 

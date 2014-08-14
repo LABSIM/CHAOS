@@ -1,60 +1,67 @@
 #!/bin/bash
 
-#######################
-# Developpement environment config
-#
-# Ce fichier contient l'ensemble des definitions
-# pour les projets en cours de developpement
-#
-# 07/02/12 - Kinani Nawfel
-#######################
+######################################################################
+## LABSIM Developpement environment config							##
+##																	##
+## Ce fichier contient l'ensemble des definitions					##
+## pour les projets communs en cours de developpement				##
+##																	##
+## 07/02/12 - Kinani Nawfel											##
+######################################################################
 
-###################################################################
-# UTILITIES 
-###
 
-UTILITIES_ROOT=$DEV_HOME/Modeles/Utilities/$DEV_SUBDIR
+# ================================================================= #
+# 							Common codes root 						#
+# ================================================================= #
+# 																	#
+# Contient les configurations pour les differents codes communs : 	#
+#	- Utilities 													#
+#	- propTree 														#
+#	- HUD 															#
+#	- VESA 															#
+#	- ELIPS 														#
+#	- ELIPS-TK 														#
+#	- ELIPS-DEMO 													#
+#	- VISUEL PA 													#
+# 																	#
+# ================================================================= #
+
+# == UTILITIES
+
+UTILITIES_ROOT=$DEV_HOME/Utilities
 UTILITIES_INCLUDEDIR=$UTILITIES_ROOT/include
 UTILITIES_LIBRARYDIR=$UTILITIES_ROOT/lib
 
 export UTILITIES_ROOT UTILITIES_INCLUDEDIR UTILITIES_LIBRARYDIR
 
-###################################################################
-# PROPTREE 
-###
+# == PROPTREE 
 
-PROPTREE_ROOT=$DEV_HOME/Modeles/propTree/$DEV_SUBDIR
+PROPTREE_ROOT=$DEV_HOME/propTree
 PROPTREE_INCLUDEDIR=$PROPTREE_ROOT/include
 PROPTREE_LIBRARYDIR=$PROPTREE_ROOT/lib
 
 export PROPTREE_ROOT PROPTREE_INCLUDEDIR PROPTREE_LIBRARYDIR
 
-###################################################################
-# HUD 
-###
+# == HUD 
 
-HUD_ROOT=$DEV_HOME/HUD/$DEV_SUBDIR
+HUD_ROOT=$DEV_HOME/HUD
 HUD_INCLUDEDIR=$HUD_ROOT/include
 HUD_LIBRARYDIR=$HUD_ROOT/lib
 
 export HUD_ROOT HUD_INCLUDEDIR HUD_LIBRARYDIR
 
-###################################################################
-# VESA 
-###
+# == VESA 
 
-VESA_ROOT=$DEV_HOME/VESA/$DEV_SUBDIR
+VESA_ROOT=$DEV_HOME/VESA
 VESA_INCLUDEDIR=$VESA_ROOT/include
 VESA_LIBRARYDIR=$VESA_ROOT/lib
 VESA_BINARYDIR=$VESA_ROOT/bin
 
 export VESA_ROOT VESA_INCLUDEDIR VESA_LIBRARYDIR VESA_BINARYDIR
 
-###################################################################
-# ELIPS 
-###
+# == ELIPS 
 
-ELIPS_ROOT=$DEV_HOME/ELIPS/$DEV_SUBDIR
+ELIPS_ROOT=$DEV_HOME/ELIPS
 ELIPS_INCLUDEDIR=$(find -L ${ELIPS_ROOT}/include -type d | grep -v svn | grep -v VTB_QT)
 ELIPS_INCLUDEDIR=$(echo -e "${ELIPS_ROOT}/build\n${ELIPS_INCLUDEDIR}" | tr '\n' ';')
 ELIPS_LIBRARYDIR=$ELIPS_ROOT/lib
@@ -71,36 +78,35 @@ alias ELIPSutil="konqueror $ELIPS_ROOT/doc/html/PDF/ELIPS-RT2005_utilisateur.pdf
 alias VENUShelp="konqueror $ELIPS_ROOT/doc/html/PDF/VENUS-RT2005.pdf"
 alias ELIPShelp="konqueror $ELIPS_ROOT/doc/html/index.html"
 
-###################################################################
-# ELIPS-TK
-###
+# == ELIPS-TK
 
-ELIPSTK_ROOT=$DEV_HOME/ELIPS-TK/$DEV_SUBDIR
+ELIPSTK_ROOT=$DEV_HOME/ELIPS-TK
 ELIPSTK_INCLUDEDIR=$ELIPSTK_ROOT/include
 ELIPSTK_LIBRARYDIR=$ELIPSTK_ROOT/lib
 ELIPSTK_BINARYDIR=$ELIPSTK_ROOT/bin
 
 export ELIPSTK_ROOT ELIPSTK_INCLUDEDIR ELIPSTK_LIBRARYDIR ELIPSTK_BINARYDIR
 
-###################################################################
-# ELIPS-DEMO
-###
+# == ELIPS-DEMO
 
-ELIPSDEMO_ROOT=$DEV_HOME/ELIPS-DEMO/$DEV_SUBDIR
+ELIPSDEMO_ROOT=$DEV_HOME/ELIPS-DEMO
 
 export ELIPSDEMO_ROOT
 
-###################################################################
-# VISUEL PA 
-###
+# == VISUEL PA 
 
 IMAGE_PA_PATH=$BDD_HOME/IMAGE_PA
 
 export IMAGE_PA_PATH
 
-###################################################################
-# Global Variable
-###
+# ================================================================= #
+# 							Global Variable  						#
+# ================================================================= #
+# 																	#
+# Configure les variables globales pour assurer un 					#
+# fonctionnement correct 											#
+# 																	#
+# ================================================================= #
 
 PATH=$PATH\
 :$VESA_BINARYDIR\
@@ -115,4 +121,3 @@ LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
 
 export PATH LD_LIBRARY_PATH
 
-###################################################################

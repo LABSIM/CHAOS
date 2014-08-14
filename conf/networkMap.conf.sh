@@ -34,3 +34,15 @@ declare -a NTWK
 # NTWK[${#NTWK[@]}]="jules"
 # NTWK[${#NTWK[@]}]="jean"
 
+#### Salle PYCSHEL
+# NTWK[${#NTWK[@]}]="dcsd-simbridge"
+# NTWK[${#NTWK[@]}]="labsim_matlab"
+# NTWK[${#NTWK[@]}]="kronos"
+# NTWK[${#NTWK[@]}]="hyperion"
+# NTWK[${#NTWK[@]}]="koios"
+# NTWK[${#NTWK[@]}]="krios"
+# NTWK[${#NTWK[@]}]="japet"
+# NTWK[${#NTWK[@]}]="deimos"
+# NTWK[${#NTWK[@]}]="vesa"
+# NTWK[${#NTWK[@]}]="host"
+

@@ -11,38 +11,6 @@
 #######################
 
 ###################################################################
-# RHEA 
-###
-
-RHEA_ROOT=$DEV_HOME/Titans/RHEA/$DEV_SUBDIR
-
-export RHEA_ROOT
-
-alias rhea="perl -I $RHEA_ROOT/etc/modules $RHEA_ROOT/bin/v2/RHEA.pl"
-
-###################################################################
-# KRONOS-DDS 
-###
-
-KRONOSDDS_ROOT=$DEV_HOME/Titans/KRONOS-DDS/$DEV_SUBDIR
-KRONOSDDS_INCLUDEDIR=$KRONOSDDS_ROOT/include
-KRONOSDDS_LIBRARYDIR=$KRONOSDDS_ROOT/lib
-KRONOSDDS_BINARYDIR=$KRONOSDDS_ROOT/bin
-
-export KRONOSDDS_ROOT KRONOSDDS_INCLUDEDIR KRONOSDDS_LIBRARYDIR KRONOSDDS_BINARYDIR
-
-###################################################################
-# KRONOS-IDL
-###
-
-KRONOSIDL_ROOT=$KRONOSDDS_ROOT/idl
-KRONOSIDL_INCLUDEDIR="$KRONOSIDL_ROOT/include $KRONOSIDL_ROOT/traits"
-KRONOSIDL_LIBRARYDIR=$KRONOSDDS_LIBRARYDIR
-KRONOSIDL_BINARYDIR=$KRONOSDDS_BINARYDIR
-
-export KRONOSIDL_ROOT KRONOSIDL_INCLUDEDIR KRONOSIDL_LIBRARYDIR KRONOSIDL_BINARYDIR
-
-###################################################################
 # TAO - OpenFusionTAO
 ###
 # ACE ROOT - The home of the ADAPTIVE Communication Environment
@@ -118,18 +86,12 @@ fi
 ###
 
 PATH=$PATH\
-:$KRONOSDDS/bin\
 :$TAO_ROOT/bin
 
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
-:$KRONOSDDS_LIBRARYDIR\
 :$TAO_ROOT/lib
 
 INSLIB=$INSLIB\
 :$TAO_ROOT/lib
-
-###################################################################
-# Exporting
-###
 
 export PATH LD_LIBRARY_PATH INSLIB

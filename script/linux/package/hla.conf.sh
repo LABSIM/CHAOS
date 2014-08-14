@@ -11,7 +11,7 @@
 ###################################################################
 # BLING
 ###
-BLING_ROOT=$DEV_HOME/BLING/$DEV_SUBDIR
+BLING_ROOT=$DEV_HOME/BLING
 BLING_INCLUDEDIR=$BLING_ROOT/gateway/include
 BLING_LIBRARYDIR=$BLING_ROOT/gateway/lib
 
