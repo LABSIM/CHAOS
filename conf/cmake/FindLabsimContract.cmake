@@ -55,11 +55,25 @@ foreach(COMPONENT ${LabsimContract_FIND_COMPONENTS})
     
 endforeach()
 
-# checkup => general LabsimContract_FOUND
-foreach(COMPONENT ${LabsimContract_FIND_COMPONENTS})
-    if(NOT $LabsimContract_FOUND EQUAL 0) 
-        set($LabsimContract_FOUND ${LabsimContract_${UPPERCOMPONENT}_FOUND})
+# checkup => general LabsimContrat_FOUND + print
+message(STATUS "-- LabsimContrat component(s) found :")
+foreach(COMPONENT ${LabsimContrat_FIND_COMPONENTS})
+
+    # Uppercase them !
+    string(TOUPPER ${COMPONENT} UPPERCOMPONENT)
+    
+    # print status
+    if(${LabsimContrat_${UPPERCOMPONENT}_FOUND} EQUAL 1)
+        message(STATUS "-- \t requested ${COMPONENT} component found")
+    else()
+        message(STATUS "-- \t requested ${COMPONENT} component NOT found !")
     endif()
+    
+    # fill global
+    if(NOT $LabsimContrat_FOUND EQUAL 0) 
+        set($LabsimContrat_FOUND ${LabsimContrat_${UPPERCOMPONENT}_FOUND})
+    endif()
+    
 endforeach()
 
 # = EOF

@@ -55,11 +55,25 @@ foreach(COMPONENT ${LabsimTitans_FIND_COMPONENTS})
     
 endforeach()
 
-# checkup => general LabsimTitans_FOUND
+# checkup => general LabsimTitans_FOUND + print
+message(STATUS "-- LabsimTitans component(s) found :")
 foreach(COMPONENT ${LabsimTitans_FIND_COMPONENTS})
+
+    # Uppercase them !
+    string(TOUPPER ${COMPONENT} UPPERCOMPONENT)
+    
+    # print status
+    if(${LabsimTitans_${UPPERCOMPONENT}_FOUND} EQUAL 1)
+        message(STATUS "-- \t requested ${COMPONENT} component found")
+    else()
+        message(STATUS "-- \t requested ${COMPONENT} component NOT found !")
+    endif()
+    
+    # fill global
     if(NOT $LabsimTitans_FOUND EQUAL 0) 
         set($LabsimTitans_FOUND ${LabsimTitans_${UPPERCOMPONENT}_FOUND})
     endif()
+    
 endforeach()
 
 # = EOF
