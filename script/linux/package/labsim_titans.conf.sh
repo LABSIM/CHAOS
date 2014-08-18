@@ -9,6 +9,10 @@
 ## 07/02/12 - Kinani Nawfel											##
 ######################################################################
 
+# BASE
+TITANS_HOME=$DEV_HOME/Titans
+
+export TITANS_HOME
 
 # ================================================================= #
 # 							Titans codes 							#
@@ -23,7 +27,7 @@
 
 # == RHEA 
 
-RHEA_ROOT=$DEV_HOME/Titans/RHEA
+RHEA_ROOT=$TITANS_HOME/RHEA
 
 export RHEA_ROOT
 
@@ -31,7 +35,7 @@ alias rhea="perl -I $RHEA_ROOT/etc/modules $RHEA_ROOT/bin/v2/RHEA.pl"
 
 # == KRONOS-DDS 
 
-KRONOSDDS_ROOT=$DEV_HOME/Titans/KRONOS-DDS
+KRONOSDDS_ROOT=$TITANS_HOME/KRONOS-DDS
 KRONOSDDS_INCLUDEDIR=$KRONOSDDS_ROOT/include
 KRONOSDDS_LIBRARYDIR=$KRONOSDDS_ROOT/lib
 KRONOSDDS_BINARYDIR=$KRONOSDDS_ROOT/bin

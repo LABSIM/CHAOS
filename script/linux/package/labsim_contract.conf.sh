@@ -9,6 +9,10 @@
 ## 07/02/12 - Kinani Nawfel											##
 ######################################################################
 
+# BASE
+CONTRACT_HOME=$DEV_HOME/Contract
+
+export CONTRACT_HOME
 
 # ================================================================= #
 # 						Contract codes root 						#
@@ -22,7 +26,7 @@
 
 # == SAMCOH
 
-SAMCOH_ROOT=$DEV_HOME/SAMCOH
+SAMCOH_ROOT=$CONTRACT_HOME/SAMCOH
 SAMCOH_INCLUDEDIR=$SAMCOH_ROOT/include
 SAMCOH_LIBRARYDIR=$SAMCOH_ROOT/lib
 SAMCOH_BINARYDIR=$SAMCOH_ROOT/bin
@@ -31,7 +35,7 @@ export SAMCOH_ROOT SAMCOH_INCLUDEDIR SAMCOH_LIBRARYDIR SAMCOH_BINARYDIR
 
 # == CARNOT
 
-CARNOT_ROOT=$DEV_HOME/CARNOT
+CARNOT_ROOT=$CONTRACT_HOME/CARNOT
 CARNOT_INCLUDEDIR=$CARNOT_ROOT/include
 CARNOT_LIBRARYDIR=$CARNOT_ROOT/lib
 CARNOT_BINARYDIR=$CARNOT_ROOT/bin
