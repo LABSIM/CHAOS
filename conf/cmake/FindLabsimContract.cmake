@@ -19,14 +19,14 @@ set(LabsimContract_LIBRARY_DIRS)
 set(LabsimContract_LIBRARIES)
 
 # get a clean root path
-if(DEFINED ENV{DEV_ROOT}) 
-    if(IS_DIRECTORY $ENV{DEV_ROOT}/Contract)
-        get_filename_component(_ROOTPATH $ENV{DEV_ROOT}/Contract ABSOLUTE)
+if(DEFINED ENV{DEV_HOME}) 
+    if(IS_DIRECTORY $ENV{DEV_HOME}/Contract)
+        get_filename_component(_ROOTPATH $ENV{DEV_HOME}/Contract ABSOLUTE)
     else()
-        message(FATAL_ERROR "ERROR: $ENV{DEV_ROOT}/Contract directory doesn't exist !...")
+        message(FATAL_ERROR "ERROR: $ENV{DEV_HOME}/Contract directory doesn't exist !...")
     endif()
 else()
-    message(FATAL_ERROR "ERROR: Requested environment variables DEV_ROOT doesn't exist !...")
+    message(FATAL_ERROR "ERROR: Requested environment variables DEV_HOME doesn't exist !...")
 endif()
    
 # iterate over requested components
@@ -40,13 +40,28 @@ foreach(COMPONENT ${LabsimContract_FIND_COMPONENTS})
         message(FATAL_ERROR "ERROR: Requested coponents ${COMPONENT} doesn't match requested include/lib scheme !...")
     endif()
     
+    # be careful about system config
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    
+        # set MSVC internal
+        set(_${UPPERCOMPONENT}_INCLUDE_DIRS ${_ROOTPATH}/${COMPONENT}/include)
+        set(_${UPPERCOMPONENT}_LIBRARY_DIRS ${_ROOTPATH}/${COMPONENT}/lib/$(ConfigurationName))
+        
+    else()
+    
+        # set GCC internal
+        set(_${UPPERCOMPONENT}_INCLUDE_DIRS ${_ROOTPATH}/${COMPONENT}/include)
+        set(_${UPPERCOMPONENT}_LIBRARY_DIRS ${_ROOTPATH}/${COMPONENT}/lib)
+               
+    endif() 
+    
     # Add each lib to LabsimContract_<C>_LIBRARY
-    file(GLOB_RECURSE LabsimContract_${UPPERCOMPONENT}_LIBRARY ${_ROOTPATH}/${COMPONENT}/lib/*)
+    file(GLOB_RECURSE LabsimContract_${UPPERCOMPONENT}_LIBRARY ${_${UPPERCOMPONENT}_LIBRARY_DIRS}/*)
     
     # Add each include/lib dir to LabsimContract_INCLUDE_DIRS/LabsimContract_LIBRARY_DIRS
-    list(APPEND LabsimContract_INCLUDE_DIRS ${_ROOTPATH}/${COMPONENT}/include)
-    list(APPEND LabsimContract_LIBRARY_DIRS ${_ROOTPATH}/${COMPONENT}/lib)
-    
+    list(APPEND LabsimContract_INCLUDE_DIRS ${_${UPPERCOMPONENT}_INCLUDE_DIRS})
+    list(APPEND LabsimContract_LIBRARY_DIRS ${_${UPPERCOMPONENT}_LIBRARY_DIRS})
+        
     # Add LabsimContract_<C>_LIBRARY to LabsimContract_LIBRARIES
     list(APPEND LabsimContract_LIBRARIES ${LabsimContract_${UPPERCOMPONENT}_LIBRARY})
     
@@ -56,7 +71,7 @@ foreach(COMPONENT ${LabsimContract_FIND_COMPONENTS})
 endforeach()
 
 # checkup => general LabsimContrat_FOUND + print
-message(STATUS "-- LabsimContrat component(s) found :")
+message(STATUS "Found the following LabsimContract libraries :")
 foreach(COMPONENT ${LabsimContrat_FIND_COMPONENTS})
 
     # Uppercase them !
@@ -64,9 +79,9 @@ foreach(COMPONENT ${LabsimContrat_FIND_COMPONENTS})
     
     # print status
     if(${LabsimContrat_${UPPERCOMPONENT}_FOUND} EQUAL 1)
-        message(STATUS "-- \t requested ${COMPONENT} component found")
+        message(STATUS "  ${COMPONENT}")
     else()
-        message(STATUS "-- \t requested ${COMPONENT} component NOT found !")
+        message(STATUS "  ${COMPONENT}... component NOT found !")
     endif()
     
     # fill global

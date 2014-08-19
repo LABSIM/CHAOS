@@ -19,14 +19,14 @@ set(LabsimTitans_LIBRARY_DIRS "")
 set(LabsimTitans_LIBRARIES "")
 
 # get a clean root path
-if(DEFINED ENV{DEV_ROOT}) 
-    if(IS_DIRECTORY $ENV{DEV_ROOT}/Titans)
-        get_filename_component(_ROOTPATH $ENV{DEV_ROOT}/Titans ABSOLUTE)
+if(DEFINED ENV{DEV_HOME}) 
+    if(IS_DIRECTORY $ENV{DEV_HOME}/Titans)
+        get_filename_component(_ROOTPATH $ENV{DEV_HOME}/Titans ABSOLUTE)
     else()
-        message(FATAL_ERROR "ERROR: $ENV{DEV_ROOT}/Titans directory doesn't exist !...")
+        message(FATAL_ERROR "ERROR: $ENV{DEV_HOME}/Titans directory doesn't exist !...")
     endif()
 else()
-    message(FATAL_ERROR "ERROR: Requested environment variables DEV_ROOT doesn't exist !...")
+    message(FATAL_ERROR "ERROR: Requested environment variables DEV_HOME doesn't exist !...")
 endif()
    
 # iterate over requested components
@@ -40,13 +40,28 @@ foreach(COMPONENT ${LabsimTitans_FIND_COMPONENTS})
         message(FATAL_ERROR "ERROR: Requested coponents ${COMPONENT} doesn't match requested include/lib scheme !...")
     endif()
     
+    # be careful about system config
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    
+        # set MSVC internal
+        set(_${UPPERCOMPONENT}_INCLUDE_DIRS ${_ROOTPATH}/${COMPONENT}/include)
+        set(_${UPPERCOMPONENT}_LIBRARY_DIRS ${_ROOTPATH}/${COMPONENT}/lib/$(ConfigurationName))
+        
+    else()
+    
+        # set GCC internal
+        set(_${UPPERCOMPONENT}_INCLUDE_DIRS ${_ROOTPATH}/${COMPONENT}/include)
+        set(_${UPPERCOMPONENT}_LIBRARY_DIRS ${_ROOTPATH}/${COMPONENT}/lib)
+               
+    endif() 
+    
     # Add each lib to LabsimTitans_<C>_LIBRARY
-    file(GLOB_RECURSE LabsimTitans_${UPPERCOMPONENT}_LIBRARY ${_ROOTPATH}/${COMPONENT}/lib/*)
+    file(GLOB_RECURSE LabsimTitans_${UPPERCOMPONENT}_LIBRARY ${_${UPPERCOMPONENT}_LIBRARY_DIRS}/*)
     
     # Add each include/lib dir to LabsimTitans_INCLUDE_DIRS/LabsimTitans_LIBRARY_DIRS
-    list(APPEND LabsimTitans_INCLUDE_DIRS ${_ROOTPATH}/${COMPONENT}/include)
-    list(APPEND LabsimTitans_LIBRARY_DIRS ${_ROOTPATH}/${COMPONENT}/lib)
-    
+    list(APPEND LabsimTitans_INCLUDE_DIRS ${_${UPPERCOMPONENT}_INCLUDE_DIRS})
+    list(APPEND LabsimTitans_LIBRARY_DIRS ${_${UPPERCOMPONENT}_LIBRARY_DIRS})
+        
     # Add LabsimTitans_<C>_LIBRARY to LabsimTitans_LIBRARIES
     list(APPEND LabsimTitans_LIBRARIES ${LabsimTitans_${UPPERCOMPONENT}_LIBRARY})
     
@@ -56,7 +71,7 @@ foreach(COMPONENT ${LabsimTitans_FIND_COMPONENTS})
 endforeach()
 
 # checkup => general LabsimTitans_FOUND + print
-message(STATUS "-- LabsimTitans component(s) found :")
+message(STATUS "Found the following LabsimTitans libraries :")
 foreach(COMPONENT ${LabsimTitans_FIND_COMPONENTS})
 
     # Uppercase them !
@@ -64,9 +79,9 @@ foreach(COMPONENT ${LabsimTitans_FIND_COMPONENTS})
     
     # print status
     if(${LabsimTitans_${UPPERCOMPONENT}_FOUND} EQUAL 1)
-        message(STATUS "-- \t requested ${COMPONENT} component found")
+        message(STATUS "  ${COMPONENT}")
     else()
-        message(STATUS "-- \t requested ${COMPONENT} component NOT found !")
+        message(STATUS "  ${COMPONENT}... component NOT found !")
     endif()
     
     # fill global

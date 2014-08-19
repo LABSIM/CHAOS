@@ -19,10 +19,10 @@ set(LabsimCommon_LIBRARY_DIRS "")
 set(LabsimCommon_LIBRARIES "")
 
 # get a clean root path
-if(DEFINED ENV{DEV_ROOT}) 
-    get_filename_component(_ROOTPATH $ENV{DEV_ROOT} ABSOLUTE)
+if(DEFINED ENV{DEV_HOME}) 
+    get_filename_component(_ROOTPATH $ENV{DEV_HOME} ABSOLUTE)
 else()
-    message(FATAL_ERROR "ERROR: Requested environment variables DEV_ROOT doesn't exist !...")
+    message(FATAL_ERROR "ERROR: Requested environment variables DEV_HOME doesn't exist !...")
 endif()
    
 # iterate over requested components
@@ -36,13 +36,28 @@ foreach(COMPONENT ${LabsimCommon_FIND_COMPONENTS})
         message(FATAL_ERROR "ERROR: Requested components ${COMPONENT} doesn't match requested include/lib scheme...")
     endif()
     
+    # be careful about system config
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    
+        # set MSVC internal
+        set(_${UPPERCOMPONENT}_INCLUDE_DIRS ${_ROOTPATH}/${COMPONENT}/include)
+        set(_${UPPERCOMPONENT}_LIBRARY_DIRS ${_ROOTPATH}/${COMPONENT}/lib/$(ConfigurationName))
+        
+    else()
+    
+        # set GCC internal
+        set(_${UPPERCOMPONENT}_INCLUDE_DIRS ${_ROOTPATH}/${COMPONENT}/include)
+        set(_${UPPERCOMPONENT}_LIBRARY_DIRS ${_ROOTPATH}/${COMPONENT}/lib)
+               
+    endif() 
+    
     # Add each lib to LabsimCommon_<C>_LIBRARY
-    file(GLOB_RECURSE LabsimCommon_${UPPERCOMPONENT}_LIBRARY ${_ROOTPATH}/${COMPONENT}/lib/*)
+    file(GLOB_RECURSE LabsimCommon_${UPPERCOMPONENT}_LIBRARY ${_${UPPERCOMPONENT}_LIBRARY_DIRS}/*)
     
     # Add each include/lib dir to LabsimCommon_INCLUDE_DIRS/LabsimCommon_LIBRARY_DIRS
-    list(APPEND LabsimCommon_INCLUDE_DIRS ${_ROOTPATH}/${COMPONENT}/include)
-    list(APPEND LabsimCommon_LIBRARY_DIRS ${_ROOTPATH}/${COMPONENT}/lib)
-    
+    list(APPEND LabsimCommon_INCLUDE_DIRS ${_${UPPERCOMPONENT}_INCLUDE_DIRS})
+    list(APPEND LabsimCommon_LIBRARY_DIRS ${_${UPPERCOMPONENT}_LIBRARY_DIRS})
+        
     # Add LabsimCommon_<C>_LIBRARY to LabsimCommon_LIBRARIES
     list(APPEND LabsimCommon_LIBRARIES ${LabsimCommon_${UPPERCOMPONENT}_LIBRARY})
     
@@ -52,7 +67,7 @@ foreach(COMPONENT ${LabsimCommon_FIND_COMPONENTS})
 endforeach()
 
 # checkup => general LabsimCommon_FOUND + print
-message(STATUS "-- LabsimCommon component(s) found :")
+message(STATUS "Found the following LabsimCommon libraries :")
 foreach(COMPONENT ${LabsimCommon_FIND_COMPONENTS})
 
     # Uppercase them !
@@ -60,9 +75,9 @@ foreach(COMPONENT ${LabsimCommon_FIND_COMPONENTS})
     
     # print status
     if(${LabsimCommon_${UPPERCOMPONENT}_FOUND} EQUAL 1)
-        message(STATUS "-- \t requested ${COMPONENT} component found")
+        message(STATUS "  ${COMPONENT}")
     else()
-        message(STATUS "-- \t requested ${COMPONENT} component NOT found !")
+        message(STATUS "  ${COMPONENT}... component NOT found !")
     endif()
     
     # fill global
