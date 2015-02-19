@@ -9,6 +9,7 @@
 #  LabsimContract_LIBRARIES     - LABSIM Common component libraries to be linked
 #  LabsimContract_<C>_FOUND     - True if component <C> was found(<C> is upper-case)
 #  LabsimContract_<C>_LIBRARY   - Link these to use specific Contract libraries . (<C> is upper-case)
+#  LabsimContract_<C>_ROOT      - Corresponding root path i to <C>  component (<C> is upper-case)
 #
 ##############################################################################
 
@@ -67,6 +68,9 @@ foreach(COMPONENT ${LabsimContract_FIND_COMPONENTS})
     
     # flag LabsimContract_<C>_FOUND
     set($LabsimContract_${UPPERCOMPONENT}_FOUND 1)
+    
+    # set root
+    get_filename_component(LabsimContract_${UPPERCOMPONENT}_ROOT ${_ROOTPATH}/${COMPONENT}/ ABSOLUTE) 
     
 endforeach()
 

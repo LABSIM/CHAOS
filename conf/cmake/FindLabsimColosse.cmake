@@ -9,6 +9,7 @@
 #  LabsimColosse_LIBRARIES     - LABSIM Common component libraries to be linked
 #  LabsimColosse_<C>_FOUND     - True if component <C> was found(<C> is upper-case)
 #  LabsimColosse_<C>_LIBRARY   - Link these to use specific Colosse libraries . (<C> is upper-case)
+#  LabsimColosse_<C>_ROOT      - Corresponding root path i to <C>  component (<C> is upper-case)
 #
 ##############################################################################
 
@@ -67,6 +68,9 @@ foreach(COMPONENT ${LabsimColosse_FIND_COMPONENTS})
         
     # flag LabsimColosse_<C>_FOUND
     set(LabsimColosse_${UPPERCOMPONENT}_FOUND 1)
+    
+    # set root
+    get_filename_component(LabsimColosse_${UPPERCOMPONENT}_ROOT ${_ROOTPATH}/${COMPONENT}/ ABSOLUTE)
     
 endforeach()
 

@@ -9,6 +9,7 @@
 #  LabsimCommon_LIBRARIES     - LABSIM Common component libraries to be linked
 #  LabsimCommon_<C>_FOUND     - True if component <C> was found(<C> is upper-case)
 #  LabsimCommon_<C>_LIBRARY   - Link these to use specific Common libraries . (<C> is upper-case)
+#  LabsimCommon_<C>_ROOT      - Corresponding root path i to <C>  component (<C> is upper-case)
 #
 ##############################################################################
 
@@ -63,6 +64,9 @@ foreach(COMPONENT ${LabsimCommon_FIND_COMPONENTS})
     
     # flag LabsimCommon_<C>_FOUND
     set(LabsimCommon_${UPPERCOMPONENT}_FOUND 1)
+    
+    # set root
+    get_filename_component(LabsimCommon_${UPPERCOMPONENT}_ROOT ${_ROOTPATH}/${COMPONENT}/ ABSOLUTE)
     
 endforeach()
 

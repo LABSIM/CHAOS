@@ -9,6 +9,7 @@
 #  LabsimTitans_LIBRARIES     - LABSIM Common component libraries to be linked
 #  LabsimTitans_<C>_FOUND     - True if component <C> was found(<C> is upper-case)
 #  LabsimTitans_<C>_LIBRARY   - Link these to use specific Titans libraries . (<C> is upper-case)
+#  LabsimTitans_<C>_ROOT      - Corresponding root path i to <C>  component (<C> is upper-case)
 #
 ##############################################################################
 
@@ -67,6 +68,9 @@ foreach(COMPONENT ${LabsimTitans_FIND_COMPONENTS})
     
     # flag LabsimTitans_<C>_FOUND
     set(LabsimTitans_${UPPERCOMPONENT}_FOUND 1)
+    
+    # set root
+    get_filename_component(LabsimTitans_${UPPERCOMPONENT}_ROOT ${_ROOTPATH}/${COMPONENT}/ ABSOLUTE)
     
 endforeach()
 
