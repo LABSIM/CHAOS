@@ -8,7 +8,7 @@
 #  LabsimColosse_LIBRARY_DIRS  - LABSIM Common directories for LABSIM Common libraries
 #  LabsimColosse_LIBRARIES     - LABSIM Common component libraries to be linked
 #  LabsimColosse_<C>_FOUND     - True if component <C> was found(<C> is upper-case)
-#  LabsimColosse_<C>_LIBRARY   - Link these to use OpenSplice. (<C> is upper-case)
+#  LabsimColosse_<C>_LIBRARY   - Link these to use specific Colosse libraries . (<C> is upper-case)
 #
 ##############################################################################
 

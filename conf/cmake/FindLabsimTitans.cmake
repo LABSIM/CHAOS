@@ -8,7 +8,7 @@
 #  LabsimTitans_LIBRARY_DIRS  - LABSIM Common directories for LABSIM Common libraries
 #  LabsimTitans_LIBRARIES     - LABSIM Common component libraries to be linked
 #  LabsimTitans_<C>_FOUND     - True if component <C> was found(<C> is upper-case)
-#  LabsimTitans_<C>_LIBRARY   - Link these to use OpenSplice. (<C> is upper-case)
+#  LabsimTitans_<C>_LIBRARY   - Link these to use specific Titans libraries . (<C> is upper-case)
 #
 ##############################################################################
 

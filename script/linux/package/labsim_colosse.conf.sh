@@ -21,6 +21,22 @@ export COLOSSE_HOME
 # 																	#
 # ================================================================= #
 
+# == TEMPLATE MODEL
+
+TEMPLATE_ROOT=$COLOSSE_HOME/Template
+TEMPLATE_INCLUDEDIR=$TEMPLATE_ROOT/include
+TEMPLATE_LIBRARYDIR=$TEMPLATE_ROOT/lib
+
+export TEMPLATE_ROOT TEMPLATE_INCLUDEDIR TEMPLATE_LIBRARYDIR
+
+# == GRT
+
+GRT_ROOT=$COLOSSE_HOME/GRT
+GRT_INCLUDEDIR=$GRT_ROOT/include
+GRT_LIBRARYDIR=$GRT_ROOT/lib
+GRT_BINARYDIR=$GRT_ROOT/bin
+
+export GRT_ROOT GRT_INCLUDEDIR GRT_LIBRARYDIR GRT_BINARYDIR
 
 # ================================================================= #
 # 							Global Variable  						#
@@ -31,9 +47,12 @@ export COLOSSE_HOME
 # 																	#
 # ================================================================= #
 
-PATH=$PATH
+PATH=$PATH\
+:$GRT_BINARYDIR
 
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
+:$TEMPLATE_LIBRARYDIR\
+:$GRT_LIBRARYDIR
 
 export PATH LD_LIBRARY_PATH
 

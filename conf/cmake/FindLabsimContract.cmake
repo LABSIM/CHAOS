@@ -8,7 +8,7 @@
 #  LabsimContract_LIBRARY_DIRS  - LABSIM Common directories for LABSIM Common libraries
 #  LabsimContract_LIBRARIES     - LABSIM Common component libraries to be linked
 #  LabsimContract_<C>_FOUND     - True if component <C> was found(<C> is upper-case)
-#  LabsimContract_<C>_LIBRARY   - Link these to use OpenSplice. (<C> is upper-case)
+#  LabsimContract_<C>_LIBRARY   - Link these to use specific Contract libraries . (<C> is upper-case)
 #
 ##############################################################################
 

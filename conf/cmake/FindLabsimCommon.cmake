@@ -8,7 +8,7 @@
 #  LabsimCommon_LIBRARY_DIRS  - LABSIM Common directories for LABSIM Common libraries
 #  LabsimCommon_LIBRARIES     - LABSIM Common component libraries to be linked
 #  LabsimCommon_<C>_FOUND     - True if component <C> was found(<C> is upper-case)
-#  LabsimCommon_<C>_LIBRARY   - Link these to use OpenSplice. (<C> is upper-case)
+#  LabsimCommon_<C>_LIBRARY   - Link these to use specific Common libraries . (<C> is upper-case)
 #
 ##############################################################################
 
