@@ -70,7 +70,7 @@ foreach(COMPONENT ${LabsimColosse_FIND_COMPONENTS})
     set(LabsimColosse_${UPPERCOMPONENT}_FOUND 1)
     
     # set root
-    get_filename_component(LabsimColosse_${UPPERCOMPONENT}_ROOT ${_ROOTPATH}/${COMPONENT}/ ABSOLUTE)
+    get_filename_component(LabsimColosse_${UPPERCOMPONENT}_ROOT ${_ROOTPATH}/${COMPONENT} ABSOLUTE)
     
 endforeach()
 
