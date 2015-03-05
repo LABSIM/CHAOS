@@ -3,62 +3,66 @@
 # get current directory
 current_dir=$PWD
 
-source ../../../conf/versions.sh
+# source user configured versions 
+source user-config.versions.sh
+
+# go to dir
 cd /home/$(whoami)
 mkdir qtinst
 cd qtinst
 
+echo; echo "## BEGIN"; echo
+
 echo "########################################################"
+echo "  Decompression du/des package(s)"
+echo "########################################################"
+
 echo "#!/bin/bash" > exec.sh
-echo "tar -xzvf /data/CentOS_6.3/archive/qt-*-$QT_VERSION.tar.gz" >> exec.sh
+echo "tar -xzvf /data/CentOS_6.3/archive/qt-*-$QT_INSTALL_TARGET_VERSION.tar.gz" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -n "Decompression de QT $QT_VERSION ... "
+echo -ne "\tDecompression de QT $QT_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
-#konsole --profile Shell --nofork --workdir $PWD -e "./exec.sh"
 echo "OK"
 
 echo "########################################################"
+echo "  Configure, build & install"
+echo "########################################################"
+
 cd qt-*
+
 echo "#!/bin/bash" > exec.sh
-echo "./configure --prefix=/home/$(whoami)/Progiciels/QT-$QT_VERSION -opensource -release -silent -stl -optimized-qmake -no-qt3support -no-webkit -nomake examples -nomake demos -nomake docs" >> exec.sh
+echo "./configure --prefix=/home/$(whoami)/Progiciels/qt-$QT_INSTALL_TARGET_VERSION -opensource -release -no-c++11 -shared -largefile -accessibility -qml-debug -optimized-qmake -opengl desktop -gui -widgets -skip webkit -no-xcb" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh-stl
-echo -n "Configuration de QT $QT_VERSION ... "
+echo -ne "\tConfiguration de QT $QT_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
-#konsole --profile Shell --nofork --workdir $PWD -e "./exec.sh"
 echo "OK"
 
-echo "########################################################"
 echo "#!/bin/bash" > exec.sh
 echo "make -j4" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -n "Compilation de QT $QT_VERSION ... "
+echo -ne "\tCompilation de QT $QT_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
-#konsole --profile Shell --nofork --workdir $PWD -e "./exec.sh"
 echo "OK"
 
-echo "########################################################"
 echo "#!/bin/bash" > exec.sh
 echo "make install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -n "Installation de QT $QT_VERSION ... "
+echo -ne "\tInstallation de QT $QT_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
-#konsole --profile Shell --nofork --workdir $PWD -e "./exec.sh"
 echo "OK"
 
 echo "########################################################"
-echo -n "Copie des libembedded-widget ... "
+echo "  Copie des libembedded-widget ... "
 cd $current_dir
-cp -r /data/CentOS_6.3/conf/libembedded-widget/ /home/$(whoami)/Progiciels/QT-$QT_VERSION
-echo "OK"
-
+cp -r /data/CentOS_6.3/conf/libembedded-widget/ /home/$(whoami)/Progiciels/qt-$QT_INSTALL_TARGET_VERSION
 echo "########################################################"
-echo -n "Suppression du repertoire temporaire ... "
+echo "  Suppression du repertoire temporaire ... "
 rm -rf /home/$(whoami)/qtinst
-echo "OK"
-
 echo "########################################################"
-echo
+
+echo; echo "## END"; echo
+

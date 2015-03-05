@@ -9,111 +9,196 @@
 #
 #################################################
 
+# set progiciel home directory
+if [ -z ${PRO_HOME+x} ]; then 
+	current_progiciels_home="/home/$(whoami)/Progiciels"
+else 
+	current_progiciels_home=${PRO_HOME}
+fi
+
+###
+# Fonction de verification du versionning du progiciels recquis
+function split_version () 
+{
+	local major_version=0
+	local minor_version=0
+	local patch_version=0
+
+	for dirname in $(ls -d $current_progiciels_home/$1-*); do
+
+		local tmp_version=$(echo $dirname | cut -d'-' -f2)
+		local tmp_major_version=$(echo $tmp_version | cut -d. -f1)
+		local tmp_minor_version=$(echo $tmp_version | cut -d. -f2)
+		local tmp_patch_version=$(echo $tmp_version | cut -d. -f3)
+
+		if [ "$tmp_major_version" -gt "$major_version" ]; then
+			major_version=$tmp_major_version
+			minor_version=$tmp_minor_version
+			patch_version=$tmp_patch_version
+		else
+			if [ "$tmp_minor_version" -gt "$minor_version" ]; then
+				minor_version=$tmp_minor_version
+				patch_version=$tmp_patch_version
+			else
+				if [ "$tmp_patch_version" -gt "$patch_version" ]; then
+					patch_version=$tmp_patch_version
+				fi
+			fi
+		fi
+
+	done
+
+    if unset -v "$2"; then
+    	eval $2=\"\$major_version\"
+    fi
+    if unset -v "$3"; then
+    	eval $3=\"\$minor_version\"
+    fi
+    if unset -v "$4"; then
+    	eval $4=\"\$patch_version\"
+    fi
+	if unset -v "$5"; then				
+    	eval $5=\"\$major_version.$minor_version.$patch_version\"
+    fi
+	
+}
+
 # MPC versions
-MPC_MAJ_VER=1
+MPC_MAJ_VER=0
 MPC_MIN_VER=0
-MPC_REV_VER=2
-MPC_VERSION=${MPC_MAJ_VER}.${MPC_MIN_VER}.${MPC_REV_VER}
+MPC_PATCH_VER=0 
+MPC_VERSION=0
 
 # MPFR versions
-MPFR_MAJ_VER=3
-MPFR_MIN_VER=1
-MPFR_REV_VER=2
-MPFR_VERSION=${MPFR_MAJ_VER}.${MPFR_MIN_VER}.${MPFR_REV_VER}
+MPFR_MAJ_VER=0
+MPFR_MIN_VER=0
+MPFR_PATCH_VER=0 
+MPFR_VERSION=0
 
 # GMP versions
-GMP_MAJ_VER=6
+GMP_MAJ_VER=0
 GMP_MIN_VER=0
-GMP_REV_VER=0
-GMP_VERSION=${GMP_MAJ_VER}.${GMP_MIN_VER}.${GMP_REV_VER}
+GMP_PATCH_VER=0 
+GMP_VERSION=0
 
 # AutoGen versions
-AUTOGEN_MAJ_VER=5
-AUTOGEN_MIN_VER=18
-AUTOGEN_REV_VER=2
-AUTOGEN_VERSION=${AUTOGEN_MAJ_VER}.${AUTOGEN_MIN_VER}.${AUTOGEN_REV_VER}
+AUTOGEN_MAJ_VER=0
+AUTOGEN_MIN_VER=0
+AUTOGEN_PATCH_VER=0 
+AUTOGEN_VERSION=0
 
 # GCC versions
-GCC_MAJ_VER=4
-GCC_MIN_VER=8
-GCC_REV_VER=2
-GCC_VERSION=${GCC_MAJ_VER}.${GCC_MIN_VER}.${GCC_REV_VER}
+GCC_MAJ_VER=0
+GCC_MIN_VER=0
+GCC_PATCH_VER=0 
+GCC_VERSION=0
 
 # GLM versions
 GLM_MAJ_VER=0
-GLM_MIN_VER=9
-GLM_REV_VER=5.3
-GLM_VERSION=${GLM_MAJ_VER}.${GLM_MIN_VER}.${GLM_REV_VER}
+GLM_MIN_VER=0
+GLM_PATCH_VER=0 
+GLM_VERSION=0
 
 # GLFW versions
-GLFW_MAJ_VER=2
-GLFW_MIN_VER=7
-GLFW_REV_VER=9
-GLFW_VERSION=${GLFW_MAJ_VER}.${GLFW_MIN_VER}.${GLFW_REV_VER}
+GLFW_MAJ_VER=0
+GLFW_MIN_VER=0
+GLFW_PATCH_VER=0 
+GLFW_VERSION=0
 
 # CMAKE versions
-CMAKE_MAJ_VER=2
-CMAKE_MIN_VER=8
-CMAKE_REV_VER=12
-CMAKE_VERSION=$CMAKE_MAJ_VER.$CMAKE_MIN_VER.$CMAKE_REV_VER
+CMAKE_MAJ_VER=0
+CMAKE_MIN_VER=0
+CMAKE_PATCH_VER=0 
+CMAKE_VERSION=0
 
 # Boost versions
-BOOST_MAJ_VER=1
-BOOST_MIN_VER=55
-BOOST_REV_VER=0
-BOOST_VERSION=${BOOST_MAJ_VER}.${BOOST_MIN_VER}.${BOOST_REV_VER}
+BOOST_MAJ_VER=0
+BOOST_MIN_VER=0
+BOOST_PATCH_VER=0 
+BOOST_VERSION=0
 
 # Nvidia Texture Tools versions
-NVTT_MAJ_VER=2
+NVTT_MAJ_VER=0
 NVTT_MIN_VER=0
-NVTT_REV_VER=8-1
-NVTT_VERSION=${NVTT_MAJ_VER}.${NVTT_MIN_VER}.${NVTT_REV_VER}
+NVTT_PATCH_VER=0 
+NVTT_VERSION=0
 
 # OpenSceneGraph versions
-OSG_MAJ_VER=3
-OSG_MIN_VER=2
-OSG_REV_VER=0
-OSG_VERSION=${OSG_MAJ_VER}.${OSG_MIN_VER}.${OSG_REV_VER}
+OSG_MAJ_VER=0
+OSG_MIN_VER=0
+OSG_PATCH_VER=0 
+OSG_VERSION=0
 
 # CEGUI versions
 CEGUI_MAJ_VER=0
-CEGUI_MIN_VER=8
-CEGUI_REV_VER=3
-CEGUI_VERSION=$CEGUI_MAJ_VER.$CEGUI_MIN_VER.$CEGUI_REV_VER
+CEGUI_MIN_VER=0
+CEGUI_PATCH_VER=0 
+CEGUI_VERSION=0
 
 # CEED versions
-CEED_VERSION=snapshot11
+#split_version "ceed" MPC_MAJ_VER MPC_MIN_VER MPC_PATCH_VER MPC_VERSION
+#CEED_VERSION=snapshot11
 
 # QT versions
-QT_MAJ_VER=4
-QT_MIN_VER=8
-QT_REV_VER=4
-QT_VERSION=$QT_MAJ_VER.$QT_MIN_VER.$QT_REV_VER
+QT_MAJ_VER=0
+QT_MIN_VER=0
+QT_PATCH_VER=0 
+QT_VERSION=0
 
 # OpenFusionTAO versions
-TAO_MAJ_VER=1
-TAO_MIN_VER=6
-TAO_REV_VER=1_0
-TAO_VERSION=$TAO_MAJ_VER.$TAO_MIN_VER.$TAO_REV_VER
+TAO_MAJ_VER=0
+TAO_MIN_VER=0
+TAO_PATCH_VER=0 
+TAO_VERSION=0
 
 # OpenSpliceDDS versions
-OSPL_MAJ_VER=5
-OSPL_MIN_VER=5
-OSPL_REV_VER=1
-OSPL_VERSION=$OSPL_MAJ_VER.$OSPL_MIN_VER.$OSPL_REV_VER
+OSPL_MAJ_VER=0
+OSPL_MIN_VER=0
+OSPL_PATCH_VER=0 
+OSPL_VERSION=0
 
 # SimpleDDS versions
 SIMD_MAJ_VER=0
-SIMD_MIN_VER=10
-SIMD_REV_VER=0
-SIMD_VERSION=$SIMD_MAJ_VER.$SIMD_MIN_VER.$SIMD_REV_VER
+SIMD_MIN_VER=0
+SIMD_PATCH_VER=0 
+SIMD_VERSION=0
 
-# LEAPMOTION version 
-LEAPMOTION_MAJ_VER=0
-LEAPMOTION_MIN_VER=8
-LEAPMOTION_REV_VER=0
-LEAPMOTION_PATCH_VER=5300
-LEAPMOTION_ARCH_VER=Linux
-LEAPMOTION_VERSION=${LEAPMOTION_MAJ_VER}.${LEAPMOTION_MIN_VER}.${LEAPMOTION_REV_VER}_${LEAPMOTION_PATCH_VER}_${LEAPMOTION_ARCH_VER}
+# Then split then into version
+split_version "mpc" MPC_MAJ_VER MPC_MIN_VER MPC_PATCH_VER MPC_VERSION
+split_version "mpfr" MPFR_MAJ_VER MPFR_MIN_VER MPFR_PATCH_VER MPFR_VERSION
+split_version "gmp" GMP_MAJ_VER GMP_MIN_VER GMP_PATCH_VER GMP_VERSION
+split_version "autogen" AUTOGEN_MAJ_VER AUTOGEN_MIN_VER AUTOGEN_PATCH_VER AUTOGEN_VERSION
+split_version "gcc" GCC_MAJ_VER GCC_MIN_VER GCC_PATCH_VER GCC_VERSION
+split_version "glm" GLM_MAJ_VER GLM_MIN_VER GLM_PATCH_VER GLM_VERSION
+split_version "glfw" GLFW_MAJ_VER GLFW_MIN_VER GLFW_PATCH_VER GLFW_VERSION
+split_version "cmake" CMAKE_MAJ_VER CMAKE_MIN_VER CMAKE_PATCH_VER CMAKE_VERSION
+split_version "boost" BOOST_MAJ_VER BOOST_MIN_VER BOOST_PATCH_VER BOOST_VERSION
+split_version "nvtt" NVTT_MAJ_VER NVTT_MIN_VER NVTT_PATCH_VER NVTT_VERSION
+split_version "osg" OSG_MAJ_VER OSG_MIN_VER OSG_PATCH_VER OSG_VERSION
+split_version "cegui" CEGUI_MAJ_VER CEGUI_MIN_VER CEGUI_PATCH_VER CEGUI_VERSION
+split_version "qt" QT_MAJ_VER QT_MIN_VER QT_PATCH_VER QT_VERSION
+split_version "openfusiontao" TAO_MAJ_VER TAO_MIN_VER TAO_PATCH_VER TAO_VERSION
+split_version "opensplicedds" OSPL_MAJ_VER OSPL_MIN_VER OSPL_PATCH_VER OSPL_VERSION
+split_version "simd" SIMD_MAJ_VER SIMD_MIN_VER SIMD_PATCH_VER SIMD_VERSION
 
-
+# debug
+if [ ! -z ${DEVTK_DEBUG_ON+x} ]; then 
+	echo "--------------------------------------------------------------------"
+	echo "mpc : $MPC_MAJ_VER $MPC_MIN_VER $MPC_PATCH_VER $MPC_VERSION"
+	echo "mpfr : $MPFR_MAJ_VER $MPFR_MIN_VER $MPFR_PATCH_VER $MPFR_VERSION"
+	echo "gmp : $GMP_MAJ_VER $GMP_MIN_VER $GMP_PATCH_VER $GMP_VERSION"
+	echo "autogen : $AUTOGEN_MAJ_VER $AUTOGEN_MIN_VER $AUTOGEN_PATCH_VER $AUTOGEN_VERSION"
+	echo "gcc : $GCC_MAJ_VER $GCC_MIN_VER $GCC_PATCH_VER $GCC_VERSION"
+	echo "glm : $GLM_MAJ_VER $GLM_MIN_VER $GLM_PATCH_VER $GLM_VERSION"
+	echo "glfw : $GLFW_MAJ_VER $GLFW_MIN_VER $GLFW_PATCH_VER $GLFW_VERSION"
+	echo "cmake : $CMAKE_MAJ_VER $CMAKE_MIN_VER $CMAKE_PATCH_VER $CMAKE_VERSION"
+	echo "boost : $BOOST_MAJ_VER $BOOST_MIN_VER $BOOST_PATCH_VER $BOOST_VERSION"
+	echo "nvtt : $NVTT_MAJ_VER $NVTT_MIN_VER $NVTT_PATCH_VER $NVTT_VERSION"
+	echo "osg : $OSG_MAJ_VER $OSG_MIN_VER $OSG_PATCH_VER $OSG_VERSION"
+	echo "cegui : $CEGUI_MAJ_VER $CEGUI_MIN_VER $CEGUI_PATCH_VER $CEGUI_VERSION"
+	echo "qt: $QT_MAJ_VER $QT_MIN_VER $QT_PATCH_VER $QT_VERSION"
+	echo "openfusiontao : $TAO_MAJ_VER $TAO_MIN_VER $TAO_PATCH_VER $TAO_VERSION"
+	echo "opensplicedds : $OSPL_MAJ_VER $OSPL_MIN_VER $OSPL_PATCH_VER $OSPL_VERSION"
+	echo "simd : $SIMD_MAJ_VER $SIMD_MIN_VER $SIMD_PATCH_VER $SIMD_VERSION"
+	echo "--------------------------------------------------------------------"
+fi

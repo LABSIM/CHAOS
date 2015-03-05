@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo; echo "## BEGIN"; echo
+
 # montage du repo EPEL
 yum install /data/CentOS_6.3/rpms/epel-release-6.8.noarch.rpm
 
@@ -27,4 +29,6 @@ yum install \
 	giflib-devel.x86_64 \
 	libsndfile-devel.x86_64 \
 	compat-glibc-headers-2.5-46.2.x86_64
+
+echo; echo "## END"; echo
 

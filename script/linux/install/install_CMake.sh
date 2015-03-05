@@ -1,71 +1,90 @@
 #!/bin/bash
 
-echo 
-
 # get current directory
 current_dir=$PWD
 
-source ../../../conf/versions.sh
+# source user configured versions 
+source user-config.versions.sh
+
+# go to dir
 cd /home/$(whoami)
 mkdir cmakeinst
 cd cmakeinst
 
+echo; echo "## BEGIN"; echo
+
 echo "########################################################"
+echo "  Decompression du/des package(s)"
+echo "########################################################"
+
 echo "#!/bin/bash" > exec.sh
-echo "tar -xzvf /data/CentOS_6.3/archive/cmake-$CMAKE_VERSION.tar.gz" >> exec.sh
+echo "tar -xzvf /data/CentOS_6.3/archive/cmake-$CMAKE_INSTALL_TARGET_VERSION.tar.gz" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -n "Decompression de cmake $CMAKE_VERSION ... "
+echo -ne "\tDecompression de cmake $CMAKE_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
-#konsole --profile Shell --nofork --workdir $PWD -e "./exec.sh"
 echo "OK"
 
 echo "########################################################"
-cd cmake-$CMAKE_VERSION
-echo "#!/bin/bash" > exec.sh
-echo "./configure --prefix=/home/$(whoami)/Progiciels/cmake-$CMAKE_VERSION" >> exec.sh
-echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -n "Configuration de cmake $CMAKE_VERSION ... "
-chmod u+x exec.sh
-gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
-#konsole --profile Shell --nofork --workdir $PWD -e "./exec.sh"
-echo "OK"
-
+echo " Bootstrap, build & install"
 echo "########################################################"
+
+cd cmake-*
+
+# Cmake install or not ?
+if hash cmake 2>/dev/null; then
+	# cmake exist
+	echo "#!/bin/bash" > exec.sh
+	echo "cmake -DCMAKE_INSTALL_PREFIX=/home/$(whoami)/Progiciels/cmake-$CMAKE_INSTALL_TARGET_VERSION ." >> exec.sh
+	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo -ne "\tCMake de cmake $CMAKE_INSTALL_TARGET_VERSION (Inception !)... "
+	chmod u+x exec.sh
+	gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
+	echo "OK"
+else
+	# no cmake builtin -> bootstrap
+	echo "#!/bin/bash" > exec.sh
+	echo "./bootstrap --prefix=/home/$(whoami)/Progiciels/cmake-$CMAKE_INSTALL_TARGET_VERSION --parallel=4" >> exec.sh
+	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo -ne "\tBootstrap de cmake $CMAKE_INSTALL_TARGET_VERSION ... "
+	chmod u+x exec.sh
+	gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
+	echo "OK"
+fi
+
 echo "#!/bin/bash" > exec.sh
 echo "make -j4" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -n "Compilation de cmake $CMAKE_VERSION ... "
+echo -ne "\tCompilation de cmake $CMAKE_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
-#konsole --profile Shell --nofork --workdir $PWD -e "./exec.sh"
 echo "OK"
 
-echo "########################################################"
 echo "#!/bin/bash" > exec.sh
 echo "make install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -n "Installation de cmake $CMAKE_VERSION ... "
+echo -ne "\tInstallation de cmake $CMAKE_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
-#konsole --profile Shell --nofork --workdir $PWD -e "./exec.sh"
 echo "OK"
 
 echo "########################################################"
+echo " Import des propriétés LABSIM"
+echo "########################################################"
+
 echo "#!/bin/bash" > exec.sh
-echo "cp -r $current_dir/../../../conf/cmake/* /home/$(whoami)/Progiciels/cmake-$CMAKE_VERSION/share/cmake-$CMAKE_MAJ_VER.$CMAKE_MIN_VER/Modules/" >> exec.sh
+echo "cp -r $current_dir/../../../conf/cmake/* /home/$(whoami)/Progiciels/cmake-$CMAKE_INSTALL_TARGET_VERSION/share/cmake-$CMAKE_INSTALL_TARGET_MAJ_VER.$CMAKE_INSTALL_TARGET_MIN_VER/Modules/" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -n "Copie des Module CMake specifiques (FindOpenSpliceDDS, FindSimpleDDS & KRONOS-DDS spec.)..."
+echo -ne "\tCopie des Module CMake specifiques (COTIRE, FindOpenSpliceDDS, FindSimpleDDS, FindLabsim* & KRONOS-DDS spec.) ... "
 chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
-#konsole --profile Shell --nofork --workdir $PWD -e "./exec.sh"
 echo "OK"
 
 echo "########################################################"
-echo -n "Suppression du repertoire temporaire ... "
+echo "  Suppression du repertoire temporaire"
 cd $current_dir
 rm -rf /home/$(whoami)/cmakeinst
-echo "OK"
 echo "########################################################"
 
-echo
+echo; echo "## END"; echo
+
