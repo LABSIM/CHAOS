@@ -32,7 +32,7 @@ echo "########################################################"
 cd qt-*
 
 echo "#!/bin/bash" > exec.sh
-echo "./configure --prefix=/home/$(whoami)/Progiciels/qt-$QT_INSTALL_TARGET_VERSION -opensource -release -no-c++11 -shared -largefile -accessibility -qml-debug -optimized-qmake -opengl desktop -gui -widgets -skip webkit -no-xcb" >> exec.sh
+echo "./configure --prefix=/home/$(whoami)/Progiciels/qt-$QT_INSTALL_TARGET_VERSION -opensource -confirm-license -release -shared -largefile -qml-debug -reduce-relocations -optimized-qmake -qt-zlib -qt-libpng -qt-libjpeg -mtdev -qt-freetype -qt-pcre -glib -pulseaudio -gtkstyle -accessibility -openssl -opengl desktop -no-c++11 -no-xcb -no-journald -no-use-gold-linker -skip webkit -nomake tests -nomake examples -nomake tools" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh-stl
 echo -ne "\tConfiguration de QT $QT_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh

@@ -79,7 +79,7 @@ cd OpenSceneGraph-*
 
 echo "#!/bin/bash" > exec.sh
 echo "export NVTT_DIR=/home/$(whoami)/Progiciels/nvtt-$NVTT_INSTALL_TARGET_VERSION/" >> exec.sh
-echo "cmake -DQT_QMAKE_EXECUTABLE=/home/$(whoami)/Progiciels/QT-$QT_INSTALL_TARGET_VERSION/bin/qmake -DCMAKE_INSTALL_PREFIX=/home/$(whoami)/Progiciels/osg-$OSG_INSTALL_TARGET_VERSION ." >> exec.sh
+echo "cmake -DCMAKE_INSTALL_PREFIX=/home/$(whoami)/Progiciels/osg-$OSG_INSTALL_TARGET_VERSION ." >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tConfiguration de OpenSceneGraph $OSG_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
