@@ -83,7 +83,7 @@ foreach(COMPONENT ${LabsimContrat_FIND_COMPONENTS})
     
     # print status
     if(${LabsimContrat_${UPPERCOMPONENT}_FOUND} EQUAL 1)
-        message(STATUS "  ${COMPONENT}")
+        message(STATUS "  ${COMPONENT} -> ${LabsimContract_${UPPERCOMPONENT}_LIBRARY}")
     else()
         message(STATUS "  ${COMPONENT}... component NOT found !")
     endif()
