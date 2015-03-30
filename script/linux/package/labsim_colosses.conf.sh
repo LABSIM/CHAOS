@@ -4,14 +4,14 @@
 ## LABSIM Developpement environment config							##
 ##																	##
 ## Ce fichier contient l'ensemble des definitions					##
-## pour les projets de Modeles Colosse en cours de developpement	##
+## pour les projets de Colosses en cours de developpement			##
 ##																	##
 ## 07/02/12 - Kinani Nawfel											##
 ######################################################################
 
-COLOSSE_HOME=$DEV_HOME/Colosse
+COLOSSES_HOME=$DEV_HOME/Colosses
 
-export COLOSSE_HOME
+export COLOSSES_HOME
 
 # ================================================================= #
 # 								Colosse   							#
@@ -23,7 +23,7 @@ export COLOSSE_HOME
 
 # == TEMPLATE MODEL
 
-TEMPLATE_ROOT=$COLOSSE_HOME/Template
+TEMPLATE_ROOT=$COLOSSES_HOME/Template
 TEMPLATE_INCLUDEDIR=$TEMPLATE_ROOT/include
 TEMPLATE_LIBRARYDIR=$TEMPLATE_ROOT/lib
 
@@ -31,7 +31,7 @@ export TEMPLATE_ROOT TEMPLATE_INCLUDEDIR TEMPLATE_LIBRARYDIR
 
 # == GRT
 
-GRT_ROOT=$COLOSSE_HOME/GRT
+GRT_ROOT=$COLOSSES_HOME/GRT
 GRT_INCLUDEDIR=$GRT_ROOT/include
 GRT_LIBRARYDIR=$GRT_ROOT/lib
 GRT_BINARYDIR=$GRT_ROOT/bin

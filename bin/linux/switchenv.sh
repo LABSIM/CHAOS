@@ -10,11 +10,16 @@
 #
 #################################################
 
+# Absolute path to this script
+SCRIPT=$(readlink -f "$BASH_SOURCE")
+# Absolute path this script is in
+SCRIPTPATH=$(dirname "$SCRIPT")
+
 # ============================================================== #
 # 				BASIC VARIABLES DECLARATION						 #
 # ============================================================== #
+
 env_requested="$1"
-devtk_home_path="$2"
 
 major_version=1
 minor_version=2
@@ -24,13 +29,13 @@ script_version="v.${major_version}.${minor_version}.${patch_version}"
 
 rsh_login=$(whoami)
 
-root_directory=$(readlink -f "${devtk_home_path}")
+root_directory=$(readlink -f "$SCRIPTPATH/../../")
 
 link_base_name=${rsh_login}
 link_path_directory="/home/${rsh_login}/."
 
 env_decoration="_env_file_lst"
-env_file_decoration=".conf.sh"
+env_file_decoration=".env.sh"
 env_path_directory="${root_directory}/script/linux/env/"
 
 declare -a env_file_lst
@@ -71,12 +76,11 @@ function info_printing ()
 	echo "======================================================"
 	echo
 	echo "Usage:"
-	echo "  switchenv [[ARG1 ARG2] | OPTION]"
+	echo "  switchenv [[ARG1] | OPTION]"
 	echo
 	echo "ARG:"
 	echo "  - ARG1 > Le type de l'environment de travail a"
 	echo "  diffuser, ex: DEV"
-	echo "  - ARG2 > Le path vers le home projet DEV-TK "
 	echo
 	echo "OPTION :"
 	echo 
@@ -303,7 +307,7 @@ echo "_______End_Checkout_Routines_______"
 # On informe l'utilisateur 
 bContinue=0
 while [ $bContinue != 1 ] ; do
-	echo; echo "==== [ATTENTION] : ==== "; echo -n " le processus relancera chacunes des machines du réseau configuré, assurez-vous ne n'avoir plus aucun travail en cours. Continuer ? [y/n]  : "
+	echo; echo "==== [ATTENTION] : ==== "; echo -n " le processus reconfigurera l'ensemble des machines définies, assurez-vous ne n'avoir plus aucun travail en cours. Continuer ? [y/n]  : "
 	read response
 	# On traite la réponse
 	case ${response} in	
@@ -334,11 +338,7 @@ for remote_host in ${internal_ntwk[@]}; do
 	# Redirection du lien symbolique 
 	echo " > rsh -l ${rsh_login} ${remote_host} ln -sf ${env_path_directory}${env_requested}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}"
 	rsh -l ${rsh_login} ${remote_host} ln -sf ${env_path_directory}${env_requested}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}
-
-	# Reboot
-	echo " > rsh -l ${rsh_login} ${remote_host} reboot"
-	rsh -l ${rsh_login} ${remote_host} reboot
-
+	
 done
 
 # Sans oublier la machine locale
@@ -348,16 +348,10 @@ echo; echo "[localhost]"
 echo " > ln -sf ${env_path_directory}${env_requested}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}"
 ln -sf ${env_path_directory}${env_requested}${env_file_decoration} ${link_path_directory}${link_base_name}${env_file_decoration}
 
-# Reboot
-echo -n " > localhost redemmarera dans environ"
-for (( i=5; i!=0; i-- )); do
-	echo -n " ${i}s..."
-	sleep 1
-done
-echo " reboot ! Bye"
+# Fin
+echo " End ! Bye"
 echo; echo "_______End_Process_______"; echo
 
-# juste pour laisser le temps de lire
-sleep 1
-reboot
+# EOF
+
 

@@ -13,20 +13,10 @@
 
 # On check l'existance du lien symbolique qui sera modifié par la suite & on verifie que l'on est pas en pleine install
 login=$(whoami)
-if [ -f ~/.${login}.conf.sh ]; then 
+if [ -f ~/.${login}.env.sh ]; then 
 	if [ -z ${DEVTK_REQUIRE_CLEAN_INSTALL_ENVIRONMENT+x} ]; then
-		. ~/.${login}.conf.sh
+		. ~/.${login}.env.sh
 	fi 
 fi
-
-# ======================================================================== #
-# A modifier dans ~/.bash_profile
-
-+---------------------------------+	   	 +-------------------------------+
-| # Get the aliases and functions |  TO  | # Source global definitions   |
-| if [ -f ~/.bashrc ]; then       |=====>| if [ -f /etc/bashrc ]; then   |
-| 	. ~/.bashrc                   |=====>| 	. /etc/bashrc			   	 |
-| fi                              |      | fi                            |
-+---------------------------------+	   	 +-------------------------------+
 
 # ======================================================================== #
