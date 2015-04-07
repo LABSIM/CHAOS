@@ -11,10 +11,9 @@
 ###################################################################
 # Home path
 ###
-
-DEV_HOME=/home/$(whoami)/dev
-PRO_HOME=/home/$(whoami)/Progiciels
-CODES_HOME=/home/$(whoami)/CODES
+DEV_HOME=$(eval echo "~$(whoami)")/dev
+PRO_HOME=$(eval echo "~$(whoami)")/Progiciels
+CODES_HOME=$(eval echo "~$(whoami)")/CODES
 BDD_HOME=/data/bdd
 
 export PRO_HOME CODES_HOME BDD_HOME DEV_HOME IDE_HOME
@@ -29,21 +28,32 @@ else
 fi
 
 ###
-# Informations
+# funtions
 ###
-function whichDevTK()
-{
-	echo "=========================================================================="
- 	echo " Environment de dev courant : ${DEV_CURRENT_DIST} ID:[${DEV_CURRENT_ID}]"
-	echo "=========================================================================="
-}
+
+function __internal_labsim_environment() {
+	echo -e "\n## BEGIN LABSIM ROUTINES\n" 	\
+	&& echo -e ${LABSIM_DEV_DIST} 			\
+	&& echo -e "\n## END LABSIM ROUTINES\n"
+} # __internal_labsim_environment()
+
+function __internal_labsim_switch_environment() {
+	echo -e "\n## BEGIN LABSIM ROUTINES\n" 								\
+	&& time sh $DEVTK_ROOT/bin/linux/Labsim_switch_environment.sh "$@"	\
+	&& echo -e "\n## END LABSIM ROUTINES\n"
+} # __internal_labsim_switch_environment()
 
 ###
-# Switch
+# long alias
 ###
-if [ -f "$DEVTK_ROOT/script/linux/switchenv.sh" ]; then 
-	alias switchenv="sh $DEVTK_ROOT/script/linux/switchenv.sh"
-fi
+alias labsim_env="__internal_labsim_environment"
+alias labsim_switch_env="__internal_labsim_switch_environment"
+
+###
+# short alias
+###
+alias le="labsim_env"
+alias lse="labsim_switch_env"
 
 ###################################################################
 # Other
@@ -64,3 +74,4 @@ LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
 export LD_LIBRARY_PATH
 
 ###################################################################
+

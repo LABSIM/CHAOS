@@ -12,10 +12,9 @@
 #######################
 
 # On check l'existance du lien symbolique qui sera modifié par la suite & on verifie que l'on est pas en pleine install
-login=$(whoami)
-if [ -f ~/.${login}.env.sh ]; then 
+if [ -f ~/.labsim.env.sh ]; then 
 	if [ -z ${DEVTK_REQUIRE_CLEAN_INSTALL_ENVIRONMENT+x} ]; then
-		. ~/.${login}.env.sh
+		source ~/.labsim.env.sh
 	fi 
 fi
 

@@ -33,7 +33,14 @@ RHEA_ROOT=$TITANS_HOME/RHEA
 
 export RHEA_ROOT
 
-alias rhea="perl -I $RHEA_ROOT/etc/modules $RHEA_ROOT/bin/v2/RHEA.pl"
+# alias 
+function __internal_labsim_rhea() {
+	echo -e "\n## BEGIN LABSIM ROUTINES\n" 									\
+	&& time perl -I $RHEA_ROOT/etc/module $RHEA_ROOT/bin/v2/RHEA.pl "$@"	\
+	&& echo -e "\n## END LABSIM ROUTINES\n"
+} # __internal_labsim_rhea()
+
+alias rhea="__internal_labsim_rhea"
 
 # == OCEAN 
 
@@ -41,7 +48,14 @@ OCEAN_ROOT=$TITANS_HOME/OCEAN
 
 export OCEAN_ROOT
 
-alias ocean="perl -I $OCEAN_ROOT/etc/modules $OCEAN_ROOT/bin/v1/OCEAN.pl"
+# alias 
+function __internal_labsim_ocean() {
+	echo -e "\n## BEGIN LABSIM ROUTINES\n" 									\
+	&& time perl -I $OCEAN_ROOT/etc/module $OCEAN_ROOT/bin/v1/OCEAN.pl "$@"	\
+	&& echo -e "\n## END LABSIM ROUTINES\n"
+} # __internal_labsim_ocean()
+
+alias ocean="__internal_labsim_ocean"
 
 # == THETYS
 

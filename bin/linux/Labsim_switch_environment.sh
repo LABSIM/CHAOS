@@ -31,8 +31,8 @@ rsh_login=$(whoami)
 
 root_directory=$(readlink -f "$SCRIPTPATH/../../")
 
-link_base_name=${rsh_login}
-link_path_directory="/home/${rsh_login}/."
+link_base_name="labsim"
+link_path_directory="$(eval echo "~$(whoami)")/."
 
 env_decoration="_env_file_lst"
 env_file_decoration=".env.sh"
@@ -76,7 +76,7 @@ function info_printing ()
 	echo "======================================================"
 	echo
 	echo "Usage:"
-	echo "  switchenv [[ARG1] | OPTION]"
+	echo "  {command} [[ARG1] | OPTION]"
 	echo
 	echo "ARG:"
 	echo "  - ARG1 > Le type de l'environment de travail a"
@@ -242,12 +242,12 @@ function pre_parse_routines ()
 		;;
 		# Erreur options non-traité
 		$(echo "${env_requested}" | grep -e "\-[a-zA-Z0-9]*"))
-			echo; echo "Aucune option correspondante trouvée ! Abandon de la diffusion ... voir --help ou -h pour l'usage"; echo
+			echo; echo -e "Aucune option correspondante trouvée ! Abandon de la diffusion ... voir --help ou -h pour l'usage \n\n"; echo
 			exit 1
 		;;
 		# Aucun env_requested
 		"")
-			echo; echo "Aucun(e) paramètre/option correspondant(e) trouvé(e) ! Abandon de la diffusion ... voir --help ou -h pour l'usage"; echo
+			echo; echo -e "Aucun(e) paramètre/option correspondant(e) trouvé(e) ! Abandon de la diffusion ... voir --help ou -h pour l'usage \n\n"; echo
 			exit 1
 		;;
 	esac
