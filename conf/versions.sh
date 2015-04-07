@@ -11,7 +11,9 @@
 
 # set progiciel home directory
 if [ -z ${PRO_HOME+x} ]; then 
-	current_progiciels_home="/home/$(whoami)/Progiciels"
+	# $whoami's home dir
+	tmp=$(eval echo "~$(whoami)")
+	current_progiciels_home="$tmp/Progiciels"
 else 
 	current_progiciels_home=${PRO_HOME}
 fi
@@ -164,22 +166,34 @@ SIMD_PATCH_VER=0
 SIMD_VERSION=0
 
 # Then split then into version
-split_version "mpc" MPC_MAJ_VER MPC_MIN_VER MPC_PATCH_VER MPC_VERSION
-split_version "mpfr" MPFR_MAJ_VER MPFR_MIN_VER MPFR_PATCH_VER MPFR_VERSION
-split_version "gmp" GMP_MAJ_VER GMP_MIN_VER GMP_PATCH_VER GMP_VERSION
-split_version "autogen" AUTOGEN_MAJ_VER AUTOGEN_MIN_VER AUTOGEN_PATCH_VER AUTOGEN_VERSION
-split_version "gcc" GCC_MAJ_VER GCC_MIN_VER GCC_PATCH_VER GCC_VERSION
-split_version "glm" GLM_MAJ_VER GLM_MIN_VER GLM_PATCH_VER GLM_VERSION
-split_version "glfw" GLFW_MAJ_VER GLFW_MIN_VER GLFW_PATCH_VER GLFW_VERSION
-split_version "cmake" CMAKE_MAJ_VER CMAKE_MIN_VER CMAKE_PATCH_VER CMAKE_VERSION
-split_version "boost" BOOST_MAJ_VER BOOST_MIN_VER BOOST_PATCH_VER BOOST_VERSION
-split_version "nvtt" NVTT_MAJ_VER NVTT_MIN_VER NVTT_PATCH_VER NVTT_VERSION
-split_version "osg" OSG_MAJ_VER OSG_MIN_VER OSG_PATCH_VER OSG_VERSION
-split_version "cegui" CEGUI_MAJ_VER CEGUI_MIN_VER CEGUI_PATCH_VER CEGUI_VERSION
-split_version "qt" QT_MAJ_VER QT_MIN_VER QT_PATCH_VER QT_VERSION
-split_version "openfusiontao" TAO_MAJ_VER TAO_MIN_VER TAO_PATCH_VER TAO_VERSION
-split_version "opensplicedds" OSPL_MAJ_VER OSPL_MIN_VER OSPL_PATCH_VER OSPL_VERSION
-split_version "simd" SIMD_MAJ_VER SIMD_MIN_VER SIMD_PATCH_VER SIMD_VERSION
+
+# Global environment mapping -- should always be set
+if [ $(( $LABSIM_DEV_ID & $LABSIM_COMMON_MASK )) -eq $LABSIM_COMMON_MASK ]; then
+	split_version "mpc" MPC_MAJ_VER MPC_MIN_VER MPC_PATCH_VER MPC_VERSION
+	split_version "mpfr" MPFR_MAJ_VER MPFR_MIN_VER MPFR_PATCH_VER MPFR_VERSION
+	split_version "gmp" GMP_MAJ_VER GMP_MIN_VER GMP_PATCH_VER GMP_VERSION
+	split_version "autogen" AUTOGEN_MAJ_VER AUTOGEN_MIN_VER AUTOGEN_PATCH_VER AUTOGEN_VERSION
+	split_version "gcc" GCC_MAJ_VER GCC_MIN_VER GCC_PATCH_VER GCC_VERSION
+	split_version "cmake" CMAKE_MAJ_VER CMAKE_MIN_VER CMAKE_PATCH_VER CMAKE_VERSION
+	split_version "boost" BOOST_MAJ_VER BOOST_MIN_VER BOOST_PATCH_VER BOOST_VERSION
+	split_version "nvtt" NVTT_MAJ_VER NVTT_MIN_VER NVTT_PATCH_VER NVTT_VERSION
+	split_version "osg" OSG_MAJ_VER OSG_MIN_VER OSG_PATCH_VER OSG_VERSION
+	split_version "qt" QT_MAJ_VER QT_MIN_VER QT_PATCH_VER QT_VERSION
+fi
+
+# Olympiens specific environment mapping
+if [ $(( $LABSIM_DEV_ID & $LABSIM_OLYMPIENS_MASK )) -eq $LABSIM_OLYMPIENS_MASK ]; then
+	split_version "glm" GLM_MAJ_VER GLM_MIN_VER GLM_PATCH_VER GLM_VERSION
+	split_version "glfw" GLFW_MAJ_VER GLFW_MIN_VER GLFW_PATCH_VER GLFW_VERSION
+	split_version "cegui" CEGUI_MAJ_VER CEGUI_MIN_VER CEGUI_PATCH_VER CEGUI_VERSION
+fi
+
+# Titans specific environment mapping
+if [ $(( $LABSIM_DEV_ID & $LABSIM_TITANS_MASK )) -eq $LABSIM_TITANS_MASK ]; then
+	split_version "openfusiontao" TAO_MAJ_VER TAO_MIN_VER TAO_PATCH_VER TAO_VERSION
+	split_version "opensplicedds" OSPL_MAJ_VER OSPL_MIN_VER OSPL_PATCH_VER OSPL_VERSION
+	split_version "simd" SIMD_MAJ_VER SIMD_MIN_VER SIMD_PATCH_VER SIMD_VERSION
+fi
 
 # debug
 if [ ! -z ${DEVTK_DEBUG_ON+x} ]; then 
