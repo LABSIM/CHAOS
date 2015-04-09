@@ -4,7 +4,7 @@
 current_dir=$PWD
 
 # source user configured versions 
-source user-config.versions.sh
+source user-config-versions.sh
 
 # go to dir
 cd /home/$(whoami)

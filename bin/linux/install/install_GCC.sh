@@ -4,7 +4,7 @@
 current_dir=$PWD
 
 # source user configured versions 
-source user-config.versions.sh
+source user-config-versions.sh
 
 echo; echo "## BEGIN"; echo
 
@@ -182,8 +182,8 @@ gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" 
 echo "OK"
 echo -e "\t-------------------------------------------------"
 echo "#!/bin/bash" > exec.sh
-echo "mkdir GCC-$GCC_INSTALL_TARGET_VERSION" >> exec.sh
-echo "cd GCC-$GCC_INSTALL_TARGET_VERSION" >> exec.sh
+echo "mkdir gcc-$GCC_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cd gcc-$GCC_INSTALL_TARGET_VERSION" >> exec.sh
 echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/$(whoami)/Progiciels/mpfr-$MPFR_INSTALL_TARGET_VERSION/lib:/home/$(whoami)/Progiciels/mpc-$MPC_INSTALL_TARGET_VERSION/lib:/home/$(whoami)/Progiciels/gmp-$GMP_INSTALL_TARGET_VERSION/lib:/home/$(whoami)/Progiciels/autogen-$AUTOGEN_INSTALL_TARGET_VERSION/lib" >> exec.sh
 echo "../gcc-$GCC_INSTALL_TARGET_VERSION/configure --prefix=/home/$(whoami)/Progiciels/gcc-$GCC_INSTALL_TARGET_VERSION --mandir=/home/$(whoami)/Progiciels/gcc-$GCC_INSTALL_TARGET_VERSION/share/man --infodir=/home/$(whoami)/Progiciels/gcc-$GCC_INSTALL_TARGET_VERSION/share/info --enable-shared --enable-threads=posix --enable-checking=yes --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-libgcj-multifile --enable-languages=c,c++,objc,obj-c++,java,fortran --disable-dssi --enable-plugin --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-1.5.0.0/jre --with-cpu=generic --with-gmp=/home/$(whoami)/Progiciels/gmp-$GMP_INSTALL_TARGET_VERSION --with-mpfr=/home/$(whoami)/Progiciels/mpfr-$MPFR_INSTALL_TARGET_VERSION --with-mpc=/home/$(whoami)/Progiciels/mpc-$MPC_INSTALL_TARGET_VERSION" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
@@ -194,7 +194,7 @@ gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" 
 echo "OK"
 echo -e "\t-------------------------------------------------"
 echo "#!/bin/bash" > exec.sh
-echo "cd  GCC-$GCC_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cd  gcc-$GCC_INSTALL_TARGET_VERSION" >> exec.sh
 echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/$(whoami)/Progiciels/mpfr-$MPFR_INSTALL_TARGET_VERSION/lib:/home/$(whoami)/Progiciels/mpc-$MPC_INSTALL_TARGET_VERSION/lib:/home/$(whoami)/Progiciels/gmp-$GMP_INSTALL_TARGET_VERSION/lib:/home/$(whoami)/Progiciels/autogen-$AUTOGEN_INSTALL_TARGET_VERSION/lib" >> exec.sh
 echo "make -j4" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
@@ -205,7 +205,7 @@ gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" 
 echo "OK"
 echo -e "\t-------------------------------------------------"
 echo "#!/bin/bash" > exec.sh
-echo "cd  GCC-$GCC_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cd  gcc-$GCC_INSTALL_TARGET_VERSION" >> exec.sh
 echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/$(whoami)/Progiciels/mpfr-$MPFR_INSTALL_TARGET_VERSION/lib:/home/$(whoami)/Progiciels/mpc-$MPC_INSTALL_TARGET_VERSION/lib:/home/$(whoami)/Progiciels/gmp-$GMP_INSTALL_TARGET_VERSION/lib:/home/$(whoami)/Progiciels/autogen-$AUTOGEN_INSTALL_TARGET_VERSION/lib" >> exec.sh
 echo "make install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh

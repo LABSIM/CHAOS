@@ -30,6 +30,6 @@ yum install \
 	libsndfile-devel.x86_64 \
 	compat-glibc-headers-2.5-46.2.x86_64 \
 	ncurses-devel.x86_64
-
+	
 echo; echo "## END"; echo
 

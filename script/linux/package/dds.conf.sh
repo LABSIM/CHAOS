@@ -18,11 +18,11 @@
 # TAO IDL - The Interface Definition Language compiler 
 ###
 
-ACE_ROOT=$PRO_HOME/openfusiontao-$TAO_VERSION
-TAO_ROOT=$ACE_ROOT
-TAO_IDL=$TAO_ROOT/bin/tao_idl
-
-export ACE_ROOT TAO_ROOT TAO_IDL
+#ACE_ROOT=$PRO_HOME/openfusiontao-$TAO_VERSION
+#TAO_ROOT=$ACE_ROOT
+#TAO_IDL=$TAO_ROOT/bin/tao_idl
+#
+#export ACE_ROOT TAO_ROOT TAO_IDL
 
 ###################################################################
 # OpenSpliceDDS
@@ -34,7 +34,7 @@ export ACE_ROOT TAO_ROOT TAO_IDL
 ###
 
 OSPL_ROOT=$PRO_HOME/opensplicedds-$OSPL_VERSION
-OSPL_TARGET=x86_64.linux2.6
+OSPL_TARGET=x86_64.linux
 OSPL_RTS_ROOT=$OSPL_ROOT/RTS/$OSPL_TARGET
 OSPL_HDE_ROOT=$OSPL_ROOT/HDE/$OSPL_TARGET
 OSPL_LOGPATH=$OSPL_ROOT/log
@@ -62,10 +62,11 @@ SIMD_INSTALL_DIR=$PRO_HOME/simd-$SIMD_VERSION
 export SIMD_INSTALL_DIR
 
 ###################################################################
-# Sourcing
+# Sourcing - except during install
 ###
-
-source "$OSPL_HDE_ROOT/release.com"
+if [ -z ${DEVTK_REQUIRE_CLEAN_DDS_INSTALL_ENVIRONMENT+x} ]; then
+	source "$OSPL_HDE_ROOT/release.com"
+fi
 
 ###################################################################
 # Auxilliary stuff - RHEL5 Compatibility header under CentOS
@@ -85,13 +86,13 @@ fi
 # Global Variable
 ###
 
-PATH=$PATH\
-:$TAO_ROOT/bin
+#PATH=$PATH\
+#:$TAO_ROOT/bin
 
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
-:$TAO_ROOT/lib
+#LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
+#:$TAO_ROOT/lib
 
-INSLIB=$INSLIB\
-:$TAO_ROOT/lib
+#INSLIB=$INSLIB\
+#:$TAO_ROOT/lib
 
-export PATH LD_LIBRARY_PATH INSLIB
+#export PATH LD_LIBRARY_PATH INSLIB

@@ -4,12 +4,13 @@
 current_dir=$PWD
 
 # source user configured versions 
-source user-config.versions.sh
+source user-config-versions.sh
 
 # go to dir
 cd /home/$(whoami)
 mkdir osplinst
 cd osplinst
+
 
 echo; echo "## BEGIN"; echo
 
@@ -18,23 +19,34 @@ echo "  Decompression du/des package(s)"
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
-echo "tar -xvzf /data/CentOS_6.3/archive/OpenSpliceDDSV$OSPL_INSTALL_TARGET_VERSION-src.tar.gz" >> exec.sh
+echo "unzip /data/CentOS_6.3/archive/opensplice-master.zip" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tDecompression de OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION ..."
+echo -ne "\tDecompression d'OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
 echo "OK"
 
-cd OpenSplice
+cd opensplice-master/submods/
+rm -rf MPC_ROOT/
+
+echo "#!/bin/bash" > exec.sh
+echo "unzip /data/CentOS_6.3/archive/MPC_ROOT-master.zip && mv MPC_ROOT-master MPC_ROOT" >> exec.sh
+echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+echo -ne "\tDecompression de MPC_ROOT specifique pour OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION ... "
+chmod u+x exec.sh
+gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
+echo "OK"
+
+cd ../
 
 echo "########################################################"
 echo "  Configure, build & install"
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
-echo "./configure" >> exec.sh
+echo "export OSPL_QT_IS_ON=no && ./configure" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tConfiguration de OpenSpliceDDS ..."
+echo -ne "\tConfiguration d'OpenSpliceDDS ..."
 chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
 echo "OK"
@@ -44,9 +56,17 @@ source envs-*.sh
 echo "OK"
 
 echo "#!/bin/bash" > exec.sh
+echo "make" >> exec.sh
+echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+echo -ne "\tBuild d'OpenSpliceDDS ..."
+chmod u+x exec.sh
+gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
+echo "OK"
+
+echo "#!/bin/bash" > exec.sh
 echo "make install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tBuild & Install d'OpenSpliceDDS ..."
+echo -ne "\tInstallation d'OpenSpliceDDS ..."
 chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
 echo "OK"
@@ -64,8 +84,8 @@ echo -ne "\tCopie des environments d'OpenSpliceDDS et creation des directories P
 chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
 
-sed -i "s|@@INSTALLDIR@@|/home/$(whoami)/Progiciels/opensplicedds-$OSPL_INSTALL_TARGET_VERSION|g" /home/$(whoami)/Progiciels/opensplicedds-$OSPL_INSTALL_TARGET_VERSION/HDE/x86_64.linux2.6/release.com
-sed -i "s|@@INSTALLDIR@@|/home/$(whoami)/Progiciels/opensplicedds-$OSPL_INSTALL_TARGET_VERSION|g" /home/$(whoami)/Progiciels/opensplicedds-$OSPL_INSTALL_TARGET_VERSION/RTS/x86_64.linux2.6/release.com
+sed -i "s|@@INSTALLDIR@@|/home/$(whoami)/Progiciels/opensplicedds-$OSPL_INSTALL_TARGET_VERSION|g" /home/$(whoami)/Progiciels/opensplicedds-$OSPL_INSTALL_TARGET_VERSION/HDE/x86_64.linux/release.com
+sed -i "s|@@INSTALLDIR@@|/home/$(whoami)/Progiciels/opensplicedds-$OSPL_INSTALL_TARGET_VERSION|g" /home/$(whoami)/Progiciels/opensplicedds-$OSPL_INSTALL_TARGET_VERSION/RTS/x86_64.linux/release.com
 
 echo "OK"
 

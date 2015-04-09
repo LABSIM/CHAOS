@@ -4,7 +4,7 @@
 current_dir=$PWD
 
 # source user configured versions 
-source user-config.versions.sh
+source user-config-versions.sh
 
 # go to dir
 cd /home/$(whoami)
@@ -18,14 +18,14 @@ echo "  Decompression du/des package(s)"
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
-echo "tar -xvzf /data/CentOS_6.3/archive/simd-cxx-src-v$SIMD_INSTALL_TARGET_MAJ_VER.$SIMD_INSTALL_TARGET_MIN_VER.tar.gz" >> exec.sh
+echo "unzip /data/CentOS_6.3/archive/simd-cxx-master.zip" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tDecompression de SimpleDDS-$SIMD_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
 echo "OK"
 
-cd simd-cxx
+cd simd-cxx-master
 mkdir build
 cd build
 

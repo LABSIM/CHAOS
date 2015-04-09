@@ -17,15 +17,15 @@ endif(NOT SIMD_INSTALL_DIR AND NOT $ENV{SIMD_INSTALL_DIR} STREQUAL "")
 
 FIND_PATH(SimD_INCLUDE_DIR
 	NAMES
-		dds/dds.hpp
+		dds/core/types.hpp
 	PATHS
 		${SIMD_INSTALL_DIR}/include
 )
 
 IF (SimD_INCLUDE_DIR)
-	MESSAGE(STATUS "Found SimD include dir: ${SimD_INCLUDE_DIR}")
+	MESSAGE(STATUS "Found SimD C++ include dir: ${SimD_INCLUDE_DIR}")
 ELSE (SimD_INCLUDE_DIR)
-  MESSAGE(FATAL_ERROR "Could not find SimD include dir")
+  MESSAGE(FATAL_ERROR "Could not find SimD C++ include dir")
 ENDIF (SimD_INCLUDE_DIR)
 
 SET(SimD_INCLUDE_DIRS 
@@ -35,7 +35,7 @@ SET(SimD_INCLUDE_DIRS
 # Find libraries
 FIND_LIBRARY(SimD_LIBRARY
 	NAMES
-		SimD
+		simd-cxx
 	PATHS
 		${SIMD_INSTALL_DIR}/lib
 )
@@ -53,9 +53,8 @@ IF (SimD_FOUND)
 	MESSAGE(STATUS "Found SimD C++ libraries: ${SimD_LIBRARIES}")
 ELSE (SimD_FOUND)
 	IF (SimD_FIND_REQUIRED)
-		MESSAGE(FATAL_ERROR "Could not find SimD")
+		MESSAGE(FATAL_ERROR "Could not find SimD C++")
 	ENDIF (SimD_FIND_REQUIRED)
 ENDIF (SimD_FOUND)
 
 MARK_AS_ADVANCED(SimD_INCLUDE_DIRS SimD_LIBRARIES)
-
