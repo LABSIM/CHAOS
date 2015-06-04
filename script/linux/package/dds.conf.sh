@@ -4,25 +4,10 @@
 # DDS environment config
 #
 # Ce fichier defini les variables necessaires aux projet RHEA & KRONOS 
-# ainsi que celles necessaires aux Progiciels OpenSpliceDDS, 
-# OpenFusionTAO & SimD
+# ainsi que celles necessaires au Progiciel OpenSpliceDDS
 #
 # 07/02/12 - Kinani Nawfel
 #######################
-
-###################################################################
-# TAO - OpenFusionTAO
-###
-# ACE ROOT - The home of the ADAPTIVE Communication Environment
-# TAO ROOT - The home of The Ace Orb
-# TAO IDL - The Interface Definition Language compiler 
-###
-
-#ACE_ROOT=$PRO_HOME/openfusiontao-$TAO_VERSION
-#TAO_ROOT=$ACE_ROOT
-#TAO_IDL=$TAO_ROOT/bin/tao_idl
-#
-#export ACE_ROOT TAO_ROOT TAO_IDL
 
 ###################################################################
 # OpenSpliceDDS
@@ -54,14 +39,6 @@ OSPL_URI=file://$OSPL_CONFPATH/ospl_simulation_conf.xml
 export OSPL_URI
 
 ###################################################################
-# SimD - Simple DDS API
-###
-
-SIMD_INSTALL_DIR=$PRO_HOME/simd-$SIMD_VERSION
-
-export SIMD_INSTALL_DIR
-
-###################################################################
 # Sourcing - except during install
 ###
 if [ -z ${DEVTK_REQUIRE_CLEAN_DDS_INSTALL_ENVIRONMENT+x} ]; then
@@ -81,18 +58,3 @@ else
 	echo "!! installation du package compat-glibc-headers-2.5-46.2.x86_64 nécéssaire afin d'assurer la compatibilité RHEL !!"
 fi
 
-
-###################################################################
-# Global Variable
-###
-
-#PATH=$PATH\
-#:$TAO_ROOT/bin
-
-#LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
-#:$TAO_ROOT/lib
-
-#INSLIB=$INSLIB\
-#:$TAO_ROOT/lib
-
-#export PATH LD_LIBRARY_PATH INSLIB

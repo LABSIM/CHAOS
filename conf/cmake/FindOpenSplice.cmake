@@ -15,55 +15,47 @@
 ##############################################################################
 # Courtesy of Ivan Galvez Junquera <ivgalvez@gmail.com>
 ##############################################################################
-
 FIND_PATH(OpenSplice_INCLUDE_DIR
 	NAMES
-		ccpp_dds_dcps.h
+		make_files.py
 	PATHS
-		$ENV{OSPL_HOME}/include/dcps/C++/SACPP
+		$ENV{OSPL_HOME}/include/dcps/C++/isocpp
 )
 
 SET(OpenSplice_INCLUDE_DIRS 
 	${OpenSplice_INCLUDE_DIR} 
 	$ENV{OSPL_HOME}/include 
 	$ENV{OSPL_HOME}/include/sys
-	$ENV{OSPL_HOME}/etc/idl
+	$ENV{OSPL_HOME}/include/dcps/C++/SACPP
 )
 
 # Find libraries
-FIND_LIBRARY(DCPSGAPI_LIBRARY
+FIND_LIBRARY(KERNEL_LIBRARY
 	NAMES
-		dcpsgapi
+		ddskernel
 	PATHS
 		$ENV{OSPL_HOME}/lib
 )
 
-FIND_LIBRARY(DCPSSACPP_LIBRARY
+FIND_LIBRARY(DCPSISOCPP_LIBRARY
+	NAMES
+		dcpsisocpp
+	PATHS
+		$ENV{OSPL_HOME}/lib
+)
+
+FIND_LIBRARY(DCPSCPP_LIBRARY
 	NAMES
 		dcpssacpp
 	PATHS
 		$ENV{OSPL_HOME}/lib
 )
 
-FIND_LIBRARY(DDSDATABASE_LIBRARY
-	NAMES
-		ddsdatabase
-	PATHS
-		$ENV{OSPL_HOME}/lib
-)
-
-FIND_LIBRARY(DDSOS_LIBRARY
-   NAMES
-		ddsos
-   PATHS
-      $ENV{OSPL_HOME}/lib
-)
-
 SET(OpenSplice_LIBRARIES
-			${DCPSGAPI_LIBRARY}
-			${DCPSSACPP_LIBRARY}
-			${DDSDATABASE_LIBRARY}
-			${DDSOS_LIBRARY}
+			${KERNEL_LIBRARY}
+			${DCPSISOCPP_LIBRARY}
+			${DCPSCPP_LIBRARY}
+
 )
 
 # Binary for the IDL compiler 

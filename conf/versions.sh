@@ -147,23 +147,11 @@ QT_MIN_VER=0
 QT_PATCH_VER=0 
 QT_VERSION=0
 
-# OpenFusionTAO versions
-#TAO_MAJ_VER=0
-#TAO_MIN_VER=0
-#TAO_PATCH_VER=0 
-#TAO_VERSION=0
-
 # OpenSpliceDDS versions
 OSPL_MAJ_VER=0
 OSPL_MIN_VER=0
 OSPL_PATCH_VER=0 
 OSPL_VERSION=0
-
-# SimpleDDS versions
-SIMD_MAJ_VER=0
-SIMD_MIN_VER=0
-SIMD_PATCH_VER=0 
-SIMD_VERSION=0
 
 # Then split then into version
 
@@ -190,9 +178,7 @@ fi
 
 # Titans specific environment mapping
 if [ $(( $LABSIM_DEV_ID & $LABSIM_TITANS_MASK )) -eq $LABSIM_TITANS_MASK ]; then
-	#split_version "openfusiontao" TAO_MAJ_VER TAO_MIN_VER TAO_PATCH_VER TAO_VERSION
 	split_version "opensplicedds" OSPL_MAJ_VER OSPL_MIN_VER OSPL_PATCH_VER OSPL_VERSION
-	split_version "simd" SIMD_MAJ_VER SIMD_MIN_VER SIMD_PATCH_VER SIMD_VERSION
 fi
 
 # debug
@@ -211,8 +197,6 @@ if [ ! -z ${DEVTK_DEBUG_ON+x} ]; then
 	echo "osg : $OSG_MAJ_VER $OSG_MIN_VER $OSG_PATCH_VER $OSG_VERSION"
 	echo "cegui : $CEGUI_MAJ_VER $CEGUI_MIN_VER $CEGUI_PATCH_VER $CEGUI_VERSION"
 	echo "qt: $QT_MAJ_VER $QT_MIN_VER $QT_PATCH_VER $QT_VERSION"
-	#echo "openfusiontao : $TAO_MAJ_VER $TAO_MIN_VER $TAO_PATCH_VER $TAO_VERSION"
 	echo "opensplicedds : $OSPL_MAJ_VER $OSPL_MIN_VER $OSPL_PATCH_VER $OSPL_VERSION"
-	echo "simd : $SIMD_MAJ_VER $SIMD_MIN_VER $SIMD_PATCH_VER $SIMD_VERSION"
 	echo "--------------------------------------------------------------------"
 fi

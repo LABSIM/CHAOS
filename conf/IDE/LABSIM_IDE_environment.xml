@@ -9,9 +9,9 @@
 			<includepath>${QTEMBEDDED_INCLUDEDIR}</includepath>
 			<includepath>${OSPL_HDE_ROOT}/include</includepath>
 			<includepath>${OSPL_HDE_ROOT}/include/sys</includepath>
-			<includepath>${SIMD_INSTALL_DIR}/include</includepath>
+			<includepath>${OSPL_HDE_ROOT}/include/dcps/C++/SACPP</includepath>
+			<includepath>${OSPL_HDE_ROOT}/include/dcps/C++/isocpp</includepath>
 			<includepath>${CEGUI_INCLUDEDIR}</includepath>
-			<includepath>${TAO_ROOT}/include</includepath>
 		</language>
 		<language name="C Source File">
 			<includepath>/usr/lib/x86_64-redhat-linux5E/include/</includepath>
@@ -21,9 +21,9 @@
 			<includepath>${QTEMBEDDED_INCLUDEDIR}</includepath>
 			<includepath>${OSPL_HDE_ROOT}/include</includepath>
 			<includepath>${OSPL_HDE_ROOT}/include/sys</includepath>
-			<includepath>${SIMD_INSTALL_DIR}/include</includepath>
+			<includepath>${OSPL_HDE_ROOT}/include/dcps/C++/SACPP</includepath>
+			<includepath>${OSPL_HDE_ROOT}/include/dcps/C++/isocpp</includepath>
 			<includepath>${CEGUI_INCLUDEDIR}</includepath>
-			<includepath>${TAO_ROOT}/include</includepath>
 		</language>
 		<language name="Object File">
 		</language>
@@ -35,9 +35,9 @@
 			<includepath>${QTEMBEDDED_INCLUDEDIR}</includepath>
 			<includepath>${OSPL_HDE_ROOT}/include</includepath>
 			<includepath>${OSPL_HDE_ROOT}/include/sys</includepath>
-			<includepath>${SIMD_INSTALL_DIR}/include</includepath>
+			<includepath>${OSPL_HDE_ROOT}/include/dcps/C++/SACPP</includepath>
+			<includepath>${OSPL_HDE_ROOT}/include/dcps/C++/isocpp</includepath>
 			<includepath>${CEGUI_INCLUDEDIR}</includepath>
-			<includepath>${TAO_ROOT}/include</includepath>
 		</language>
 	</section>
 	<section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.Macros">
