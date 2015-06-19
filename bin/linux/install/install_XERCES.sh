@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# get current directory
+current_dir=$PWD
+
+# source user configured versions 
+source user-config-versions.sh
+
+# go to dir
+cd /home/$(whoami)
+mkdir xercescinst
+cd xercescinst
+
+echo; echo "## BEGIN"; echo
+
+echo "########################################################"
+echo "  Decompression du/des package(s)"
+echo "########################################################"
+
+echo "#!/bin/bash" > exec.sh
+echo "tar -xvzf /data/CentOS_6.3/archive/xerces-c-$XERCESC_INSTALL_TARGET_VERSION.tar.gz" >> exec.sh
+echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+echo -ne "\tDecompression de Xerces-C++ $XERCESC_INSTALL_TARGET_VERSION ..."
+chmod u+x exec.sh
+gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
+echo "OK"
+
+cd xerces-c-$XERCESC_INSTALL_TARGET_VERSION
+
+echo "########################################################"
+echo "  Configure, build & install"
+echo "########################################################"
+
+echo "#!/bin/bash" > exec.sh
+echo "./configure --prefix=/home/$(whoami)/Progiciels/xercesc-$XERCESC_INSTALL_TARGET_VERSION" >> exec.sh
+echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+echo -ne "\tConfiguration de Xerces-C++ $XERCESC_INSTALL_TARGET_VERSION ... "
+chmod u+x exec.sh
+gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
+echo "OK"
+
+echo "#!/bin/bash" > exec.sh
+echo "make -j4" >> exec.sh
+echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+echo -ne "\tCompilation de Xerces-C++ $XERCESC_INSTALL_TARGET_VERSION ... "
+chmod u+x exec.sh
+gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
+echo "OK"
+
+echo "#!/bin/bash" > exec.sh
+echo "make install" >> exec.sh
+echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+echo -ne "\tInstallation de Xerces-C++ $XERCESC_INSTALL_TARGET_VERSION ... "
+chmod u+x exec.sh
+gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
+echo "OK"
+
+echo "########################################################"
+echo "  Suppression du repertoire temporaire"
+cd $current_dir
+rm -rf /home/$(whoami)/xercescinst
+echo "########################################################"
+
+echo; echo "## END"; echo
+
