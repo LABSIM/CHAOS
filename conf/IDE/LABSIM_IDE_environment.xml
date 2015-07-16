@@ -6,6 +6,7 @@
 			<includepath>${BOOST_INCLUDEDIR}</includepath>
 			<includepath>${OSG_INCLUDEDIR}</includepath>
 			<includepath>${QT_INCLUDEDIR}</includepath>
+			<includepath>${XERCESC_INCLUDEDIR}</includepath>
 			<includepath>${QTEMBEDDED_INCLUDEDIR}</includepath>
 			<includepath>${OSPL_HDE_ROOT}/include</includepath>
 			<includepath>${OSPL_HDE_ROOT}/include/sys</includepath>
@@ -17,6 +18,7 @@
 			<includepath>/usr/lib/x86_64-redhat-linux5E/include/</includepath>
 			<includepath>${BOOST_INCLUDEDIR}</includepath>
 			<includepath>${OSG_INCLUDEDIR}</includepath>
+			<includepath>${XERCESC_INCLUDEDIR}</includepath>
 			<includepath>${QT_INCLUDEDIR}</includepath>
 			<includepath>${QTEMBEDDED_INCLUDEDIR}</includepath>
 			<includepath>${OSPL_HDE_ROOT}/include</includepath>
@@ -31,6 +33,7 @@
 			<includepath>/usr/lib/x86_64-redhat-linux5E/include/</includepath>
 			<includepath>${BOOST_INCLUDEDIR}</includepath>
 			<includepath>${OSG_INCLUDEDIR}</includepath>
+			<includepath>${XERCESC_INCLUDEDIR}</includepath>
 			<includepath>${QT_INCLUDEDIR}</includepath>
 			<includepath>${QTEMBEDDED_INCLUDEDIR}</includepath>
 			<includepath>${OSPL_HDE_ROOT}/include</includepath>
