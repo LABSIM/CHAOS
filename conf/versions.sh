@@ -28,10 +28,10 @@ function split_version ()
 
 	for dirname in $(ls -d $current_progiciels_home/$1-*); do
 
-		local tmp_version=$(echo $dirname | cut -d'-' -f2)
-		local tmp_major_version=$(echo $tmp_version | cut -d. -f1)
-		local tmp_minor_version=$(echo $tmp_version | cut -d. -f2)
-		local tmp_patch_version=$(echo $tmp_version | cut -d. -f3)
+		local tmp_version=$(echo $dirname | awk -F"-" '{print $NF}')
+		local tmp_major_version=$(echo $tmp_version | awk -F"." '{print $1}')
+		local tmp_minor_version=$(echo $tmp_version | awk -F"." '{print $2}')
+		local tmp_patch_version=$(echo $tmp_version | awk -F"." '{print $3}')
 
 		if [ "$tmp_major_version" -gt "$major_version" ]; then
 			major_version=$tmp_major_version
@@ -153,6 +153,12 @@ QT_MIN_VER=0
 QT_PATCH_VER=0 
 QT_VERSION=0
 
+# QT Creator versions
+QTCREATOR_MAJ_VER=0
+QTCREATOR_MIN_VER=0
+QTCREATOR_PATCH_VER=0 
+QTCREATOR_VERSION=0
+
 # OpenSpliceDDS versions
 OSPL_MAJ_VER=0
 OSPL_MIN_VER=0
@@ -174,6 +180,7 @@ if [ $(( $LABSIM_DEV_ID & $LABSIM_COMMON_MASK )) -eq $LABSIM_COMMON_MASK ]; then
 	split_version "nvtt" NVTT_MAJ_VER NVTT_MIN_VER NVTT_PATCH_VER NVTT_VERSION
 	split_version "osg" OSG_MAJ_VER OSG_MIN_VER OSG_PATCH_VER OSG_VERSION
 	split_version "qt" QT_MAJ_VER QT_MIN_VER QT_PATCH_VER QT_VERSION
+	split_version "qt-creator" QTCREATOR_MAJ_VER QTCREATOR_MIN_VER QTCREATOR_PATCH_VER QTCREATOR_VERSION
 fi
 
 # Olympiens specific environment mapping
@@ -202,9 +209,10 @@ if [ ! -z ${DEVTK_DEBUG_ON+x} ]; then
 	echo "cmake : $CMAKE_MAJ_VER $CMAKE_MIN_VER $CMAKE_PATCH_VER $CMAKE_VERSION"
 	echo "boost : $BOOST_MAJ_VER $BOOST_MIN_VER $BOOST_PATCH_VER $BOOST_VERSION"
 	echo "nvtt : $NVTT_MAJ_VER $NVTT_MIN_VER $NVTT_PATCH_VER $NVTT_VERSION"
-	echo "osg : $OSG_MAJ_VER $OSG_MIN_VER $OSG_PATCH_VER $OSG_VERSION"
+	echo "osg : $OSG_MAJ_VER $OSG_MIN_VER $OSG_PATCH_VER $OSG_VERSION"r	
 	echo "cegui : $CEGUI_MAJ_VER $CEGUI_MIN_VER $CEGUI_PATCH_VER $CEGUI_VERSION"
 	echo "qt: $QT_MAJ_VER $QT_MIN_VER $QT_PATCH_VER $QT_VERSION"
+	echo "qt-creator: $QTCREATOR_MAJ_VER $QTCREATOR_MIN_VER $QTCREATOR_PATCH_VER $QTCREATOR_VERSION"
 	echo "opensplicedds : $OSPL_MAJ_VER $OSPL_MIN_VER $OSPL_PATCH_VER $OSPL_VERSION"
 	echo "--------------------------------------------------------------------"
 fi
