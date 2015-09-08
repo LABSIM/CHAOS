@@ -44,7 +44,7 @@ echo "  Configure, build & install"
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
-echo "export OSPL_QT_IS_ON=no && ./configure" >> exec.sh
+echo "export OSPL_QT_IS_ON=no && ./configure x86_64.linux-release" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tConfiguration d'OpenSpliceDDS ..."
 chmod u+x exec.sh
@@ -52,7 +52,7 @@ gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" 
 echo "OK"
 
 echo -ne "\tSourcing de la configuration d'OpenSpliceDDS ..."
-source envs-*.sh
+source envs-x86_64.linux-release.sh
 echo "OK"
 
 echo "#!/bin/bash" > exec.sh

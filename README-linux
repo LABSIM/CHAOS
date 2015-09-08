@@ -19,9 +19,7 @@ if [ -f ~/.labsim.env.sh ]; then
 fi
 
 # ======================================================================== #
-
-
-Dans l'ordre :
+# Installation script execution order
 
 -> install_Dependencies.sh
 -> [root] pre-configure_GCC.sh

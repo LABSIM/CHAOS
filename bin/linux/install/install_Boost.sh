@@ -38,9 +38,8 @@ chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
 echo "OK"
 
-cp -f /data/CentOS_6.3/conf/boost_$BOOST_INSTALL_TARGET_MAJ_VER\_$BOOST_INSTALL_TARGET_MIN_VER\_$BOOST_INSTALL_TARGET_PATCH_VER/user-config.jam ./tools/build/user-config.jam
 echo "#!/bin/bash" > exec.sh
-echo "./b2 --prefix=/home/$(whoami)/Progiciels/boost-$BOOST_INSTALL_TARGET_VERSION toolset=gcc variant=release link=shared threading=multi runtime-link=shared -j4 install" >> exec.sh
+echo "./b2 --prefix=/home/$(whoami)/Progiciels/boost-$BOOST_INSTALL_TARGET_VERSION toolset=gcc cxxflags="-std=c++11" variant=release link=shared threading=multi runtime-link=shared -j4 install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tCompilation et installation de boost $BOOST_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
