@@ -77,7 +77,7 @@ macro(ospl_process_generated_src_procedure)
 	
 	# Prepare folders
 	file(MAKE_DIRECTORY ${tmp_idlpath}/tmp)
-	set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${tmp_idlpath}/tmp;${tmp_idlpath}/src;${tmp_idlpath}/include")
+	set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${tmp_idlpath}/tmp;${tmp_idlpath}/src/KronosIDL;${tmp_idlpath}/include/KronosIDL")
 	
 	# Create a custom target
 	add_custom_target("${tmp_target}" ALL)
@@ -120,7 +120,7 @@ macro(ospl_dispatch_generated_src_procedure)
         add_custom_command(
             TARGET "${tmp_target}" 
             PRE_BUILD 
-            COMMAND ${CMAKE_COMMAND} -E copy ${tmp_idlpath}/tmp/${header} ${tmp_idlpath}/include/${header}
+            COMMAND ${CMAKE_COMMAND} -E copy ${tmp_idlpath}/tmp/${header} ${tmp_idlpath}/include/KronosIDL/${header}
         )
     endforeach(header ${tmp_header})
     
@@ -129,7 +129,7 @@ macro(ospl_dispatch_generated_src_procedure)
         add_custom_command(
             TARGET "${tmp_target}" 
             PRE_BUILD 
-            COMMAND ${CMAKE_COMMAND} -E copy ${tmp_idlpath}/tmp/${src} ${tmp_idlpath}/src/${src}
+            COMMAND ${CMAKE_COMMAND} -E copy ${tmp_idlpath}/tmp/${src} ${tmp_idlpath}/src/KronosIDL/${src}
         )
     endforeach(src ${tmp_src})
     
@@ -154,19 +154,19 @@ macro(ospl_scoped_procedure)
     
     # Extract headers 
     message("\t>-+ ${OpenSplice_IDLGEN_PATH}/")
-    message("\t  +-+ include/")
+    message("\t  +-+ include/KronosIDL/")
     foreach(headerfullpath ${tmp_header})
         get_filename_component(headerfullpath ${headerfullpath} NAME)
-        set(OpenSplice_IDLGEN_HEADER ${OpenSplice_IDLGEN_HEADER} "${OpenSplice_IDLGEN_PATH}/include/${headerfullpath}")
+        set(OpenSplice_IDLGEN_HEADER ${OpenSplice_IDLGEN_HEADER} "${OpenSplice_IDLGEN_PATH}/include/KronosIDL/${headerfullpath}")
         message("\t  | |-> ${headerfullpath}")
     endforeach(headerfullpath ${tmp_header})
     message("\t  | +")
     
     # Extract srcs 
-    message("\t  +-+ src/")
+    message("\t  +-+ src/KronosIDL")
     foreach(srcfullpath ${tmp_src})
         get_filename_component(srcfullpath ${srcfullpath} NAME)
-        set(OpenSplice_IDLGEN_SRC ${OpenSplice_IDLGEN_SRC} "${OpenSplice_IDLGEN_PATH}/src/${srcfullpath}")
+        set(OpenSplice_IDLGEN_SRC ${OpenSplice_IDLGEN_SRC} "${OpenSplice_IDLGEN_PATH}/src/KronosIDL/${srcfullpath}")
         message("\t  | |-> ${srcfullpath}")
     endforeach(srcfullpath ${tmp_src})
     message("\t  | +")
