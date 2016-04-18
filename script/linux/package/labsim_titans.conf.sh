@@ -36,7 +36,7 @@ export RHEA_ROOT
 # alias 
 function __internal_labsim_rhea() {
 	echo -e "\n## BEGIN LABSIM ROUTINES\n" 									\
-	&& time perl -I $RHEA_ROOT/etc/module $RHEA_ROOT/bin/v2/RHEA.pl "$@"	\
+	&& time perl -I $RHEA_ROOT/script/module $RHEA_ROOT/bin/RHEA.pl "$@"	\
 	&& echo -e "\n## END LABSIM ROUTINES\n"
 } # __internal_labsim_rhea()
 
@@ -51,7 +51,7 @@ export OCEAN_ROOT
 # alias 
 function __internal_labsim_ocean() {
 	echo -e "\n## BEGIN LABSIM ROUTINES\n" 									\
-	&& time perl -I $OCEAN_ROOT/etc/module $OCEAN_ROOT/bin/v1/OCEAN.pl "$@"	\
+	&& time perl -I $OCEAN_ROOT/script/module $OCEAN_ROOT/bin/OCEAN.pl "$@"	\
 	&& echo -e "\n## END LABSIM ROUTINES\n"
 } # __internal_labsim_ocean()
 
@@ -77,12 +77,12 @@ export KRONOSDDS_ROOT KRONOSDDS_INCLUDEDIR KRONOSDDS_LIBRARYDIR KRONOSDDS_BINARY
 
 # == KRONOS-IDL
 
-KRONOSIDL_ROOT=$KRONOSDDS_ROOT/idl
-KRONOSIDL_INCLUDEDIR="$KRONOSIDL_ROOT/include $KRONOSIDL_ROOT/traits"
-KRONOSIDL_LIBRARYDIR=$KRONOSDDS_LIBRARYDIR
-KRONOSIDL_BINARYDIR=$KRONOSDDS_BINARYDIR
+#KRONOSIDL_ROOT=$KRONOSDDS_ROOT/idl
+#KRONOSIDL_INCLUDEDIR="$KRONOSIDL_ROOT/include $KRONOSIDL_ROOT/traits"
+#KRONOSIDL_LIBRARYDIR=$KRONOSDDS_LIBRARYDIR
+#KRONOSIDL_BINARYDIR=$KRONOSDDS_BINARYDIR
 
-export KRONOSIDL_ROOT KRONOSIDL_INCLUDEDIR KRONOSIDL_LIBRARYDIR KRONOSIDL_BINARYDIR
+#export KRONOSIDL_ROOT KRONOSIDL_INCLUDEDIR KRONOSIDL_LIBRARYDIR KRONOSIDL_BINARYDIR
 
 # ================================================================= #
 # 							Global Variable  						#

@@ -11,7 +11,6 @@ cd /home/$(whoami)
 mkdir osplinst
 cd osplinst
 
-
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
@@ -56,17 +55,9 @@ source envs-x86_64.linux-release.sh
 echo "OK"
 
 echo "#!/bin/bash" > exec.sh
-echo "make" >> exec.sh
-echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tBuild d'OpenSpliceDDS ..."
-chmod u+x exec.sh
-gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
-echo "OK"
-
-echo "#!/bin/bash" > exec.sh
 echo "make install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tInstallation d'OpenSpliceDDS ..."
+echo -ne "\tBuild & Install OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION..."
 chmod u+x exec.sh
 gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
 echo "OK"
@@ -88,6 +79,20 @@ sed -i "s|@@INSTALLDIR@@|/home/$(whoami)/Progiciels/opensplicedds-$OSPL_INSTALL_
 sed -i "s|@@INSTALLDIR@@|/home/$(whoami)/Progiciels/opensplicedds-$OSPL_INSTALL_TARGET_VERSION|g" /home/$(whoami)/Progiciels/opensplicedds-$OSPL_INSTALL_TARGET_VERSION/RTS/x86_64.linux/release.com
 
 echo "OK"
+
+cd /home/$(whoami)/Progiciels/opensplicedds-$OSPL_INSTALL_TARGET_VERSION/HDE/x86_64.linux/custom_lib
+
+echo "#!/bin/bash" > exec.sh
+echo "sed -i 's/CPPFLAGS      = /CPPFLAGS      = -DOSPL_USE_CXX11 -std=c++14 /g' Makefile.Build_DCPS_ISO_Cpp_Lib" >> exec.sh
+echo "sed -i 's/CPPFLAGS      = /CPPFLAGS      = -DOSPL_USE_CXX11 -std=c++14 /g' Makefile.Build_DCPS_Stand_Alone_Cpp_Lib" >> exec.sh
+echo "make" >> exec.sh
+echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+echo -ne "\tRe-build de la couche ISO CPP du DCPS d'OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION avec le support explicite du c++14 ..."
+chmod u+x exec.sh
+gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" --window
+echo "OK"
+
+rm -f exec.sh
 
 echo "########################################################"
 echo "  Suppression du repertoire temporaire"

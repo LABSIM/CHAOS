@@ -33,17 +33,12 @@ yum install \
 	giflib-devel.x86_64 \
 	libsndfile-devel.x86_64 \
 	java-1.8.0-openjdk-devel.x86_64 \
-	ncurses-devel.x86_64
+	ncurses-devel.x86_64 \
+	graphviz.x86_64
 
 echo; echo " - QT5 dependencies - "; echo
 
 # Script d'installation des dependances necessaires a QT5
-
-yum install flex bison gperf libicu-devel libxslt-devel ruby
-
-libgcrypt-devel libgcrypt pciutils-devel nss-devel libXtst-devel gperf cups-devel pulseaudio-libs-devel libgudev1-devel systemd-devel libcap-devel alsa-lib-devel dbus libXrandr-devel libXcomposite-devel libXcursor-devel dbus-devel fontconfig-devel
-
-
 yum install \
 	libxcb \
 	libxcb-devel \

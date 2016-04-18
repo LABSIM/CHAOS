@@ -72,7 +72,7 @@ gnome-terminal --disable-factory --working-directory $PWD --command "./exec.sh" 
 echo "OK"
 
 echo "########################################################"
-echo "  OSG :CMake, build  & install"
+echo "  OSG : CMake, build  & install"
 echo "########################################################"
 
 cd OpenSceneGraph-*
