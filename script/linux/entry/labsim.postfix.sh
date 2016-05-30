@@ -3,8 +3,14 @@
 # export necessary env
 export DEVTK_ROOT=$(readlink -f "$SCRIPTPATH/../../../")
 
-# don't forget to simply source the local version bash file 
-source $DEVTK_ROOT/conf/versions.sh
+###################################################################
+# Versions deployment
+###
+if [ -f "$DEVTK_ROOT/conf/versions.sh" ]; then 
+	source $DEVTK_ROOT/conf/versions.sh
+else
+	echo "Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
+fi
 
 # then simply source the entry point
 source $DEVTK_ROOT/script/linux/entry/labsim.entry.sh

@@ -18,15 +18,6 @@ BDD_HOME=/data/bdd
 
 export PRO_HOME CODES_HOME BDD_HOME DEV_HOME IDE_HOME
 
-###################################################################
-# Versions deployment
-###
-if [ -f "$DEVTK_ROOT/conf/versions.sh" ]; then 
-	source $DEVTK_ROOT/conf/versions.sh
-else
-	echo "Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
-fi
-
 ###
 # funtions
 ###

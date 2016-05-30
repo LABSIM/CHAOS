@@ -21,7 +21,7 @@ fi
 # ======================================================================== #
 # Installation script execution order
 
--> install_Dependencies.sh
+-> [root] install_Dependencies.sh
 -> [root] pre-configure_GCC.sh
 -> install_GCC.sh
 -> [root] post-configure_GCC.sh

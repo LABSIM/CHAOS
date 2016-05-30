@@ -9,12 +9,6 @@
 # 07/02/12 - Kinani Nawfel
 
 ###################################################################
-# Version definition
-###
-
-source $DEVTK_ROOT/conf/versions.sh
-
-###################################################################
 # MPC
 ###
 
@@ -129,17 +123,6 @@ BOOST_LIBRARYDIR=$BOOST_ROOT/lib
 BOOST_INCLUDEDIR=$BOOST_ROOT/include
 
 export BOOST_ROOT BOOST_INCLUDEDIR BOOST_LIBRARYDIR
-
-###################################################################
-# Nvidia Texture Tools
-###
-
-NVTT_ROOT=$PRO_HOME/nvtt-$NVTT_VERSION
-NVTT_BINARYDIR=$NVTT_ROOT/bin
-NVTT_LIBRARYDIR=$NVTT_ROOT/lib
-NVTT_INCLUDEDIR=$NVTT_ROOT/include
-
-export NVTT_ROOT NVTT_BINARYDIR NVTT_LIBRARYDIR NVTT_INCLUDEDIR
 
 ###################################################################
 # OpenSceneGraph
