@@ -36,7 +36,7 @@ function __internal_labsim_environment() {
 
 function __internal_labsim_switch_environment() {
 	echo -e "\n## BEGIN LABSIM ROUTINES\n" 								\
-	&& time sh $DEVTK_ROOT/bin/linux/Labsim_switch_environment.sh "$@"	\
+	&& time sh $DEVTK_ROOT/script/linux/switch_environment.sh "$@"	\
 	&& echo -e "\n## END LABSIM ROUTINES\n"
 } # __internal_labsim_switch_environment()
 

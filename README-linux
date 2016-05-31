@@ -17,26 +17,3 @@ if [ -f ~/.labsim.env.sh ]; then
 		source ~/.labsim.env.sh
 	fi 
 fi
-
-# ======================================================================== #
-# Installation script execution order
-
--> [sudo required] install_Dependencies.sh
--> not DRI ?
-	-> [root] pre-configure_GCC.sh
-	-> install_GCC.sh
-	-> [root] post-configure_GCC.sh
--> run script Labsim_switch_environment.sh with your corresponding environment
--> install_QT.sh
--> install_QT_Creator.sh
--> install_Boost.sh
--> install_CMake.sh
--> install_XERCES.sh
--> install_GLM.sh
--> install_GLFW.sh
--> install_OSG.sh
--> install_SilverLining.sh
--> [root] pre-configure_Triton.sh
--> install_Triton.sh
--> [root] pre-configure_OSPL.sh
--> install_OSPL.sh
