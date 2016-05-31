@@ -19,7 +19,7 @@ echo "  Decompression du/des package(s)"
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
-echo "tar -xzvf /data/CentOS_6.3/archive/cmake-$CMAKE_INSTALL_TARGET_VERSION.tar.gz" >> exec.sh
+echo "tar -xzvf /data/CentOS_6.x/archive/cmake-$CMAKE_INSTALL_TARGET_VERSION.tar.gz" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tDecompression de cmake $CMAKE_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
