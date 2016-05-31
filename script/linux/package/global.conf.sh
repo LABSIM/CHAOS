@@ -10,12 +10,15 @@
 
 # configuration DRI ?
 if [ -z ${LABSIM_DRI_HOST_ADMIN+x} ]; then 
-	DRI_HACK=0
+	# LABSIM HOST
+	NEED_DRI_BYPASS_HACK=0
 else 
-	DRI_HACK=1
+	# DRI HOST
+	NEED_DRI_BYPASS_HACK=1
 fi
 
-if [ $DRI_HACK -eq 1 ]; then
+# if bypassing labsim variable is on then load required DRI module
+if [ $NEED_DRI_BYPASS_HACK -eq 1 ]; then
 	module add gcc/5.2
 	module add subversion/1.7.6
 fi

@@ -14,6 +14,13 @@ if [ $(( $LABSIM_DEV_ID & $LABSIM_DRI_MASK )) -eq $LABSIM_DRI_MASK ]; then
 	LABSIM_DEV_DIST="$LABSIM_DEV_DIST\n\t- [DRI host admin]"
 fi
 
+# Version deployment
+if [ -f "$DEVTK_ROOT/script/linux/versions.sh" ]; then 
+	source $DEVTK_ROOT/script/linux/versions.sh
+else
+	echo "Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
+fi
+
 # Global environment mapping -- should always be set
 if [ $(( $LABSIM_DEV_ID & $LABSIM_COMMON_MASK )) -eq $LABSIM_COMMON_MASK ]; then
 	source $DEVTK_ROOT/script/linux/package/global.conf.sh

@@ -21,9 +21,9 @@ echo "########################################################"
 echo "#!/bin/bash" > exec.sh
 echo "tar -xzvf /data/CentOS_6.x/archive/cmake-$CMAKE_INSTALL_TARGET_VERSION.tar.gz" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tDecompression de cmake $CMAKE_INSTALL_TARGET_VERSION ... "
+echo -ne "\tDecompression de CMake $CMAKE_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - CMake $CMAKE_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -43,10 +43,10 @@ if hash cmake 2>/dev/null; then
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 	echo -ne "\tCMake de cmake $CMAKE_INSTALL_TARGET_VERSION (Inception !)... "
 	chmod u+x exec.sh
-	gnome-terminal --working-directory $PWD --command "./exec.sh" --window
-sleep 0.2
-PID=$(pgrep exec.sh)
-wait_for_PID $PID
+	gnome-terminal --working-directory $PWD --title="LABSIM - CMake $CMAKE_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+	sleep 0.2
+	PID=$(pgrep exec.sh)
+	wait_for_PID $PID
 	echo "OK"
 else
 	# no cmake builtin -> bootstrap
@@ -55,10 +55,10 @@ else
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 	echo -ne "\tBootstrap de cmake $CMAKE_INSTALL_TARGET_VERSION ... "
 	chmod u+x exec.sh
-	gnome-terminal --working-directory $PWD --command "./exec.sh" --window
-sleep 0.2
-PID=$(pgrep exec.sh)
-wait_for_PID $PID
+	gnome-terminal --working-directory $PWD --title="LABSIM - CMake $CMAKE_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+	sleep 0.2
+	PID=$(pgrep exec.sh)
+	wait_for_PID $PID
 	echo "OK"
 fi
 
@@ -67,7 +67,7 @@ echo "make -j4" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tCompilation de cmake $CMAKE_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - CMake $CMAKE_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -78,7 +78,7 @@ echo "make install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tInstallation de cmake $CMAKE_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - CMake $CMAKE_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -89,11 +89,11 @@ echo " Import des propriétés LABSIM"
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
-echo "cp -r $current_dir/../../../conf/cmake/* /home/$(whoami)/Progiciels/cmake-$CMAKE_INSTALL_TARGET_VERSION/share/cmake-$CMAKE_INSTALL_TARGET_MAJ_VER.$CMAKE_INSTALL_TARGET_MIN_VER/Modules/" >> exec.sh
+echo "cp -r $current_dir/../../../../conf/cmake/* /home/$(whoami)/Progiciels/cmake-$CMAKE_INSTALL_TARGET_VERSION/share/cmake-$CMAKE_INSTALL_TARGET_MAJ_VER.$CMAKE_INSTALL_TARGET_MIN_VER/Modules/" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tCopie des Module CMake specifiques (COTIRE, FindOpenSpliceDDS, FindSimpleDDS, FindLabsim* & KRONOS-DDS spec.) ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - CMake $CMAKE_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID

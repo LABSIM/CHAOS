@@ -23,7 +23,7 @@ echo "tar -xzvf /data/CentOS_6.x/archive/doxygen-$DOXYGEN_INSTALL_TARGET_VERSION
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tDecompression de Doxygen $DOXYGEN_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - Doxygen $DOXYGEN_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -40,7 +40,7 @@ echo "cmake -DCMAKE_INSTALL_PREFIX=/home/$(whoami)/Progiciels/doxygen-$DOXYGEN_I
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tConfiguration de Doxygen $DOXYGEN_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - Doxygen $DOXYGEN_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -51,7 +51,7 @@ echo "make -j4" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tCompilation de Doxygen $DOXYGEN_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - Doxygen $DOXYGEN_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -62,7 +62,7 @@ echo "make install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tInstallation de Doxygen $DOXYGEN_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - Doxygen $DOXYGEN_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID

@@ -11,9 +11,11 @@
 
 # configuration DRI ?
 if [ -z ${LABSIM_DRI_HOST_ADMIN+x} ]; then 
-	DRI_HACK=0
+	# LABSIM HOST
+	NEED_DRI_BYPASS_HACK=0
 else 
-	DRI_HACK=1
+	# DRI HOST
+	NEED_DRI_BYPASS_HACK=1
 fi
 
 # set progiciel home directory
@@ -194,8 +196,8 @@ OSPL_VERSION=0
 
 # Global environment mapping -- should always be set
 if [ $(( $LABSIM_DEV_ID & $LABSIM_COMMON_MASK )) -eq $LABSIM_COMMON_MASK ]; then
-	# is it a DRI administrated host
-	if [ $DRI_HACK -eq 0 ]; then
+	# is it a LABSIM administrated host
+	if [ $NEED_DRI_BYPASS_HACK -ne 1 ]; then
 		split_version "mpc" MPC_MAJ_VER MPC_MIN_VER MPC_PATCH_VER MPC_VERSION
 		split_version "mpfr" MPFR_MAJ_VER MPFR_MIN_VER MPFR_PATCH_VER MPFR_VERSION
 		split_version "gmp" GMP_MAJ_VER GMP_MIN_VER GMP_PATCH_VER GMP_VERSION
@@ -230,7 +232,7 @@ fi
 if [ ! -z ${DEVTK_DEBUG_ON+x} ]; then 
 	echo "--------------------------------------------------------------------"
 	# is it a DRI administrated host
-	if [ $DRI_HACK -eq 0 ]; then
+	if [ $NEED_DRI_HACK -ne 1 ]; then
 		echo "mpc : $MPC_MAJ_VER $MPC_MIN_VER $MPC_PATCH_VER $MPC_VERSION"
 		echo "mpfr : $MPFR_MAJ_VER $MPFR_MIN_VER $MPFR_PATCH_VER $MPFR_VERSION"
 		echo "gmp : $GMP_MAJ_VER $GMP_MIN_VER $GMP_PATCH_VER $GMP_VERSION"

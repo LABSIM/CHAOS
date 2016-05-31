@@ -10,12 +10,14 @@
 
 # configuration DRI ?
 if [ -z ${LABSIM_DRI_HOST_ADMIN+x} ]; then 
-	DRI_HACK=0
+	# LABSIM HOST
+	NEED_DRI_BYPASS_HACK=0
 else 
-	DRI_HACK=1
+	# DRI HOST
+	NEED_DRI_BYPASS_HACK=1
 fi
 
-if [ $DRI_HACK -eq 0 ]; then
+if [ $NEED_DRI_BYPASS_HACK -ne 1 ]; then
 
 	###################################################################
 	# MPC
@@ -273,7 +275,7 @@ export CEGUI_ROOT CEGUI_BINARYDIR CEGUI_LIBRARYDIR CEGUI_INCLUDEDIR
 ###
 
 # configuration DRI ?
-if [ $DRI_HACK -eq 0 ]; then
+if [ $NEED_DRI_BYPASS_HACK -ne 1 ]; then
 
 	# prepone the new GCC to inhibit the installed one 
 	
