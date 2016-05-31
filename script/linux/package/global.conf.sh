@@ -9,7 +9,8 @@
 #######################
 
 # configuration DRI ?
-if [ $LABSIM_DRI_HOST_ADMIN -eq 1 ]; then
+declare DRI_HACK=$LABSIM_DRI_HOST_ADMIN
+if [ $DRI_HACK -eq 1 ]; then
 	module add gcc/5.2
 	module add subversion/1.7.6
 fi

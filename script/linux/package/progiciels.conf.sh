@@ -9,7 +9,8 @@
 # 07/02/12 - Kinani Nawfel
 
 # configuration DRI ?
-if [ $LABSIM_DRI_HOST_ADMIN -neq 1 ]; then
+declare DRI_HACK=$LABSIM_DRI_HOST_ADMIN
+if [ $DRI_HACK -eq 0 ]; then
 
 	###################################################################
 	# MPC
@@ -304,7 +305,7 @@ LD_LIBRARY_PATH=$QT_LIBRARYDIR\
 #:$LEAPMOTION_LIBRARYDIR
 
 # configuration DRI ?
-if [ $LABSIM_DRI_HOST_ADMIN -neq 1 ]; then
+if [ $DRI_HACK -neq 0 ]; then
 
 	# prepone the new GCC to inhibit the installed one 
 
