@@ -6,11 +6,11 @@
 
 # construct the information toolchain about the current environment
 declare LABSIM_DEV_DIST="LABSIM Development Environment distribution :"
-declare LABSIM_DRI_HOST_ADMIN=0
 
 # DRI administrated host
 if [ $(( $LABSIM_DEV_ID & $LABSIM_DRI_MASK )) -eq $LABSIM_DRI_MASK ]; then
 	LABSIM_DRI_HOST_ADMIN=1
+	export LABSIM_DRI_HOST_ADMIN
 	LABSIM_DEV_DIST="$LABSIM_DEV_DIST\n\t- [DRI host admin]"
 fi
 
@@ -51,6 +51,5 @@ if [ $(( $LABSIM_DEV_ID & $LABSIM_CONTRACT_MASK )) -eq $LABSIM_CONTRACT_MASK ]; 
 fi
 
 export LABSIM_DEV_DIST
-export LABSIM_DRI_HOST_ADMIN
 
 # == EOF

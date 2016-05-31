@@ -9,8 +9,12 @@
 #
 #################################################
 
-# DRI ?
-DRI_HACK=$LABSIM_DRI_HOST_ADMIN
+# configuration DRI ?
+if [ -z ${LABSIM_DRI_HOST_ADMIN+x} ]; then 
+	DRI_HACK=0
+else 
+	DRI_HACK=1
+fi
 
 # set progiciel home directory
 if [ -z ${PRO_HOME+x} ]; then 
