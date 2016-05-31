@@ -10,7 +10,7 @@
 #################################################
 
 # DRI ?
-declare DRI_HACK=$LABSIM_DRI_HOST_ADMIN
+DRI_HACK=$LABSIM_DRI_HOST_ADMIN
 
 # set progiciel home directory
 if [ -z ${PRO_HOME+x} ]; then 
