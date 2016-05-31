@@ -21,11 +21,14 @@ fi
 # ======================================================================== #
 # Installation script execution order
 
--> [root] install_Dependencies.sh
--> [root] pre-configure_GCC.sh
--> install_GCC.sh
--> [root] post-configure_GCC.sh
+-> [sudo required] install_Dependencies.sh
+-> not DRI ?
+	-> [root] pre-configure_GCC.sh
+	-> install_GCC.sh
+	-> [root] post-configure_GCC.sh
+-> run script Labsim_switch_environment.sh with your corresponding environment
 -> install_QT.sh
+-> install_QT_Creator.sh
 -> install_Boost.sh
 -> install_CMake.sh
 -> install_XERCES.sh

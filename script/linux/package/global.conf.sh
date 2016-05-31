@@ -8,10 +8,16 @@
 # 07/02/12 - Kinani Nawfel
 #######################
 
+# configuration DRI ?
+if [ $LABSIM_DRI_HOST_ADMIN -eq 1 ]; then
+	module add gcc/5.2
+	module add subversion/1.7.6
+fi
+
 ###################################################################
 # Home path
 ###
-DEV_HOME=$(eval echo "~$(whoami)")/dev
+DEV_HOME=$(eval echo "~$(whoami)")/Dev
 PRO_HOME=$(eval echo "~$(whoami)")/Progiciels
 CODES_HOME=$(eval echo "~$(whoami)")/CODES
 BDD_HOME=/data/bdd

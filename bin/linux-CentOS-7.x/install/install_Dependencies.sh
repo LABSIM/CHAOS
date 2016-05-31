@@ -2,8 +2,6 @@
 
 echo; echo "## BEGIN"; echo
 
-echo; echo " - CentOS EPEL repo - "; echo
-
 echo; echo " - Common dependencies - "; echo
 
 # Script d'installation des dependances necessaires aux differents codes
@@ -32,6 +30,7 @@ yum install \
 	python-devel.x86_64 \
 	bzip2-devel.x86_64
 
+echo; echo " - User provided dependencies - "; echo
 
 yum install \
 	/data/CentOS_7.x/rpms/guile-2.0.9-5.el7.x86_64.rpm \

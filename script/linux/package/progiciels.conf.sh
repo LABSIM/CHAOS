@@ -8,62 +8,67 @@
 #
 # 07/02/12 - Kinani Nawfel
 
-###################################################################
-# MPC
-###
+# configuration DRI ?
+if [ $LABSIM_DRI_HOST_ADMIN -eq 0 ]; then
 
-MPC_ROOT=$PRO_HOME/mpc-$MPC_VERSION
-MPC_LIBRARYDIR=$MPC_ROOT/lib
-MPC_INCLUDEDIR=$MPC_ROOT/include
+	###################################################################
+	# MPC
+	###
 
-export MPC_ROOT MPC_LIBRARYDIR MPC_INCLUDEDIR
+	MPC_ROOT=$PRO_HOME/mpc-$MPC_VERSION
+	MPC_LIBRARYDIR=$MPC_ROOT/lib
+	MPC_INCLUDEDIR=$MPC_ROOT/include
 
-###################################################################
-# MPFR
-###
+	export MPC_ROOT MPC_LIBRARYDIR MPC_INCLUDEDIR
 
-MPFR_ROOT=$PRO_HOME/mpfr-$MPFR_VERSION
-MPFR_LIBRARYDIR=$MPFR_ROOT/lib
-MPFR_INCLUDEDIR=$MPFR_ROOT/include
+	###################################################################
+	# MPFR
+	###
 
-export MPFR_ROOT MPFR_LIBRARYDIR MPFR_INCLUDEDIR
+	MPFR_ROOT=$PRO_HOME/mpfr-$MPFR_VERSION
+	MPFR_LIBRARYDIR=$MPFR_ROOT/lib
+	MPFR_INCLUDEDIR=$MPFR_ROOT/include
 
-###################################################################
-# GMP
-###
+	export MPFR_ROOT MPFR_LIBRARYDIR MPFR_INCLUDEDIR
 
-GMP_ROOT=$PRO_HOME/gmp-$GMP_VERSION
-GMP_LIBRARYDIR=$GMP_ROOT/lib
-GMP_INCLUDEDIR=$GMP_ROOT/include
+	###################################################################
+	# GMP
+	###
 
-export GMP_ROOT GMP_LIBRARYDIR GMP_INCLUDEDIR
+	GMP_ROOT=$PRO_HOME/gmp-$GMP_VERSION
+	GMP_LIBRARYDIR=$GMP_ROOT/lib
+	GMP_INCLUDEDIR=$GMP_ROOT/include
 
-###################################################################
-# AutoGen
-###
+	export GMP_ROOT GMP_LIBRARYDIR GMP_INCLUDEDIR
 
-AUTOGEN_ROOT=$PRO_HOME/autogen-$AUTOGEN_VERSION
-AUTOGEN_BINARYDIR=$AUTOGEN_ROOT/bin
-AUTOGEN_LIBRARYDIR=$AUTOGEN_ROOT/lib
-AUTOGEN_INCLUDEDIR=$AUTOGEN_ROOT/include
+	###################################################################
+	# AutoGen
+	###
 
-export AUTOGEN_ROOT AUTOGEN_BINARYDIR AUTOGEN_LIBRARYDIR AUTOGEN_INCLUDEDIR
+	AUTOGEN_ROOT=$PRO_HOME/autogen-$AUTOGEN_VERSION
+	AUTOGEN_BINARYDIR=$AUTOGEN_ROOT/bin
+	AUTOGEN_LIBRARYDIR=$AUTOGEN_ROOT/lib
+	AUTOGEN_INCLUDEDIR=$AUTOGEN_ROOT/include
 
-###################################################################
-# GCC
-###
+	export AUTOGEN_ROOT AUTOGEN_BINARYDIR AUTOGEN_LIBRARYDIR AUTOGEN_INCLUDEDIR
 
-GCC_ROOT=$PRO_HOME/gcc-$GCC_VERSION
-GCC_BINARYDIR=$GCC_ROOT/bin
-GCC_LIBRARYDIR=$GCC_ROOT/lib
-GCC_LIBRARY64DIR=$GCC_ROOT/lib64
-GCC_LIBRARYEXECDIR=$GCC_ROOT/libexec/gcc-$GCC_VERSION/x86_64-unknown-linux-gnu/$GCC_VERSION
-GCC_INCLUDEDIR=$GCC_ROOT/include
+	###################################################################
+	# GCC
+	###
 
-CC=$GCC_BINARYDIR/gcc
-CXX=$GCC_BINARYDIR/g++
+	GCC_ROOT=$PRO_HOME/gcc-$GCC_VERSION
+	GCC_BINARYDIR=$GCC_ROOT/bin
+	GCC_LIBRARYDIR=$GCC_ROOT/lib
+	GCC_LIBRARY64DIR=$GCC_ROOT/lib64
+	GCC_LIBRARYEXECDIR=$GCC_ROOT/libexec/gcc-$GCC_VERSION/x86_64-unknown-linux-gnu/$GCC_VERSION
+	GCC_INCLUDEDIR=$GCC_ROOT/include
 
-export GCC_ROOT GCC_BINARYDIR GCC_LIBRARYDIR GCC_LIBRARY64DIR GCC_LIBRARYEXECDIR GCC_INCLUDEDIR CC CXX
+	CC=$GCC_BINARYDIR/gcc
+	CXX=$GCC_BINARYDIR/g++
+
+	export GCC_ROOT GCC_BINARYDIR GCC_LIBRARYDIR GCC_LIBRARY64DIR GCC_LIBRARYEXECDIR GCC_INCLUDEDIR CC CXX
+
+fi # DRI ?
 
 ###################################################################
 # Doxygen
@@ -261,11 +266,7 @@ export CEGUI_ROOT CEGUI_BINARYDIR CEGUI_LIBRARYDIR CEGUI_INCLUDEDIR
 # Global Variable
 ###
 
-# prepone the new GCC to inhibit the installed one 
-# & postpone others progiciels
-PATH=$GCC_BINARYDIR\
-:$GCC_LIBRARYEXECDIR\
-:$QT_BINARYDIR\
+PATH=$QT_BINARYDIR\
 :$QTCREATOR_BINARYDIR\
 :$CMAKE_BINARYDIR\
 :$DOXYGEN_BINARYDIR\
@@ -283,9 +284,7 @@ PYTHONPATH=:$CEGUI_ROOT\
 #:$CEED_ROOT\
 :$PYTHONPATH
 
-LD_LIBRARY_PATH=$GCC_LIBRARYDIR\
-:$GCC_LIBRARY64DIR\
-:$QT_LIBRARYDIR\
+LD_LIBRARY_PATH=$QT_LIBRARYDIR\
 :$QTCREATOR_LIBRARYDIR\
 :$LD_LIBRARY_PATH\
 :$MPC_LIBRARYDIR\
@@ -303,6 +302,21 @@ LD_LIBRARY_PATH=$GCC_LIBRARYDIR\
 :$CEGUI_LIBRARYDIR
 #:$CEED_LIBRARYDIR\
 #:$LEAPMOTION_LIBRARYDIR
+
+# configuration DRI ?
+if [ $LABSIM_DRI_HOST_ADMIN -eq 0 ]; then
+
+	# prepone the new GCC to inhibit the installed one 
+
+	PATH=$GCC_BINARYDIR\
+	:$GCC_LIBRARYEXECDIR\
+	:$PATH
+
+	LD_LIBRARY_PATH=$GCC_LIBRARYDIR\
+	:$GCC_LIBRARY64DIR\
+	:$LD_LIBRARY_PATH
+
+fi # DRI ?
 
 export PATH PYTHONPATH LD_LIBRARY_PATH
 
