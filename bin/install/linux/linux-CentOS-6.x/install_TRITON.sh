@@ -77,7 +77,7 @@ echo "########################################################"
 echo "#!/bin/bash" > exec.sh
 echo "tar -xvf /data/CentOS_6.x/sundog/Triton-SDK-FullSource.tgz" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tDecompression du SDK Triton $TRITON_INSTALL_TARGET_VERSION ... "
+echo -ne "\tDecompression de Triton $TRITON_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --working-directory $PWD --title="LABSIM - Triton $TRITON_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
@@ -94,7 +94,7 @@ cd triton-*
 echo "#!/bin/bash" > exec.sh
 echo "cmake -DCMAKE_INSTALL_PREFIX=/home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION -DFFTSS_INCLUDE_DIR=/home/$(whoami)/Progiciels/fftss-$FFTSS_INSTALL_TARGET_VERSION/include -DFFTSS_LIBRARY=/home/$(whoami)/Progiciels/fftss-$FFTSS_INSTALL_TARGET_VERSION/lib/libfftss.so -DLIB_IOMP5=/usr/local/intel/studio/2015/composer_xe_2015.6.233/compiler/lib/intel64/libiomp5.so ." >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tConfiguration du SDK Triton $TRITON_INSTALL_TARGET_VERSION ... "
+echo -ne "\tConfiguration de Triton $TRITON_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --working-directory $PWD --title="LABSIM - Triton $TRITON_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
@@ -105,7 +105,7 @@ echo "OK"
 echo "#!/bin/bash" > exec.sh
 echo "make -j4" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tBuild du SDK Triton $TRITON_INSTALL_TARGET_VERSION ... "
+echo -ne "\tBuild de Triton $TRITON_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --working-directory $PWD --title="LABSIM - Triton $TRITON_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
@@ -114,9 +114,15 @@ wait_for_PID $PID
 echo "OK"
 
 echo "#!/bin/bash" > exec.sh
-echo "make install" >> exec.sh
+echo "mkdir /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /tmp_user/$(hostname)/$(whoami)/tritoninst/triton-sdk-fullsource/docs /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /tmp_user/$(hostname)/$(whoami)/tritoninst/triton-sdk-fullsource/lib /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /tmp_user/$(hostname)/$(whoami)/tritoninst/triton-sdk-fullsource/Public* /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /tmp_user/$(hostname)/$(whoami)/tritoninst/triton-sdk-fullsource/Resources /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /tmp_user/$(hostname)/$(whoami)/tritoninst/triton-sdk-fullsource/Samples /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /tmp_user/$(hostname)/$(whoami)/tritoninst/triton-sdk-fullsource/third* /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tInstalation du SDK Triton $TRITON_INSTALL_TARGET_VERSION ... "
+echo -ne "\tInstallation de Triton $TRITON_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --working-directory $PWD --title="LABSIM - Triton $TRITON_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2

@@ -21,7 +21,7 @@ echo "########################################################"
 echo "#!/bin/bash" > exec.sh
 echo "tar -xvf /data/CentOS_6.x/sundog/SilverLining-SDK-FullSource.tgz" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tDecompression du SDK SilverLining $SILVERLINING_INSTALL_TARGET_VERSION ... "
+echo -ne "\tDecompression de Silverlining $SILVERLINING_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --working-directory $PWD --title="LABSIM - SilverLining $SILVERLINING_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
@@ -38,7 +38,7 @@ cd SilverLining-SDK-FullSource
 echo "#!/bin/bash" > exec.sh
 echo "make" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tBuild du SDK SilverLining $SILVERLINING_INSTALL_TARGET_VERSION ... "
+echo -ne "\tBuild de Silverlining $SILVERLINING_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --working-directory $PWD --title="LABSIM - SilverLining $SILVERLINING_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
@@ -48,9 +48,14 @@ echo "OK"
 
 echo "#!/bin/bash" > exec.sh
 echo "mkdir /home/$(whoami)/Progiciels/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
-echo "cp -rf /tmp_user/$(hostname)/$(whoami)/silverlininginst/SilverLining-SDK-FullSource/* /home/$(whoami)/Progiciels/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /tmp_user/$(hostname)/$(whoami)/silverlininginst/SilverLining-SDK-FullSource/Docs /home/$(whoami)/Progiciels/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /tmp_user/$(hostname)/$(whoami)/silverlininginst/SilverLining-SDK-FullSource/lib /home/$(whoami)/Progiciels/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /tmp_user/$(hostname)/$(whoami)/silverlininginst/SilverLining-SDK-FullSource/Public* /home/$(whoami)/Progiciels/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /tmp_user/$(hostname)/$(whoami)/silverlininginst/SilverLining-SDK-FullSource/Resources /home/$(whoami)/Progiciels/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /tmp_user/$(hostname)/$(whoami)/silverlininginst/SilverLining-SDK-FullSource/SampleCode /home/$(whoami)/Progiciels/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /tmp_user/$(hostname)/$(whoami)/silverlininginst/SilverLining-SDK-FullSource/third* /home/$(whoami)/Progiciels/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tInstall du SDK SilverLining $SILVERLINING_INSTALL_TARGET_VERSION ... "
+echo -ne "\tInstallation de Silverlining $SILVERLINING_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --working-directory $PWD --title="LABSIM - SilverLining $SILVERLINING_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2

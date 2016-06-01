@@ -12,7 +12,7 @@
 -> bin/install/linux/linux-CentOS-6.x/install_QTCREATOR.sh
 -> bin/install/linux/linux-CentOS-6.x/install_BOOST.sh
 -> bin/install/linux/linux-CentOS-6.x/install_OSG.sh
--> bin/install/linux/linux-CentOS-6.x/install_SILVERLINGING.sh
+-> bin/install/linux/linux-CentOS-6.x/install_SILVERLINING.sh
 -> bin/install/linux/linux-CentOS-6.x/install_TRITON.sh
 -> bin/install/linux/linux-CentOS-6.x/install_OSPL.sh
 -> bin/install/linux/linux-CentOS-6.x/install_CEGUI.sh
