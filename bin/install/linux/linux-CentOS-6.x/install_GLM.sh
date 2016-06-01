@@ -19,11 +19,11 @@ echo "  Decompression du/des package(s)"
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
-echo "unzip /data/CentOS_6.c/archive/glm-$GLM_INSTALL_TARGET_VERSION.zip" >> exec.sh
+echo "unzip /data/CentOS_6.x/archive/glm-$GLM_INSTALL_TARGET_VERSION*.zip" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tDecompression de GLM $GLM_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - GLM $GLM_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -40,7 +40,7 @@ echo "cmake . -Wno-dev -DCMAKE_INSTALL_PREFIX=/home/$(whoami)/Progiciels/glm-$GL
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tConfiguration de GLM $GLM_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - GLM $GLM_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -51,7 +51,7 @@ echo "make -j4 install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tBuild & Install de GLM $GLM_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - GLM $GLM_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID

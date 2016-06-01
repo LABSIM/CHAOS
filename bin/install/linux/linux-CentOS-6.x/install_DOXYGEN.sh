@@ -36,7 +36,7 @@ echo "########################################################"
 cd doxygen-*
 
 echo "#!/bin/bash" > exec.sh
-echo "cmake -DCMAKE_INSTALL_PREFIX=/home/$(whoami)/Progiciels/doxygen-$DOXYGEN_INSTALL_TARGET_VERSION ." >> exec.sh
+echo "cmake -DCMAKE_INSTALL_PREFIX=/home/$(whoami)/Progiciels/doxygen-$DOXYGEN_INSTALL_TARGET_VERSION -Dbuild_wizard=ON ." >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tConfiguration de Doxygen $DOXYGEN_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh

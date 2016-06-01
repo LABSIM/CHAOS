@@ -23,7 +23,7 @@ echo "unzip /data/CentOS_6.x/archive/opensplice-master.zip" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tDecompression d'OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - Vortex OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -37,7 +37,7 @@ echo "unzip /data/CentOS_6.x/archive/MPC_ROOT-master.zip && mv MPC_ROOT-master M
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tDecompression de MPC_ROOT specifique pour OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - Vortex OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -54,7 +54,7 @@ echo "export OSPL_QT_IS_ON=no && ./configure x86_64.linux-release" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tConfiguration d'OpenSpliceDDS ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - Vortex OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -69,7 +69,7 @@ echo "make install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tBuild & Install OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - Vortex OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -86,7 +86,7 @@ echo "cp -r install/VC /home/$(whoami)/Progiciels/opensplicedds-$OSPL_INSTALL_TA
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tCopie des environments d'OpenSpliceDDS et creation des directories Progiciels..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - Vortex OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -105,7 +105,7 @@ echo "make" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tRe-build de la couche ISOCPP du DCPS d'OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION avec le support explicite du c++14 ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - Vortex OpenSpliceDDS $OSPL_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID

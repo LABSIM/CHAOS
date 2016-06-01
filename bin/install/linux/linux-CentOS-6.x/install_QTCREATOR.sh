@@ -23,8 +23,8 @@ echo "tar -xzvf /data/CentOS_6.x/archive/qt-creator-*-$QTCREATOR_INSTALL_TARGET_
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tDecompression de QT Creator $QTCREATOR_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
-sleep 1.0
+gnome-terminal --working-directory $PWD --title="LABSIM - QT Creator $QTCREATOR_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
@@ -40,8 +40,8 @@ echo "qmake -r" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh-stl
 echo -ne "\tConfiguration de QT Creator $QTCREATOR_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
-sleep 1.0
+gnome-terminal --working-directory $PWD --title="LABSIM - QT Creator $QTCREATOR_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
@@ -51,8 +51,8 @@ echo "make -j4" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tCompilation de QT Creator $QTCREATOR_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
-sleep 1.0
+gnome-terminal --working-directory $PWD --title="LABSIM - QT Creator $QTCREATOR_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
@@ -62,8 +62,8 @@ echo "make install INSTALL_ROOT=/home/$(whoami)/Progiciels/qt-creator-$QTCREATOR
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tInstallation de QT Creator $QTCREATOR_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
-sleep 1.0
+gnome-terminal --working-directory $PWD --title="LABSIM - QT Creator $QTCREATOR_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"

@@ -23,7 +23,7 @@ echo "unzip /data/CentOS_6.x/archive/OpenSceneGraph-$OSG_INSTALL_TARGET_VERSION.
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tDecompression de OpenSceneGraph $OSG_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - OpenSceneGraph $OSG_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -36,11 +36,11 @@ echo "########################################################"
 cd OpenSceneGraph-*
 
 echo "#!/bin/bash" > exec.sh
-echo "cmake -DCMAKE_INSTALL_PREFIX=/home/$(whoami)/Progiciels/osg-$OSG_INSTALL_TARGET_VERSION ." >> exec.sh
+echo "cmake -DCMAKE_INSTALL_PREFIX=/home/$(whoami)/Progiciels/osg-$OSG_INSTALL_TARGET_VERSION -DOPENGL_PROFILE=GL3 -DOSG_GL3_AVAILABLE=ON -DOSG_USE_FLOAT_BOUNDINGBOX=OFF -DOSG_USE_FLOAT_BOUNDINGSPHERE=OFF -DOSG_USE_FLOAT_MATRIX=OFF -DOSG_USE_FLOAT_PLANE=OFF ." >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tConfiguration de OpenSceneGraph $OSG_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - OpenSceneGraph $OSG_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -51,7 +51,7 @@ echo "make -j4" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tCompilation de OpenSceneGraph $OSG_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - OpenSceneGraph $OSG_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -62,7 +62,7 @@ echo "make install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tInstallation de OpenSceneGraph $OSG_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - OpenSceneGraph $OSG_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID

@@ -23,7 +23,7 @@ echo "tar -xzvf /data/CentOS_6.x/archive/qt-*-$QT_INSTALL_TARGET_VERSION.tar.gz"
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tDecompression de QT $QT_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - QT $QT_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -40,8 +40,8 @@ echo "./configure --prefix=/home/$(whoami)/Progiciels/qt-$QT_INSTALL_TARGET_VERS
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh-stl
 echo -ne "\tConfiguration de QT $QT_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
-sleep 1.0
+gnome-terminal --working-directory $PWD --title="LABSIM - QT $QT_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
@@ -51,8 +51,8 @@ echo "make -j4" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tCompilation de QT $QT_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
-sleep 1.0
+gnome-terminal --working-directory $PWD --title="LABSIM - QT $QT_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+sleep 0.2
 wait_for_PID $(pgrep exec.sh)
 echo "OK"
 
@@ -61,8 +61,8 @@ echo "make install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tInstallation de QT $QT_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
-sleep 1.0
+gnome-terminal --working-directory $PWD --title="LABSIM - QT $QT_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"

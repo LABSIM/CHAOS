@@ -16,11 +16,11 @@ echo; echo "## BEGIN"; echo
 
 echo "########################################################"
 echo "#!/bin/bash" > exec.sh
-echo "tar -xvzf /data/CentOS_6.x/archive/ceed-$CEED_INSTALL_TARGET_VERSION.tar.bz2" >> exec.sh
+echo "tar -xvf /data/CentOS_6.x/archive/ceed-$CEED_INSTALL_TARGET_VERSION.tar.bz2" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -n "Decompression de CEED $CEED_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - CEED $CEED_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID

@@ -21,6 +21,7 @@ fi
 if [ $NEED_DRI_BYPASS_HACK -eq 1 ]; then
 	module add gcc/5.2
 	module add subversion/1.7.6
+	module unload intel/cce/11.1.064 intel/cmkle/11.1.064 intel/fce/11.1.064 intel/idbe/11.1.064
 fi
 
 ###################################################################
