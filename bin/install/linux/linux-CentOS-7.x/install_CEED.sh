@@ -16,7 +16,7 @@ echo; echo "## BEGIN"; echo
 
 echo "########################################################"
 echo "#!/bin/bash" > exec.sh
-echo "tar -xvzf /data/CentOS_7.x/archive/ceed-$CEED_INSTALL_TARGET_VERSION.tar.bz2" >> exec.sh
+echo "tar -xvf /data/CentOS_7.x/archive/ceed-$CEED_INSTALL_TARGET_VERSION.tar.bz2" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -n "Decompression de CEED $CEED_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh

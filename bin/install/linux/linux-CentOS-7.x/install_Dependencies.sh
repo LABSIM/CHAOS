@@ -41,7 +41,8 @@ yum install \
 	/data/CentOS_7.x/rpms/tolua++-1.0.93-14.el7.x86_64.rpm \
 	/data/CentOS_7.x/rpms/tolua++-devel-1.0.93-14.el7.x86_64.rpm \
 	/data/CentOS_7.x/rpms/glew-devel-1.10.0-5.el7.x86_64.rpm \
-	/data/CentOS_7.x/rpms/giflib-devel-4.1.6-9.el7.x86_64.rpm
+	/data/CentOS_7.x/rpms/giflib-devel-4.1.6-9.el7.x86_64.rpm \
+	/data/CentOS_7.x/rpms/PyOpenGL-3.0.1-6.el7.noarch.rpm
 
 echo; echo " - QT5 dependencies - "; echo
 

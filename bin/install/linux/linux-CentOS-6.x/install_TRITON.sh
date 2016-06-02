@@ -121,6 +121,8 @@ echo "cp -rf /tmp_user/$(hostname)/$(whoami)/tritoninst/triton-sdk-fullsource/Pu
 echo "cp -rf /tmp_user/$(hostname)/$(whoami)/tritoninst/triton-sdk-fullsource/Resources /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
 echo "cp -rf /tmp_user/$(hostname)/$(whoami)/tritoninst/triton-sdk-fullsource/Samples /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
 echo "cp -rf /tmp_user/$(hostname)/$(whoami)/tritoninst/triton-sdk-fullsource/third* /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -f /tmp_user/$(hostname)/$(whoami)/tritoninst/triton-sdk-fullsource/license-full.txt /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -f /tmp_user/$(hostname)/$(whoami)/tritoninst/triton-sdk-fullsource/releasenotes.txt /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tInstallation de Triton $TRITON_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh

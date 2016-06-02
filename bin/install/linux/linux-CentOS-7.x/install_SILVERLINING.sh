@@ -46,6 +46,8 @@ PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
 
+rm -rf Private\ Headers/ Makefile README-Seriously SilverLiningOpenGL SilverLiningOpenGL32/ Src/ *.o
+
 echo "#!/bin/bash" > exec.sh
 echo "mkdir /home/$(whoami)/Progiciels/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
 echo "cp -rf /home/$(whoami)/silverlininginst/SilverLining-SDK-FullSource/* /home/$(whoami)/Progiciels/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
@@ -56,6 +58,7 @@ gnome-terminal --working-directory $PWD --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
+rm -f /home/$(whoami)/Progiciels/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION/exec.sh
 echo "OK"
 
 echo "########################################################"

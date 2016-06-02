@@ -34,7 +34,6 @@ echo " Bootstrap, build [bjam] & install"
 echo "########################################################"
 
 cd boost_*
-cp /data/CentOS_7.x/conf/boost_$BOOST_INSTALL_TARGET_MAJ_VER\_$BOOST_INSTALL_TARGET_MIN_VER\_$BOOST_INSTALL_TARGET_PATCH_VER/user-config.jam .
 echo "#!/bin/bash" > exec.sh
 echo "./bootstrap.sh" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
@@ -47,7 +46,7 @@ wait_for_PID $PID
 echo "OK"
 
 echo "#!/bin/bash" > exec.sh
-echo "./b2 --user-config=./user-config.jam --prefix=/home/$(whoami)/Progiciels/boost-$BOOST_INSTALL_TARGET_VERSION toolset=gcc cxxflags="-std=c++11" variant=release link=shared threading=multi runtime-link=shared -j4 install" >> exec.sh
+echo "./b2 --prefix=/home/$(whoami)/Progiciels/boost-$BOOST_INSTALL_TARGET_VERSION toolset=gcc cxxflags="-std=c++11" variant=release link=shared threading=multi runtime-link=shared -j4 install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tCompilation et installation de boost $BOOST_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh

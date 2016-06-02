@@ -7,18 +7,10 @@ current_dir=$PWD
 source user-config-versions.sh
 source ../../../../script/linux/wait_for_PID.sh
 
-if [ $(whoami) == "root" ] 
-then
-  echo
-  echo "##############################################"
-  echo " Vous NE devez PLUS etre root pour executer ce script :)"
-  echo "##############################################"
-  echo
-  exit
-fi
-
 # go to dir
-cd /home/$(whoami)/tritoninst
+cd /home/$(whoami)
+mkdir tritoninst
+cd tritoninst
 
 echo; echo "## BEGIN"; echo
 
@@ -76,11 +68,29 @@ PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
 
-cd ../triton-sdk-fullsource
+
+cd ..
+
+echo "########################################################"
+echo "  Triton : Decompression du/des package(s)"
+echo "########################################################"
+
+echo "#!/bin/bash" > exec.sh
+echo "tar -xvf /data/CentOS_7.x/sundog/Triton-SDK-FullSource.tgz" >> exec.sh
+echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+echo -ne "\tDecompression du SDK Triton $TRITON_INSTALL_TARGET_VERSION ... "
+chmod u+x exec.sh
+gnome-terminal --working-directory $PWD --command "./exec.sh" --window
+sleep 0.2
+PID=$(pgrep exec.sh)
+wait_for_PID $PID
+echo "OK"
 
 echo "########################################################"
 echo "  Triton : CMake, Build & Install"
-echo "########################################################"
+echo "########################################################"*
+
+cd triton-*
 
 echo "#!/bin/bash" > exec.sh
 echo "cmake -DCMAKE_INSTALL_PREFIX=/home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION -DFFTSS_INCLUDE_DIR=/home/$(whoami)/Progiciels/fftss-$FFTSS_INSTALL_TARGET_VERSION/include -DFFTSS_LIBRARY=/home/$(whoami)/Progiciels/fftss-$FFTSS_INSTALL_TARGET_VERSION/lib/libfftss.so ." >> exec.sh
@@ -105,9 +115,17 @@ wait_for_PID $PID
 echo "OK"
 
 echo "#!/bin/bash" > exec.sh
-echo "make install" >> exec.sh
+echo "mkdir /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /home/$(whoami)/tritoninst/triton-sdk-fullsource/docs /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /home/$(whoami)/tritoninst/triton-sdk-fullsource/lib /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /home/$(whoami)/tritoninst/triton-sdk-fullsource/Public* /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /home/$(whoami)/tritoninst/triton-sdk-fullsource/Resources /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /home/$(whoami)/tritoninst/triton-sdk-fullsource/Samples /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rf /home/$(whoami)/tritoninst/triton-sdk-fullsource/third* /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -f /home/$(whoami)/tritoninst/triton-sdk-fullsource/license-full.txt /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -f /home/$(whoami)/tritoninst/triton-sdk-fullsource/releasenotes.txt /home/$(whoami)/Progiciels/triton-$TRITON_INSTALL_TARGET_VERSION" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tInstalation du SDK Triton $TRITON_INSTALL_TARGET_VERSION ... "
+echo -ne "\tInstallation du SDK Triton $TRITON_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --working-directory $PWD --command "./exec.sh" --window
 sleep 0.2
