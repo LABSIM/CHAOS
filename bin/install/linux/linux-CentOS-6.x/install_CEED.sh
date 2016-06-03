@@ -57,7 +57,6 @@ echo -n "Suppression du repertoire temporaire ... "
 cd $current_dir
 rm -rf /tmp_user/$(hostname)/$(whoami)/ceedinst
 echo "OK"
-
 echo "########################################################"
 
 echo; echo "## END"; echo

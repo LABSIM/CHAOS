@@ -15,7 +15,7 @@ cd glfwinst
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
-echo "  Decompression du/des package(s)"
+echo "                         GLFW                           "
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
@@ -30,10 +30,6 @@ wait_for_PID $PID
 echo "OK"
 
 cd glfw-$GLFW_INSTALL_TARGET_VERSION
-
-echo "########################################################"
-echo "  Build & install"
-echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
 echo "cmake . -Wno-dev -DCMAKE_INSTALL_PREFIX=/home/$(whoami)/Progiciels/glfw-$GLFW_INSTALL_TARGET_VERSION -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=TRUE -DGLFW_BUILD_EXAMPLES=FALSE -DGLFW_BUILD_TESTS=FALSE -DGLFW_BUILD_DOCS=FALSE" >> exec.sh

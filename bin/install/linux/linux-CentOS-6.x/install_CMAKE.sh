@@ -15,7 +15,7 @@ cd cmakeinst
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
-echo "  Decompression du/des package(s)"
+echo "                        CMake                           "
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
@@ -28,10 +28,6 @@ sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
-
-echo "########################################################"
-echo " Bootstrap, build & install"
-echo "########################################################"
 
 cd cmake-*
 
@@ -83,10 +79,6 @@ sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
-
-echo "########################################################"
-echo " Import des propriétés LABSIM"
-echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
 echo "cp -r $current_dir/../../../../conf/cmake/* /home/$(whoami)/Progiciels/cmake-$CMAKE_INSTALL_TARGET_VERSION/share/cmake-$CMAKE_INSTALL_TARGET_MAJ_VER.$CMAKE_INSTALL_TARGET_MIN_VER/Modules/" >> exec.sh

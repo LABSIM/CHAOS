@@ -15,7 +15,7 @@ cd qtcreatortinst
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
-echo " QT Creator - Decompression du/des package(s)"
+echo "                     QT Creator                         "
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
@@ -28,10 +28,6 @@ sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
-
-echo "########################################################"
-echo " QT Creator - Configure, build & install"
-echo "########################################################"
 
 cd qt-creator-*
 
@@ -70,6 +66,7 @@ echo "OK"
 
 echo "########################################################"
 echo "  Suppression des repertoires temporaires... "
+cd $current_dir
 rm -rf /tmp_user/$(hostname)/$(whoami)/qtcreatortinst
 echo "########################################################"
 

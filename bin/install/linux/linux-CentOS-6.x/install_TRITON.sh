@@ -15,7 +15,7 @@ cd tritoninst
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
-echo "  FFTS : Decompression du/des package(s)"
+echo "                          FFTSS                         "
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
@@ -28,10 +28,6 @@ sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
-
-echo "########################################################"
-echo "  FFTS : Configure, build & install"
-echo "########################################################"
 
 cd fftss-*
 
@@ -71,7 +67,7 @@ echo "OK"
 cd ..
 
 echo "########################################################"
-echo "  Triton : Decompression du/des package(s)"
+echo "                     Sundog Triton                      "
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
@@ -84,10 +80,6 @@ sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
-
-echo "########################################################"
-echo "  Triton : CMake, Build & Install"
-echo "########################################################"*
 
 cd triton-*
 

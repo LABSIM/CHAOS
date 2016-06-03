@@ -15,7 +15,7 @@ cd glminst
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
-echo "  Decompression du/des package(s)"
+echo "                         GLM                            "
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
@@ -30,10 +30,6 @@ wait_for_PID $PID
 echo "OK"
 
 cd glm
-
-echo "########################################################"
-echo "  CMake, build  & install"
-echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
 echo "cmake . -Wno-dev -DCMAKE_INSTALL_PREFIX=/home/$(whoami)/Progiciels/glm-$GLM_INSTALL_TARGET_VERSION -DCMAKE_BUILD_TYPE=Release -DGLM_TEST_ENABLE=TRUE -DGLM_TEST_ENABLE_CXX_0X=FALSE -DGLM_TEST_ENABLE_CXX_11=FALSE -DGLM_TEST_ENABLE_CXX_1Y=FALSE -DGLM_TEST_ENABLE_CXX_98=FALSE -DGLM_TEST_ENABLE_CXX_PEDANTIC=FALSE -DGLM_TEST_ENABLE_FAST_MATH=FALSE -DGLM_TEST_ENABLE_SIMD_AVX=FALSE -DGLM_TEST_ENABLE_SIMD_AVX2=FALSE -DGLM_TEST_ENABLE_SIMD_SSE2=FALSE -DGLM_TEST_ENABLE_SIMD_SSE3=FALSE -DGLM_TEST_FORCE_PURE=FALSE" >> exec.sh

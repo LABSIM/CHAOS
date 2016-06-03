@@ -229,17 +229,6 @@ QTLIB=$QT_LIBRARYDIR
 export QT_ROOT QT_INCLUDEDIR QT_LIBRARYDIR QT_BINARYDIR QTEMBEDDED_ROOT QTEMBEDDED_INCLUDEDIR QTEMBEDDED_LIBRARYDIR QTDIR QTINC QTLIB
 
 ###################################################################
-# QT Creator
-###
-
-QTCREATOR_ROOT=$PRO_HOME/qt-creator-$QTCREATOR_VERSION
-QTCREATOR_INCLUDEDIR=$QTCREATOR_ROOT/include
-QTCREATOR_LIBRARYDIR=$QTCREATOR_ROOT/lib
-QTCREATOR_BINARYDIR=$QTCREATOR_ROOT/bin
-
-export QTCREATOR_ROOT QTCREATOR_INCLUDEDIR QTCREATOR_LIBRARYDIR QTCREATOR_BINARYDIR
-
-###################################################################
 # CEGUI
 ###
 
@@ -269,6 +258,49 @@ export CEGUI_ROOT CEGUI_BINARYDIR CEGUI_LIBRARYDIR CEGUI_INCLUDEDIR
 #LEAPMOTION_INCLUDEDIR=$LEAPMOTION_ROOT/LeapSDK/include
 #
 #export LEAPMOTION_ROOT LEAPMOTION_LIBRARYDIR LEAPMOTION_INCLUDEDIR
+
+###################################################################
+# QT Creator
+###
+
+QTCREATOR_ROOT=$PRO_HOME/qt-creator-$QTCREATOR_VERSION
+QTCREATOR_LIBRARYDIR=$QTCREATOR_ROOT/lib
+QTCREATOR_BINARYDIR=$QTCREATOR_ROOT/bin
+
+export QTCREATOR_ROOT QTCREATOR_LIBRARYDIR QTCREATOR_BINARYDIR
+
+###################################################################
+# Adobe Flash Player
+###
+
+ADOBEFLASHPLAYER_ROOT=$PRO_HOME/adobe-flash-player-$ADOBEFLASHPLAYER_VERSION
+
+export ADOBEFLASHPLAYER_ROOT
+
+###################################################################
+# Mozilla Firefox
+###
+
+FIREFOX_ROOT=$PRO_HOME/firefox-$FIREFOX_VERSION
+
+export FIREFOX_ROOT
+
+###################################################################
+# Java Runtime Environmeent
+###
+
+JRE_ROOT=$PRO_HOME/jre-$JRE_VERSION
+
+export JRE_ROOT
+
+###################################################################
+# Eclipse IDE
+###
+
+ECLIPSE_ROOT=$PRO_HOME/eclipse-$ECLIPSE_VERSION
+
+export ECLIPSE_ROOT
+
 
 ###################################################################
 # Global Variable

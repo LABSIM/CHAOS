@@ -15,7 +15,7 @@ cd xercescinst
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
-echo "  Decompression du/des package(s)"
+echo "                       Xerces C++                       " 
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
@@ -30,10 +30,6 @@ wait_for_PID $PID
 echo "OK"
 
 cd xerces-c-$XERCESC_INSTALL_TARGET_VERSION
-
-echo "########################################################"
-echo "  Configure, build & install"
-echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
 echo "./configure --prefix=/home/$(whoami)/Progiciels/xercesc-$XERCESC_INSTALL_TARGET_VERSION" >> exec.sh

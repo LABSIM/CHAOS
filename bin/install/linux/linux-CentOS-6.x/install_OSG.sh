@@ -15,7 +15,7 @@ cd osginst
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
-echo "  OSG : Decompression du/des package(s)"
+echo "                      OpenSceneGraph                    "
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
@@ -28,10 +28,6 @@ sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
-
-echo "########################################################"
-echo "  OSG : CMake, build  & install"
-echo "########################################################"
 
 cd OpenSceneGraph-*
 

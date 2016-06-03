@@ -15,7 +15,7 @@ cd qtinst
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
-echo " QT - Decompression du/des package(s)"
+echo "                         QT                             "
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
@@ -28,10 +28,6 @@ sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
-
-echo "########################################################"
-echo " QT - Configure, build & install"
-echo "########################################################"
 
 cd qt-*
 
@@ -68,7 +64,7 @@ wait_for_PID $PID
 echo "OK"
 
 echo "########################################################"
-echo " QT - Copie des libembedded-widget ... "
+echo "         QT - Copie des libembedded-widget ...          "
 echo "########################################################"
 cd $current_dir
 cp -r /data/CentOS_6.x/conf/libembedded-widget/ /home/$(whoami)/Progiciels/qt-$QT_INSTALL_TARGET_VERSION
@@ -76,6 +72,7 @@ echo "OK"; echo
 
 echo "########################################################"
 echo "  Suppression des repertoires temporaires... "
+cd $current_dir
 rm -rf /tmp_user/$(hostname)/$(whoami)/qtinst
 echo "########################################################"
 

@@ -2,9 +2,11 @@
 
 echo; echo "## BEGIN"; echo
 
-echo; echo " - Common dependencies - "; echo
+echo "########################################################"
+echo "                       Dependencies                     "
+echo "########################################################"
 
-# Script d'installation des dependances necessaires aux differents codes
+echo; echo " - Common dependencies - "; echo
 sudo yum install \
 	glib2-devel.x86_64 \
 	glibc-devel.x86_64 \
@@ -29,15 +31,12 @@ sudo yum install \
 	graphviz.x86_64
 
 echo; echo " - User provided dependencies - "; echo
-
 sudo yum install \
 	/data/CentOS_6.x/rpms/lua-devel-5.1.4-4.1.el6.x86_64.rpm \
 	/data/CentOS_6.x/rpms/tolua++-1.0.93-1.el6.x86_64.rpm \
 	/data/CentOS_6.x/rpms/tolua++-devel-1.0.93-1.el6.x86_64.rpm
 
 echo; echo " - QT5 dependencies - "; echo
-
-# Script d'installation des dependances necessaires a QT5
 sudo yum install \
 	libxcb-devel.x86_64 \
 	libXrender-devel.x86_64 \
@@ -51,6 +50,16 @@ sudo yum install \
 	bison.x86_64 \
 	gperf.x86_64 \
 	ruby.x86_64
+
+echo; echo " - Eclipse dependencies - "; echo
+sudo yum install \
+	java-1.8.0-openjdk.x86_64
+
+echo; echo " - Atom dependencies - "; echo
+sudo yum install \
+	git-core \
+	libgnome-keyring-devel \
+	rpmdevtools
 	
 echo; echo "## END"; echo
 

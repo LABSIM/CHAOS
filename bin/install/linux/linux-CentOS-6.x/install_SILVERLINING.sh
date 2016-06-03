@@ -15,7 +15,7 @@ cd silverlininginst
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
-echo "  SilverLining : Decompression du/des package(s)"
+echo "                  Sundog SilverLining                   "  
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
@@ -28,10 +28,6 @@ sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
-
-echo "########################################################"
-echo "  SilverLining : Build & install"
-echo "########################################################"
 
 cd SilverLining-SDK-FullSource
 
