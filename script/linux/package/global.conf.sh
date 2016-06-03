@@ -27,9 +27,18 @@ fi
 ###################################################################
 # Home path
 ###
-DEV_HOME=$(eval echo "~$(whoami)")/Dev
+
+if [ $NEED_DRI_BYPASS_HACK -eq 1 ]; then
+	# Use local directory for compilation performance
+	DEV_HOME=/tmp_user/$(hostname)/$(whoami)/dev
+	CODES_HOME=/tmp_user/$(hostname)/$(whoami)/CODES
+else
+	# Use home directory - default
+	DEV_HOME=$(eval echo "~$(whoami)")/dev
+	CODES_HOME=$(eval echo "~$(whoami)")/CODES
+fi
+
 PRO_HOME=$(eval echo "~$(whoami)")/Progiciels
-CODES_HOME=$(eval echo "~$(whoami)")/CODES
 BDD_HOME=/data/bdd
 
 export PRO_HOME CODES_HOME BDD_HOME DEV_HOME IDE_HOME
