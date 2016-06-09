@@ -56,7 +56,7 @@ function info_printing ()
 	echo " > L'objectif de ce script est de permettre la"
 	echo " diffusion d'un environment de travail sur"
 	echo " l'ensemble du réseau configuré dans le fichier"
-	echo " ${root_directory}/conf/networkMap.conf.sh"
+	echo " ${root_directory}/etc/networkMap.conf.sh"
 	echo
 	echo " > Les différentes configurations des environments"
 	echo " de travail sont répertoriées sous"
@@ -99,8 +99,8 @@ function info_printing ()
 # On check l'existance du fichier de mapping et on le source
 function check_ntwk_conf () 
 {
-	if [ -f "${root_directory}/conf/networkMap.conf.sh" ];  then
-		. "${root_directory}/conf/networkMap.conf.sh"
+	if [ -f "${root_directory}/etc/networkMap.conf.sh" ];  then
+		. "${root_directory}/etc/networkMap.conf.sh"
 		echo ">> Fichier de configuration du réseau : trouvé"
 	else
 		echo; echo "Aucun fichier de mapping du résau trouvé ! Abandon de la diffusion ..."; echo

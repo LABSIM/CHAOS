@@ -21,7 +21,7 @@ fi
 if [ $NEED_DRI_BYPASS_HACK -eq 1 ]; then
 	module add gcc/5.2
 	module add subversion/1.7.6
-	module unload intel/cce/11.1.064 intel/cmkle/11.1.064 intel/fce/11.1.064 intel/idbe/11.1.064
+	module unload intel/cce/11.1.064 intel/cmkle/11.1.064 intel/fce/11.1.064 intel/idbe/11.1.064 eclipse/3.6.1 cmake/2.8.12
 fi
 
 ###################################################################
@@ -88,6 +88,11 @@ LD_LIBRARY_PATH=$LD_LIBRARY_PATH\
 :/usr/lib/
 
 export LD_LIBRARY_PATH
+
+###################################################################
+# Default proxy
+
+export http_proxy=http://proxy.onera:80
 
 ###################################################################
 

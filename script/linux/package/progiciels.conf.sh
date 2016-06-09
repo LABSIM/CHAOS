@@ -79,6 +79,15 @@ if [ $NEED_DRI_BYPASS_HACK -ne 1 ]; then
 fi # DRI ?
 
 ###################################################################
+# PERL
+###
+
+PERL_ROOT=$PRO_HOME/perl-$PERL_VERSION
+PERL_BINARYDIR=$PERL_ROOT/bin
+
+export PERL_ROOT PERL_BINARYDIR
+
+###################################################################
 # Doxygen
 ###
 
@@ -181,7 +190,7 @@ SILVERLINING_INCLUDEDIR=$SILVERLINING_ROOT/Public\ Headers
 SILVERLINING_LIBRARYDIR=$SILVERLINING_ROOT/lib/linux
 
 SILVERLINING_DIR=$SILVERLINING_ROOT
-SILVERLINING_PATH=$SILVERLINING_INCLUDEDIR
+SILVERLINING_PATH=$SILVERLINING_ROOT/Resources
 
 export SILVERLINING_ROOT SILVERLINING_INCLUDEDIR SILVERLINING_LIBRARYDIR SILVERLINING_DIR SILVERLINING_PATH
 
@@ -202,10 +211,10 @@ export FFTSS_ROOT FFTSS_BINARYDIR FFTSS_LIBRARYDIR FFTSS_INCLUDEDIR
 
 TRITON_ROOT=$PRO_HOME/triton-$TRITON_VERSION
 TRITON_INCLUDEDIR=$TRITON_ROOT/Public\ Headers
-TRITON_LIBRARYDIR=$TRITON_ROOT/lib/linux
+TRITON_LIBRARYDIR=$TRITON_ROOT/lib/Linux/x64
 
 TRITON_DIR=$TRITON_ROOT
-TRITON_PATH=$TRITON_INCLUDEDIR
+TRITON_PATH=$TTRITON_ROOT/Resources
 
 export TRITON_ROOT TRITON_INCLUDEDIR TRITON_LIBRARYDIR TRITON_DIR TRITON_PATH
 
@@ -270,39 +279,6 @@ QTCREATOR_BINARYDIR=$QTCREATOR_ROOT/bin
 export QTCREATOR_ROOT QTCREATOR_LIBRARYDIR QTCREATOR_BINARYDIR
 
 ###################################################################
-# Adobe Flash Player
-###
-
-ADOBEFLASHPLAYER_ROOT=$PRO_HOME/adobe-flash-player-$ADOBEFLASHPLAYER_VERSION
-
-export ADOBEFLASHPLAYER_ROOT
-
-###################################################################
-# Mozilla Firefox
-###
-
-FIREFOX_ROOT=$PRO_HOME/firefox-$FIREFOX_VERSION
-
-export FIREFOX_ROOT
-
-###################################################################
-# Java Runtime Environmeent
-###
-
-JRE_ROOT=$PRO_HOME/jre-$JRE_VERSION
-
-export JRE_ROOT
-
-###################################################################
-# Eclipse IDE
-###
-
-ECLIPSE_ROOT=$PRO_HOME/eclipse-$ECLIPSE_VERSION
-
-export ECLIPSE_ROOT
-
-
-###################################################################
 # Global Variable
 ###
 
@@ -313,6 +289,7 @@ if [ $NEED_DRI_BYPASS_HACK -ne 1 ]; then
 	
 PATH=$GCC_BINARYDIR\
 :$GCC_LIBRARYEXECDIR\
+:$PERL_BINARYDIR\
 :$QT_BINARYDIR\
 :$QTCREATOR_BINARYDIR\
 :$CMAKE_BINARYDIR\
@@ -349,7 +326,8 @@ LD_LIBRARY_PATH=$GCC_LIBRARYDIR\
 	
 else
 
-PATH=$QT_BINARYDIR\
+PATH=$PERL_BINARYDIR\
+:$QT_BINARYDIR\
 :$QTCREATOR_BINARYDIR\
 :$CMAKE_BINARYDIR\
 :$DOXYGEN_BINARYDIR\

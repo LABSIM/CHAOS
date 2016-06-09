@@ -1,21 +1,21 @@
 # ======================================================================== #
 # Installation script execution order
 
--> [sudo required] bin/install/linux/linux-CentOS-7.x/install_Dependencies.sh
--> [root] bin/install/linux/linux-CentOS-7.x/pre-configure_GCC.sh
--> bin/install/linux/linux-CentOS-7.x/install_GCC.sh
--> [root] bin/install/linux/linux-CentOS-7.x/post-configure_GCC.sh
+-> [sudo required] script/linux/install/CentOS-7.x/install_Dependencies.sh
+-> [root] script/linux/install/CentOS-7.x/pre-configure_GCC.sh
+-> script/linux/install/CentOS-7.x/install_GCC.sh
+-> [root] script/linux/install/CentOS-7.x/post-configure_GCC.sh
 -> run script/linux/switch_environment.sh with your corresponding environment
--> bin/install/linux/linux-CentOS-7.x/install_CMAKE.sh
--> bin/install/linux/linux-CentOS-7.x/install_XERCES.sh
--> bin/install/linux/linux-CentOS-7.x/install_DOXYGEN.sh
--> bin/install/linux/linux-CentOS-7.x/install_GLM.sh
--> bin/install/linux/linux-CentOS-7.x/install_GLFW.sh
--> bin/install/linux/linux-CentOS-7.x/install_QT.sh
--> bin/install/linux/linux-CentOS-7.x/install_QTCREATOR.sh
--> bin/install/linux/linux-CentOS-7.x/install_BOOST.sh
--> bin/install/linux/linux-CentOS-7.x/install_OSG.sh
--> bin/install/linux/linux-CentOS-7.x/install_SILVERLINING.sh
--> bin/install/linux/linux-CentOS-7.x/install_TRITON.sh
--> [root] bin/install/linux/linux-CentOS-7.x/pre-configure_OSPL.sh
--> bin/install/linux/linux-CentOS-7.x/install_OSPL.sh
+-> script/linux/install/CentOS-7.x/install_CMAKE.sh
+-> script/linux/install/CentOS-7.x/install_XERCES.sh
+-> script/linux/install/CentOS-7.x/install_DOXYGEN.sh
+-> script/linux/install/CentOS-7.x/install_GLM.sh
+-> script/linux/install/CentOS-7.x/install_GLFW.sh
+-> script/linux/install/CentOS-7.x/install_QT.sh
+-> script/linux/install/CentOS-7.x/install_QTCREATOR.sh
+-> script/linux/install/CentOS-7.x/install_BOOST.sh
+-> script/linux/install/CentOS-7.x/install_OSG.sh
+-> script/linux/install/CentOS-7.x/install_SILVERLINING.sh
+-> script/linux/install/CentOS-7.x/install_TRITON.sh
+-> [root] script/linux/install/CentOS-7.x/pre-configure_OSPL.sh
+-> script/linux/install/CentOS-7.x/install_OSPL.sh

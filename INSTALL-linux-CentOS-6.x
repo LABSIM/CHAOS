@@ -2,30 +2,40 @@
 # Installation script execution order
 # ======================================================================== #
 
-# Libraries
+----------------------------------------------------------------------------
+I - Package (YUM)
+----------------------------------------------------------------------------
 
--> [sudo required] bin/install/linux/linux-CentOS-6.x/install_Dependencies.sh
--> run script/linux/switch_environment.sh with your corresponding environment
--> bin/install/linux/linux-CentOS-6.x/install_CMAKE.sh
--> bin/install/linux/linux-CentOS-6.x/install_XERCES.sh
--> bin/install/linux/linux-CentOS-6.x/install_DOXYGEN.sh
--> bin/install/linux/linux-CentOS-6.x/install_GLM.sh
--> bin/install/linux/linux-CentOS-6.x/install_GLFW.sh
--> bin/install/linux/linux-CentOS-6.x/install_QT.sh
--> bin/install/linux/linux-CentOS-6.x/install_BOOST.sh
--> bin/install/linux/linux-CentOS-6.x/install_OSG.sh
--> bin/install/linux/linux-CentOS-6.x/install_SILVERLINING.sh
--> bin/install/linux/linux-CentOS-6.x/install_TRITON.sh
--> bin/install/linux/linux-CentOS-6.x/install_OSPL.sh
--> bin/install/linux/linux-CentOS-6.x/install_CEGUI.sh
+	-> [sudo required] script/linux/install/CentOS-6.x/install_Dependencies.sh
 
-# IDE
+----------------------------------------------------------------------------
+II - Boostrapping (should log some error message untill all script are executed)
+----------------------------------------------------------------------------
 
--> bin/install/linux/linux-CentOS-6.x/install_QTCREATOR.sh
--> bin/install/linux/linux-CentOS-6.x/install_CEED.sh
--> bin/install/linux/linux-CentOS-6.x/install_ECLIPSE.sh
--> bin/install/linux/linux-CentOS-6.x/install_ATOM.sh
+	-> script/linux/switch_environment.sh [with your corresponding environment here]
 
-# Software
+----------------------------------------------------------------------------
+III - Libraries
+----------------------------------------------------------------------------
 
--> bin/install/linux/linux-CentOS-6.x/install_FIREFOX.sh
+	-> script/linux/install/CentOS-6.x/install_PERL.sh	
+	-> script/linux/install/CentOS-6.x/install_CPAN.sh
+	-> script/linux/install/CentOS-6.x/install_CMAKE.sh
+	-> script/linux/install/CentOS-6.x/install_XERCES.sh
+	-> script/linux/install/CentOS-6.x/install_DOXYGEN.sh
+	-> script/linux/install/CentOS-6.x/install_GLM.sh
+	-> script/linux/install/CentOS-6.x/install_GLFW.sh
+	-> script/linux/install/CentOS-6.x/install_QT.sh
+	-> script/linux/install/CentOS-6.x/install_BOOST.sh
+	-> script/linux/install/CentOS-6.x/install_OSG.sh
+	-> script/linux/install/CentOS-6.x/install_SILVERLINING.sh
+	-> script/linux/install/CentOS-6.x/install_TRITON.sh
+	-> script/linux/install/CentOS-6.x/install_OSPL.sh
+	-> script/linux/install/CentOS-6.x/install_CEGUI.sh
+
+----------------------------------------------------------------------------
+IV - IDE
+----------------------------------------------------------------------------
+
+	-> script/linux/install/CentOS-6.x/install_QTCREATOR.sh
+	-> [unstable as a fuck] script/linux/install/CentOS-6.x/install_CEED.sh

@@ -36,7 +36,7 @@ export RHEA_ROOT
 # alias 
 function __internal_labsim_rhea() {
 	echo -e "\n## BEGIN LABSIM ROUTINES\n" 									\
-	&& time perl -I $RHEA_ROOT/script/module $RHEA_ROOT/bin/RHEA.pl "$@"	\
+	&& time perl -I $RHEA_ROOT/script/module $RHEA_ROOT/script/RHEA.pl "$@"	\
 	&& echo -e "\n## END LABSIM ROUTINES\n"
 } # __internal_labsim_rhea()
 
@@ -51,7 +51,7 @@ export OCEAN_ROOT
 # alias 
 function __internal_labsim_ocean() {
 	echo -e "\n## BEGIN LABSIM ROUTINES\n" 									\
-	&& time perl -I $OCEAN_ROOT/script/module $OCEAN_ROOT/bin/OCEAN.pl "$@"	\
+	&& time perl -I $OCEAN_ROOT/script/module $OCEAN_ROOT/script/OCEAN.pl "$@"	\
 	&& echo -e "\n## END LABSIM ROUTINES\n"
 } # __internal_labsim_ocean()
 
