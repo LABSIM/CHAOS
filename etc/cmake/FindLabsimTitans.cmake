@@ -37,8 +37,8 @@ foreach(COMPONENT ${LabsimTitans_FIND_COMPONENTS})
     string(TOUPPER ${COMPONENT} UPPERCOMPONENT)
     
     # test that library match requested scheme
-    if(NOT IS_DIRECTORY ${_ROOTPATH}/${COMPONENT} OR NOT IS_DIRECTORY ${_ROOTPATH}/${COMPONENT}/include OR NOT IS_DIRECTORY ${_ROOTPATH}/${COMPONENT}/lib)
-        message(FATAL_ERROR "ERROR: Requested coponents ${COMPONENT} doesn't match requested include/lib scheme !...")
+    if(NOT IS_DIRECTORY ${_ROOTPATH}/${COMPONENT} OR NOT IS_DIRECTORY ${_ROOTPATH}/${COMPONENT}/include)
+        message(FATAL_ERROR "ERROR: Requested coponents ${COMPONENT} doesn't match requested scheme !...")
     endif()
     
     # be careful about system config

@@ -93,6 +93,7 @@ export LD_LIBRARY_PATH
 # Default proxy
 
 export http_proxy=http://proxy.onera:80
+export https_proxy=http://proxy.onera:80
 
 ###################################################################
 

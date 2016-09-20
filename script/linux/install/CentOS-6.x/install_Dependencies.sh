@@ -28,7 +28,9 @@ sudo yum install \
 	giflib-devel.x86_64 \
 	libsndfile-devel.x86_64 \
 	ncurses-devel.x86_64 \
-	graphviz.x86_64
+	graphviz.x86_64 \
+	libudev-devel.x86_64 \
+	libusb1-devel.x86_64
 
 echo; echo " - User provided dependencies - "; echo
 sudo yum install \
