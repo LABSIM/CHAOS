@@ -31,7 +31,17 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 
 # export necessary variables
 export GAIA_ROOT=$(readlink -f "$SCRIPTPATH/../../../")
-declare GAIA_DEV_DIST="## =========================================== ##\n## GAIA - the LABSIM ground software ecosystem ##\n## =========================================== ##\n\n[GAIA]--"
+
+declare GAIA_DEV_DIST
+GAIA_DEV_DIST="$GAIA_DEV_DIST# ================================================================= #"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n# GAIA : the LABSIM ground software ecosystem"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n# ================================================================= #"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n# Copyright (C) 2012-2016 Nawfel KINANI"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n# This program comes with ABSOLUTELY NO WARRANTY;"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n# This is free software, and you are welcome to redistribute it"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n# under certain conditions;"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n# ================================================================= #"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\n[GAIA]--"
 
 # dynamically check DRI environment -> normally DRI config use "module", sooooo....
 if hash module 2>/dev/null; then
