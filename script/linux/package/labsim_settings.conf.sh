@@ -1,5 +1,24 @@
 #!/bin/bash
 
+#
+# GAIA : required LABSIM ground software ecosystem
+# Copyright (C) 2012-2016  Nawfel KINANI
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; see the file COPYING.
+# If not, see <http://www.gnu.org/licenses/>.
+#
+
 #######################
 # global environment config
 #
@@ -9,7 +28,7 @@
 #######################
 
 # configuration DRI ?
-if [ -z ${LABSIM_DRI_HOST_ADMIN+x} ]; then 
+if [ -z ${GAIA_FOUND_DRI_HOST+x} ]; then 
 	# LABSIM HOST
 	NEED_DRI_BYPASS_HACK=0
 else 
@@ -49,21 +68,14 @@ export PRO_HOME CODES_HOME BDD_HOME DEV_HOME IDE_HOME
 
 function __internal_labsim_environment() {
 	echo -e "\n## BEGIN LABSIM ROUTINES\n" 	\
-	&& echo -e ${LABSIM_DEV_DIST} 			\
+	&& echo -e ${GAIA_DEV_DIST} 			\
 	&& echo -e "\n## END LABSIM ROUTINES\n"
 } # __internal_labsim_environment()
-
-function __internal_labsim_switch_environment() {
-	echo -e "\n## BEGIN LABSIM ROUTINES\n" 								\
-	&& time sh $DEVTK_ROOT/script/linux/switch_environment.sh "$@"	\
-	&& echo -e "\n## END LABSIM ROUTINES\n"
-} # __internal_labsim_switch_environment()
 
 ###
 # long alias
 ###
-alias labsim_env="__internal_labsim_environment"
-alias labsim_switch_env="__internal_labsim_switch_environment"
+alias gaia="__internal_labsim_environment"
 
 ###
 # short alias

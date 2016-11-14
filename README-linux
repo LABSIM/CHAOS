@@ -1,5 +1,15 @@
 # ======================================================================== #
-# A ajouter dans ~/.bashrc 
+# ======================================================================== #
+#
+# Creer un lien symbolique [ ~/.gaia.env.sh ] pointant sur le repertoire source de GAIA
+#
+
+# ======================================================================== #
+# 
+# ======================================================================== #
+#
+# A ajouter dans ~/.bashrc si config non-DRI, sinon ~/.bashrc.linux si DRI
+#
 
 #######################
 # Sourcing Env
@@ -11,15 +21,27 @@
 # 13/02/12 - Kinani Nawfel
 #######################
 
-# On check l'existance du lien symbolique qui sera modifié par la suite & on verifie que l'on est pas en pleine install
-if [ -f ~/.labsim.env.sh ]; then 
-	if [ -z ${DEVTK_REQUIRE_CLEAN_INSTALL_ENVIRONMENT+x} ]; then
-		source ~/.labsim.env.sh
-	fi 
+# dynamically check DRI environment -> normally DRI config use "module", sooooo....
+
+if hash module 2>/dev/null; then
+	if [ -f $(find /tmp_user/ -type f -name "*GAIA.sh" 2>/dev/null) ]; then
+		if [ -z ${GAIA_REQUIRE_CLEAN_INSTALL_ENVIRONMENT+x} ]; then
+			source $(find /tmp_user/ -type f -name "*GAIA.sh" 2>/dev/null)
+		fi
+	else 
+		echo "[GAIA] Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
+	fi
+else
+	if [ -f $(find /tmp_user/ -type f -name "*GAIA.sh" 2>/dev/null) ]; then
+		if [ -z ${GAIA_REQUIRE_CLEAN_INSTALL_ENVIRONMENT+x} ]; then
+			source $(find /tmp_user/ -type f -name "*GAIA.sh" 2>/dev/null)
+		fi
+	else 
+		echo "[GAIA] Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
+	fi
 fi
 
-#######################
-# colored man : https://gist.github.com/cocoalabs/2fb7dc2199b0d4bf160364b8e557eb66
+# colored man -> https://gist.github.com/cocoalabs/2fb7dc2199b0d4bf160364b8e557eb66 :) 
 
 man() {
 	env \

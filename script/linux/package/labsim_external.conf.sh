@@ -1,5 +1,24 @@
 #!/bin/bash
 
+#
+# GAIA : required LABSIM ground software ecosystem
+# Copyright (C) 2012-2016  Nawfel KINANI
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; see the file COPYING.
+# If not, see <http://www.gnu.org/licenses/>.
+#
+
 #######################
 # Progiciels environment config
 #
@@ -9,7 +28,7 @@
 # 07/02/12 - Kinani Nawfel
 
 # configuration DRI ?
-if [ -z ${LABSIM_DRI_HOST_ADMIN+x} ]; then 
+if [ -z ${GAIA_FOUND_DRI_HOST+x} ]; then 
 	# LABSIM HOST
 	NEED_DRI_BYPASS_HACK=0
 else 
@@ -334,6 +353,39 @@ export QTCREATOR_ROOT QTCREATOR_LIBRARYDIR QTCREATOR_BINARYDIR
 ###################################################################
 # Global Variable
 ###
+
+# is it a DRI administrated host
+if [ $NEED_DRI_BYPASS_HACK -ne 1 ]; then
+	GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* mpc v.$MPC_VERSION"
+	GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* mpfr v.$MPFR_VERSION"
+	GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* gmp v.$GMP_VERSION"
+	GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* autogen v.$AUTOGEN_VERSION"
+	GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* gcc v.$GCC_VERSION"
+fi # DRI ?
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* perl v.$PERL_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* doxygen v.$DOXYGEN_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* xercesc v.$XERCESC_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* glm v.$GLM_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* glfw v.$GLFW_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* cmake v.$CMAKE_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* boost v.$BOOST_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* osg v.$OSG_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* silverlining v.$SILVERLINING_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* fftss v.$FFTSS_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* triton v.$TRITON_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* opencv v.$OPENCV_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* hid api v.$HIDAPI_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* jsonccpp v.$JSONCPP_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* osvr-libfunctionality v.$OSVR_LIBFUNCTIONALITY_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* osvr-core v.$OSVR_CORE_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* cegui v.$CEGUI_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* qt v.$QT_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* qt-creator v.$QTCREATOR_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* opensplicedds v.$OSPL_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* adobe flash player v.$ADOBEFLASHPLAYER_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* firefox v.$FIREFOX_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* jre v.$JRE_VERSION"
+GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t|\t* eclipse v.$ECLIPSE_VERSION"
 
 # configuration DRI ?
 if [ $NEED_DRI_BYPASS_HACK -ne 1 ]; then
