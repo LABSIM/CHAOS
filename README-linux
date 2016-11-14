@@ -1,25 +1,12 @@
-# ======================================================================== #
-# ======================================================================== #
 #
-# Creer un lien symbolique [ ~/.gaia.env.sh ] pointant sur le repertoire source de GAIA
-#
-
-# ======================================================================== #
-# 
-# ======================================================================== #
-#
-# A ajouter dans ~/.bashrc si config non-DRI, sinon ~/.bashrc.linux si DRI
+# A ajouter dans:
+#	-> ~/.bashrc 		ssi LABSIM
+#	-> ~/.bashrc.linux 	ssi DRI
 #
 
-#######################
-# Sourcing Env
-#
-# Préparation au mode distant pour le déploiement
-# rapide des differents modes d'utilisation
-# 
-# (J-1)
-# 13/02/12 - Kinani Nawfel
-#######################
+########
+# GAIA #
+########
 
 # dynamically check DRI environment -> normally DRI config use "module", sooooo....
 
@@ -32,9 +19,9 @@ if hash module 2>/dev/null; then
 		echo "[GAIA] Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
 	fi
 else
-	if [ -f $(find /tmp_user/ -type f -name "*GAIA.sh" 2>/dev/null) ]; then
+	if [ -f $(find ~/ -type f -name "*GAIA.sh" 2>/dev/null) ]; then
 		if [ -z ${GAIA_REQUIRE_CLEAN_INSTALL_ENVIRONMENT+x} ]; then
-			source $(find /tmp_user/ -type f -name "*GAIA.sh" 2>/dev/null)
+			source $(find ~/ -type f -name "*GAIA.sh" 2>/dev/null)
 		fi
 	else 
 		echo "[GAIA] Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."

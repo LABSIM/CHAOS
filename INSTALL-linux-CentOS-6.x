@@ -9,13 +9,7 @@ I - Package (YUM)
 	-> [sudo required] script/linux/install/CentOS-6.x/install_Dependencies.sh
 
 ----------------------------------------------------------------------------
-II - Boostrapping (should log some error message untill all script are executed)
-----------------------------------------------------------------------------
-
-	-> script/linux/switch_environment.sh [with your corresponding environment here]
-
-----------------------------------------------------------------------------
-III - Libraries
+II - Libraries
 ----------------------------------------------------------------------------
 
 	-> script/linux/install/CentOS-6.x/install_PERL.sh	
@@ -40,7 +34,7 @@ III - Libraries
 	-> script/linux/install/CentOS-6.x/install_CEGUI.sh
 
 ----------------------------------------------------------------------------
-IV - IDE
+III - IDE
 ----------------------------------------------------------------------------
 
 	-> script/linux/install/CentOS-6.x/install_QTCREATOR.sh
