@@ -10,34 +10,20 @@
 
 # dynamically check DRI environment -> normally DRI config use "module", sooooo....
 
-if hash module 2>/dev/null; then
-	if [ -f $(find /tmp_user/ -type f -name "*GAIA.sh" 2>/dev/null) ]; then
-		if [ -z ${GAIA_REQUIRE_CLEAN_INSTALL_ENVIRONMENT+x} ]; then
+if [ -z ${GAIA_REQUIRE_CLEAN_INSTALL_ENVIRONMENT+x} ]; then
+	if hash module 2>/dev/null; then
+		if [ -f $(find /tmp_user/ -type f -name "*GAIA.sh" 2>/dev/null) ]; then
 			source $(find /tmp_user/ -type f -name "*GAIA.sh" 2>/dev/null)
+		else 
+			echo "[GAIA][DRI] Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
 		fi
-	else 
-		echo "[GAIA] Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
-	fi
-else
-	if [ -f $(find ~/ -type f -name "*GAIA.sh" 2>/dev/null) ]; then
-		if [ -z ${GAIA_REQUIRE_CLEAN_INSTALL_ENVIRONMENT+x} ]; then
+	else
+		if [ -f $(find ~/ -type f -name "*GAIA.sh" 2>/dev/null) ]; then
 			source $(find ~/ -type f -name "*GAIA.sh" 2>/dev/null)
+		else 
+			echo "[GAIA][LABSIM] Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
 		fi
-	else 
-		echo "[GAIA] Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
 	fi
+else 
+	echo "[GAIA] Warning : environment de travail clean... En cas de doute(s) sur la(les) cause(s), contactez les administrateurs: Christian S. ou Nawfel K."
 fi
-
-# colored man -> https://gist.github.com/cocoalabs/2fb7dc2199b0d4bf160364b8e557eb66 :) 
-
-man() {
-	env \
-		LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-		LESS_TERMCAP_md=$(printf "\e[1;31m") \
-		LESS_TERMCAP_me=$(printf "\e[0m") \
-		LESS_TERMCAP_se=$(printf "\e[0m") \
-		LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-		LESS_TERMCAP_ue=$(printf "\e[0m") \
-		LESS_TERMCAP_us=$(printf "\e[1;32m") \
-		man "$@"
-}

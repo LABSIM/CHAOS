@@ -132,4 +132,66 @@ fi
 
 GAIA_DEV_DIST="$GAIA_DEV_DIST\n\t+"
 
+##############################################################################
+## Magic Section ! Cleanup and more ..										##
+##############################################################################
+
+# colored man -> https://gist.github.com/cocoalabs/2fb7dc2199b0d4bf160364b8e557eb66 :) 
+
+man() {
+	env \
+		LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+		LESS_TERMCAP_md=$(printf "\e[1;31m") \
+		LESS_TERMCAP_me=$(printf "\e[0m") \
+		LESS_TERMCAP_se=$(printf "\e[0m") \
+		LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+		LESS_TERMCAP_ue=$(printf "\e[0m") \
+		LESS_TERMCAP_us=$(printf "\e[1;32m") \
+		man "$@"
+}
+
+# http://unix.stackexchange.com/questions/40749/remove-duplicate-path-entries-with-awk-command ... What else ?...
+
+if [ -n "$PATH" ]; then
+	old_PATH=$PATH:; PATH=
+	while [ -n "$old_PATH" ]; do
+		x=${old_PATH%%:*}        # the first remaining entry
+		case $PATH: in
+			*:"$x":*) ;;         # already there
+			*) PATH=$PATH:$x;;   # not there yet
+		esac
+		old_PATH=${old_PATH#*:}
+	done
+	PATH=${PATH#:}
+	unset old_PATH x
+fi
+
+if [ -n "$LD_LIBRARY_PATH" ]; then
+	old_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:; LD_LIBRARY_PATH=
+	while [ -n "$old_LD_LIBRARY_PATH" ]; do
+		x=${old_LD_LIBRARY_PATH%%:*}        			# the first remaining entry
+		case $LD_LIBRARY_PATH: in
+			*:"$x":*) ;;         						# already there
+			*) LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$x;;  	# not there yet
+		esac
+		old_LD_LIBRARY_PATH=${old_LD_LIBRARY_PATH#*:}
+	done
+	LD_LIBRARY_PATH=${LD_LIBRARY_PATH#:}
+	unset old_LD_LIBRARY_PATH x
+fi
+
+if [ -n "$CPATH" ]; then
+	old_CPATH=$CPATH:; CPATH=
+	while [ -n "$old_CPATH" ]; do
+		x=${old_CPATH%%:*}        	# the first remaining entry
+		case $CPATH: in
+			*:"$x":*) ;;         	# already there
+			*) CPATH=$CPATH:$x;;   	# not there yet
+		esac
+		old_CPATH=${old_CPATH#*:}
+	done
+	CPATH=${CPATH#:}
+	unset old_CPATH x
+fi
+
 # == EOF
