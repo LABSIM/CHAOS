@@ -81,7 +81,6 @@ alias gaia="__internal_labsim_environment"
 # short alias
 ###
 alias le="labsim_env"
-alias lse="labsim_switch_env"
 
 ###################################################################
 # Other

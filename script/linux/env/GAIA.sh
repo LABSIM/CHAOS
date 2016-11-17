@@ -32,7 +32,7 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 # export necessary variables
 export GAIA_ROOT=$(readlink -f "$SCRIPTPATH/../../../")
 
-declare GAIA_DEV_DIST
+declare GAIA_DEV_DIST=""
 GAIA_DEV_DIST="$GAIA_DEV_DIST# ================================================================= #"
 GAIA_DEV_DIST="$GAIA_DEV_DIST\n# GAIA : the LABSIM ground software ecosystem"
 GAIA_DEV_DIST="$GAIA_DEV_DIST\n# ================================================================= #"
