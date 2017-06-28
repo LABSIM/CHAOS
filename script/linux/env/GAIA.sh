@@ -155,10 +155,10 @@ man() {
 if [ -n "$PATH" ]; then
 	old_PATH=$PATH:; PATH=
 	while [ -n "$old_PATH" ]; do
-		x=${old_PATH%%:*}        # the first remaining entry
+		x=${old_PATH%%:*}        	# the first remaining entry
 		case $PATH: in
-			*:"$x":*) ;;         # already there
-			*) PATH=$PATH:$x;;   # not there yet
+			*:"$x":*) ;;         	# already there
+			*) PATH=$PATH:$x;;   	# not there yet
 		esac
 		old_PATH=${old_PATH#*:}
 	done
@@ -171,7 +171,7 @@ if [ -n "$LD_LIBRARY_PATH" ]; then
 	while [ -n "$old_LD_LIBRARY_PATH" ]; do
 		x=${old_LD_LIBRARY_PATH%%:*}        			# the first remaining entry
 		case $LD_LIBRARY_PATH: in
-			*:"$x":*) ;;         						# already there
+			*:"$x":*) ;;         				# already there
 			*) LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$x;;  	# not there yet
 		esac
 		old_LD_LIBRARY_PATH=${old_LD_LIBRARY_PATH#*:}
@@ -192,6 +192,20 @@ if [ -n "$CPATH" ]; then
 	done
 	CPATH=${CPATH#:}
 	unset old_CPATH x
+fi
+
+if [ -n "$PKG_CONFIG_PATH" ]; then
+	old_PKG_CONFIG_PATH=$PKG_CONFIG_PATH:; PKG_CONFIG_PATH=
+	while [ -n "$old_PKG_CONFIG_PATH" ]; do
+		x=${old_PKG_CONFIG_PATH%%:*}        			# the first remaining entry
+		case $PKG_CONFIG_PATH: in
+			*:"$x":*) ;;         				# already there
+			*) PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$x;;   	# not there yet
+		esac
+		old_PKG_CONFIG_PATH=${old_PKG_CONFIG_PATH#*:}
+	done
+	PKG_CONFIG_PATH=${PKG_CONFIG_PATH#:}
+	unset old_PKG_CONFIG_PATH x
 fi
 
 # == EOF

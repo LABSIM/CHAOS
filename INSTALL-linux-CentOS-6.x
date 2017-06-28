@@ -46,7 +46,6 @@ II - Libraries
 	// Google section
 	
 	-> script/linux/install/CentOS-6.x/install_GO.sh
-	-> script/linux/install/CentOS-6.x/install_PROTOBUF.sh
 	-> script/linux/install/CentOS-6.x/install_GRPC.sh
 	
 	// CEGUI (depreciated?)

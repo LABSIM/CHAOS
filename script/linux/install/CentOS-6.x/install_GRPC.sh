@@ -34,8 +34,12 @@ cd grpcinst
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
-echo "                      	gRPC                    "
+echo "                       gRPC & Protobuf"
 echo "########################################################"
+
+# ===============
+# Main repository
+# ===============
 
 echo "#!/bin/bash" > exec.sh
 echo "git clone --recursive -b $(curl -L http://grpc.io/release) https://github.com/grpc/grpc" >> exec.sh
@@ -48,12 +52,88 @@ PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
 
-cd grpc*
+cd grpc*/third_party/protobuf
+
+	# ========
+	# Protobuf
+	# ========
+
+	echo "#!/bin/bash" > exec.sh
+	echo "./autogen.sh" >> exec.sh
+	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo -ne "\tGeneration du fichier de configuration pour Protobuf $PROTOBUF_INSTALL_TARGET_VERSION ... "
+	chmod u+x exec.sh
+	gnome-terminal --working-directory $PWD --title="LABSIM - Protobuf $PROTOBUF_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+	sleep 0.2
+	PID=$(pgrep exec.sh)
+	wait_for_PID $PID
+	echo "OK"
+
+	echo "#!/bin/bash" > exec.sh
+	echo "./configure --prefix=/home/$(whoami)/Progiciels/protobuf-$PROTOBUF_INSTALL_TARGET_VERSION" >> exec.sh
+	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo -ne "\tConfiguration de Protobuf $PROTOBUF_INSTALL_TARGET_VERSION ... "
+	chmod u+x exec.sh
+	gnome-terminal --working-directory $PWD --title="LABSIM - Protobuf $PROTOBUF_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+	sleep 0.2
+	PID=$(pgrep exec.sh)
+	wait_for_PID $PID
+	echo "OK"
+
+	echo "#!/bin/bash" > exec.sh
+	echo "make -j4" >> exec.sh
+	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo -ne "\tBuild de Protobuf $PROTOBUF_INSTALL_TARGET_VERSION ... "
+	chmod u+x exec.sh
+	gnome-terminal --working-directory $PWD --title="LABSIM - Protobuf $PROTOBUF_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+	sleep 0.2
+	PID=$(pgrep exec.sh)
+	wait_for_PID $PID
+	echo "OK"
+
+	echo "#!/bin/bash" > exec.sh
+	echo "make check" >> exec.sh
+	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo -ne "\tChecking de Protobuf $PROTOBUF_INSTALL_TARGET_VERSION ... "
+	chmod u+x exec.sh
+	gnome-terminal --working-directory $PWD --title="LABSIM - Protobuf $PROTOBUF_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+	sleep 0.2
+	PID=$(pgrep exec.sh)
+	wait_for_PID $PID
+	echo "OK"
+
+	echo "#!/bin/bash" > exec.sh
+	echo "make install" >> exec.sh
+	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo -ne "\tInstall de Protobuf $PROTOBUF_INSTALL_TARGET_VERSION ... "
+	chmod u+x exec.sh
+	gnome-terminal --working-directory $PWD --title="LABSIM - Protobuf $PROTOBUF_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+	sleep 0.2
+	PID=$(pgrep exec.sh)
+	wait_for_PID $PID
+	echo "OK"
+
+	echo "#!/bin/bash" > exec.sh
+	echo "sudo /sbin/ldconfig" >> exec.sh
+	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo -ne "\tMise a jour du cache de /usr/bin/ld pour Protobuf $PROTOBUF_INSTALL_TARGET_VERSION ... "
+	chmod u+x exec.sh
+	gnome-terminal --working-directory $PWD --title="LABSIM - Protobuf $PROTOBUF_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+	sleep 0.2
+	PID=$(pgrep exec.sh)
+	wait_for_PID $PID
+	echo "OK"
+
+cd ../..
+
+# ====
+# gRPC
+# ====
 
 echo "#!/bin/bash" > exec.sh
-echo "make -j4" >> exec.sh
+echo "make -j4 install prefix=/home/$(whoami)/Progiciels/grpc-$GRPC_INSTALL_TARGET_VERSION" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tCompilation de gRPC $GRPC_INSTALL_TARGET_VERSION ... "
+echo -ne "\tInstallation de gRPC $GRPC_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --working-directory $PWD --title="LABSIM - gRPC $GRPC_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
@@ -61,10 +141,11 @@ PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
 
+
 echo "#!/bin/bash" > exec.sh
-echo "make install prefix=/home/$(whoami)/Progiciels/grpc-$GRPC_INSTALL_TARGET_VERSION" >> exec.sh
+echo "sudo /sbin/ldconfig" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tInstallation de gRPC $GRPC_INSTALL_TARGET_VERSION ... "
+echo -ne "\tMise a jour du cache de /usr/bin/ld pour gRPC $GRPC_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
 gnome-terminal --working-directory $PWD --title="LABSIM - gRPC $GRPC_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2

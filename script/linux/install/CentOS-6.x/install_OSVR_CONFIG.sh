@@ -28,45 +28,41 @@ source ../../routine/wait_for_PID.sh
 
 # go to local dir
 cd /tmp_user/$(hostname)/$(whoami)
-mkdir protobufinst
-cd protobufinst
+mkdir osvrdisplayinst
+cd osvrdisplayinst
 
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
-echo "                      	PROTOBUF                    "
+echo "  git "
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
-echo "git clone --recursive https://github.com/google/protobuf.git" >> exec.sh
+echo "git clone --recursive https://github.com/OSVR/OSVR-Display.git" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tCloning de Protobuf $PROTOBUF_INSTALL_TARGET_VERSION ... "
+echo -ne "\tCloning de OSVR - display $OSVR_DISPLAY_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - Protobuf $PROTOBUF_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
 
-cd protobuf*
+echo "########################################################"
+echo " cmake, build & install"
+echo "########################################################"
+
+cd OSVR-Display*
+
+mkdir build
+cd build
 
 echo "#!/bin/bash" > exec.sh
-echo "./autogen.sh" >> exec.sh
+echo "cmake -DCMAKE_INSTALL_PREFIX=/home/$(whoami)/Progiciels/osvr-display-$OSVR_DISPLAY_INSTALL_TARGET_VERSION -DCMAKE_BUILD_TYPE=Release -DBoost_NO_BOOST_CMAKE=ON -DUSE_BOOST_REGEX=ON -DBUILD_TESTS=OFF -Dstd=c++14 .." >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tGeneration du fichier de configuration pour Protobuf $PROTOBUF_INSTALL_TARGET_VERSION ... "
+echo -ne "\tCMake de OSVR - display $OSVR_DISPLAY_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - Protobuf $PROTOBUF_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
-sleep 0.2
-PID=$(pgrep exec.sh)
-wait_for_PID $PID
-echo "OK"
-
-echo "#!/bin/bash" > exec.sh
-echo "./configure --prefix=/home/$(whoami)/Progiciels/protobuf-$PROTOBUF_INSTALL_TARGET_VERSION" >> exec.sh
-echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tConfiguration de Protobuf $PROTOBUF_INSTALL_TARGET_VERSION ... "
-chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - Protobuf $PROTOBUF_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -75,20 +71,9 @@ echo "OK"
 echo "#!/bin/bash" > exec.sh
 echo "make -j4" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tBuild de Protobuf $PROTOBUF_INSTALL_TARGET_VERSION ... "
+echo -ne "\tCompilation de OSVR - display $OSVR_DISPLAY_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - Protobuf $PROTOBUF_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
-sleep 0.2
-PID=$(pgrep exec.sh)
-wait_for_PID $PID
-echo "OK"
-
-echo "#!/bin/bash" > exec.sh
-echo "make check" >> exec.sh
-echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tChecking de Protobuf $PROTOBUF_INSTALL_TARGET_VERSION ... "
-chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - Protobuf $PROTOBUF_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -97,9 +82,9 @@ echo "OK"
 echo "#!/bin/bash" > exec.sh
 echo "make install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tChecking de Protobuf $PROTOBUF_INSTALL_TARGET_VERSION ... "
+echo -ne "\tInstallation de OSVR - display $OSVR_DISPLAY_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - Protobuf $PROTOBUF_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -108,7 +93,7 @@ echo "OK"
 echo "########################################################"
 echo "  Suppression du repertoire temporaire"
 cd $current_dir
-rm -rf /tmp_user/$(hostname)/$(whoami)/protobufinst
+rm -rf /tmp_user/$(hostname)/$(whoami)/osvrdisplayinst
 echo "########################################################"
 
 echo; echo "## END"; echo
