@@ -27,3 +27,5 @@ if [ -z ${GAIA_REQUIRE_CLEAN_INSTALL_ENVIRONMENT+x} ]; then
 else 
 	echo "[GAIA] Warning : environment de travail clean... En cas de doute(s) sur la(les) cause(s), contactez les administrateurs: Christian S. ou Nawfel K."
 fi
+
+# EOF
