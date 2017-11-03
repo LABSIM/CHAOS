@@ -103,8 +103,9 @@ fi # DRI ?
 
 PERL_ROOT=$PRO_HOME/perl-$PERL_VERSION
 PERL_BINARYDIR=$PERL_ROOT/bin
+PERL5LIB=$PERL_ROOT/lib/$PERL_VERSION:$PERL_ROOT/lib/site_perl/$PERL_VERSION
 
-export PERL_ROOT PERL_BINARYDIR
+export PERL_ROOT PERL_BINARYDIR PERL5LIB
 
 ###################################################################
 # Doxygen
