@@ -178,15 +178,31 @@ source $GAIA_ROOT/script/sh/software/labsim-contract.conf.sh
 #========================================================================================================================#
 #===================================================== END FEATURES =====================================================#
 #========================================================================================================================#
-#
- finalize dist detail
+
+# finalize dist detail
 GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+\n"
 
 # cleanup
 source $GAIA_ROOT/script/sh/function/cleanup.conf.sh
 
-# GAIA, finally :)
-alias gaia='sh $GAIA_ROOT/script/sh/GAIA.sh'
+# functions 
+
+function __internal_labsim_gaia_ecosystem() {
+	echo -e "\n## BEGIN LABSIM ROUTINES\n" \
+	&& time perl -I $GAIA_ROOT/script/perl/module $GAIA_ROOT/script/gaia-ecosystem.pl "$@"	\
+	&& echo -e "\n## END LABSIM ROUTINES\n"
+} # __internal_labsim_gaia_ecosystem()
+
+function __internal_labsim_gaia_deploy() {
+	echo -e "\n## BEGIN LABSIM ROUTINES\n" \
+	&& time perl -I $GAIA_ROOT/script/perl/module $GAIA_ROOT/script/gaia-deploy.pl "$@"	\
+	&& echo -e "\n## END LABSIM ROUTINES\n"
+} # __internal_labsim_gaia_deploy()
+
+# aliases
+
+alias gaia-ecosystem="__internal_labsim_gaia_ecosystem"
+alias gaia-deploy="__internal_labsim_gaia_deploy"
 
 ##############################################################################
 ## Magic Section ! Fun, Functions and more ..				    ##
