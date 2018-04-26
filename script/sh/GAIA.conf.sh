@@ -214,8 +214,10 @@ alias gaia='sh $GAIA_ROOT/script/sh/GAIA.sh'
 ## Magic Section ! Fun, Functions and more ..				    ##
 ##############################################################################
 
-# colored man -> https://gist.github.com/cocoalabs/2fb7dc2199b0d4bf160364b8e557eb66 :) 
-
+#
+# colored man :) --> #geek
+# [ https://gist.github.com/cocoalabs/2fb7dc2199b0d4bf160364b8e557eb66 ]
+#
 man() {
 	env \
 		LESS_TERMCAP_mb=$(printf "\e[1;31m") \
