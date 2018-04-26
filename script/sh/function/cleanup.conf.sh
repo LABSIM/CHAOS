@@ -45,54 +45,21 @@ function unset_version()
 
 } # unset_version()
 
-function clean_version() {
+# list all directories under home
+directories=$(find $GAIA_THIRD_PARTY_HOME/* -maxdepth 0 -type d 2>/dev/null | awk -F"/" '{print $NF}' | awk -F"-" '{print $1}')
 
-	# common
-	unset_version "binutils"
-	unset_version "mpc"
-	unset_version "mpfr"
-	unset_version "gmp"
-	unset_version "isl"
-	unset_version "autogen"
-	unset_version "gcc"
-	unset_version "gdb"
-	unset_version "perl"
-	unset_version "doxygen"
-	unset_version "xercesc"
-	unset_version "cmake"
-	unset_version "boost"
+#
+# remove duplicate names if any
+# [ https://stackoverflow.com/questions/13648410/how-can-i-get-unique-values-from-an-array-in-bash ]
+#
+unique_directories=$(tr ' ' '\n' <<< "${directories[@]}" | sort -u | tr '\n' ' ')
 
-	# IG
-	unset_version "osg"
-	unset_version "silverlining"
-	unset_version "fftss"
-	unset_version "triton"
+# then unset
+for dirname in $unique_directories; do
+	
+	unset_version $dirname
 
-	# VR-AR
-	unset_version "opencv"
-	unset_version "hidapi"
-	unset_version "jsoncpp"
-	unset_version "osvr-libfunctionality"
-	unset_version "osvr-core"
-	unset_version "osvr-display"
-
-	# Simulation network
-	unset_version "protobuf"
-	unset_version "grpc"
-	unset_version "gsoap"
-	unset_version "opensplice"
-
-	# UI
-	unset_version "qt"
-	unset_version "qt-creator"
-
-	# ...
-	unset_version "cegui"
-
-} # clean_version()
-
-# call
-clean_version
+done
 
 # http://unix.stackexchange.com/questions/40749/remove-duplicate-path-entries-with-awk-command ... What else ?...
 

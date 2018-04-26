@@ -42,7 +42,7 @@ function declare_version()
 	local version_ref=GAIA_THIRD_PARTY_$(echo "${1//-/_}" | tr '[:lower:]' '[:upper:]')_VERSION
 
 	# find highest version
-	for dirname in $(ls -d $GAIA_THIRD_PARTY_HOME/$1-* 2>/dev/null); do
+	for dirname in $(find $GAIA_THIRD_PARTY_HOME/$1-* -maxdepth 0 -type d 2>/dev/null | awk -F"/" '{print $NF}'); do
 
 		local tmp_version=$(echo $dirname | awk -F"-" '{print $NF}')
 		local tmp_major_version=$(echo $tmp_version | awk -F"." '{print $1}')
@@ -84,56 +84,21 @@ function declare_version()
 	
 } # declare_version()
 
-# Then split then into version
+# list all directories under home
+directories=$(find $GAIA_THIRD_PARTY_HOME/* -maxdepth 0 -type d 2>/dev/null | awk -F"/" '{print $NF}' | awk -F"-" '{print $1}')
 
-function find_version()  {
+#
+# remove duplicate names if any
+# [ https://stackoverflow.com/questions/13648410/how-can-i-get-unique-values-from-an-array-in-bash ]
+#
+unique_directories=$(tr ' ' '\n' <<< "${directories[@]}" | sort -u | tr '\n' ' ')
 
-	# common
-	declare_version "binutils"
-	declare_version "mpc"
-	declare_version "mpfr"
-	declare_version "gmp"
-	declare_version "isl"
-	declare_version "autogen"
-	declare_version "gcc"
-	declare_version "gdb"
-	declare_version "perl"
-	declare_version "doxygen"
-	declare_version "xercesc"
-	declare_version "cmake"
-	declare_version "boost"
+# then declare each version
+for dirname in $unique_directories; do
+	
+	declare_version $dirname
 
-	# IG
-	declare_version "osg"
-	declare_version "silverlining"
-	declare_version "fftss"
-	declare_version "triton"
-
-	# VR-AR
-	declare_version "opencv"
-	declare_version "hidapi"
-	declare_version "jsoncpp"
-	declare_version "osvr-libfunctionality"
-	declare_version "osvr-core"
-	declare_version "osvr-display"
-
-	# Simulation network
-	declare_version "protobuf"
-	declare_version "grpc"
-	declare_version "gsoap"
-	declare_version "opensplice"
-
-	# UI
-	declare_version "qt"
-	declare_version "qt-creator"
-
-	# ...
-	declare_version "cegui"
-
-} # find_version() 
-
-# call
-find_version
+done
 
 # == EOF
 
