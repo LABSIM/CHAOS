@@ -19,6 +19,10 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
+
+# detail 
+GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ LABSIM : <Titans> ]"
+
 ######################################################################
 ## LABSIM Developpement environment config							##
 ##																	##
@@ -56,7 +60,7 @@ if [ -d "$TITANS_HOME/RHEA" ]; then
 	
 	# alias 
 	function __internal_labsim_rhea() {
-		echo -e "\n## BEGIN LABSIM ROUTINES\n" 									\
+		echo -e "\n## BEGIN LABSIM ROUTINES\n" \
 		&& time perl -I $RHEA_ROOT/script/module $RHEA_ROOT/script/RHEA.pl "$@"	\
 		&& echo -e "\n## END LABSIM ROUTINES\n"
 	} # __internal_labsim_rhea()

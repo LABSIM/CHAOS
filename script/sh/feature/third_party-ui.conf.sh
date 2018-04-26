@@ -19,6 +19,10 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
+
+# detail
+GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ Third_party : <User Interface (UI)> ]"
+
 ###################################################################
 # QT
 ###

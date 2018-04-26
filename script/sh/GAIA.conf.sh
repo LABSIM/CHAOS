@@ -159,50 +159,28 @@ GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t|\t* Architecture : $GAIA
 
 # === third party feature
 
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ Third_party : <GNU> ]"
 source $GAIA_ROOT/script/sh/feature/third_party-gnu.conf.sh
-
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ Third_party : <Common> ]"
 source $GAIA_ROOT/script/sh/feature/third_party-common.conf.sh
-
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ Third_party : <Image Generation> ]"
 source $GAIA_ROOT/script/sh/feature/third_party-ig.conf.sh
-
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ Third_party : <Image Processing> ]"
 source $GAIA_ROOT/script/sh/feature/third_party-ip.conf.sh
-
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ Third_party : <Distrituted Simulation> ]"
 source $GAIA_ROOT/script/sh/feature/third_party-sim.conf.sh
-
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ Third_party : <User Interface> ]"
 source $GAIA_ROOT/script/sh/feature/third_party-ui.conf.sh
-
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ Third_party : <Virtual Reality> ]"
 source $GAIA_ROOT/script/sh/feature/third_party-vr.conf.sh
 
 # === LABSIM software
 
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ LABSIM : <Common> ]"
 source $GAIA_ROOT/script/sh/software/labsim-common.conf.sh
-
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ LABSIM : <Colosses> ]"
 source $GAIA_ROOT/script/sh/software/labsim-colosses.conf.sh
-
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ LABSIM : <Olympiens> ]"
 source $GAIA_ROOT/script/sh/software/labsim-olympiens.conf.sh
-
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ LABSIM : <Titans> ]"
 source $GAIA_ROOT/script/sh/software/labsim-titans.conf.sh
-
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ LABSIM : <Contract> ]"
 source $GAIA_ROOT/script/sh/software/labsim-contract.conf.sh
-
-# finalize dist detail
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+\n"
 
 #========================================================================================================================#
 #===================================================== END FEATURES =====================================================#
 #========================================================================================================================#
+#
+ finalize dist detail
+GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+\n"
 
 # cleanup
 source $GAIA_ROOT/script/sh/function/cleanup.conf.sh

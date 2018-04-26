@@ -22,10 +22,10 @@
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
-echo "                       Dependencies                     "
+echo "                       Packages                         "
 echo "########################################################"
 
-echo; echo " - Common dependencies - "; echo
+echo; echo " - Common package - "; echo
 sudo yum install \
 	glib2-devel.x86_64 \
 	glibc-devel.x86_64 \
