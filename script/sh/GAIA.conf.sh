@@ -163,7 +163,8 @@ source $GAIA_ROOT/script/sh/feature/third_party-gnu.conf.sh
 source $GAIA_ROOT/script/sh/feature/third_party-common.conf.sh
 source $GAIA_ROOT/script/sh/feature/third_party-ig.conf.sh
 source $GAIA_ROOT/script/sh/feature/third_party-ip.conf.sh
-source $GAIA_ROOT/script/sh/feature/third_party-sim.conf.sh
+source $GAIA_ROOT/script/sh/feature/third_party-sf.conf.sh
+source $GAIA_ROOT/script/sh/feature/third_party-sb.conf.sh
 source $GAIA_ROOT/script/sh/feature/third_party-ui.conf.sh
 source $GAIA_ROOT/script/sh/feature/third_party-vr.conf.sh
 

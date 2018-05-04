@@ -58,11 +58,13 @@
     -  **Image Processing (IP)** -- *optionnal*
         - opencv *v.3.1.0*
         - openpose *v.1.3.0*
-    - **Simulation (SIM)** -- *optionnal*
+     - **Simulation Frontend (SF)** -- *optionnal*
         - protobuf *v.3.5.0*
         - grpc *v.1.11.0*
+      - **Simulation Backend (SB)** -- *optionnal*
+        - nghttp2 *v.1.31.1*
         - gsoap *v.2.8.66*
-        - ospl *v.6.7.180404*
+        - opensplice *v.6.7.0*
     - **Virtual Reality (VR)** -- ***experimental***
         - hidapi *v.0.8.0*
         - jsoncpp *v.1.7.5*

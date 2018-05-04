@@ -21,7 +21,7 @@
 
 # variables
 CURRENT_DIR=$PWD
-BUILD_DIR=/tmp/GAIA/$(whoami)/build/osg
+BUILD_DIR=/tmp/GAIA/$(whoami)/build/gdal
 
 # source distribution configured versions 
 source /tmp/GAIA/$(whoami)/dist-config-versions.conf.sh
@@ -37,75 +37,84 @@ cd $BUILD_DIR
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
-echo "                      OpenSceneGraph                    "
+echo "                           GDAL                        "
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
-echo "git clone https://github.com/openscenegraph/OpenSceneGraph.git" >> exec.sh
+echo "wget http://download.osgeo.org/gdal/$GDAL_INSTALL_TARGET_VERSION/gdal-$GDAL_INSTALL_TARGET_VERSION.tar.xz" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tCloning de OpenSceneGraph $OSG_INSTALL_TARGET_VERSION ... "
+echo -ne "\tTelechargement de GDAL $GDAL_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - OpenSceneGraph $OSG_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - GDAL $GDAL_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
-echo "OK"
-
-cd OpenSceneGraph
+echo -e "\t==> OK"
 
 echo "#!/bin/bash" > exec.sh
-echo "git checkout --force tags/OpenSceneGraph-$OSG_INSTALL_TARGET_VERSION" >> exec.sh
+echo "tar -xvf gdal-$GDAL_INSTALL_TARGET_VERSION.tar.xz" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tCheckout release tag d'OpenSplice $OSPL_INSTALL_TARGET_VERSION ... "
+echo -ne "\tDecompression de GDAL $GDAL_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - OpenSplice $OSPL_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - GDAL $GDAL_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
-echo "OK"
+echo -e "\t==> OK"
 
-mkdir build
+cd gdal-*
+mkdir build 
 cd build
 
 echo "#!/bin/bash" > exec.sh
-echo "cmake -DCMAKE_INSTALL_PREFIX=$GAIA_THIRD_PARTY_HOME/osg-$OSG_INSTALL_TARGET_VERSION -DOSG_USE_FLOAT_BOUNDINGBOX=OFF -DOSG_USE_FLOAT_BOUNDINGSPHERE=OFF -DOSG_USE_FLOAT_MATRIX=OFF -DOSG_USE_FLOAT_PLANE=OFF -DOSG_USE_DEPRECATED_API=OFF -DOSG_USE_REF_PTR_SAFE_DEREFERENCE=ON .." >> exec.sh
+echo "../configure --prefix=$GAIA_THIRD_PARTY_HOME/gdal-$GDAL_INSTALL_TARGET_VERSION --enable-lto --with-xerces=$GAIA_THIRD_PARTY_HOME/xercesc-$XERCESC_INSTALL_TARGET_VERSION" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tConfiguration de OpenSceneGraph $OSG_INSTALL_TARGET_VERSION ... "
+echo -ne "\tConfiguration de GDAL $GDAL_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - OpenSceneGraph $OSG_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - GDAL $GDAL_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
-echo "OK"
+echo -e "\t==> OK"
 
 echo "#!/bin/bash" > exec.sh
 echo "make -j6" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tCompilation de OpenSceneGraph $OSG_INSTALL_TARGET_VERSION ... "
+echo -ne "\tBuild de GDAL $GDAL_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - OpenSceneGraph $OSG_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - GDAL $GDAL_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
-echo "OK"
+echo -e "\t==> OK"
+
+echo "#!/bin/bash" > exec.sh
+echo "make check" >> exec.sh
+echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+echo -ne "\tCheck de GDAL $GDAL_INSTALL_TARGET_VERSION ..."
+chmod u+x exec.sh
+gnome-terminal --working-directory $PWD --title="LABSIM - GDAL $GDAL_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+sleep 0.2
+PID=$(pgrep exec.sh)
+wait_for_PID $PID
+echo -e "\t==> OK"
 
 echo "#!/bin/bash" > exec.sh
 echo "make install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tInstallation de OpenSceneGraph $OSG_INSTALL_TARGET_VERSION ... "
+echo -ne "\tInstall de GDAL $GDAL_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - OpenSceneGraph $OSG_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - GDAL $GDAL_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
-echo "OK"
+echo -e "\t==> OK"
 
 echo "########################################################"
-echo -ne "\tSuppression du repertoire temporaire ..."
+echo -ne "\tSuppression du repertoire temporaire ... "
 cd $CURRENT_DIR
 rm -rf $BUILD_DIR
 echo "OK"
 echo "########################################################"
 
 echo; echo "## END"; echo
-

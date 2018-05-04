@@ -27,6 +27,11 @@ BUILD_DIR=/tmp/GAIA/$(whoami)/build/silverlining
 source /tmp/GAIA/$(whoami)/dist-config-versions.conf.sh
 source $GAIA_ROOT/script/sh/function/pid.conf.sh
 
+SILVERLINING_INSTALL_TARGET_MAJ_VER=5
+SILVERLINING_INSTALL_TARGET_MIN_VER=0
+SILVERLINING_INSTALL_TARGET_PATCH_VER=17
+SILVERLINING_INSTALL_TARGET_VERSION=$SILVERLINING_INSTALL_TARGET_MAJ_VER.$SILVERLINING_INSTALL_TARGET_MIN_VER.$SILVERLINING_INSTALL_TARGET_PATCH_VER
+
 # build local dir & remove previous
 if [ -d "$BUILD_DIR" ]; then 
 	rm -rf $BUILD_DIR
@@ -41,7 +46,7 @@ echo "                  Sundog SilverLining                   "
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
-echo "wget http://cdn.sundog-soft.com/latest/SilverLining-SDK-FullSource.tgz" >> exec.sh
+echo "wget http://cdn.sundog-soft.com/SilverLining-SDK-Evaluation.tgz" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tTelechargement de Silverlining $SILVERLINING_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
@@ -52,7 +57,7 @@ wait_for_PID $PID
 echo "OK"
 
 echo "#!/bin/bash" > exec.sh
-echo "tar -xvzf SilverLining-SDK-FullSource.tgz" >> exec.sh
+echo "tar -xvzf SilverLining-SDK-Evaluation.tgz" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 echo -ne "\tDecompression de Silverlining $SILVERLINING_INSTALL_TARGET_VERSION ... "
 chmod u+x exec.sh
@@ -62,7 +67,7 @@ PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo "OK"
 
-cd SilverLining-SDK-FullSource
+cd SilverLining-*
 
 echo "#!/bin/bash" > exec.sh
 echo "sed -i 's/DEBUG_FLAGS = -O3 -c/DEBUG_FLAGS = -O3 -c -fpermissive/g' Makefile" >> exec.sh
@@ -88,9 +93,10 @@ echo "OK"
 
 echo "#!/bin/bash" > exec.sh
 echo "mkdir $GAIA_THIRD_PARTY_HOME/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
+echo "mkdir $GAIA_THIRD_PARTY_HOME/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION/include" >> exec.sh
 echo "cp -rvf Docs $GAIA_THIRD_PARTY_HOME/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
 echo "cp -rvf lib $GAIA_THIRD_PARTY_HOME/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
-echo "cp -rvf Public* $GAIA_THIRD_PARTY_HOME/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
+echo "cp -rvf Public*/* $GAIA_THIRD_PARTY_HOME/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION/include" >> exec.sh
 echo "cp -rvf Resources $GAIA_THIRD_PARTY_HOME/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
 echo "cp -rvf SampleCode $GAIA_THIRD_PARTY_HOME/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh
 echo "cp -rvf third* /$GAIA_THIRD_PARTY_HOME/silverlining-$SILVERLINING_INSTALL_TARGET_VERSION" >> exec.sh

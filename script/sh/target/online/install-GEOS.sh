@@ -21,7 +21,7 @@
 
 # variables
 CURRENT_DIR=$PWD
-BUILD_DIR=/tmp/GAIA/$(whoami)/build/qt
+BUILD_DIR=/tmp/GAIA/$(whoami)/build/geos
 
 # source distribution configured versions 
 source /tmp/GAIA/$(whoami)/dist-config-versions.conf.sh
@@ -37,53 +37,41 @@ cd $BUILD_DIR
 echo; echo "## BEGIN"; echo
 
 echo "########################################################"
-echo "                         Qt                             "
+echo "                           GEOS                        "
 echo "########################################################"
 
 echo "#!/bin/bash" > exec.sh
-echo "git clone https://code.qt.io/qt/qt5.git" >> exec.sh
+echo "wget http://download.osgeo.org/geos/geos-$GEOS_INSTALL_TARGET_VERSION.tar.bz2" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tCloning de Qt $QT_INSTALL_TARGET_VERSION ... "
+echo -ne "\tTelechargement de GEOS $GEOS_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - Qt $QT_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
-sleep 0.2
-PID=$(pgrep exec.sh)
-wait_for_PID $PID
-echo -e "\t==> OK"
-
-cd qt*
-
-echo "#!/bin/bash" > exec.sh
-echo "git checkout $QT_INSTALL_TARGET_VERSION" >> exec.sh
-echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tCheckout de la branche Qt $QT_INSTALL_TARGET_VERSION ... "
-chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - Qt $QT_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - GEOS $GEOS_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo -e "\t==> OK"
 
 echo "#!/bin/bash" > exec.sh
-echo "git submodule update --init --recursive" >> exec.sh
+echo "tar -xvf geos-$GEOS_INSTALL_TARGET_VERSION.tar.bz2" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tConfiguration des submodules de Qt $QT_INSTALL_TARGET_VERSION ... "
+echo -ne "\tDecompression de GEOS $GEOS_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - Qt $QT_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - GEOS $GEOS_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo -e "\t==> OK"
 
-mkdir build
+cd geos-*
+mkdir build 
 cd build
 
 echo "#!/bin/bash" > exec.sh
-echo "../configure -prefix $GAIA_THIRD_PARTY_HOME/qt-$QT_INSTALL_TARGET_VERSION -platform linux-g++-64 -verbose -opensource -confirm-license -release -c++std c++14 -shared -reduce-exports -reduce-relocations -use-gold-linker  -optimized-qmake -optimized-tools -no-avx2 -no-cups -no-pch -no-qt3d-input -opengl desktop -openssl -pkg-config -qml-debug -gui -widgets -accessibility -skip webengine -skip webchannel -skip webglplugin -skip websockets -skip webview -skip networkauth -skip purchasing -skip connectivity -skip wayland -skip gamepad -skip sensors -skip location -skip serialbus -skip serialport -nomake tests -compile-examples" >> exec.sh
-echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh-stl
-echo -ne "\tConfiguration de Qt $QT_INSTALL_TARGET_VERSION ... "
+echo "../configure --prefix=$GAIA_THIRD_PARTY_HOME/geos-$GEOS_INSTALL_TARGET_VERSION" >> exec.sh
+echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+echo -ne "\tConfiguration de GEOS $GEOS_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - Qt $QT_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - GEOS $GEOS_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
@@ -92,30 +80,41 @@ echo -e "\t==> OK"
 echo "#!/bin/bash" > exec.sh
 echo "make -j6" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tCompilation de Qt $QT_INSTALL_TARGET_VERSION ... "
+echo -ne "\tBuild de GEOS $GEOS_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - Qt $QT_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - GEOS $GEOS_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
-wait_for_PID $(pgrep exec.sh)
+PID=$(pgrep exec.sh)
+wait_for_PID $PID
+echo -e "\t==> OK"
+
+echo "#!/bin/bash" > exec.sh
+echo "make check" >> exec.sh
+echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+echo -ne "\tCheck de GEOS $GEOS_INSTALL_TARGET_VERSION ..."
+chmod u+x exec.sh
+gnome-terminal --working-directory $PWD --title="LABSIM - GEOS $GEOS_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+sleep 0.2
+PID=$(pgrep exec.sh)
+wait_for_PID $PID
 echo -e "\t==> OK"
 
 echo "#!/bin/bash" > exec.sh
 echo "make install" >> exec.sh
 echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-echo -ne "\tInstallation de Qt $QT_INSTALL_TARGET_VERSION ... "
+echo -ne "\tInstall de GEOS $GEOS_INSTALL_TARGET_VERSION ..."
 chmod u+x exec.sh
-gnome-terminal --working-directory $PWD --title="LABSIM - Qt $QT_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
+gnome-terminal --working-directory $PWD --title="LABSIM - GEOS $GEOS_INSTALL_TARGET_VERSION" --command "./exec.sh" --window
 sleep 0.2
 PID=$(pgrep exec.sh)
 wait_for_PID $PID
 echo -e "\t==> OK"
 
 echo "########################################################"
-echo -ne "\tSuppression du repertoire temporaire ..."
+echo -ne "\tSuppression du repertoire temporaire ... "
 cd $CURRENT_DIR
 rm -rf $BUILD_DIR
 echo "OK"
 echo "########################################################"
 
 echo; echo "## END"; echo
-
