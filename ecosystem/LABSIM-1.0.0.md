@@ -51,10 +51,13 @@
         - cegui *v.0.8.7* -- ***experimental***
         - ceed *v.0.8.0* -- ***experimental***
     - **Image Generation (IG)** -- *optionnal*
-        -  osg *v.3.6.0*
-        -  silverlining *v.5.0.15* -- ***license***
-        -  fftss *v.3.0.0*
-        -  triton *v.3.58.0* -- ***license*** 
+    	- gdal *v.2.2.4*
+    	- geos *v.3.6.2*
+        - fftss *v.3.0.20071031*
+        - openscenegraph *v.3.6.0*
+        - silverlining *v.5.0.17* -- ***license***
+        - triton *v.4.0.4* -- ***license*** 
+        - osgearth *v.2.9.0*
     -  **Image Processing (IP)** -- *optionnal*
         - opencv *v.3.1.0*
         - openpose *v.1.3.0*
