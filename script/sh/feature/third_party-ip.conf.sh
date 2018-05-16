@@ -20,7 +20,7 @@
 #
 
 # detail
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ Third_party : <Image Processing (IP)> ]"
+GAIA_DISTRIBUTION_DETAIL+="\n\t+--[ Third_party : <Image Processing (IP)> ]"
 
 ###################################################################
 # OpenCV
@@ -35,7 +35,7 @@ if [ "${GAIA_THIRD_PARTY_OPENCV_FOUND}" = true ]; then
 	GAIA_THIRD_PARTY_OPENCV_BINARYDIR=$GAIA_THIRD_PARTY_OPENCV_ROOT/bin
 
 	# info
-	GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t|\t* openCV v.$GAIA_THIRD_PARTY_OPENCV_VERSION"
+	GAIA_DISTRIBUTION_DETAIL+="\n\t|\t* openCV v.$GAIA_THIRD_PARTY_OPENCV_VERSION"
 
 	# env
 	CPATH=$GAIA_THIRD_PARTY_OPENCV_INCLUDEDIR:$CPATH

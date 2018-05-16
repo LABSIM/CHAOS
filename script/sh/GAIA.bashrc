@@ -7,7 +7,7 @@
 
 if hash module 2>/dev/null; then
 
-	export GAIA_FOUND_DSI_HOST=true
+	GAIA_FOUND_DSI_HOST=true
 		
 	if [ -f $(find /tmp_user/ -type f -name "*GAIA.conf.sh" 2>/dev/null) ]; then
 	
@@ -21,7 +21,7 @@ if hash module 2>/dev/null; then
 	
 else 
 
-	export GAIA_FOUND_DSI_HOST=false
+	GAIA_FOUND_DSI_HOST=false
 	
 	if [ -f $(find ~/ -type f -name "*GAIA.conf.sh" 2>/dev/null) ]; then
 
@@ -34,5 +34,7 @@ else
 	fi
 
 fi
+
+unset GAIA_FOUND_DSI_HOST
 
 # EOF

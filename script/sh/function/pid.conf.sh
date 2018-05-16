@@ -156,4 +156,5 @@ function wait_for_PID()
 	echo -ne "\033[9B ${NC}"
 }
 
+return 0
 # == EOF

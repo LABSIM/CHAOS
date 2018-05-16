@@ -21,7 +21,7 @@
 
 
 # detail
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ Third_party : <Simulation Backend (SB)> ]"
+GAIA_DISTRIBUTION_DETAIL+="\n\t+--[ Third_party : <Simulation Backend (SB)> ]"
 
 ###################################################################
 # GSOAP
@@ -36,7 +36,7 @@ if [ "${GAIA_THIRD_PARTY_GSOAP_FOUND}" = true ]; then
 	GAIA_THIRD_PARTY_GSOAP_BINARYDIR=$GAIA_THIRD_PARTY_GSOAP_ROOT/bin
 
 	# info
-	GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t|\t* gSOAP v.$GAIA_THIRD_PARTY_GSOAP_VERSION"
+	GAIA_DISTRIBUTION_DETAIL+="\n\t|\t* gSOAP v.$GAIA_THIRD_PARTY_GSOAP_VERSION"
 
 	# env
 	CPATH=$GAIA_THIRD_PARTY_GSOAP_INCLUDEDIR:$CPATH
@@ -62,7 +62,7 @@ if [ "${GAIA_THIRD_PARTY_OPENSPLICE_FOUND}" = true ]; then
 	GAIA_THIRD_PARTY_OPENSPLICE_ROOT=$GAIA_THIRD_PARTY_HOME/opensplice-$GAIA_THIRD_PARTY_OPENSPLICE_VERSION
 
 	# info
-	GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t|\t* opensplice v.$GAIA_THIRD_PARTY_OPENSPLICE_VERSION"
+	GAIA_DISTRIBUTION_DETAIL+="\n\t|\t* opensplice v.$GAIA_THIRD_PARTY_OPENSPLICE_VERSION"
 
 	# source release file --> automatically configure environment
 	source "$GAIA_THIRD_PARTY_OPENSPLICE_ROOT/release.com"
