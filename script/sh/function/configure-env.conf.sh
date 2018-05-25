@@ -65,14 +65,14 @@ fi
 if [ "${GAIA_FOUND_DSI_HOST}" = true ]; then
 
 	# Use local directory for compilation performance
-	GAIA_DEV_HOME=/tmp_user/$(hostname)/$(whoami)/dev
-	GAIA_THIRD_PARTY_HOME=/tmp_user/$(hostname)/$(whoami)/third_party
+	GAIA_DEV_HOME="${GAIA_HOME_DSI_HINT}/dev"
+	GAIA_THIRD_PARTY_HOME="${GAIA_HOME_DSI_HINT}/third_party"
 
 else
 
 	# Use home directory - default
-	GAIA_DEV_HOME=$(eval echo "~$(whoami)")/dev
-	GAIA_THIRD_PARTY_HOME=$(eval echo "~$(whoami)")/third_party
+	GAIA_DEV_HOME="$(eval echo "~$(whoami)")/dev"
+	GAIA_THIRD_PARTY_HOME="$(eval echo "~$(whoami)")/third_party"
 
 fi
 

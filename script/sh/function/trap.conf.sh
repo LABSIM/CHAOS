@@ -28,6 +28,9 @@ lib_name="GAIA"
 lib_version="1.0.0"
 stderr_log="/tmp/GAIA/$(whoami)/${0##*/}-$(date +%s).log"
 
+# check 
+mkdir --parents "/tmp/GAIA/$(whoami)/"
+
 #
 # TO BE SOURCED ONLY ONCE:
 #

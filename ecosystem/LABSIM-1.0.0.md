@@ -37,7 +37,7 @@
         - mpc *v.1.1.0*
         - autogen *v.5.18.4*
         - isl *v.0.19.0*
-        - gcc *v.7.3.0*
+        - gcc *v.8.1.0*
         - gdb *v.8.1.0*
     - **Common** -- ***required***
         -  perl *v.5.26.1*
@@ -45,29 +45,29 @@
         -  xerces-c++ *v.3.2.1*
         -  doxygen *v.1.8.14*
         -  boost *v.1.67.0*
-    - **User Interface (UI)** -- *optionnal*
-        - qt *v.5.11.0*
+    - **Simulation Frontend (SF)** -- *strongly recommended*
+        - protobuf *v.3.5.0*
+        - grpc *v.1.11.0*
+    - **Simulation Backend (SB)** -- *strongly recommended*
+        - nghttp2 *v.1.32.0*
+        - gsoap *v.2.8.66*
+        - opensplice *v.6.7.0*
+    - **User Interface (UI)** -- *optional*
+        - qt *v.5.10.1*
         - qt-creator *v.4.6.0*
         - cegui *v.0.8.7* -- ***experimental***
         - ceed *v.0.8.0* -- ***experimental***
-    - **Image Generation (IG)** -- *optionnal*
+    - **Image Generation (IG)** -- *optional*
     	- gdal *v.2.2.4*
     	- geos *v.3.6.2*
         - fftss *v.3.0.20071031*
         - openscenegraph *v.3.6.0*
         - silverlining *v.5.0.17* -- ***license***
         - triton *v.4.0.4* -- ***license*** 
-        - osgearth *v.2.9.0*
-    -  **Image Processing (IP)** -- *optionnal*
+        - osgearth *v.2.9.0* ***experimental***
+    -  **Image Processing (IP)** -- *optional*
         - opencv *v.3.1.0*
         - openpose *v.1.3.0*
-     - **Simulation Frontend (SF)** -- *optionnal*
-        - protobuf *v.3.5.0*
-        - grpc *v.1.11.0*
-      - **Simulation Backend (SB)** -- *optionnal*
-        - nghttp2 *v.1.31.1*
-        - gsoap *v.2.8.66*
-        - opensplice *v.6.7.0*
     - **Virtual Reality (VR)** -- ***experimental***
         - hidapi *v.0.8.0*
         - jsoncpp *v.1.7.5*

@@ -51,6 +51,10 @@ function configure() {
 	GAIA_TARGET_PATCH="$3"
 	GAIA_TARGET_VERSION="${GAIA_TARGET_MAJOR}.${GAIA_TARGET_MINOR}.${GAIA_TARGET_PATCH}"
 
+	# build job parameter, save at least one core for OS & user :)
+	GAIA_PARALLEL_BUILD_JOB_COUNT="$(nproc)"
+	(( GAIA_PARALLEL_BUILD_JOB_COUNT = GAIA_PARALLEL_BUILD_JOB_COUNT > 1 ? --GAIA_PARALLEL_BUILD_JOB_COUNT : GAIA_PARALLEL_BUILD_JOB_COUNT ))
+
 }
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
@@ -80,6 +84,9 @@ function cleanup() {
 	unset GAIA_TARGET_MINOR
 	unset GAIA_TARGET_PATCH
 	unset GAIA_TARGET_VERSION
+
+	# parameter
+	unset GAIA_PARALLEL_BUILD_JOB_COUNT
 
 }
 
@@ -253,7 +260,8 @@ function push_extract_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "tar -xvf ${GAIA_TARGET_LC_NAME}-$GAIA_TARGET_VERSION.tar.xz" >> exec.sh
+	echo "tar -xvf ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+	echo "rm ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -289,7 +297,7 @@ function push_build_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "make -j6" >> exec.sh
+	echo "make -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -355,7 +363,7 @@ print_header
 	pop_cache
 
 	# --> navigate
-	cd "${GAIA_TARGET_PRETTY_NAME}-*"
+	cd ${GAIA_TARGET_LC_NAME}*
 
 	# == configure ==
 	push_configure_op_to_cache
@@ -369,7 +377,7 @@ print_header
 	push_check_op_to_cache
 	pop_cache
 
-	# == check ==
+	# == install ==
 	push_install_op_to_cache
 	pop_cache
 

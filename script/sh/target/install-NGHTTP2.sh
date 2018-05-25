@@ -35,9 +35,9 @@ function configure() {
 	echo -ne "  + Configuration..."
 
 	# name
-	GAIA_TARGET_PRETTY_NAME="GEOS"
-	GAIA_TARGET_UC_NAME="$(echo "${GAIA_TARGET_PRETTY_NAME}" | tr '[:lower:]' '[:upper:]')"
-	GAIA_TARGET_LC_NAME="$(echo "${GAIA_TARGET_PRETTY_NAME}" | tr '[:upper:]' '[:lower:]')"
+	GAIA_TARGET_PRETTY_NAME="nghttp2"
+	GAIA_TARGET_UC_NAME="$(echo ${GAIA_TARGET_PRETTY_NAME} | tr '[:lower:]' '[:upper:]')"
+	GAIA_TARGET_LC_NAME="$(echo ${GAIA_TARGET_PRETTY_NAME} | tr '[:upper:]' '[:lower:]')"
 
 	# directories
 	GAIA_INITIAL_DIR="$PWD"
@@ -233,18 +233,18 @@ function pop_cache() {
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
-# PUSH_DOWNLOAD_OP_TO_CACHE FUNCTION
+# PUSH_CLONE_OP_TO_CACHE FUNCTION
 #
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 
-function push_download_op_to_cache() {
+function push_clone_op_to_cache() {
 
 	# print
-	echo -ne "  + Telechargement de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}... "
+	echo -ne "  + Clonage du repository pour ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}... "
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "wget http://download.osgeo.org/${GAIA_TARGET_LC_NAME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.bz2" >> exec.sh
+	echo "git clone https://github.com/${GAIA_TARGET_LC_NAME}/${GAIA_TARGET_LC_NAME}.git" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -258,11 +258,11 @@ function push_download_op_to_cache() {
 function push_copy_op_to_cache() {
 
 	# print
-	echo -ne "  + Copie de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}... "
+	echo -ne "  + Copie de l'archive ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}... "
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.bz2 ." >> exec.sh
+	echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz ." >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -280,8 +280,44 @@ function push_extract_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "tar -xvf ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.bz2" >> exec.sh
-	echo "rm ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.bz2" >> exec.sh
+	echo "tar -xvzf ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
+	echo "rm ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
+	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+
+}
+
+###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+#
+# PUSH_CHECKOUT_OP_TO_CACHE FUNCTION
+#
+###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+
+function push_checkout_op_to_cache() {
+
+	# print
+	echo -ne "  + Checkout de la branche pour ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
+
+	# the op
+	echo "#!/bin/bash" > exec.sh
+	echo "git checkout tags/v${GAIA_TARGET_VERSION}" >> exec.sh
+	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+
+}
+
+###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+#
+# PUSH_INIT_SUBMODULE_OP_TO_CACHE FUNCTION
+#
+###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+
+function push_init_submodule_op_to_cache() {
+
+	# print
+	echo -ne "  + Intitialisation des submodule pour ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
+
+	# the op
+	echo "#!/bin/bash" > exec.sh
+	echo "git submodule update --init --recursive" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -295,15 +331,15 @@ function push_extract_op_to_cache() {
 function push_configure_op_to_cache() {
 
 	# print
-	echo -ne "  + Configuration de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
+	echo -ne "  + CMake de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
 
-	# navigate 
+	# navigate
 	mkdir build
 	cd build
 
-	# the op
+	# cmake exist
 	echo "#!/bin/bash" > exec.sh
-	echo "../configure --prefix=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}" >> exec.sh
+	echo "cmake -DCMAKE_INSTALL_PREFIX=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -DCMAKE_BUILD_TYPE=Release -DENABLE_APP=ON -DENABLE_THREADS=ON -DENABLE_ASIO_LIB=ON -DENABLE_EXAMPLES=OFF -DENABLE_DEBUG=OFF .." >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -321,25 +357,7 @@ function push_build_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "make -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-
-}
-
-###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
-#
-# PUSH_CHECK_OP_TO_CACHE FUNCTION
-#
-###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
-
-function push_check_op_to_cache() {
-
-	# print
-	echo -ne "  + Check de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
-
-	# the op
-	echo "#!/bin/bash" > exec.sh
-	echo "make check" >> exec.sh
+	echo "cmake --build . -- -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -357,7 +375,7 @@ function push_install_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "make install" >> exec.sh
+	echo "cmake --build . --target install" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -380,8 +398,8 @@ print_header
 
 	if [ "${GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY}" = true ]; then
 
-		# == download ==
-		push_download_op_to_cache
+		# == clone ==
+		push_clone_op_to_cache
 		pop_cache
 
 	else
@@ -390,14 +408,26 @@ print_header
 		push_copy_op_to_cache
 		pop_cache
 
-	fi
+		# == extract ==
+		push_extract_op_to_cache
+		pop_cache
 
-	# == extract ==
-	push_extract_op_to_cache
-	pop_cache
+	fi
 
 	# --> navigate
 	cd ${GAIA_TARGET_LC_NAME}*
+
+	if [ "${GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY}" = true ]; then
+
+		# == checkout ==
+		push_checkout_op_to_cache
+		pop_cache
+
+		# == init submodule ==
+		push_init_submodule_op_to_cache
+		pop_cache
+
+	fi
 
 	# == configure ==
 	push_configure_op_to_cache
@@ -405,10 +435,6 @@ print_header
 
 	# == build ==
 	push_build_op_to_cache
-	pop_cache
-
-	# == check ==
-	push_check_op_to_cache
 	pop_cache
 
 	# == install ==
