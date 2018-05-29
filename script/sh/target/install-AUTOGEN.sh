@@ -55,6 +55,44 @@ function configure() {
 	GAIA_PARALLEL_BUILD_JOB_COUNT="$(nproc)"
 	(( GAIA_PARALLEL_BUILD_JOB_COUNT = GAIA_PARALLEL_BUILD_JOB_COUNT > 1 ? --GAIA_PARALLEL_BUILD_JOB_COUNT : GAIA_PARALLEL_BUILD_JOB_COUNT ))
 
+	# check at least one network card is available 
+	for GAIA_NETWORK_ITERFACE_CARD in $(ls "/sys/class/net/" | grep -v lo);
+	do
+		
+		if [[ "$(cat /sys/class/net/$GAIA_NETWORK_ITERFACE_CARD/carrier 2>/dev/null)" -eq 1 ]]; then
+			GAIA_FOUND_AVAILABLE_NETWORK=true; 
+		fi
+
+	done
+
+	# then check for internet connection
+	if [ "${GAIA_FOUND_AVAILABLE_NETWORK}" = true ]; then
+
+		case "$(curl -s --max-time 2 -I https://www.google.com | sed 's/^[^ ]*  *\([0-9]\).*/\1/; 1q')" in
+
+			2|3) 
+				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
+				echo -e "Connection HTTP => ONLINE MODE"
+				;;
+
+			5) 
+				echo -e "Blocage du proxy ! verifier vos parametres d'environments aka. [http_proxy] && [https_proxy] => OFFLINE MODE"
+				;;
+
+			*)
+				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
+				echo -e "Connection HTTP lente [ lag : >2s ] mais c'est OK, \"DSI\" => ONLINE MODE"
+				;;
+
+		esac
+
+	else 
+
+		echo -ne "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
+		exit 1
+
+	fi
+
 }
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
@@ -197,44 +235,6 @@ function push_download_op_to_cache() {
 
 	# print
 	echo -ne "  + Telechargement de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}... "
-
-	# check at least one network card is available 
-	for GAIA_NETWORK_ITERFACE_CARD in $(ls "/sys/class/net/" | grep -v lo);
-	do
-		
-		if [[ "$(cat /sys/class/net/$GAIA_NETWORK_ITERFACE_CARD/carrier 2>/dev/null)" -eq 1 ]]; then
-			GAIA_FOUND_AVAILABLE_NETWORK=true; 
-		fi
-
-	done
-
-	# then check for internet connection
-	if [ "${GAIA_FOUND_AVAILABLE_NETWORK}" = true ]; then
-
-		case "$(curl -s --max-time 2 -I https://www.google.com | sed 's/^[^ ]*  *\([0-9]\).*/\1/; 1q')" in
-
-			2|3) 
-				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
-				echo -ne "(connection HTTP => ONLINE MODE)... "
-				;;
-
-			5) 
-				echo -ne "(blocage du proxy ! verifier vos parametres d'environments aka. [http_proxy] && [https_proxy] => OFFLINE MODE)... "
-				;;
-
-			*)
-				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
-				echo -ne "(connection HTTP lente [ lag : >2s ] mais c'est OK, \"DSI\" => ONLINE MODE)... "
-				;;
-
-		esac
-
-	else 
-
-		echo -ne "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
-		exit 1
-
-	fi
 
 	# finally, the op
 	echo "#!/bin/bash" > exec.sh

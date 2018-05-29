@@ -38,7 +38,7 @@ popd  > /dev/null
 export GAIA_ROOT="$( cd "$(dirname "$SCRIPT_PATH/../../..")" ; pwd )"
 
 # Distribution detail
-export GAIA_DISTRIBUTION_DETAIL=""
+export GAIA_ECOSYSTEM_DETAIL=""
 
 # clean ASAP
 unset SCRIPT_PATH
@@ -48,15 +48,15 @@ source "${GAIA_ROOT}/script/sh/function/configure-env.conf.sh"
 source "${GAIA_ROOT}/script/sh/function/configure-third_party.conf.sh"
 
 # initialize dist detail
-GAIA_DISTRIBUTION_DETAIL+="\n# ================================================================= #"
-GAIA_DISTRIBUTION_DETAIL+="\n# GAIA : the LABSIM ground software ecosystem"
-GAIA_DISTRIBUTION_DETAIL+="\n# ================================================================= #"
-GAIA_DISTRIBUTION_DETAIL+="\n# Copyright (C) 2012-2016 Nawfel KINANI"
-GAIA_DISTRIBUTION_DETAIL+="\n# This program comes with ABSOLUTELY NO WARRANTY;"
-GAIA_DISTRIBUTION_DETAIL+="\n# This is free software, and you are welcome to redistribute it"
-GAIA_DISTRIBUTION_DETAIL+="\n# under certain conditions;"
-GAIA_DISTRIBUTION_DETAIL+="\n# ================================================================= #"
-GAIA_DISTRIBUTION_DETAIL+="\n\n[GAIA]--+--[ Host ]"
+GAIA_ECOSYSTEM_DETAIL+="\n# ================================================================= #"
+GAIA_ECOSYSTEM_DETAIL+="\n# GAIA : the LABSIM ground software ecosystem"
+GAIA_ECOSYSTEM_DETAIL+="\n# ================================================================= #"
+GAIA_ECOSYSTEM_DETAIL+="\n# Copyright (C) 2012-2016 Nawfel KINANI"
+GAIA_ECOSYSTEM_DETAIL+="\n# This program comes with ABSOLUTELY NO WARRANTY;"
+GAIA_ECOSYSTEM_DETAIL+="\n# This is free software, and you are welcome to redistribute it"
+GAIA_ECOSYSTEM_DETAIL+="\n# under certain conditions;"
+GAIA_ECOSYSTEM_DETAIL+="\n# ================================================================= #"
+GAIA_ECOSYSTEM_DETAIL+="\n\n[GAIA]--+--[ Host ]"
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
@@ -78,7 +78,7 @@ else
 
 fi
 
-GAIA_DISTRIBUTION_DETAIL+="\n\t|\t* Administrator : $GAIA_HOST_ADMIN"
+GAIA_ECOSYSTEM_DETAIL+="\n\t|\t* Administrator : $GAIA_HOST_ADMIN"
 
 export GAIA_HOST_ADMIN
 
@@ -138,8 +138,8 @@ else
 
 fi
 
-GAIA_DISTRIBUTION_DETAIL+="\n\t|\t* OS : $GAIA_HOST_OS"
-GAIA_DISTRIBUTION_DETAIL+="\n\t|\t* Version : $GAIA_HOST_VER"
+GAIA_ECOSYSTEM_DETAIL+="\n\t|\t* OS : $GAIA_HOST_OS"
+GAIA_ECOSYSTEM_DETAIL+="\n\t|\t* Version : $GAIA_HOST_VER"
 
 export GAIA_HOST_OS GAIA_HOST_VER
 
@@ -163,7 +163,7 @@ case $(uname -m) in
 
 esac
 
-GAIA_DISTRIBUTION_DETAIL+="\n\t|\t* Architecture : $GAIA_HOST_ARCH"
+GAIA_ECOSYSTEM_DETAIL+="\n\t|\t* Architecture : $GAIA_HOST_ARCH"
 
 export GAIA_HOST_ARCH
 
@@ -195,7 +195,7 @@ source "${GAIA_ROOT}/script/sh/software/labsim-contract.conf.sh"
 #========================================================================================================================#
 
 # finalize dist detail
-GAIA_DISTRIBUTION_DETAIL+="\n\t+\n"
+GAIA_ECOSYSTEM_DETAIL+="\n\t+\n"
 
 # cleanup
 source "${GAIA_ROOT}/script/sh/function/cleanup-env.conf.sh"
@@ -205,13 +205,13 @@ source "${GAIA_ROOT}/script/sh/function/cleanup-third_party.conf.sh"
 
 function __internal_labsim_gaia_ecosystem() {
 	echo -e "\n## BEGIN LABSIM ROUTINES\n" \
-	&& time perl -I "${GAIA_ROOT}/script/perl/module" "${GAIA_ROOT}/script/gaia-ecosystem.pl" "$@"	\
+	&& time perl -I "${GAIA_ROOT}/script/perl/module" "${GAIA_ROOT}/script/perl/gaia-ecosystem.pl" "$@"	\
 	&& echo -e "\n## END LABSIM ROUTINES\n"
 } # __internal_labsim_gaia_ecosystem()
 
 function __internal_labsim_gaia_deploy() {
 	echo -e "\n## BEGIN LABSIM ROUTINES\n" \
-	&& time perl -I "${GAIA_ROOT}/script/perl/module" "${GAIA_ROOT}/script/gaia-deploy.pl" "$@"	\
+	&& time perl -I "${GAIA_ROOT}/script/perl/module" "${GAIA_ROOT}/script/perl/gaia-deploy.pl" "$@"	\
 	&& echo -e "\n## END LABSIM ROUTINES\n"
 } # __internal_labsim_gaia_deploy()
 

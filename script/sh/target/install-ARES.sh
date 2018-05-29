@@ -32,7 +32,7 @@ source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
 function configure() {
 
 	# print
-	echo -ne "  + Configuration..."
+	echo -ne "  + Configuration... "
 
 	# name
 	GAIA_TARGET_PRETTY_NAME="Ares"
@@ -75,16 +75,16 @@ function configure() {
 
 			2|3) 
 				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
-				echo -ne "(connection HTTP => ONLINE MODE)... "
+				echo -e "Connection HTTP => ONLINE MODE"
 				;;
 
 			5) 
-				echo -ne "(blocage du proxy ! verifier vos parametres d'environments aka. [http_proxy] && [https_proxy] => OFFLINE MODE)... "
+				echo -e "Blocage du proxy ! verifier vos parametres d'environments aka. [http_proxy] && [https_proxy] => OFFLINE MODE"
 				;;
 
 			*)
 				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
-				echo -ne "(connection HTTP lente [ lag : >2s ] mais c'est OK, \"DSI\" => ONLINE MODE)... "
+				echo -e "Connection HTTP lente [ lag : >2s ] mais c'est OK, \"DSI\" => ONLINE MODE"
 				;;
 
 		esac

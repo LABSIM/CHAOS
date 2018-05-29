@@ -21,7 +21,7 @@
 
 
 # detail 
-GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t+--[ LABSIM : <Olympiens> ]"
+GAIA_ECOSYSTEM_DETAIL="$GAIA_ECOSYSTEM_DETAIL\n\t+--[ LABSIM : <Olympiens> ]"
 
 ######################################################################
 ## LABSIM Developpement environment config							##
@@ -59,7 +59,7 @@ if [ -d "$OLYMPIENS_HOME/HEPHAISTOS" ]; then
 	PATH=$PATH:$HEPHAISTOS_BINARYDIR
 	LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HEPHAISTOS_LIBRARYDIR
 	
-	GAIA_DISTRIBUTION_DETAIL="$GAIA_DISTRIBUTION_DETAIL\n\t|\t* HEPHAISTOS"
+	GAIA_ECOSYSTEM_DETAIL="$GAIA_ECOSYSTEM_DETAIL\n\t|\t* HEPHAISTOS"
 	
 fi
 

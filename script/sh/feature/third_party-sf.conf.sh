@@ -21,7 +21,7 @@
 
 
 # detail
-GAIA_DISTRIBUTION_DETAIL+="\n\t+--[ Third_party : <Simulation Frontend (SF)> ]"
+GAIA_ECOSYSTEM_DETAIL+="\n\t+--[ Third_party : <Simulation Frontend (SF)> ]"
 
 ###################################################################
 # PROTOBUF
@@ -36,7 +36,7 @@ if [ "${GAIA_THIRD_PARTY_PROTOBUF_FOUND}" = true ]; then
 	GAIA_THIRD_PARTY_PROTOBUF_BINARYDIR=$GAIA_THIRD_PARTY_PROTOBUF_ROOT/bin
 
 	# info
-	GAIA_DISTRIBUTION_DETAIL+="\n\t|\t* Google Protocol Buffer v.$GAIA_THIRD_PARTY_PROTOBUF_VERSION"
+	GAIA_ECOSYSTEM_DETAIL+="\n\t|\t* Google Protocol Buffer v.$GAIA_THIRD_PARTY_PROTOBUF_VERSION"
 
 	# env
 	CPATH=$GAIA_THIRD_PARTY_PROTOBUF_INCLUDEDIR:$CPATH
@@ -65,7 +65,7 @@ if [ "${GAIA_THIRD_PARTY_GRPC_FOUND}" = true ]; then
 	GAIA_THIRD_PARTY_GRPC_BINARYDIR=$GAIA_THIRD_PARTY_GRPC_ROOT/bin
 
 	# info
-	GAIA_DISTRIBUTION_DETAIL+="\n\t|\t* Google gRPC v.$GAIA_THIRD_PARTY_GRPC_VERSION"
+	GAIA_ECOSYSTEM_DETAIL+="\n\t|\t* Google gRPC v.$GAIA_THIRD_PARTY_GRPC_VERSION"
 
 	# env
 	CPATH=$GAIA_THIRD_PARTY_GRPC_INCLUDEDIR:$CPATH
