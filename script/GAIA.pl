@@ -82,12 +82,19 @@ our %g__Labsim_ecosystem_properties = (
 # Argument / Variable
 #
 
-# flags
+# arg
 my( 
 	$arg_help_flag, 
 	$arg_man_flag, 
-	$arg_available_flag, 
-	$arg_detail_flag
+	$arg_listAvailable_flag,
+	$arg_detailledEcosystem_flag,
+	$arg_detailledEcosystem_string
+) = (
+	0,
+	0,
+	0,
+	0,
+	""
 );
 
 # root
@@ -105,7 +112,7 @@ use constant {
 	GAIA_VERBOSITY_WARNING  => 2,
 	GAIA_VERBOSITY_INFO     => 3,
 	GAIA_VERBOSITY_DEBUG    => 4
-	
+
 };
 
 # default value
@@ -221,16 +228,45 @@ sub log_VerbosityHandler {
 #-----------------------------------------------------------------------------
 # Command line
 #
+
+# command line parsing op
 sub function_ParseCmdLine {
 	
 	# define arguments
     Getopt::Long::GetOptions(
 
-        'help|h'        =>  \$arg_help_flag,
-        'man'           =>  \$arg_man_flag,
-        'available|a'   =>  \$arg_available_flag,
-        'detail|d'      =>  \$arg_detail_flag,
-        'verbosity|v=s' =>  \&log_VerbosityHandler
+        'list-available|l'        => sub {
+
+			my ($arg_name, $arg_value) = @_;
+			$arg_listAvailable_flag    = $arg_value;
+			die("Specify only --list-available or --detailled-ecosyste") if($arg_detailledEcosystem_flag);
+	
+        },
+        'detailled-ecosystem|d=s' => sub {
+
+			my ($arg_name, $arg_value)     = @_;
+			$arg_detailledEcosystem_flag   = 1;
+			$arg_detailledEcosystem_string = $arg_value;
+			die("Specify only --list-available or --detailled-ecosyste") if($arg_listAvailable_flag);
+			
+        },
+        'verbosity-level|v=s'     => sub {
+
+			my ($arg_name, $arg_value) = @_;
+			switch($arg_value) {
+				case "none"    { $gaia_verbosity_level = GAIA_VERBOSITY_NONE;    }
+				case "error"   { $gaia_verbosity_level = GAIA_VERBOSITY_ERROR;   }
+				case "warning" { $gaia_verbosity_level = GAIA_VERBOSITY_WARNING; }
+				case "info"    { $gaia_verbosity_level = GAIA_VERBOSITY_INFO;    }
+				case "debug"   { $gaia_verbosity_level = GAIA_VERBOSITY_DEBUG;   }
+				else {
+					die("user-specified verbosity level incorectly parsed, set to default [info] verbosity value. Authorized values are [none, error, warn, info, debug]");
+				}                                                                                     
+			} # switch()
+			
+        },
+        'help|h' => \$arg_help_flag,
+        'man'    => \$arg_man_flag,
 
     ) or Pod::Usage::pod2usage( { -exitval => GAIA_EXIT_CRITICAL_ERROR } );
     
@@ -377,7 +413,7 @@ sub function_ParseAllAvailableEcosystem {
 		push @ecosystem_array, {
     				
     		Name    => $ecosystem_name,
-    		Detail  => $sub_ecosystem_detail_filename,
+    		Detail  => ( $var_gaia_root."/ecosystem/".$ecosystem_name."/".$sub_ecosystem_detail_filename ),
 			Feature => [ @feature_array ]
     				
 		};
@@ -450,11 +486,54 @@ sub function_DumpAvailableEcosystemDetail {
 
     log_Debug("function_DumpAvailableEcosystemDetail","<===== entry point");
     
-    
+    log_Info("function_DumpAvailableEcosystemDetail","available GAIA simulation software ecosytem are :");
+    for my $ecosystem_ref ( @{ $g__Labsim_ecosystem_properties{Ecosystem} } ) {
+    	
+    	log_Info("function_DumpAvailableEcosystemDetail","  - ".$ecosystem_ref->{Name});
+    	
+    } # for()
     
     log_Debug("function_DumpAvailableEcosystemDetail","<===== exit point");
     
 } # function_DumpAvailableEcosystemDetail()
+
+#-----------------------------------------------------------------------------
+# function_DumpDetailledEcosystem
+#
+
+sub function_DumpDetailledEcosystem {
+
+    log_Debug("function_DumpDetailledEcosystem","<===== entry point");
+    
+    # search for requested ecosystem name    
+    for my $ecosystem_ref ( @{ $g__Labsim_ecosystem_properties{Ecosystem} } ) {
+    	
+    	if($ecosystem_ref->{Name} eq $arg_detailledEcosystem_string) {
+    	
+    		log_Info("function_DumpAvailableEcosystemDetail"," [name] : ".$ecosystem_ref->{Name});
+    		log_Info("function_DumpAvailableEcosystemDetail"," [desc] : ".$ecosystem_ref->{Detail});
+    		
+    		for my $feature_ref ( @{ $ecosystem_ref->{Feature} } ) {
+			
+    			log_Info("function_DumpAvailableEcosystemDetail"," [feature] : ".$feature_ref->{Name});
+    			
+    			for my $third_party_ref ( @{ $feature_ref->{Third_party} } ) {
+    				
+    				log_Info("function_DumpAvailableEcosystemDetail"," |  [third-party] : ".$third_party_ref->{Name});
+    				log_Info("function_DumpAvailableEcosystemDetail"," |  |  [priority] : ".$third_party_ref->{Priority});
+    				log_Info("function_DumpAvailableEcosystemDetail"," |  |  [version] : ".$third_party_ref->{Major}.".".$third_party_ref->{Minor}.".".$third_party_ref->{Patch});
+    		
+    			} # for()
+    			
+    		} # for()
+    	
+    	} # if()
+    	
+    } # for()
+    
+    log_Debug("function_DumpAvailableEcosystemDetail","<===== exit point");
+    
+} # function_DumpDetailledEcosystem()
 
 #-----------------------------------------------------------------------------
 # Main
@@ -470,12 +549,13 @@ MAIN:
 	log_Debug("Main","found GAIA root directory -> [".$var_gaia_root."]");
 	
 	# if not any flag
-	if( !$arg_available_flag ) {
+	if( (!$arg_listAvailable_flag) && ($arg_detailledEcosystem_string eq "") )  {
 		
 		# just output the current ecosystem detail
    		log_Debug("Main","begining dumping distribution detail operation");
 		function_DumpCurrentEcosystemDetail();
 		
+	# otherwise, print available ecosystem or detailled view
 	} else {
 		
 		# parse
@@ -486,11 +566,25 @@ MAIN:
 	    log_Debug("Main","begining dumping internal datamodel operation");
 		function_DumpInternalDatamodel();
 		
-		# otherwise, print available ecosystem
-	    log_Debug("Main","begining dumping available ecosystem operation");
-		function_DumpAvailableEcosystemDetail();
+		# check args
+		if($arg_listAvailable_flag) {
 		
-	} #if()
+		    log_Debug("Main","begining dumping available ecosystem operation");
+			function_DumpAvailableEcosystemDetail();
+			
+		} elsif( ($arg_detailledEcosystem_flag) && ($arg_detailledEcosystem_string ne "") ) {
+			
+			log_Debug("Main","begining dumping user-requested ecosystem operation");
+			function_DumpDetailledEcosystem();
+			
+		} else {
+			
+			# hummmm, error + bonus :)
+			log_Debug("Main","the force is strong in this one, but you are not a Jedi yet !");
+			
+		} # if()
+		
+	} # if()
 	
 	# success
     log_Debug("Main","Successfully completed all operation. Exiting...");
@@ -506,33 +600,35 @@ __END__
 GAIA : required LABSIM ground software ecosystem                  
  
 =head1 SYNOPSIS
- 
-gaia-ecosystem [options]
+
+B<gaia> I<[options]>
  
  Options:
-   --verbosity|v  current script verbosity
-   --available|a  list all available simulation software ecosystem
-   --detail|d     detailled output
-   --help|h       brief help message			
-   --man          full documentation
+   --verbosity-level|v       current script verbosity
+   --list-available|l        list all available simulation software ecosystem
+   --detailled-ecosystem|d   detailled view of requested ecosystem
+   --help|h                  brief help message			
+   --man                     full documentation
    
 =head1 OPTIONS
  
 =over 4
 
-=item B<-v, --verbosity> I<[DEFAULT=B<info>]> I<[OPTIONAL]>
+=item -v B<level>, --verbosity-level=B<level> 
 
-Currrent level of verbosity. Available level are [none, error, warn, info, debug]
+ Argument : DEFAULT=[info]
+ Currrent level of verbosity. Available level are [none, error, warn, info, debug]
 
-=item B<-a, --available> I<[OPTIONAL]>
+=item -l, --list-available
 
-List all available simulation software ecosystem listed under the $ENV{GAIA_ROOT}/ecosystem/ directory. Print output & exit.
+ List all available simulation software ecosystem listed under the $ENV{GAIA_ROOT}/ecosystem/ directory. Print output & exit.
 
-=item B<-d, --detail> I<[OPTIONAL]>
+=item -d B<name>, --detailled-ecosystem=B<name>
 
-Print detailled output.
+ Argument : REQUESTED=[ecosystem_name]
+ Print detailled output of requested GAIA simulation software ecosystem.
 
-=item B<-h, --help> 
+=item -h, --help
  
 Print a brief help message and exits.
  

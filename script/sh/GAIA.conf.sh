@@ -203,22 +203,15 @@ source "${GAIA_ROOT}/script/sh/function/cleanup-third_party.conf.sh"
 
 # functions 
 
-function __internal_labsim_gaia_ecosystem() {
+function __internal_labsim_gaia() {
 	echo -e "\n## BEGIN LABSIM ROUTINES\n" \
-	&& time perl -I "${GAIA_ROOT}/script/perl/module" "${GAIA_ROOT}/script/perl/gaia-ecosystem.pl" "$@"	\
+	&& time perl "${GAIA_ROOT}/script/GAIA.pl" "$@"	\
 	&& echo -e "\n## END LABSIM ROUTINES\n"
 } # __internal_labsim_gaia_ecosystem()
 
-function __internal_labsim_gaia_deploy() {
-	echo -e "\n## BEGIN LABSIM ROUTINES\n" \
-	&& time perl -I "${GAIA_ROOT}/script/perl/module" "${GAIA_ROOT}/script/perl/gaia-deploy.pl" "$@"	\
-	&& echo -e "\n## END LABSIM ROUTINES\n"
-} # __internal_labsim_gaia_deploy()
-
 # aliases
 
-alias gaia-ecosystem="__internal_labsim_gaia_ecosystem"
-alias gaia-deploy="__internal_labsim_gaia_deploy"
+alias gaia="__internal_labsim_gaia"
 
 ##############################################################################
 ## Magic Section ! Fun, Functions and more ..				    ##
