@@ -32,11 +32,13 @@ use Getopt::Long qw(GetOptions);    # avoid name-space pollution
 use Pod::Usage qw(pod2usage);		# usage pretty print
 use Term::ANSIColor qw(:constants); # colored output for the terminal
 use FindBin qw($RealBin);   		# facilities
-use File::Spec;                     # File Op
-use Switch;                         # Switch statement handling
-use Time::HiRes qw(time);			# High-resolution timer
-use Data::Dumper;					# Dump functionality
-use Env;							# Environment variables manipulation
+use File::Spec;                     # file Op
+use Switch;                         # switch statement handling
+use Time::HiRes qw(time);			# high-resolution timer
+use Data::Dumper;					# dump functionality
+use Env;							# environment variables manipulation
+use Config;							# Perl configuration module (OS/Arch/...)
+use List::Util qw(any);				# find any string in array
 
 # configure
 Getopt::Long::Configure qw(gnu_getopt);
@@ -83,22 +85,19 @@ our %g__Labsim_ecosystem_properties = (
 #
 
 # arg
-my( 
-	$arg_help_flag, 
-	$arg_man_flag, 
-	$arg_listAvailable_flag,
-	$arg_detailledEcosystem_flag,
-	$arg_detailledEcosystem_string
-) = (
-	0,
-	0,
-	0,
-	0,
-	""
-);
+my $arg_help_flag                 = 0; 
+my $arg_man_flag                  = 0; 
+my $arg_listAvailable_flag        = 0;
+my $arg_detailledEcosystem_flag   = 0; 
+my $arg_detailledEcosystem_string = "";
+my $arg_targetEcosystem_flag      = 0; 
+my $arg_targetEcosystem_string    = "";
+my $arg_targetFeature_flag        = 0; 
+my @arg_targetFeature_array       = (); 
+my $arg_dev_mode                  = 0;
 
 # root
-my $var_gaia_root = function_CleanPath($FindBin::RealBin."/../..");
+my $var_gaia_root = function_CleanPath($FindBin::RealBin."/..");
 	
 #-----------------------------------------------------------------------------
 # Logging
@@ -181,49 +180,9 @@ sub log_Error   {
 	} # if()
 	
 	# exit
-	exit GAIA_EXIT_ERROR;
+	exit(GAIA_EXIT_ERROR);
 	
 } # log_Error()
-
-# argument verbosity handler
-sub log_VerbosityHandler {
-	
-	# parse
-	my ($arg_verbosity_name, $arg_verbosity_value) = @_;
-	
-	# select
-	switch($arg_verbosity_value) {                                                                                                                                                         
-		
-		case "none" {
-			$gaia_verbosity_level = GAIA_VERBOSITY_NONE;
-		}
-		
-		case "error" {
-			$gaia_verbosity_level = GAIA_VERBOSITY_ERROR;
-		}
-		
-		case "warning" {
-			$gaia_verbosity_level = GAIA_VERBOSITY_WARNING;
-		}
-		
-		case "info" {
-			$gaia_verbosity_level = GAIA_VERBOSITY_INFO;
-		}
-		
-		case "debug" {
-			$gaia_verbosity_level = GAIA_VERBOSITY_DEBUG;
-		}
-		
-		else {
-			
-			# log
-			log_Warning("log_VerbosityHandler","user-specified verbosity level incorectly parsed, set to default [info] verbosity value. Authorized values are [none, error, warn, info, debug]");
-
-		}
-		                                                                                                                                                                 
-	} # switch()
-        
-} # VerbosityHandler()
 
 #-----------------------------------------------------------------------------
 # Command line
@@ -235,22 +194,60 @@ sub function_ParseCmdLine {
 	# define arguments
     Getopt::Long::GetOptions(
 
-        'list-available|l'        => sub {
+        'list-available|l' => sub {
 
+			# extract
 			my ($arg_name, $arg_value) = @_;
 			$arg_listAvailable_flag    = $arg_value;
-			die("Specify only --list-available or --detailled-ecosyste") if($arg_detailledEcosystem_flag);
+			
+			# check exclusivity
+			log_Error("function_ParseCmdLine","specify only --list-available or --detailled-ecosystem") if($arg_detailledEcosystem_flag);
+			
+			# check incompatibility
+			log_Error("function_ParseCmdLine","found --list-available option but incompatible --target-ecosystem option detected ! check your command-line...") if($arg_targetEcosystem_flag);
+			log_Error("function_ParseCmdLine","found --list-available option but incompatible --enable-feature option detected ! check your command-line...") if($arg_targetFeature_flag);
 	
         },
         'detailled-ecosystem|d=s' => sub {
 
+			# extract
 			my ($arg_name, $arg_value)     = @_;
 			$arg_detailledEcosystem_flag   = 1;
 			$arg_detailledEcosystem_string = $arg_value;
-			die("Specify only --list-available or --detailled-ecosyste") if($arg_listAvailable_flag);
 			
+			# check exclusivity
+			log_Error("function_ParseCmdLine","specify only --list-available or --detailled-ecosystem") if($arg_listAvailable_flag);
+			
+			# check incompatibility
+			log_Error("function_ParseCmdLine","found --detailled-ecosystem option but incompatible --target-ecosystem option detected ! check your command-line...") if($arg_targetEcosystem_flag);
+			log_Error("function_ParseCmdLine","found --detailled-ecosystem option but incompatible --enable-feature option detected ! check your command-line...") if($arg_targetFeature_flag);
+	
         },
-        'verbosity-level|v=s'     => sub {
+        'target-ecosystem|t=s' => sub {
+        	
+        	# extract
+			my ($arg_name, $arg_value)  = @_;
+			$arg_targetEcosystem_flag   = 1;
+			$arg_targetEcosystem_string = $arg_value;
+			
+			# check incompatibility
+			log_Error("function_ParseCmdLine","found --target-ecosystem option but incompatible --detailled-ecosystem option detected ! check your command-line...") if($arg_detailledEcosystem_flag);
+			log_Error("function_ParseCmdLine","found --target-ecosystem option but incompatible --list-available option detected ! check your command-line...") if($arg_listAvailable_flag);
+	
+        },
+        'enable-feature=s@' => sub {
+        	
+        	# extract
+        	my ($arg_name) = shift;
+        	$arg_targetFeature_flag   = 1;
+			push(@arg_targetFeature_array, split(/,/,join(',',@_)));
+			
+			# check incompatibility
+			log_Error("function_ParseCmdLine","found --enable-feature option but incompatible --detailled-ecosystem option detected ! check your command-line...") if($arg_detailledEcosystem_flag);
+			log_Error("function_ParseCmdLine","found --enable-feature option but incompatible --list-available option detected ! check your command-line...") if($arg_listAvailable_flag);
+
+        },
+        'verbosity-level|v=s' => sub {
 
 			my ($arg_name, $arg_value) = @_;
 			switch($arg_value) {
@@ -259,11 +256,16 @@ sub function_ParseCmdLine {
 				case "warning" { $gaia_verbosity_level = GAIA_VERBOSITY_WARNING; }
 				case "info"    { $gaia_verbosity_level = GAIA_VERBOSITY_INFO;    }
 				case "debug"   { $gaia_verbosity_level = GAIA_VERBOSITY_DEBUG;   }
+				case "dev"     { 
+					$gaia_verbosity_level = GAIA_VERBOSITY_DEBUG; 
+					$arg_dev_mode =1; 
+					log_Info("YouAreInsideTheMatrix","oh oh oh, is see... You're a man of culture :)");
+					log_Info("YouAreInsideTheMatrix","I'm trying to free your mind, Neo. But I can only show you the door. You're the one that has to walk through it.");
+				} # kind of a hidden spot :)
 				else {
-					die("user-specified verbosity level incorectly parsed, set to default [info] verbosity value. Authorized values are [none, error, warn, info, debug]");
-				}                                                                                     
+					log_Error("function_ParseCmdLine","User-specified verbosity-level incorectly parsed. Unspecified options set to default [info] verbosity value. Authorized values are [none, error, warn, info, debug]");
+				}                                                                                 
 			} # switch()
-			
         },
         'help|h' => \$arg_help_flag,
         'man'    => \$arg_man_flag,
@@ -273,7 +275,7 @@ sub function_ParseCmdLine {
     # check default usage options
 	Pod::Usage::pod2usage( { -verbose => 1, -exitval => GAIA_EXIT_SUCCESS } ) if $arg_help_flag;
 	Pod::Usage::pod2usage( { -verbose => 2, -exitval => GAIA_EXIT_SUCCESS } ) if $arg_man_flag;
-        
+	
 } # ParseCmdLine()
 
 #-----------------------------------------------------------------------------
@@ -519,9 +521,10 @@ sub function_DumpDetailledEcosystem {
     			
     			for my $third_party_ref ( @{ $feature_ref->{Third_party} } ) {
     				
-    				log_Info("function_DumpAvailableEcosystemDetail"," |  [third-party] : ".$third_party_ref->{Name});
-    				log_Info("function_DumpAvailableEcosystemDetail"," |  |  [priority] : ".$third_party_ref->{Priority});
-    				log_Info("function_DumpAvailableEcosystemDetail"," |  |  [version] : ".$third_party_ref->{Major}.".".$third_party_ref->{Minor}.".".$third_party_ref->{Patch});
+    				log_Info(
+    					"function_DumpAvailableEcosystemDetail",
+    					"     |  [third-party] : ".$third_party_ref->{Name}." v".$third_party_ref->{Major}.".".$third_party_ref->{Minor}.".".$third_party_ref->{Patch}." (priority : ".$third_party_ref->{Priority}.")"
+    				);
     		
     			} # for()
     			
@@ -536,6 +539,95 @@ sub function_DumpDetailledEcosystem {
 } # function_DumpDetailledEcosystem()
 
 #-----------------------------------------------------------------------------
+# function_DeployTargetEcosystem
+#
+
+sub function_DeployTargetEcosystem {
+
+    log_Debug("function_DeployTargetEcosystem","<===== entry point");
+    
+    # search for requested target ecosystem    
+    for my $ecosystem_ref ( @{ $g__Labsim_ecosystem_properties{Ecosystem} } ) {
+    	
+    	if($ecosystem_ref->{Name} eq $arg_targetEcosystem_string) {
+    	
+    		log_Info("function_DeployTargetEcosystem","target : ecosystem [".$ecosystem_ref->{Name}."]");
+    		
+    		for my $feature_ref ( @{ $ecosystem_ref->{Feature} } ) {
+    		
+    			if( any { /$feature_ref->{Name}/ } @arg_targetFeature_array ) {
+    				
+    				log_Info("function_DeployTargetEcosystem","  add user-requested feature [".$feature_ref->{Name}."]");
+    				
+				    foreach my $third_party_ref ( sort { $b->{Priority} <=> $a->{Priority} } @{ $feature_ref->{Third_party} } ) {
+				    
+				    	log_Info("function_DeployTargetEcosystem","    processing third_party [".$third_party_ref->{Name}."] with priority [".$third_party_ref->{Priority}."]");
+				    	log_Info("function_DeployTargetEcosystem","    ----------------------------------------------<OUTPUT>-----------------------------------------------");
+				    	
+				    	# so now, we can launch the corresponding target shell :)
+				    	my @command_line;
+						switch( $Config{osname} ) {
+							
+							case "linux" {
+								
+								@command_line = (
+						    		$Config{sh},
+						    		$var_gaia_root."/script/sh/target/install-".$third_party_ref->{Name}.".sh",
+						    		$third_party_ref->{Major},
+						    		$third_party_ref->{Minor},
+						    		$third_party_ref->{Patch}
+						    	);
+						    	
+							} # Linux
+							
+							case "MSWin32" {
+								
+								log_Warning("function_DeployTargetEcosystem","unsupported plateform - Win32 *.bat scripts are still in beta...");
+	    						exit(GAIA_EXIT_ERROR);
+							
+							} # Windows
+				    	
+				    		else {
+				    			
+				    			log_Error("function_DeployTargetEcosystem","unsupported plateform");
+				    			
+				    		}
+				    	
+						} # switch()
+
+				    	# syscall
+				    	log_Debug("function_DeployTargetEcosystem","external command -> [ system(".join(" ", @command_line).") ]");
+    					system(@command_line) if !$arg_dev_mode;
+    					
+    					# check result
+		    	        if ($? == -1) {
+		    	        	
+				            log_Error("function_DeployTargetEcosystem","failed to execute: $!");
+				        
+		    	        } elsif ($? & 127) {
+				        
+				            log_Error("function_DeployTargetEcosystem","child died with signal ".($? & 127).", ".(($? & 128) ? "with" : "without")." coredump");
+				        
+		    	        }
+				        
+				        log_Debug("function_DeployTargetEcosystem","child exited with value [".($? >> 8)."]");
+				    	log_Info("function_DeployTargetEcosystem","    ----------------------------------------------</OUTPUT>-----------------------------------------------");
+				    
+				    } # foreach
+    				
+    			} # if()
+    			
+    		} # for()
+    	
+    	} # if()
+    	
+    } # for()
+    
+    log_Debug("function_DeployTargetEcosystem","<===== exit point");
+    
+} # function_DeployTargetEcosystem()
+
+#-----------------------------------------------------------------------------
 # Main
 #
 MAIN:
@@ -548,47 +640,82 @@ MAIN:
 	log_Debug("Main","found RealBin=[".$FindBin::RealBin);
 	log_Debug("Main","found GAIA root directory -> [".$var_gaia_root."]");
 	
-	# if not any flag
-	if( (!$arg_listAvailable_flag) && ($arg_detailledEcosystem_string eq "") )  {
+	# if not any flag just pretty print current ecosystem detail
+	if( !$arg_listAvailable_flag
+		&& !$arg_detailledEcosystem_flag
+		&& !$arg_targetEcosystem_flag
+		&& !$arg_targetFeature_flag
+	)  {
 		
-		# just output the current ecosystem detail
-   		log_Debug("Main","begining dumping distribution detail operation");
+		log_Debug("Main","begining dumping current ecosystem detail operation");
 		function_DumpCurrentEcosystemDetail();
 		
-	# otherwise, print available ecosystem or detailled view
-	} else {
-		
-		# parse
-	    log_Debug("Main","begining parsing operation");
-		function_ParseAllAvailableEcosystem();
-	
-		# dump
-	    log_Debug("Main","begining dumping internal datamodel operation");
-		function_DumpInternalDatamodel();
-		
-		# check args
-		if($arg_listAvailable_flag) {
-		
-		    log_Debug("Main","begining dumping available ecosystem operation");
-			function_DumpAvailableEcosystemDetail();
-			
-		} elsif( ($arg_detailledEcosystem_flag) && ($arg_detailledEcosystem_string ne "") ) {
-			
-			log_Debug("Main","begining dumping user-requested ecosystem operation");
-			function_DumpDetailledEcosystem();
-			
-		} else {
-			
-			# hummmm, error + bonus :)
-			log_Debug("Main","the force is strong in this one, but you are not a Jedi yet !");
-			
-		} # if()
+		# success
+	    log_Debug("Main","Successfully completed all operation. Exiting...");
+	    exit(GAIA_EXIT_SUCCESS);
 		
 	} # if()
 	
-	# success
-    log_Debug("Main","Successfully completed all operation. Exiting...");
-    exit(GAIA_EXIT_SUCCESS);
+	# parse
+    log_Debug("Main","begining parsing operation");
+	function_ParseAllAvailableEcosystem();
+
+	# dump
+    log_Debug("Main","begining dumping internal datamodel operation");
+	function_DumpInternalDatamodel();
+	
+	# list available ?
+	if($arg_listAvailable_flag) {
+	
+	    log_Debug("Main","begining dumping available ecosystem operation");
+		function_DumpAvailableEcosystemDetail();
+		
+		# success
+	    log_Debug("Main","Successfully completed all operation. Exiting...");
+	    exit(GAIA_EXIT_SUCCESS);
+		
+	} # if()
+	
+	# print detailled one ?
+	if( ($arg_detailledEcosystem_flag) && ($arg_detailledEcosystem_string ne "") ) {
+		
+		log_Debug("Main","begining dumping user-requested ecosystem operation");
+		function_DumpDetailledEcosystem();
+		
+		# success
+	    log_Debug("Main","Successfully completed all operation. Exiting...");
+	    exit(GAIA_EXIT_SUCCESS);
+		
+	} # if()
+	
+	# normally, there should be only one couple of option available, check if they are both present
+	
+	log_Error(
+		"Main",
+		"option --enable-feature should be specified in pair with --target-ecoystem, check your command line and/or RTFM."
+	) if( !$arg_targetEcosystem_flag && $arg_targetFeature_flag );
+	
+	log_Error(
+		"Main",
+		"option --target-ecosystem should be specified in pair with --enable-feature, check your command line and/or RTFM."
+	) if( $arg_targetEcosystem_flag && !$arg_targetFeature_flag );
+		
+	# it ok, start target installation
+	if( $arg_targetEcosystem_flag && $arg_targetFeature_flag ) {
+		
+		log_Debug("Main","begining deploying user-requested ecosystem operation");
+		function_DeployTargetEcosystem();
+		
+		# success
+	    log_Debug("Main","Successfully completed all operation. Exiting...");
+	    exit(GAIA_EXIT_SUCCESS);	
+		
+	} # if()
+	
+	# hummmm .... this should really never occur...
+    log_Warning("Main","The force is with you, young Skywalker. But you are not a Jedi yet !... (Darth Vador et al.)");
+    log_Warning("Main","I have a bad feeling about this ! (Han Solo et al.)");
+    exit(GAIA_EXIT_ERROR);
 
 } # MAIN
 
@@ -604,9 +731,11 @@ GAIA : required LABSIM ground software ecosystem
 B<gaia> I<[options]>
  
  Options:
-   --verbosity-level|v       current script verbosity
+   --verbosity-level|v       script verbosity
    --list-available|l        list all available simulation software ecosystem
    --detailled-ecosystem|d   detailled view of requested ecosystem
+   --target-ecosystem|t      the simulation software ecosystem to deploy
+   --enable-feature|e        the simulation software ecosystem related feature list to deploy 
    --help|h                  brief help message			
    --man                     full documentation
    
@@ -617,7 +746,7 @@ B<gaia> I<[options]>
 =item -v B<level>, --verbosity-level=B<level> 
 
  Argument : DEFAULT=[info]
- Currrent level of verbosity. Available level are [none, error, warn, info, debug]
+ Level of verbosity. Available level are [none, error, warn, info, debug]
 
 =item -l, --list-available
 
@@ -625,14 +754,24 @@ B<gaia> I<[options]>
 
 =item -d B<name>, --detailled-ecosystem=B<name>
 
- Argument : REQUESTED=[ecosystem_name]
+ Argument : REQUIRED=[ecosystem_name]
  Print detailled output of requested GAIA simulation software ecosystem.
+ 
+=item -t B<name>, --target-ecosystem=B<name>
+
+ Argument : REQUIRED=[ecosystem_name]
+ Start deploying requested GAIA simulation software ecosystem on current host. A set of feature to enable should be specified.
+ 
+=item -e B<name>, --enable-feature=B<name>
+
+ Argument : REQUIRED=[feature_name1, feature_name2, ...] | MULTITOKEN
+ A comma separated list of target related feature to enable during deployment. A targeted ecosystem should be specified.
 
 =item -h, --help
  
 Print a brief help message and exits.
  
-=item B<--man>
+=item --man
  
 Prints the manual page and exits.
  
@@ -658,7 +797,7 @@ if serious trouble (e.g., cannot access command-line argument)
 
 =head1 DESCRIPTION
 
-By default, B<gaia-ecosystem> will print current installed simulation software ecosystem & exit. If any option is provided, then the corresponding comportment described previously will occur.
+Without user-specified option, B<gaia> will print current installed simulation software ecosystem & exit. If any option is provided, then the corresponding comportment described previously will occur.
 
 =head1 COPYRIGHT
 
