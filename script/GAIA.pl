@@ -64,6 +64,7 @@ our %g__Labsim_ecosystem_properties = (
 		Feature  => [{
 			
 			Name        => "",
+			Priority    => "",
 			Third_party => [{
 				
 				Name     => "",
