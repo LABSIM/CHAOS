@@ -372,13 +372,23 @@ function push_cpan_op_to_cache() {
 	# finally, the op
 	echo "#!/bin/bash" > exec.sh
 	echo "export PERL_MM_USE_DEFAULT=1" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install YAML::XS;'" >> exec.sh
+	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install FindBin;'" >> exec.sh
+	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install Switch;'" >> exec.sh
+	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install Env;'" >> exec.sh
+	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install Config;'" >> exec.sh
+	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install Getopt::Long;'" >> exec.sh
+	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install Pod::Usage;'" >> exec.sh
+	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install Term::ANSIColor;'" >> exec.sh
+	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install Time::HiRes;'" >> exec.sh
+	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install List::Util;'" >> exec.sh
+	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install Data::Dumper;'" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install File::Copy::Recursive;'" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install File::Remove;'" >> exec.sh
+	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install File::Spec;'" >> exec.sh
+	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install YAML::XS;'" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install Net::Address::IP::Local;'" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install IPC::System::Simple;'" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install XML::SimpleObject::LibXML;'" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install Switch;'" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }

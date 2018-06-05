@@ -20,24 +20,24 @@
 #
 
 # perl version
-use 5.024;
+use 5.026;
 
 # force declaration, warnings & print error diagnostics
 use strict;
 use warnings;
 use diagnostics -verbose;
 
-# libraries
+# module
+use FindBin qw($RealBin);   		# facilities
+use Switch;                         # switch statement handling
+use Env;							# environment variables manipulation
+use Config;							# Perl configuration module (OS/Arch/...)
 use Getopt::Long qw(GetOptions);    # avoid name-space pollution
 use Pod::Usage qw(pod2usage);		# usage pretty print
 use Term::ANSIColor qw(:constants); # colored output for the terminal
-use FindBin qw($RealBin);   		# facilities
 use File::Spec;                     # file Op
-use Switch;                         # switch statement handling
 use Time::HiRes qw(time);			# high-resolution timer
 use Data::Dumper;					# dump functionality
-use Env;							# environment variables manipulation
-use Config;							# Perl configuration module (OS/Arch/...)
 use List::Util qw(any);				# find any string in array
 
 # configure
@@ -105,7 +105,7 @@ my $var_gaia_root = function_CleanPath($FindBin::RealBin."/..");
 
 # constant
 use constant {
-	
+
 	GAIA_VERBOSITY_NONE     => 0,
 	GAIA_VERBOSITY_ERROR    => 1,
 	GAIA_VERBOSITY_WARNING  => 2,
@@ -127,7 +127,14 @@ sub has_Error   { return ( $gaia_verbosity_level >= GAIA_VERBOSITY_ERROR   ); }
 
 sub log_Debug   { 
 	
-	say( BRIGHT_CYAN, "{".time()."} : ", BOLD, MAGENTA, "[GAIA] -- DEBUG : ", RESET, GREEN, shift."() : ", RESET, @_ ) if has_Debug();   
+	# pretty print
+	say( 
+		RESET, CYAN, time(), 
+		RESET, "|", GREEN, shift."()", 
+		RESET, " ",
+		RESET, BOLD, MAGENTA, "[GAIA] -- DEBUG : ", RESET, @_ 
+	) if has_Debug(); 
+	
 	return; 
 
 } # log_Debug()
@@ -136,12 +143,21 @@ sub log_Info    {
 	
 	if( has_Debug() ) {
 		
-		say( BRIGHT_CYAN, "{".time()."} : ", BOLD, BLUE, "[GAIA] -- INFO : ", RESET, GREEN, shift."() : ", RESET, @_ ) if has_Info(); 
+		# pretty print
+		say( 
+			RESET, CYAN, time(), 
+			RESET, "|", GREEN, shift."()", 
+			RESET, " ",
+			RESET, BOLD, BLUE, "[GAIA] -- INFO : ", RESET, @_ 
+		) if has_Info(); 
 	
 	} else {
 		
+		# discard 1st
 		shift;
-		say( BOLD, BLUE, "[GAIA] -- INFO : ", RESET, @_ ) if has_Info();
+		
+		# pretty print
+		say(RESET, BOLD, BLUE, "[GAIA] -- INFO : ", RESET, @_) if has_Info(); 
 	
 	} # if()
 	
@@ -153,12 +169,21 @@ sub log_Warning {
 	
 	if( has_Debug() ) {
 		
-		say( BRIGHT_CYAN, "{".time()."} : ", BOLD, YELLOW, "[GAIA] -- WARNING : ", RESET, GREEN, shift."() : ", RESET, @_ ) if has_Warning(); 
+		# pretty print
+		say( 
+			RESET, CYAN, time(), 
+			RESET, "|", GREEN, shift."()", 
+			RESET, " ",
+			RESET, BOLD, YELLOW, "[GAIA] -- WARNING : ", RESET, @_ 
+		) if has_Warning(); 
 		
 	} else {
 		
+		# discard 1st
 		shift;
-		say( BOLD, YELLOW, "[GAIA] -- WARNING : ", RESET, @_ ) if has_Warning();
+		
+		# pretty print
+		say(RESET, BOLD, YELLOW, "[GAIA] -- WARNING : ", RESET, @_) if has_Warning(); 
 		
 	} # if()
 	
@@ -170,12 +195,21 @@ sub log_Error   {
 	
 	if( has_Debug() ) {
 		
-		say( BRIGHT_CYAN, "{".time()."} : ", BOLD, RED, "[GAIA] -- ERROR : ", RESET, GREEN, shift."() : ", RESET, @_ ) if has_Error();    
+		# pretty print
+		say( 
+			RESET, CYAN, time(), 
+			RESET, "|", GREEN, shift."()", 
+			RESET, " ",
+			RESET, BOLD, WHITE, ON_RED, "[GAIA] -- ERROR :", RESET, " ", @_ 
+		) if has_Error();
 		
 	} else {
 		
+		# discard 1st
 		shift;
-		say( BOLD, RED, "[GAIA] -- ERROR : ", RESET, @_ ) if has_Error();
+		
+		# pretty print
+		say(RESET, BOLD, WHITE, ON_RED, "[GAIA] -- ERROR :", RESET, " ", @_) if has_Error(); 
    
 	} # if()
 	
@@ -185,11 +219,37 @@ sub log_Error   {
 } # log_Error()
 
 #-----------------------------------------------------------------------------
+# function_ConfigureRuntimeModule
+#
+sub function_ConfigureRuntimeModule {
+	
+	# general flag
+	my $requirements_flag = 1;
+	
+	# Win32 support for ANSI terminal
+	if($Config{osname} eq "MSWin32") {
+		
+		my $requirement_win32_flag = eval { require Win32::Console::ANSI; Win32::Console::ANSI->import(); 1; };
+		if(!$requirement_win32_flag) {
+			
+			print("[GAIA] -- ERROR : module [Win32::Console::ANSI] unavailable, maybe you should install it ? try command [perl -MCPAN -e 'install Win32::Console::ANSI']...\n");
+			$requirements_flag = 0;
+		
+		} # if()
+	
+	} # if()
+
+	# exit on error
+	exit(GAIA_EXIT_CRITICAL_ERROR) if(!$requirements_flag);
+	
+} # function_ConfigureRuntimeModule()
+
+#-----------------------------------------------------------------------------
 # Command line
 #
 
 # command line parsing op
-sub function_ParseCmdLine {
+sub function_ParseCommandLine {
 	
 	# define arguments
     Getopt::Long::GetOptions(
@@ -201,11 +261,11 @@ sub function_ParseCmdLine {
 			$arg_listAvailable_flag    = $arg_value;
 			
 			# check exclusivity
-			log_Error("function_ParseCmdLine","specify only --list-available or --detailled-ecosystem") if($arg_detailledEcosystem_flag);
+			log_Error("function_ParseCommandLine","specify only --list-available or --detailled-ecosystem") if($arg_detailledEcosystem_flag);
 			
 			# check incompatibility
-			log_Error("function_ParseCmdLine","found --list-available option but incompatible --target-ecosystem option detected ! check your command-line...") if($arg_targetEcosystem_flag);
-			log_Error("function_ParseCmdLine","found --list-available option but incompatible --enable-feature option detected ! check your command-line...") if($arg_targetFeature_flag);
+			log_Error("function_ParseCommandLine","found --list-available option but incompatible --target-ecosystem option detected ! check your command-line...") if($arg_targetEcosystem_flag);
+			log_Error("function_ParseCommandLine","found --list-available option but incompatible --enable-feature option detected ! check your command-line...") if($arg_targetFeature_flag);
 	
         },
         'detailled-ecosystem|d=s' => sub {
@@ -216,11 +276,11 @@ sub function_ParseCmdLine {
 			$arg_detailledEcosystem_string = $arg_value;
 			
 			# check exclusivity
-			log_Error("function_ParseCmdLine","specify only --list-available or --detailled-ecosystem") if($arg_listAvailable_flag);
+			log_Error("function_ParseCommandLine","specify only --list-available or --detailled-ecosystem") if($arg_listAvailable_flag);
 			
 			# check incompatibility
-			log_Error("function_ParseCmdLine","found --detailled-ecosystem option but incompatible --target-ecosystem option detected ! check your command-line...") if($arg_targetEcosystem_flag);
-			log_Error("function_ParseCmdLine","found --detailled-ecosystem option but incompatible --enable-feature option detected ! check your command-line...") if($arg_targetFeature_flag);
+			log_Error("function_ParseCommandLine","found --detailled-ecosystem option but incompatible --target-ecosystem option detected ! check your command-line...") if($arg_targetEcosystem_flag);
+			log_Error("function_ParseCommandLine","found --detailled-ecosystem option but incompatible --enable-feature option detected ! check your command-line...") if($arg_targetFeature_flag);
 	
         },
         'target-ecosystem|t=s' => sub {
@@ -231,8 +291,8 @@ sub function_ParseCmdLine {
 			$arg_targetEcosystem_string = $arg_value;
 			
 			# check incompatibility
-			log_Error("function_ParseCmdLine","found --target-ecosystem option but incompatible --detailled-ecosystem option detected ! check your command-line...") if($arg_detailledEcosystem_flag);
-			log_Error("function_ParseCmdLine","found --target-ecosystem option but incompatible --list-available option detected ! check your command-line...") if($arg_listAvailable_flag);
+			log_Error("function_ParseCommandLine","found --target-ecosystem option but incompatible --detailled-ecosystem option detected ! check your command-line...") if($arg_detailledEcosystem_flag);
+			log_Error("function_ParseCommandLine","found --target-ecosystem option but incompatible --list-available option detected ! check your command-line...") if($arg_listAvailable_flag);
 	
         },
         'enable-feature=s@' => sub {
@@ -243,8 +303,8 @@ sub function_ParseCmdLine {
 			push(@arg_targetFeature_array, split(/,/,join(',',@_)));
 			
 			# check incompatibility
-			log_Error("function_ParseCmdLine","found --enable-feature option but incompatible --detailled-ecosystem option detected ! check your command-line...") if($arg_detailledEcosystem_flag);
-			log_Error("function_ParseCmdLine","found --enable-feature option but incompatible --list-available option detected ! check your command-line...") if($arg_listAvailable_flag);
+			log_Error("function_ParseCommandLine","found --enable-feature option but incompatible --detailled-ecosystem option detected ! check your command-line...") if($arg_detailledEcosystem_flag);
+			log_Error("function_ParseCommandLine","found --enable-feature option but incompatible --list-available option detected ! check your command-line...") if($arg_listAvailable_flag);
 
         },
         'verbosity-level|v=s' => sub {
@@ -263,7 +323,7 @@ sub function_ParseCmdLine {
 					log_Info("YouAreInsideTheMatrix","I'm trying to free your mind, Neo. But I can only show you the door. You're the one that has to walk through it.");
 				} # kind of a hidden spot :)
 				else {
-					log_Error("function_ParseCmdLine","User-specified verbosity-level incorectly parsed. Unspecified options set to default [info] verbosity value. Authorized values are [none, error, warn, info, debug]");
+					log_Error("function_ParseCommandLine","User-specified verbosity-level incorectly parsed. Unspecified options set to default [info] verbosity value. Authorized values are [none, error, warn, info, debug]");
 				}                                                                                 
 			} # switch()
         },
@@ -562,7 +622,7 @@ sub function_DeployTargetEcosystem {
 				    foreach my $third_party_ref ( sort { $b->{Priority} <=> $a->{Priority} } @{ $feature_ref->{Third_party} } ) {
 				    
 				    	log_Info("function_DeployTargetEcosystem","    processing third_party [".$third_party_ref->{Name}."] with priority [".$third_party_ref->{Priority}."]");
-				    	log_Info("function_DeployTargetEcosystem","    ----------------------------------------------<OUTPUT>-----------------------------------------------");
+				    	log_Info("function_DeployTargetEcosystem","    ----------------------------------------------<EXTERNAL_SCRIPT>-----------------------------------------------");
 				    	
 				    	# so now, we can launch the corresponding target shell :)
 				    	my @command_line;
@@ -611,7 +671,7 @@ sub function_DeployTargetEcosystem {
 		    	        }
 				        
 				        log_Debug("function_DeployTargetEcosystem","child exited with value [".($? >> 8)."]");
-				    	log_Info("function_DeployTargetEcosystem","    ----------------------------------------------</OUTPUT>-----------------------------------------------");
+				    	log_Info("function_DeployTargetEcosystem","    ----------------------------------------------</EXTERNAL_SCRIPT>-----------------------------------------------");
 				    
 				    } # foreach
     				
@@ -633,8 +693,9 @@ sub function_DeployTargetEcosystem {
 MAIN:
 {	
 	
-	# first of all, parse command line
-	function_ParseCmdLine();
+	# first of all, check configure modules & parse command line
+	function_ConfigureRuntimeModule();
+	function_ParseCommandLine();
 	
 	# log
 	log_Debug("Main","found RealBin=[".$FindBin::RealBin);
