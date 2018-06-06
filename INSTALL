@@ -2,12 +2,16 @@
 =========================
 = 		INSTALL			=
 =========================
-   +
+  ________
+ /       /|
++-------+ |
+| Linux |/
++-------+
    |
    |
    +{1}+------------------------------------------------------------------------------------------------------------------+
    |   |                                                                                                                  |
-   |   |   Run a standard shell from GAIA source directory                                                                |
+   |   |   Run a standard shell from GAIA root directory                                                                  |
    |   |   +-----------------------------------------------------------------------------------------------------+        |
    |   |   +   [user@localhost]$ cat script/sh/template/GAIA.bashrc >> ~/.bashrc && source ~/.bashrc             +        |
    |   |   +-----------------------------------------------------------------------------------------------------+        |
@@ -18,21 +22,33 @@
    |   |                                                                                                                  |
    |   |   list all available LABSIM software ecosystem                                                                   |
    |   |   +-----------------------------------------------------------------------------------------------------+        |
-   |   |   +   [user@localhost]$ gaia-ecosystem --available                                                      +        |
+   |   |   +   [user@localhost]$ gaia --list-available                                                           +        |
    |   |   +-----------------------------------------------------------------------------------------------------+        |
    |   |                                                                                                                  |
-   |   |       Alternatively for a more complete description of each available LABSIM software ecosystem, run :           |
+   |   |       Alternatively for a more complete description of one available LABSIM software ecosystem, run :            |
    |   |       +-----------------------------------------------------------------------------------------------------+    |
-   |   |       +   [user@localhost]$ gaia-ecosystem --available --detail | vi -                                      +    |
+   |   |       +   [user@localhost]$ gaia --detailled-ecosystem <ecosystem_name> | more                              +    |
    |   |       +-----------------------------------------------------------------------------------------------------+    |
    |   |                                                                                                                  |
    |   +------------------------------------------------------------------------------------------------------------------+
    |
    +{3}+------------------------------------------------------------------------------------------------------------------+
    |   |                                                                                                                  |
-   |   |   then, simply deploy                                                                                            |
+   |   |   then, deploy your ecosystem with feature(s)                                                                    |
    |   |   +-----------------------------------------------------------------------------------------------------+        |
-   |   |   +   [user@localhost]$ gaia-deploy --ecosystem <your_ecosystem_version>                                +        |
+   |   |   +   [user@localhost]$ gaia \                                                                          +        |
+   |   |   +   [user@localhost]$ --target-ecosystem <ecosystem_name> \                                           +        |
+   |   |   +   [user@localhost]$ --enable-feature <feature_A_name> \                                             +        |
+   |   |   +   [user@localhost]$ --enable-feature <feature_B_name> \                                             +        |
+   |   |   +   [user@localhost]$ (..)                                                                            +        |
+   |   |   +   [user@localhost]$ --enable-feature <feature_N_name>                                               +        |
+   |   |   +-----------------------------------------------------------------------------------------------------+        |
+   |   |                                                                                                                  |
+   |   |   alternatively, it could be compacted as                                                                        |
+   |   |   +-----------------------------------------------------------------------------------------------------+        |
+   |   |   +   [user@localhost]$ gaia \                                                                          +        |
+   |   |   +   [user@localhost]$ --target-ecosystem <ecosystem_name> \                                           +        |
+   |   |   +   [user@localhost]$ --enable-feature <feature_A_name>,<feature_B_name>,(...),<feature_N_name>       +        |
    |   |   +-----------------------------------------------------------------------------------------------------+        |
    |   |                                                                                                                  |
    |   +------------------------------------------------------------------------------------------------------------------+
@@ -41,7 +57,7 @@
    |   |                                                                                                                  |
    |   |   finally, print installed config                                                                                |
    |   |   +-----------------------------------------------------------------------------------------------------+        |
-   |   |   +   [user@localhost]$ gaia-ecosystem                                                                  +        |
+   |   |   +   [user@localhost]$ gaia                                                                            +        |
    |   |   +-----------------------------------------------------------------------------------------------------+        |
    |   |                                                                                                                  |
    |   +------------------------------------------------------------------------------------------------------------------+
