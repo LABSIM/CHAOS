@@ -173,22 +173,23 @@ export GAIA_HOST_ARCH
 
 # === third party feature
 
-source "${GAIA_ROOT}/script/sh/feature/third_party-gnu.conf.sh"
-source "${GAIA_ROOT}/script/sh/feature/third_party-common.conf.sh"
-source "${GAIA_ROOT}/script/sh/feature/third_party-ig.conf.sh"
-source "${GAIA_ROOT}/script/sh/feature/third_party-ip.conf.sh"
-source "${GAIA_ROOT}/script/sh/feature/third_party-sf.conf.sh"
-source "${GAIA_ROOT}/script/sh/feature/third_party-sb.conf.sh"
-source "${GAIA_ROOT}/script/sh/feature/third_party-ui.conf.sh"
-source "${GAIA_ROOT}/script/sh/feature/third_party-vr.conf.sh"
+for GAIA_FEATURE_CONF_FILE in $(find "${GAIA_ROOT}/script/sh/feature/" -type f -iname "*.conf.sh"); do
+
+	source "${GAIA_FEATURE_CONF_FILE}"
+
+done
+
+unset GAIA_FEATURE_CONF_FILE
 
 # === LABSIM software
 
-source "${GAIA_ROOT}/script/sh/software/labsim-common.conf.sh"
-source "${GAIA_ROOT}/script/sh/software/labsim-colosses.conf.sh"
-source "${GAIA_ROOT}/script/sh/software/labsim-olympiens.conf.sh"
-source "${GAIA_ROOT}/script/sh/software/labsim-titans.conf.sh"
-source "${GAIA_ROOT}/script/sh/software/labsim-contract.conf.sh"
+for GAIA_SOFTWARE_CONF_FILE in $(find "${GAIA_ROOT}/script/sh/software/" -type f -iname "*.conf.sh"); do
+
+	source "${GAIA_SOFTWARE_CONF_FILE}"
+
+done
+
+unset GAIA_SOFTWARE_CONF_FILE
 
 #========================================================================================================================#
 #===================================================== END FEATURES =====================================================#

@@ -389,6 +389,7 @@ function push_cpan_op_to_cache() {
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install Net::Address::IP::Local;'" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install IPC::System::Simple;'" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install XML::SimpleObject::LibXML;'" >> exec.sh
+	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/${GAIA_TARGET_LC_NAME} -MCPAN -e 'install Graph;'" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }

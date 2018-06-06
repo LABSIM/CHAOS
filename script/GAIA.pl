@@ -32,6 +32,7 @@ use FindBin qw($RealBin);   		# facilities
 use Switch;                         # switch statement handling
 use Env;							# environment variables manipulation
 use Config;							# Perl configuration module (OS/Arch/...)
+use Graph;							# graph data structures and algorithms (dependancies solver)
 use Getopt::Long qw(GetOptions);    # avoid name-space pollution
 use Pod::Usage qw(pod2usage);		# usage pretty print
 use Term::ANSIColor qw(:constants); # colored output for the terminal
