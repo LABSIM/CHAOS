@@ -22,7 +22,7 @@
 ### Brief
 
 > *name* : ***LABSIM***
-> *version* : ***v.1.0.0*** 
+> *version* : ***v.2.0.0*** 
 > *author* : Nawfel KINANI
 > *dept* : DTIS
 > *unit* : ICNA

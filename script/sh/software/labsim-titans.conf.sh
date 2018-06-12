@@ -19,42 +19,14 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
-
 # detail 
-GAIA_ECOSYSTEM_DETAIL="$GAIA_ECOSYSTEM_DETAIL\n\t+--[ LABSIM : <Titans> ]"
-
-######################################################################
-## LABSIM Developpement environment config							##
-##																	##
-## Ce fichier contient l'ensemble des definitions					##
-## pour les projets Titans en cours de developpement				##
-##																	##
-## 07/02/12 - Kinani Nawfel											##
-######################################################################
-
-# BASE
-TITANS_HOME=$DEV_HOME/Titans
-
-export TITANS_HOME
-
-# ================================================================= #
-# 							Titans codes 							#
-# ================================================================= #
-#																	#
-# Contient les configurations pour les differents codes Titans :	#
-# 	- OURANOS														#
-#	- RHEA 															# 
-#	- OCEAN															#
-#	- THETYS														#							
-#	- KRONOS	 					 								#
-# 																	#
-# ================================================================= #
+GAIA_ECOSYSTEM_DETAIL+="\n\t+--[ LABSIM : <Titans> ]"
 
 # == RHEA 
 
-if [ -d "$TITANS_HOME/RHEA" ]; then
+if [ -d "${GAIA_DEV_HOME}/Titans/RHEA" ]; then
 	
-	RHEA_ROOT=$TITANS_HOME/RHEA
+	RHEA_ROOT=${GAIA_DEV_HOME}/Titans/RHEA
 	
 	export RHEA_ROOT
 	
@@ -67,15 +39,15 @@ if [ -d "$TITANS_HOME/RHEA" ]; then
 	
 	alias rhea="__internal_labsim_rhea"
 	
-	GAIA_ECOSYSTEM_DETAIL="$GAIA_ECOSYSTEM_DETAIL\n\t|\t* RHEA"
+	GAIA_ECOSYSTEM_DETAIL+="\n\t|\t* RHEA"
 	
 fi
 
 # == OCEAN 
 
-if [ -d "$TITANS_HOME/OCEAN" ]; then
+if [ -d "${GAIA_DEV_HOME}/Titans/OCEAN" ]; then
 	
-	OCEAN_ROOT=$TITANS_HOME/OCEAN
+	OCEAN_ROOT=${GAIA_DEV_HOME}/Titans/OCEAN
 	
 	export OCEAN_ROOT
 	
@@ -88,15 +60,15 @@ if [ -d "$TITANS_HOME/OCEAN" ]; then
 	
 	alias ocean="__internal_labsim_ocean"
 	
-	GAIA_ECOSYSTEM_DETAIL="$GAIA_ECOSYSTEM_DETAIL\n\t|\t* OCEAN"
+	GAIA_ECOSYSTEM_DETAIL+="\n\t|\t* OCEAN"
 
 fi
 
 # == OURANOS
 
-if [ -d "$TITANS_HOME/OURANOS" ]; then
+if [ -d "${GAIA_DEV_HOME}/Titans/OURANOS" ]; then
 
-	OURANOS_ROOT=$TITANS_HOME/OURANOS
+	OURANOS_ROOT=${GAIA_DEV_HOME}/Titans/OURANOS
 	OURANOS_INCLUDEDIR=$OURANOS_ROOT/include
 	OURANOS_LIBRARYDIR=$OURANOS_ROOT/lib
 	OURANOS_BINARYDIR=$OURANOS_ROOT/bin
@@ -106,15 +78,15 @@ if [ -d "$TITANS_HOME/OURANOS" ]; then
 	PATH=$PATH:$OURANOS_BINARYDIR
 	LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OURANOS_LIBRARYDIR
 	
-	GAIA_ECOSYSTEM_DETAIL="$GAIA_ECOSYSTEM_DETAIL\n\t|\t* OURANOS"
+	GAIA_ECOSYSTEM_DETAIL+="\n\t|\t* OURANOS"
 
 fi
 
 # == THETYS
 
-if [ -d "$TITANS_HOME/THETYS" ]; then
+if [ -d "${GAIA_DEV_HOME}/Titans/THETYS" ]; then
 
-	THETYS_ROOT=$TITANS_HOME/THETYS
+	THETYS_ROOT=${GAIA_DEV_HOME}/Titans/THETYS
 	THETYS_INCLUDEDIR=$THETYS_ROOT/include
 	THETYS_LIBRARYDIR=$THETYS_ROOT/lib
 	THETYS_BINARYDIR=$THETYS_ROOT/bin
@@ -124,15 +96,15 @@ if [ -d "$TITANS_HOME/THETYS" ]; then
 	PATH=$PATH:$THETYS_BINARYDIR
 	LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$THETYS_LIBRARYDIR
 	
-	GAIA_ECOSYSTEM_DETAIL="$GAIA_ECOSYSTEM_DETAIL\n\t|\t* THETYS"
+	GAIA_ECOSYSTEM_DETAIL+="\n\t|\t* THETYS"
 
 fi
 
 # == KRONOS-DDS 
 
-if [ -d "$TITANS_HOME/KRONOS-DDS" ]; then
+if [ -d "${GAIA_DEV_HOME}/Titans/KRONOS-DDS" ]; then
 	
-	KRONOSDDS_ROOT=$TITANS_HOME/KRONOS-DDS
+	KRONOSDDS_ROOT=${GAIA_DEV_HOME}/Titans/KRONOS-DDS
 	KRONOSDDS_INCLUDEDIR=$KRONOSDDS_ROOT/include
 	KRONOSDDS_LIBRARYDIR=$KRONOSDDS_ROOT/lib
 	KRONOSDDS_BINARYDIR=$KRONOSDDS_ROOT/bin
@@ -142,18 +114,7 @@ if [ -d "$TITANS_HOME/KRONOS-DDS" ]; then
 	PATH=$PATH:$KRONOSDDS_BINARYDIR
 	LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$KRONOSDDS_LIBRARYDIR
 	
-	GAIA_ECOSYSTEM_DETAIL="$GAIA_ECOSYSTEM_DETAIL\n\t|\t* KRONOS-DDS"
+	GAIA_ECOSYSTEM_DETAIL+="\n\t|\t* KRONOS-DDS"
 
 fi
-
-# ================================================================= #
-# 							Global Variable  						#
-# ================================================================= #
-# 																	#
-# Configure les variables globales pour assurer un 					#
-# fonctionnement correct 											#
-# 																	#
-# ================================================================= #
-
-export PATH LD_LIBRARY_PATH
 
