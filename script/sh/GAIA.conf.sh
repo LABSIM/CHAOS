@@ -181,6 +181,10 @@ done
 
 unset GAIA_FEATURE_CONF_FILE
 
+#========================================================================================================================#
+#======================================================= SOFTWARE =======================================================#
+#========================================================================================================================#
+
 # === LABSIM software
 
 for GAIA_SOFTWARE_CONF_FILE in $(find "${GAIA_ROOT}/script/sh/software/" -type f -iname "*.conf.sh"); do
@@ -190,6 +194,8 @@ for GAIA_SOFTWARE_CONF_FILE in $(find "${GAIA_ROOT}/script/sh/software/" -type f
 done
 
 unset GAIA_SOFTWARE_CONF_FILE
+
+export LABSIM_VERBOSITY_LEVEL="INFO"
 
 #========================================================================================================================#
 #===================================================== END FEATURES =====================================================#
@@ -213,6 +219,9 @@ function __internal_labsim_gaia() {
 # aliases
 
 alias gaia="__internal_labsim_gaia"
+
+# default language -> easier
+export LANG=en_US.UTF-8
 
 ##############################################################################
 ## Magic Section ! Fun, Functions and more ..				    ##
