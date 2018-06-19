@@ -47,9 +47,9 @@
        - boost *v.1.67.0*
     - **Simulation Frontend (SF)** -- *strongly recommended*
        - c-ares *v.1.14.0*
+       - openssl *v.1.1.0h*
        - protobuf *v.3.5.1*
 		- grpc *v.1.12.0*
-        	- shipped : boring-ssl *v.1.12.0*
     - **Simulation Backend (SB)** -- *strongly recommended*
        - c-ares *v.1.14.0*
        - nghttp2 *v.1.32.0*

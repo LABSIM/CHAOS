@@ -391,7 +391,7 @@ print_header
 
 	# == init ==
 	configure "$@"
-	#make_temporary_directories
+	make_temporary_directories
 
 	# --> navigate
 	cd "$GAIA_BUILD_DIR"
