@@ -31,13 +31,10 @@ source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
 
 function configure() {
 
-	# print
-	echo -ne "  + Configuration..."
-
 	# name
-	GAIA_TARGET_PRETTY_NAME="gRPC"
-	GAIA_TARGET_UC_NAME="$(echo ${GAIA_TARGET_PRETTY_NAME} | tr '[:lower:]' '[:upper:]')"
-	GAIA_TARGET_LC_NAME="$(echo ${GAIA_TARGET_PRETTY_NAME} | tr '[:upper:]' '[:lower:]')"
+	GAIA_TARGET_PRETTY_NAME="OpenSSL"
+	GAIA_TARGET_UC_NAME="$(echo "${GAIA_TARGET_PRETTY_NAME}" | tr '[:lower:]' '[:upper:]')"
+	GAIA_TARGET_LC_NAME="$(echo "${GAIA_TARGET_PRETTY_NAME}" | tr '[:upper:]' '[:lower:]')"
 
 	# directories
 	GAIA_INITIAL_DIR="$PWD"
@@ -58,43 +55,8 @@ function configure() {
 	GAIA_PARALLEL_BUILD_JOB_COUNT="$(nproc)"
 	(( GAIA_PARALLEL_BUILD_JOB_COUNT = GAIA_PARALLEL_BUILD_JOB_COUNT > 1 ? --GAIA_PARALLEL_BUILD_JOB_COUNT : GAIA_PARALLEL_BUILD_JOB_COUNT ))
 
-	# check at least one network card is available 
-	for GAIA_NETWORK_ITERFACE_CARD in $(ls "/sys/class/net/" | grep -v lo);
-	do
-		
-		if [[ "$(cat /sys/class/net/$GAIA_NETWORK_ITERFACE_CARD/carrier 2>/dev/null)" -eq 1 ]]; then
-			GAIA_FOUND_AVAILABLE_NETWORK=true; 
-		fi
-
-	done
-
-	# then check for internet connection
-	if [ "${GAIA_FOUND_AVAILABLE_NETWORK}" = true ]; then
-
-		case "$(curl -s --max-time 2 -I https://www.google.com | sed 's/^[^ ]*  *\([0-9]\).*/\1/; 1q')" in
-
-			2|3) 
-				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
-				echo -ne "(connection HTTP => ONLINE MODE)... "
-				;;
-
-			5) 
-				echo -ne "(blocage du proxy ! verifier vos parametres d'environments aka. [http_proxy] && [https_proxy] => OFFLINE MODE)... "
-				;;
-
-			*)
-				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
-				echo -ne "(connection HTTP lente [ lag : >2s ] mais c'est OK, \"DSI\" => ONLINE MODE)... "
-				;;
-
-		esac
-
-	else 
-
-		echo -ne "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
-		exit 1
-
-	fi
+	# third_party
+	source "$GAIA_ROOT/script/sh/function/configure-third_party.conf.sh"
 
 }
 
@@ -105,9 +67,6 @@ function configure() {
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 
 function cleanup() {
-
-	# print
-	echo -ne "  + Cleanup..."
 
 	# name
 	unset GAIA_TARGET_PRETTY_NAME
@@ -131,6 +90,9 @@ function cleanup() {
 
 	# parameter
 	unset GAIA_PARALLEL_BUILD_JOB_COUNT
+
+	# third_party
+	source "$GAIA_ROOT/script/sh/function/cleanup-third_party.conf.sh"
 
 }
 
@@ -233,36 +195,61 @@ function pop_cache() {
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
-# PUSH_CLONE_OP_TO_CACHE FUNCTION
+# PUSH_DOWNLOAD_OP_TO_CACHE FUNCTION
 #
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 
-function push_clone_op_to_cache() {
+function push_download_op_to_cache() {
 
 	# print
-	echo -ne "  + Clonage du repository pour ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}... "
+	echo -ne "  + Telechargement de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}... "
 
-	# the op
+	# check at least one network card is available 
+	for GAIA_NETWORK_ITERFACE_CARD in $(ls "/sys/class/net/" | grep -v lo);
+	do
+		
+		if [[ "$(cat /sys/class/net/$GAIA_NETWORK_ITERFACE_CARD/carrier 2>/dev/null)" -eq 1 ]]; then
+			GAIA_FOUND_AVAILABLE_NETWORK=true; 
+		fi
+
+	done
+
+	# then check for internet connection
+	if [ "${GAIA_FOUND_AVAILABLE_NETWORK}" = true ]; then
+
+		case "$(curl -s --max-time 2 -I https://www.google.com | sed 's/^[^ ]*  *\([0-9]\).*/\1/; 1q')" in
+
+			2|3) 
+				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
+				echo -ne "(connection HTTP => ONLINE MODE)... "
+				;;
+
+			5) 
+				echo -ne "(blocage du proxy ! verifier vos parametres d'environments aka. [http_proxy] && [https_proxy] => OFFLINE MODE)... "
+				;;
+
+			*)
+				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
+				echo -ne "(connection HTTP lente [ lag : >2s ] mais c'est OK, \"DSI\" => ONLINE MODE)... "
+				;;
+
+		esac
+
+	else 
+
+		echo -ne "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
+		exit 1
+
+	fi
+
+	# finally, the op
 	echo "#!/bin/bash" > exec.sh
-	echo "git clone https://github.com/${GAIA_TARGET_LC_NAME}/${GAIA_TARGET_LC_NAME}.git" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-
-}
-
-###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
-#
-# PUSH_COPY_OP_TO_CACHE FUNCTION
-#
-###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
-
-function push_copy_op_to_cache() {
-
-	# print
-	echo -ne "  + Copie de l'archive ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}... "
-
-	# the op
-	echo "#!/bin/bash" > exec.sh
-	echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz ." >> exec.sh
+	if [ "${GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY}" = true ]; then	
+		echo "wget https://github.com/${GAIA_TARGET_LC_NAME}/${GAIA_TARGET_LC_NAME}/archive/${GAIA_TARGET_PRETTY_NAME}_${GAIA_TARGET_VERSION//./_}.tar.gz" >> exec.sh
+		echo "mv ${GAIA_TARGET_PRETTY_NAME}_${GAIA_TARGET_VERSION//./_}.tar.gz ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
+	else 
+		echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz ." >> exec.sh
+	fi
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -288,42 +275,6 @@ function push_extract_op_to_cache() {
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
-# PUSH_CHECKOUT_OP_TO_CACHE FUNCTION
-#
-###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
-
-function push_checkout_op_to_cache() {
-
-	# print
-	echo -ne "  + Checkout de la branche pour ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
-
-	# the op
-	echo "#!/bin/bash" > exec.sh
-	echo "git checkout tags/v${GAIA_TARGET_VERSION}" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-
-}
-
-###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
-#
-# PUSH_INIT_SUBMODULE_OP_TO_CACHE FUNCTION
-#
-###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
-
-function push_init_submodule_op_to_cache() {
-
-	# print
-	echo -ne "  + Intitialisation des submodule pour ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
-
-	# the op
-	echo "#!/bin/bash" > exec.sh
-	echo "git submodule update --init --recursive" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-
-}
-
-###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
-#
 # PUSH_CONFIGURE_OP_TO_CACHE FUNCTION
 #
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
@@ -331,15 +282,15 @@ function push_init_submodule_op_to_cache() {
 function push_configure_op_to_cache() {
 
 	# print
-	echo -ne "  + CMake de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
+	echo -ne "  + Configuration de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
 
-	# navigate
+	# naviguate
 	mkdir build
 	cd build
 
-	# cmake exist
+	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "cmake -DCMAKE_INSTALL_PREFIX=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -DCMAKE_BUILD_TYPE=Release -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF -DgRPC_PROTOBUF_PROVIDER=package -DgRPC_PROTOBUF_PACKAGE_TYPE=CONFIG -DgRPC_ZLIB_PROVIDER=package -DgRPC_CARES_PROVIDER=package -DgRPC_SSL_PROVIDER=package .." >> exec.sh
+	echo "../config --prefix=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} --release" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -357,7 +308,25 @@ function push_build_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "cmake --build . -- -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
+	echo "make -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
+	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+
+}
+
+###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+#
+# PUSH_CHECK_OP_TO_CACHE FUNCTION
+#
+###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+
+function push_check_op_to_cache() {
+
+	# print
+	echo -ne "  + Check de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
+
+	# the op
+	echo "#!/bin/bash" > exec.sh
+	echo "make test" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -375,7 +344,7 @@ function push_install_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "cmake --build . --target install" >> exec.sh
+	echo "make install" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -386,48 +355,26 @@ function push_install_op_to_cache() {
 #
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 
+# == init ==
+configure "$@"
+make_temporary_directories
+
+# --> navigate
+cd "$GAIA_BUILD_DIR"
+
 # == start ==
 print_header
 
-	# == init ==
-	configure "$@"
-	#make_temporary_directories
+	# == download ==
+	push_download_op_to_cache
+	pop_cache
 
-	# --> navigate
-	cd "$GAIA_BUILD_DIR"
-
-	if [ "${GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY}" = true ]; then
-
-		# == clone ==
-		push_clone_op_to_cache
-		pop_cache
-
-	else
-
-		# == copy ==
-		push_copy_op_to_cache
-		pop_cache
-
-		# == extract ==
-		push_extract_op_to_cache
-		pop_cache
-
-	fi
+	# == extract ==
+	push_extract_op_to_cache
+	pop_cache
 
 	# --> navigate
 	cd ${GAIA_TARGET_LC_NAME}*
-
-	if [ "${GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY}" = true ]; then
-
-		# == checkout ==
-		push_checkout_op_to_cache
-		pop_cache
-
-		# == init submodule ==
-		push_init_submodule_op_to_cache
-		pop_cache
-
-	fi
 
 	# == configure ==
 	push_configure_op_to_cache
@@ -437,19 +384,24 @@ print_header
 	push_build_op_to_cache
 	pop_cache
 
+	# == check ==
+	push_check_op_to_cache
+	pop_cache
+
 	# == install ==
 	push_install_op_to_cache
 	pop_cache
 
-	# --> navigate
-	cd "$GAIA_INITIAL_DIR"
-
-	# == close ==
-	remove_temporary_directories
-	cleanup
 
 print_footer
 # == end ==
+
+# --> navigate
+cd "$GAIA_INITIAL_DIR"
+
+# == close ==
+remove_temporary_directories
+cleanup
 
 # final - success
 exit
