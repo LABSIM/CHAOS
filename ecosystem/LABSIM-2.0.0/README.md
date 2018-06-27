@@ -56,10 +56,11 @@
        - gsoap *v.2.8.66*
        - opensplice *v.6.7.0*
     - **User Interface (UI)** -- *optional*
-       - qt *v.5.10.1*
-       - qt-creator *v.4.6.0*
+       - qt-llvm-clang vendor branch *v.6.0.0*
+       - qt *v.5.11.1*
+       - qt-creator *v.4.6.2*
     - **Image Generation (IG)** -- *optional*
-    	- gdal *v.2.2.4*
+       - gdal *v.2.2.4*
     	- geos *v.3.6.2*
        - fftss *v.3.0.20071031*
        - openscenegraph *v.3.6.0*

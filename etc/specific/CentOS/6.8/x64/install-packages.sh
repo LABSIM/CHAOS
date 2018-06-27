@@ -62,7 +62,8 @@ sudo yum install \
 	flex.x86_64 \
 	bison.x86_64 \
 	gperf.x86_64 \
-	ruby.x86_64
+	ruby.x86_64 \
+	libedit-devel.x86_64
 	
 echo; echo "## END"; echo
 

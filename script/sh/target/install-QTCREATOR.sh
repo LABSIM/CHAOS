@@ -299,7 +299,7 @@ function push_checkout_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "git checkout v${GAIA_TARGET_VERSION}" >> exec.sh
+	echo "git checkout v${GAIA_TARGET_VERSION} --force" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -339,7 +339,7 @@ function push_configure_op_to_cache() {
 
 	# cmake exist
 	echo "#!/bin/bash" > exec.sh
-	echo "qmake ../${GAIA_TARGET_LC_NAME}/qtcreator.pro" >> exec.sh
+	echo "qmake ../qtcreator.pro -r QMAKE_CFLAGS_ISYSTEM=" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }

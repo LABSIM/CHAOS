@@ -35,7 +35,7 @@ function configure() {
 	echo -ne "  + Configuration..."
 
 	# name
-	GAIA_TARGET_PRETTY_NAME="Qt"
+	GAIA_TARGET_PRETTY_NAME="LLVM"
 	GAIA_TARGET_UC_NAME="$(echo ${GAIA_TARGET_PRETTY_NAME} | tr '[:lower:]' '[:upper:]')"
 	GAIA_TARGET_LC_NAME="$(echo ${GAIA_TARGET_PRETTY_NAME} | tr '[:upper:]' '[:lower:]')"
 
@@ -241,10 +241,19 @@ function push_clone_op_to_cache() {
 
 	# print
 	echo -ne "  + Clonage du repository pour ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}... "
-
+	
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "git clone https://code.qt.io/${GAIA_TARGET_LC_NAME}/${GAIA_TARGET_LC_NAME}${GAIA_TARGET_MAJOR}.git" >> exec.sh
+	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/llvm/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm" >> exec.sh
+	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/cfe/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/tools/clang" >> exec.sh
+	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/clang-tools-extra/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/tools/clang/tools/extra" >> exec.sh
+	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/lld/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/tools/lld" >> exec.sh
+	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/lldb/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/tools/lldb" >> exec.sh
+	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/polly/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/tools/polly" >> exec.sh
+	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/compiler-rt/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/projects/compiler-rt" >> exec.sh
+	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/openmp/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/projects/openmp" >> exec.sh
+	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/libcxx/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/projects/libcxx" >> exec.sh
+	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/libcxxabi/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/projects/libcxxabi" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -288,42 +297,6 @@ function push_extract_op_to_cache() {
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
-# PUSH_CHECKOUT_OP_TO_CACHE FUNCTION
-#
-###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
-
-function push_checkout_op_to_cache() {
-
-	# print
-	echo -ne "  + Checkout de la branche pour ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
-
-	# the op
-	echo "#!/bin/bash" > exec.sh
-	echo "git checkout v${GAIA_TARGET_VERSION}" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-
-}
-
-###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
-#
-# PUSH_INIT_SUBMODULE_OP_TO_CACHE FUNCTION
-#
-###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
-
-function push_init_submodule_op_to_cache() {
-
-	# print
-	echo -ne "  + Intitialisation des submodule pour ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
-
-	# the op
-	echo "#!/bin/bash" > exec.sh
-	echo "git submodule update --init --recursive" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-
-}
-
-###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
-#
 # PUSH_CONFIGURE_OP_TO_CACHE FUNCTION
 #
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
@@ -339,7 +312,7 @@ function push_configure_op_to_cache() {
 
 	# cmake exist
 	echo "#!/bin/bash" > exec.sh
-	echo "../configure -prefix ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -platform linux-g++-64 -verbose -opensource -confirm-license -release -c++std c++14 -shared -reduce-exports -reduce-relocations -use-gold-linker -optimized-qmake -optimized-tools -no-avx2 -no-cups -no-pch -no-qt3d-input -opengl desktop -openssl -pkg-config -qml-debug -gui -widgets -accessibility -skip webengine -skip webchannel -skip webglplugin -skip websockets -skip webview -skip networkauth -skip purchasing -skip connectivity -skip wayland -skip gamepad -skip sensors -skip location -skip serialbus -skip serialport -skip enginio -skip virtualkeyboard -skip qtquick1 -nomake tests -no-compile-examples QMAKE_CFLAGS_ISYSTEM=" >> exec.sh
+	echo "cmake -DCMAKE_INSTALL_PREFIX=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_RTTI=ON .." >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -357,7 +330,7 @@ function push_build_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "make -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
+	echo "cmake --build . -- -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -375,7 +348,7 @@ function push_install_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "make install" >> exec.sh
+	echo "cmake --build . --target install" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -416,18 +389,6 @@ print_header
 
 	# --> navigate
 	cd ${GAIA_TARGET_LC_NAME}*
-
-	if [ "${GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY}" = true ]; then
-
-		# == checkout ==
-		push_checkout_op_to_cache
-		pop_cache
-
-		# == init submodule ==
-		push_init_submodule_op_to_cache
-		pop_cache
-
-	fi
 
 	# == configure ==
 	push_configure_op_to_cache
