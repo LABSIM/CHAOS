@@ -39,22 +39,17 @@ if [ "${GAIA_FOUND_DSI_HOST}" = true ]; then
 	#
 	# ADD --> will be unloaded if by corresponding third_party dependancies
 	#
-	module add subversion/1.7.6
-	module add gcc/5.2
-	module add gdb/7.9.1
-	module add cmake/3.2.2
-	module add qt-framework/4.8.5/gnu
-	module add eclipse/4.6.0M3
+	module add subversion
+	module add gcc
+	module add cmake
+	module add qt-framework
+	module add eclipse
 
 	#
 	# UNLOAD
 	#
-	module unload texlive/2014
-	module unload intel/cce/11.1.064
-	module unload intel/cmkle/11.1.064
-	module unload intel/fce/11.1.064
-	module unload intel/idbe/11.1.064
-	module unload eclipse/3.6.1
+	module unload texlive
+	module unload intel
 
 fi
 
