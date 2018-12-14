@@ -11,13 +11,15 @@
    |
    +{1}+------------------------------------------------------------------------------------------------------------------+
    |   |                                                                                                                  |
-   |   |   Run a standard shell from GAIA root directory                                                                  |
+   |   |   Run a standard shell from GAIA root directory & install recquired Perl + .bashrc                               |
    |   |   +-----------------------------------------------------------------------------------------------------+        |
-   |   |   +   [user@localhost]$ cat script/sh/GAIA.bashrc >> ~/.bashrc && source ~/.bashrc                      +        |
+   |   |   +   [user@localhost]$ cd script/sh/target/ && ./install-PERL.sh 5 26 1 && cd ../../..                 +        |
+   |   |   +     && cat script/sh/GAIA.bashrc >> ~/.bashrc                                                       +        |
+   |   |   +     && source ~/.bashrc                                                                             +        |
    |   |   +-----------------------------------------------------------------------------------------------------+        |
    |   |                                                                                                                  |
-   |   +------------------------------------------------------------------------------------------------------------------+
    |
+   |   +------------------------------------------------------------------------------------------------------------------+
    +{2}+------------------------------------------------------------------------------------------------------------------+
    |   |                                                                                                                  |
    |   |   list all available LABSIM software ecosystem                                                                   |
@@ -36,19 +38,19 @@
    |   |                                                                                                                  |
    |   |   then, deploy your ecosystem with feature(s)                                                                    |
    |   |   +-----------------------------------------------------------------------------------------------------+        |
-   |   |   +   [user@localhost]$ gaia \                                                                          +        |
-   |   |   +   [user@localhost]$ --target-ecosystem <ecosystem_name> \                                           +        |
-   |   |   +   [user@localhost]$ --enable-feature <feature_A_name> \                                             +        |
-   |   |   +   [user@localhost]$ --enable-feature <feature_B_name> \                                             +        |
-   |   |   +   [user@localhost]$ (..)                                                                            +        |
-   |   |   +   [user@localhost]$ --enable-feature <feature_N_name>                                               +        |
+   |   |   +   [user@localhost]$ gaia                                                                            +        |
+   |   |   +     --target-ecosystem <ecosystem_name>                                                             +        |
+   |   |   +     --enable-feature <feature_A_name>                                                               +        |
+   |   |   +     --enable-feature <feature_B_name>                                                               +        |
+   |   |   +     (..)                                                                                            +        |
+   |   |   +     --enable-feature <feature_N_name>                                                               +        |
    |   |   +-----------------------------------------------------------------------------------------------------+        |
    |   |                                                                                                                  |
    |   |   alternatively, it could be compacted as                                                                        |
    |   |   +-----------------------------------------------------------------------------------------------------+        |
-   |   |   +   [user@localhost]$ gaia \                                                                          +        |
-   |   |   +   [user@localhost]$ --target-ecosystem <ecosystem_name> \                                           +        |
-   |   |   +   [user@localhost]$ --enable-feature <feature_A_name>,<feature_B_name>,(...),<feature_N_name>       +        |
+   |   |   +   [user@localhost]$ gaia                                                                            +        |
+   |   |   +     --target-ecosystem <ecosystem_name>                                                             +        |
+   |   |   +     --enable-feature <feature_A_name>,<feature_B_name>,(...),<feature_N_name>                       +        |
    |   |   +-----------------------------------------------------------------------------------------------------+        |
    |   |                                                                                                                  |
    |   +------------------------------------------------------------------------------------------------------------------+

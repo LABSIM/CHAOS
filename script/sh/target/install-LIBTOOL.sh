@@ -19,7 +19,7 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
-# import
+# import 
 source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
 source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
 
@@ -30,19 +30,19 @@ source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 
 function configure() {
-
+	
 	# print
 	echo -ne "  + Configure... "
-
+	
 	# name
-	GAIA_TARGET_PRETTY_NAME="Triton"
+	GAIA_TARGET_PRETTY_NAME="LibTool"
 	GAIA_TARGET_UC_NAME="$(echo "${GAIA_TARGET_PRETTY_NAME}" | tr '[:lower:]' '[:upper:]')"
 	GAIA_TARGET_LC_NAME="$(echo "${GAIA_TARGET_PRETTY_NAME}" | tr '[:upper:]' '[:lower:]')"
 
 	# directories
 	GAIA_INITIAL_DIR="$PWD"
 	GAIA_BUILD_DIR="/tmp/GAIA/$(whoami)/build/${GAIA_TARGET_LC_NAME}"
-	GAIA_OFFLINE_DIR="/data/GAIA/${GAIA_HOST_OS}-${GAIA_HOST_VER}-${GAIA_HOST_ARCH}"
+	GAIA_OFFLINE_DIR="/labsim/GAIA/${GAIA_HOST_OS}-${GAIA_HOST_VER}-${GAIA_HOST_ARCH}"
 	
 	# boolean
 	GAIA_FOUND_AVAILABLE_NETWORK=false
@@ -75,16 +75,16 @@ function configure() {
 
 			2|3) 
 				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
-				echo -e "(connection HTTP => ONLINE MODE)... "
+				echo -e "Connection HTTP => ONLINE MODE"
 				;;
 
 			5) 
-				echo -e "(blocage du proxy ! verifier vos parametres d'environments aka. [http_proxy] && [https_proxy] => OFFLINE MODE)... "
+				echo -e "Blocage du proxy ! verifier vos parametres d'environments aka. [http_proxy] && [https_proxy] => OFFLINE MODE"
 				;;
 
 			*)
 				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
-				echo -e "(connection HTTP lente [ lag : >2s ] mais c'est OK, \"DSI\" => ONLINE MODE)... "
+				echo -e "Connection HTTP lente [ lag : >2s ] mais c'est OK, \"DSI\" => ONLINE MODE"
 				;;
 
 		esac
@@ -108,7 +108,7 @@ function configure() {
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 
 function cleanup() {
-
+	
 	# print
 	echo -e "  + Cleanup... "
 
@@ -229,7 +229,8 @@ function print_footer() {
 function pop_cache() {
 
 	chmod u+x exec.sh
-	gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
+	#gnome-terminal --window --hide-menubar --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" -x sh -c BASH_POST_RC=\''./exec.sh'\''; exec bash'
+	gnome-terminal --window --hide-menubar --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --working-directory "$PWD" --command "./exec.sh" 
 	sleep 0.2
 	PID="$(pgrep exec.sh)"
 	wait_for_PID "$PID"
@@ -239,18 +240,22 @@ function pop_cache() {
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
-# PUSH_COPY_OP_TO_CACHE FUNCTION
+# PUSH_DOWNLOAD_OP_TO_CACHE FUNCTION
 #
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 
-function push_copy_op_to_cache() {
+function push_download_op_to_cache() {
 
 	# print
-	echo -ne "  + Copie de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}... "
+	echo -ne "  + Telechargement de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}... "
 
-	# the op
+	# finally, the op
 	echo "#!/bin/bash" > exec.sh
-	echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz ." >> exec.sh
+	if [ "${GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY}" = true ]; then
+		echo "wget https://ftp.gnu.org/gnu/${GAIA_TARGET_LC_NAME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+	else 
+		echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.xz ." >> exec.sh
+	fi
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -268,9 +273,10 @@ function push_extract_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "tar -xvzf ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
-	echo "rm ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
+	echo "tar -xvf ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+	echo "rm ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo "exit" >> exec.sh
 
 }
 
@@ -285,17 +291,13 @@ function push_configure_op_to_cache() {
 	# print
 	echo -ne "  + Configuration de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
 
-	# navigate
-	mkdir build
-	cd build
-
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "cmake -DCMAKE_BUILD_TYPE=Realease -DCMAKE_INSTALL_PREFIX=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -DFFTSS_INCLUDE_DIR=${GAIA_THIRD_PARTY_HOME}/fftss-${GAIA_THIRD_PARTY_FFTSS_VERSION}/include -DFFTSS_LIBRARY=${GAIA_THIRD_PARTY_HOME}/fftss-${GAIA_THIRD_PARTY_FFTSS_VERSION}/lib/libfftss.so .." >> exec.sh
+	echo "./configure --prefix=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo "exit" >> exec.sh
 
 }
-
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
@@ -310,8 +312,28 @@ function push_build_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "cmake --build . -- -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
+	echo "make -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo "exit" >> exec.sh
+
+}
+
+###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+#
+# PUSH_CHECK_OP_TO_CACHE FUNCTION
+#
+###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+
+function push_check_op_to_cache() {
+
+	# print
+	echo -ne "  + Check de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
+
+	# the op
+	echo "#!/bin/bash" > exec.sh
+	echo "make check" >> exec.sh
+	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo "exit" >> exec.sh
 
 }
 
@@ -326,19 +348,11 @@ function push_install_op_to_cache() {
 	# print
 	echo -ne "  + Install de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
 
-	# navigate
-	cd ..
-
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "mkdir --parents ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/include" >> exec.sh
-	echo "cp -rvf docs ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}" >> exec.sh
-	echo "cp -rvf lib ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}" >> exec.sh
-	echo "cp -rvf Public*/* ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/include" >> exec.sh
-	echo "cp -rvf Resources ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}" >> exec.sh
-	echo "cp -rvf Samples ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}" >> exec.sh
-	echo "cp -rvf third* ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}" >> exec.sh
+	echo "make install" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo "exit" >> exec.sh
 
 }
 
@@ -348,18 +362,18 @@ function push_install_op_to_cache() {
 #
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 
+# == init ==
+configure "$@"
+make_temporary_directories
+
+# --> navigate
+cd "$GAIA_BUILD_DIR"
+
 # == start ==
 print_header
 
-	# == init ==
-	configure "$@"
-	make_temporary_directories
-
-	# --> navigate
-	cd "$GAIA_BUILD_DIR"
-
-	# == copy ==
-	push_copy_op_to_cache
+	# == download ==
+	push_download_op_to_cache
 	pop_cache
 
 	# == extract ==
@@ -377,19 +391,24 @@ print_header
 	push_build_op_to_cache
 	pop_cache
 
+	# == check ==
+	push_check_op_to_cache
+	pop_cache
+
 	# == install ==
 	push_install_op_to_cache
 	pop_cache
 
-	# --> navigate
-	cd "$GAIA_INITIAL_DIR"
-
-	# == close ==
-	remove_temporary_directories
-	cleanup
 
 print_footer
 # == end ==
+
+# --> navigate
+cd "$GAIA_INITIAL_DIR"
+
+# == close ==
+remove_temporary_directories
+cleanup
 
 # final - success
 exit

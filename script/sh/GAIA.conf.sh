@@ -86,18 +86,18 @@ export GAIA_HOST_ADMIN
 #=========================================================== OS =========================================================#
 #========================================================================================================================#
 
-if [ -f /etc/os-release ]; then
+if type lsb_release >/dev/null 2>&1; then
+
+	# linuxbase.org
+	GAIA_HOST_OS="$(lsb_release -si)"
+	GAIA_HOST_VER="$(lsb_release -sr)"
+	
+elif [ -f /etc/os-release ]; then
 
 	# freedesktop.org and systemd
 	source "/etc/os-release"
 	GAIA_HOST_OS="$NAME"
 	GAIA_HOST_VER="$VERSION_ID"
-
-elif type lsb_release >/dev/null 2>&1; then
-
-	# linuxbase.org
-	GAIA_HOST_OS="$(lsb_release -si)"
-	GAIA_HOST_VER="$(lsb_release -sr)"
 
 elif [ -f /etc/lsb-release ]; then
 

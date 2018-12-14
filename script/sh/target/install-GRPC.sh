@@ -32,7 +32,7 @@ source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
 function configure() {
 
 	# print
-	echo -ne "  + Configuration..."
+	echo -ne "  + Configure... "
 
 	# name
 	GAIA_TARGET_PRETTY_NAME="gRPC"
@@ -42,7 +42,7 @@ function configure() {
 	# directories
 	GAIA_INITIAL_DIR="$PWD"
 	GAIA_BUILD_DIR="/tmp/GAIA/$(whoami)/build/${GAIA_TARGET_LC_NAME}"
-	GAIA_OFFLINE_DIR="/data/GAIA/${GAIA_HOST_OS}-${GAIA_HOST_VER}-${GAIA_HOST_ARCH}"
+	GAIA_OFFLINE_DIR="/labsim/GAIA/${GAIA_HOST_OS}-${GAIA_HOST_VER}-${GAIA_HOST_ARCH}"
 	
 	# boolean
 	GAIA_FOUND_AVAILABLE_NETWORK=false
@@ -75,26 +75,29 @@ function configure() {
 
 			2|3) 
 				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
-				echo -ne "(connection HTTP => ONLINE MODE)... "
+				echo -e "(connection HTTP => ONLINE MODE)... "
 				;;
 
 			5) 
-				echo -ne "(blocage du proxy ! verifier vos parametres d'environments aka. [http_proxy] && [https_proxy] => OFFLINE MODE)... "
+				echo -e "(blocage du proxy ! verifier vos parametres d'environments aka. [http_proxy] && [https_proxy] => OFFLINE MODE)... "
 				;;
 
 			*)
 				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
-				echo -ne "(connection HTTP lente [ lag : >2s ] mais c'est OK, \"DSI\" => ONLINE MODE)... "
+				echo -e "(connection HTTP lente [ lag : >2s ] mais c'est OK, \"DSI\" => ONLINE MODE)... "
 				;;
 
 		esac
 
 	else 
 
-		echo -ne "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
+		echo -e "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
 		exit 1
 
 	fi
+	
+	# env
+	source "$GAIA_ROOT/script/sh/function/configure-third_party.conf.sh"
 
 }
 
@@ -107,7 +110,7 @@ function configure() {
 function cleanup() {
 
 	# print
-	echo -ne "  + Cleanup..."
+	echo -e "  + Cleanup..."
 
 	# name
 	unset GAIA_TARGET_PRETTY_NAME
@@ -131,6 +134,9 @@ function cleanup() {
 
 	# parameter
 	unset GAIA_PARALLEL_BUILD_JOB_COUNT
+	
+	# env
+	source "$GAIA_ROOT/script/sh/function/cleanup-third_party.conf.sh"
 
 }
 
@@ -223,7 +229,7 @@ function print_footer() {
 function pop_cache() {
 
 	chmod u+x exec.sh
-	gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --command "./exec.sh" --window
+	gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
 	sleep 0.2
 	PID="$(pgrep exec.sh)"
 	wait_for_PID "$PID"

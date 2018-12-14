@@ -37,6 +37,7 @@ use Getopt::Long qw(GetOptions);    # avoid name-space pollution
 use Pod::Usage qw(pod2usage);		# usage pretty print
 use Term::ANSIColor qw(:constants); # colored output for the terminal
 use File::Spec;                     # file Op
+use File::HomeDir;                  # home
 use Time::HiRes qw(time);			# high-resolution timer
 use Data::Dumper;					# dump functionality
 use List::Util qw(any);				# find any string in array
@@ -659,8 +660,19 @@ sub function_DeployTargetEcosystem {
 
 				    	# syscall
 				    	log_Debug("function_DeployTargetEcosystem","external command -> [ system(".join(" ", @command_line).") ]");
-    					system(@command_line) if !$arg_dev_mode;
+    					system(@command_line) if !$arg_dev_mode;  					
     					
+    					# source home & update parent env from child env
+    					my $child_env = `. ~/.bashrc; env`;
+						my @child_env_array = split "\n", $child_env;
+						foreach (@child_env_array) {
+						   /([\w_]+)=(.*)/;
+						   $ENV{$1} = $2;
+						}
+    					
+    					# log current 
+    					system("perl ".$FindBin::RealBin."/".$FindBin::RealScript);
+    					    					
     					# check result
 		    	        if ($? == -1) {
 		    	        	

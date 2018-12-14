@@ -19,7 +19,7 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
-# import 
+# import
 source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
 source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
 
@@ -32,7 +32,7 @@ source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
 function configure() {
 
 	# print
-	echo -ne "  + Configuration..."
+	echo -ne "  + Configure... "
 
 	# name
 	GAIA_TARGET_PRETTY_NAME="LLVM"
@@ -42,7 +42,7 @@ function configure() {
 	# directories
 	GAIA_INITIAL_DIR="$PWD"
 	GAIA_BUILD_DIR="/tmp/GAIA/$(whoami)/build/${GAIA_TARGET_LC_NAME}"
-	GAIA_OFFLINE_DIR="/data/GAIA/${GAIA_HOST_OS}-${GAIA_HOST_VER}-${GAIA_HOST_ARCH}"
+	GAIA_OFFLINE_DIR="/labsim/GAIA/${GAIA_HOST_OS}-${GAIA_HOST_VER}-${GAIA_HOST_ARCH}"
 	
 	# boolean
 	GAIA_FOUND_AVAILABLE_NETWORK=false
@@ -75,26 +75,29 @@ function configure() {
 
 			2|3) 
 				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
-				echo -ne "(connection HTTP => ONLINE MODE)... "
+				echo -e "(connection HTTP => ONLINE MODE)... "
 				;;
 
 			5) 
-				echo -ne "(blocage du proxy ! verifier vos parametres d'environments aka. [http_proxy] && [https_proxy] => OFFLINE MODE)... "
+				echo -e "(blocage du proxy ! verifier vos parametres d'environments aka. [http_proxy] && [https_proxy] => OFFLINE MODE)... "
 				;;
 
 			*)
 				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
-				echo -ne "(connection HTTP lente [ lag : >2s ] mais c'est OK, \"DSI\" => ONLINE MODE)... "
+				echo -e "(connection HTTP lente [ lag : >2s ] mais c'est OK, \"DSI\" => ONLINE MODE)... "
 				;;
 
 		esac
 
 	else 
 
-		echo -ne "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
+		echo -e "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
 		exit 1
 
 	fi
+	
+	# env
+	source "$GAIA_ROOT/script/sh/function/configure-third_party.conf.sh"
 
 }
 
@@ -107,7 +110,7 @@ function configure() {
 function cleanup() {
 
 	# print
-	echo -ne "  + Cleanup..."
+	echo -e "  + Cleanup... "
 
 	# name
 	unset GAIA_TARGET_PRETTY_NAME
@@ -131,6 +134,9 @@ function cleanup() {
 
 	# parameter
 	unset GAIA_PARALLEL_BUILD_JOB_COUNT
+	
+	# env
+	source "$GAIA_ROOT/script/sh/function/cleanup-third_party.conf.sh"
 
 }
 
@@ -223,7 +229,7 @@ function print_footer() {
 function pop_cache() {
 
 	chmod u+x exec.sh
-	gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --command "./exec.sh" --window
+	gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
 	sleep 0.2
 	PID="$(pgrep exec.sh)"
 	wait_for_PID "$PID"
@@ -233,45 +239,101 @@ function pop_cache() {
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
-# PUSH_CLONE_OP_TO_CACHE FUNCTION
+# PUSH_DOWNLOAD_OP_TO_CACHE FUNCTION
 #
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 
-function push_clone_op_to_cache() {
+function push_download_op_to_cache() {
 
 	# print
-	echo -ne "  + Clonage du repository pour ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}... "
+	echo -ne "  + Telechargement de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}... "
+
+	# the op
+	echo "#!/bin/bash" > exec.sh
 	
-	# the op
-	echo "#!/bin/bash" > exec.sh
-	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/llvm/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm" >> exec.sh
-	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/cfe/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/tools/clang" >> exec.sh
-	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/clang-tools-extra/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/tools/clang/tools/extra" >> exec.sh
-	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/lld/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/tools/lld" >> exec.sh
-	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/lldb/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/tools/lldb" >> exec.sh
-	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/polly/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/tools/polly" >> exec.sh
-	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/compiler-rt/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/projects/compiler-rt" >> exec.sh
-	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/openmp/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/projects/openmp" >> exec.sh
-	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/libcxx/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/projects/libcxx" >> exec.sh
-	echo "svn co http://${GAIA_TARGET_LC_NAME}.org/svn/${GAIA_TARGET_LC_NAME}-project/libcxxabi/tags/RELEASE_${GAIA_TARGET_MAJOR}${GAIA_TARGET_MINOR}${GAIA_TARGET_PATCH}/final llvm/projects/libcxxabi" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-
-}
-
-###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
-#
-# PUSH_COPY_OP_TO_CACHE FUNCTION
-#
-###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
-
-function push_copy_op_to_cache() {
-
-	# print
-	echo -ne "  + Copie de l'archive ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}... "
-
-	# the op
-	echo "#!/bin/bash" > exec.sh
-	echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz ." >> exec.sh
+	if [ "${GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY}" = true ]; then
+		
+		echo "echo \"================== llvm ==================\"" >> exec.sh
+		echo "wget http://releases.${GAIA_TARGET_LC_NAME}.org/${GAIA_TARGET_VERSION}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.src.tar.xz" >> exec.sh
+		echo "mv ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.src.tar.xz ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+		
+		echo "echo \"================== llvm/tools/clang ==================\"" >> exec.sh
+		echo "wget http://releases.${GAIA_TARGET_LC_NAME}.org/${GAIA_TARGET_VERSION}/cfe-${GAIA_TARGET_VERSION}.src.tar.xz" >> exec.sh
+		echo "mv cfe-${GAIA_TARGET_VERSION}.src.tar.xz cfe-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+		
+		echo "echo \"================== llvm/tools/clang/tools/extra ==================\"" >> exec.sh
+		echo "wget http://releases.${GAIA_TARGET_LC_NAME}.org/${GAIA_TARGET_VERSION}/clang-tools-extra-${GAIA_TARGET_VERSION}.src.tar.xz" >> exec.sh
+		echo "mv clang-tools-extra-${GAIA_TARGET_VERSION}.src.tar.xz clang-tools-extra-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+		
+		echo "echo \"================== llvm/tools/lld ==================\"" >> exec.sh
+		echo "wget http://releases.${GAIA_TARGET_LC_NAME}.org/${GAIA_TARGET_VERSION}/lld-${GAIA_TARGET_VERSION}.src.tar.xz" >> exec.sh
+		echo "mv lld-${GAIA_TARGET_VERSION}.src.tar.xz lld-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+		
+		echo "echo \"================== llvm/tools/lldb ==================\"" >> exec.sh
+		echo "wget http://releases.${GAIA_TARGET_LC_NAME}.org/${GAIA_TARGET_VERSION}/lldb-${GAIA_TARGET_VERSION}.src.tar.xz" >> exec.sh
+		echo "mv lldb-${GAIA_TARGET_VERSION}.src.tar.xz	lldb-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+		
+		echo "echo \"================== llvm/tools/polly ==================\"" >> exec.sh
+		echo "wget http://releases.${GAIA_TARGET_LC_NAME}.org/${GAIA_TARGET_VERSION}/polly-${GAIA_TARGET_VERSION}.src.tar.xz" >> exec.sh
+		echo "mv polly-${GAIA_TARGET_VERSION}.src.tar.xz polly-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+		
+		echo "echo \"================== llvm/projects/compiler-rt ==================\"" >> exec.sh
+		echo "wget http://releases.${GAIA_TARGET_LC_NAME}.org/${GAIA_TARGET_VERSION}/compiler-rt-${GAIA_TARGET_VERSION}.src.tar.xz" >> exec.sh
+		echo "mv compiler-rt-${GAIA_TARGET_VERSION}.src.tar.xz compiler-rt-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+		
+		echo "echo \"================== llvm/projects/openmp ==================\"" >> exec.sh
+		echo "wget http://releases.${GAIA_TARGET_LC_NAME}.org/${GAIA_TARGET_VERSION}/openmp-${GAIA_TARGET_VERSION}.src.tar.xz" >> exec.sh
+		echo "mv openmp-${GAIA_TARGET_VERSION}.src.tar.xz openmp-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+		
+		echo "echo \"================== llvm/projects/libcxx ==================\"" >> exec.sh
+		echo "wget http://releases.${GAIA_TARGET_LC_NAME}.org/${GAIA_TARGET_VERSION}/libcxx-${GAIA_TARGET_VERSION}.src.tar.xz" >> exec.sh
+		echo "mv libcxx-${GAIA_TARGET_VERSION}.src.tar.xz libcxx-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+		
+		echo "echo \"================== llvm/projects/libcxxabi ==================\"" >> exec.sh
+		echo "wget http://releases.${GAIA_TARGET_LC_NAME}.org/${GAIA_TARGET_VERSION}/libcxxabi-${GAIA_TARGET_VERSION}.src.tar.xz" >> exec.sh
+		echo "mv libcxxabi-${GAIA_TARGET_VERSION}.src.tar.xz libcxxabi-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+		
+		echo "echo \"================== llvm/projects/libunwind ==================\"" >> exec.sh
+		echo "wget http://releases.${GAIA_TARGET_LC_NAME}.org/${GAIA_TARGET_VERSION}/libunwind-${GAIA_TARGET_VERSION}.src.tar.xz" >> exec.sh
+		echo "mv libunwind-${GAIA_TARGET_VERSION}.src.tar.xz libunwind-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+		
+	else 
+		
+		echo "echo \"================== llvm ==================\"" >> exec.sh
+		echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.xz ." >> exec.sh
+		
+		echo "echo \"================== llvm/tools/clang ==================\"" >> exec.sh
+		echo "cp --verbose ${GAIA_OFFLINE_DIR}/cfe-${GAIA_TARGET_VERSION}.tar.xz ." >> exec.sh
+		
+		echo "echo \"================== llvm/tools/clang/tools/extra ==================\"" >> exec.sh
+		echo "cp --verbose ${GAIA_OFFLINE_DIR}/clang-tools-extra-${GAIA_TARGET_VERSION}.tar.xz ." >> exec.sh
+		
+		echo "echo \"================== llvm/tools/lld ==================\"" >> exec.sh
+		echo "cp --verbose ${GAIA_OFFLINE_DIR}/lld-${GAIA_TARGET_VERSION}.tar.xz ." >> exec.sh
+		
+		echo "echo \"================== llvm/tools/lldb ==================\"" >> exec.sh
+		echo "cp --verbose ${GAIA_OFFLINE_DIR}/lldb-${GAIA_TARGET_VERSION}.tar.xz ." >> exec.sh
+		
+		echo "echo \"================== llvm/tools/polly ==================\"" >> exec.sh
+		echo "cp --verbose ${GAIA_OFFLINE_DIR}/polly-${GAIA_TARGET_VERSION}.tar.xz ." >> exec.sh
+		
+		echo "echo \"================== llvm/projects/compiler-rt ==================\"" >> exec.sh
+		echo "cp --verbose ${GAIA_OFFLINE_DIR}/compiler-rt-${GAIA_TARGET_VERSION}.tar.xz ." >> exec.sh
+		
+		echo "echo \"================== llvm/projects/openmp ==================\"" >> exec.sh
+		echo "cp --verbose ${GAIA_OFFLINE_DIR}/openmp-${GAIA_TARGET_VERSION}.tar.xz ." >> exec.sh
+		
+		echo "echo \"================== llvm/projects/libcxx ==================\"" >> exec.sh
+		echo "cp --verbose ${GAIA_OFFLINE_DIR}/libcxx-${GAIA_TARGET_VERSION}.tar.xz ." >> exec.sh
+		
+		echo "echo \"================== llvm/projects/libcxxabi ==================\"" >> exec.sh
+		echo "cp --verbose ${GAIA_OFFLINE_DIR}/libcxxabi-${GAIA_TARGET_VERSION}.tar.xz ." >> exec.sh
+		
+		echo "echo \"================== llvm/projects/libunwind ==================\"" >> exec.sh
+		echo "cp --verbose ${GAIA_OFFLINE_DIR}/libunwind-${GAIA_TARGET_VERSION}.tar.xz ." >> exec.sh
+		
+	fi
+	
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -289,8 +351,50 @@ function push_extract_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "tar -xvzf ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
-	echo "rm ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
+	echo "echo \"================== llvm ==================\"" >> exec.sh
+	echo "mkdir llvm && tar -xvf ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.xz --directory=llvm --strip-components=1" >> exec.sh
+	echo "rm ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+	
+	echo "echo \"================== llvm/tools/clang ==================\"" >> exec.sh
+	echo "mkdir llvm/tools/clang && tar -xvf cfe-${GAIA_TARGET_VERSION}.tar.xz --directory=llvm/tools/clang --strip-components=1" >> exec.sh
+	echo "rm cfe-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+	
+	echo "echo \"================== llvm/tools/clang/tools/extra ==================\"" >> exec.sh
+	echo "mkdir llvm/tools/clang/tools && tar -xvf clang-tools-extra-${GAIA_TARGET_VERSION}.tar.xz --directory=llvm/tools/clang/tools --strip-components=1" >> exec.sh
+	echo "rm clang-tools-extra-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+	
+	echo "echo \"================== llvm/tools/lld ==================\"" >> exec.sh
+	echo "mkdir llvm/tools/lld && tar -xvf lld-${GAIA_TARGET_VERSION}.tar.xz --directory=llvm/tools/lld --strip-components=1" >> exec.sh
+	echo "rm lld-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+	
+	echo "echo \"================== llvm/tools/lldb ==================\"" >> exec.sh
+	echo "mkdir llvm/tools/lldb && tar -xvf lldb-${GAIA_TARGET_VERSION}.tar.xz --directory=llvm/tools/lldb --strip-components=1" >> exec.sh
+	echo "rm lldb-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+	
+	echo "echo \"================== llvm/tools/polly ==================\"" >> exec.sh
+	echo "mkdir llvm/tools/polly && tar -xvf polly-${GAIA_TARGET_VERSION}.tar.xz --directory=llvm/tools/polly --strip-components=1" >> exec.sh
+	echo "rm polly-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+	
+	echo "echo \"================== llvm/projects/compiler-rt ==================\"" >> exec.sh
+	echo "mkdir llvm/projects/compiler-rt && tar -xvf compiler-rt-${GAIA_TARGET_VERSION}.tar.xz --directory=llvm/projects/compiler-rt --strip-components=1" >> exec.sh
+	echo "rm compiler-rt-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+	
+	echo "echo \"================== llvm/projects/openmp ==================\"" >> exec.sh
+	echo "mkdir llvm/projects/openmp && tar -xvf openmp-${GAIA_TARGET_VERSION}.tar.xz --directory=llvm/projects/openmp --strip-components=1" >> exec.sh
+	echo "rm openmp-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+	
+	echo "echo \"================== llvm/projects/libcxx ==================\"" >> exec.sh
+	echo "mkdir llvm/projects/libcxx && tar -xvf libcxx-${GAIA_TARGET_VERSION}.tar.xz --directory=llvm/projects/libcxx --strip-components=1" >> exec.sh
+	echo "rm libcxx-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+	
+	echo "echo \"================== llvm/projects/libcxxabi ==================\"" >> exec.sh
+	echo "mkdir llvm/projects/libcxxabi && tar -xvf libcxxabi-${GAIA_TARGET_VERSION}.tar.xz --directory=llvm/projects/libcxxabi --strip-components=1" >> exec.sh
+	echo "rm libcxxabi-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+	
+	echo "echo \"================== llvm/projects/libunwind ==================\"" >> exec.sh
+	echo "mkdir llvm/projects/libunwind && tar -xvf libunwind-${GAIA_TARGET_VERSION}.tar.xz --directory=llvm/projects/libunwind --strip-components=1" >> exec.sh
+	echo "rm libunwind-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+	
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -304,7 +408,7 @@ function push_extract_op_to_cache() {
 function push_configure_op_to_cache() {
 
 	# print
-	echo -ne "  + Configure de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
+	echo -ne "  + CMake de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
 
 	# navigate
 	mkdir build
@@ -312,7 +416,7 @@ function push_configure_op_to_cache() {
 
 	# cmake exist
 	echo "#!/bin/bash" > exec.sh
-	echo "cmake -DCMAKE_INSTALL_PREFIX=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_RTTI=ON .." >> exec.sh
+	echo "cmake -DCMAKE_INSTALL_PREFIX=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_CXX1Y=ON -DLLVM_ENABLE_CXX1Z=ON -DLLVM_ENABLE_LIBCXX=ON -DLLVM_USE_FOLDERS=ON -DLLVM_INSTALL_UTILS=ON .." >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -369,23 +473,13 @@ print_header
 	# --> navigate
 	cd "$GAIA_BUILD_DIR"
 
-	if [ "${GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY}" = true ]; then
+	# == download ==
+	push_download_op_to_cache
+	pop_cache
 
-		# == clone ==
-		push_clone_op_to_cache
-		pop_cache
-
-	else
-
-		# == copy ==
-		push_copy_op_to_cache
-		pop_cache
-
-		# == extract ==
-		push_extract_op_to_cache
-		pop_cache
-
-	fi
+	# == extract ==
+	push_extract_op_to_cache
+	pop_cache
 
 	# --> navigate
 	cd ${GAIA_TARGET_LC_NAME}*

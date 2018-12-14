@@ -32,17 +32,17 @@ source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
 function configure() {
 
 	# print
-	echo -ne "  + Configuration... "
+	echo -ne "  + Configure... "
 
 	# name
 	GAIA_TARGET_PRETTY_NAME="Ares"
-	GAIA_TARGET_UC_NAME="$(echo ${GAIA_TARGET_PRETTY_NAME} | tr '[:lower:]' '[:upper:]')"
-	GAIA_TARGET_LC_NAME="$(echo ${GAIA_TARGET_PRETTY_NAME} | tr '[:upper:]' '[:lower:]')"
+	GAIA_TARGET_UC_NAME="$(echo "${GAIA_TARGET_PRETTY_NAME}" | tr '[:lower:]' '[:upper:]')"
+	GAIA_TARGET_LC_NAME="$(echo "${GAIA_TARGET_PRETTY_NAME}" | tr '[:upper:]' '[:lower:]')"
 
 	# directories
 	GAIA_INITIAL_DIR="$PWD"
 	GAIA_BUILD_DIR="/tmp/GAIA/$(whoami)/build/${GAIA_TARGET_LC_NAME}"
-	GAIA_OFFLINE_DIR="/data/GAIA/${GAIA_HOST_OS}-${GAIA_HOST_VER}-${GAIA_HOST_ARCH}"
+	GAIA_OFFLINE_DIR="/labsim/GAIA/${GAIA_HOST_OS}-${GAIA_HOST_VER}-${GAIA_HOST_ARCH}"
 	
 	# boolean
 	GAIA_FOUND_AVAILABLE_NETWORK=false
@@ -91,11 +91,14 @@ function configure() {
 
 	else 
 
-		echo -ne "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
+		echo -e "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
 		exit 1
 
 	fi
 
+	# env
+	source "$GAIA_ROOT/script/sh/function/configure-third_party.conf.sh"
+	
 }
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
@@ -107,7 +110,7 @@ function configure() {
 function cleanup() {
 
 	# print
-	echo -ne "  + Cleanup..."
+	echo -e "  + Cleanup..."
 
 	# name
 	unset GAIA_TARGET_PRETTY_NAME
@@ -131,6 +134,9 @@ function cleanup() {
 
 	# parameter
 	unset GAIA_PARALLEL_BUILD_JOB_COUNT
+	
+	# env
+	source "$GAIA_ROOT/script/sh/function/cleanup-third_party.conf.sh"
 
 }
 
@@ -223,7 +229,7 @@ function print_footer() {
 function pop_cache() {
 
 	chmod u+x exec.sh
-	gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --command "./exec.sh" --window
+	gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
 	sleep 0.2
 	PID="$(pgrep exec.sh)"
 	wait_for_PID "$PID"
@@ -247,6 +253,7 @@ function push_clone_op_to_cache() {
 	echo "git clone https://github.com/c-${GAIA_TARGET_LC_NAME}/c-${GAIA_TARGET_LC_NAME}.git" >> exec.sh
 	echo "mv c-${GAIA_TARGET_LC_NAME} ${GAIA_TARGET_LC_NAME}" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo "exit" >> exec.sh
 
 }
 
@@ -265,6 +272,7 @@ function push_copy_op_to_cache() {
 	echo "#!/bin/bash" > exec.sh
 	echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz ." >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo "exit" >> exec.sh
 
 }
 
@@ -284,6 +292,7 @@ function push_extract_op_to_cache() {
 	echo "tar -xvzf ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
 	echo "rm ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo "exit" >> exec.sh
 
 }
 
@@ -302,6 +311,7 @@ function push_checkout_op_to_cache() {
 	echo "#!/bin/bash" > exec.sh
 	echo "git checkout tags/cares-${GAIA_TARGET_VERSION//./_}" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo "exit" >> exec.sh
 
 }
 
@@ -320,6 +330,7 @@ function push_init_submodule_op_to_cache() {
 	echo "#!/bin/bash" > exec.sh
 	echo "git submodule update --init --recursive" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo "exit" >> exec.sh
 
 }
 
@@ -342,6 +353,7 @@ function push_configure_op_to_cache() {
 	echo "#!/bin/bash" > exec.sh
 	echo "cmake -DCMAKE_INSTALL_PREFIX=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -DCMAKE_BUILD_TYPE=Release .." >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo "exit" >> exec.sh
 
 }
 
@@ -360,6 +372,7 @@ function push_build_op_to_cache() {
 	echo "#!/bin/bash" > exec.sh
 	echo "cmake --build . -- -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo "exit" >> exec.sh
 
 }
 
@@ -378,6 +391,7 @@ function push_install_op_to_cache() {
 	echo "#!/bin/bash" > exec.sh
 	echo "cmake --build . --target install" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+	echo "exit" >> exec.sh
 
 }
 

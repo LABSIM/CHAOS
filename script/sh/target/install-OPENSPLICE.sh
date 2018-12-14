@@ -32,7 +32,7 @@ source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
 function configure() {
 
 	# print
-	echo -ne "  + Configuration..."
+	echo -ne "  + Configure... "
 
 	# name
 	GAIA_TARGET_PRETTY_NAME="OpenSplice"
@@ -42,7 +42,7 @@ function configure() {
 	# directories
 	GAIA_INITIAL_DIR="$PWD"
 	GAIA_BUILD_DIR="/tmp/GAIA/$(whoami)/build/${GAIA_TARGET_LC_NAME}"
-	GAIA_OFFLINE_DIR="/data/GAIA/${GAIA_HOST_OS}-${GAIA_HOST_VER}-${GAIA_HOST_ARCH}"
+	GAIA_OFFLINE_DIR="/labsim/GAIA/${GAIA_HOST_OS}-${GAIA_HOST_VER}-${GAIA_HOST_ARCH}"
 	
 	# boolean
 	GAIA_FOUND_AVAILABLE_NETWORK=false
@@ -57,9 +57,6 @@ function configure() {
 	# build job parameter, save at least one core for OS & user :)
 	GAIA_PARALLEL_BUILD_JOB_COUNT="$(nproc)"
 	(( GAIA_PARALLEL_BUILD_JOB_COUNT = GAIA_PARALLEL_BUILD_JOB_COUNT > 1 ? --GAIA_PARALLEL_BUILD_JOB_COUNT : GAIA_PARALLEL_BUILD_JOB_COUNT ))
-
-	# third_party
-	source "$GAIA_ROOT/script/sh/function/configure-third_party.conf.sh"
 
 	# check at least one network card is available 
 	for GAIA_NETWORK_ITERFACE_CARD in $(ls "/sys/class/net/" | grep -v lo);
@@ -78,26 +75,29 @@ function configure() {
 
 			2|3) 
 				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
-				echo -ne "(connection HTTP => ONLINE MODE)... "
+				echo -e "(connection HTTP => ONLINE MODE)... "
 				;;
 
 			5) 
-				echo -ne "(blocage du proxy ! verifier vos parametres d'environments aka. [http_proxy] && [https_proxy] => OFFLINE MODE)... "
+				echo -e "(blocage du proxy ! verifier vos parametres d'environments aka. [http_proxy] && [https_proxy] => OFFLINE MODE)... "
 				;;
 
 			*)
 				GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY=true 
-				echo -ne "(connection HTTP lente [ lag : >2s ] mais c'est OK, \"DSI\" => ONLINE MODE)... "
+				echo -e "(connection HTTP lente [ lag : >2s ] mais c'est OK, \"DSI\" => ONLINE MODE)... "
 				;;
 
 		esac
 
 	else 
 
-		echo -ne "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
+		echo -e "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
 		exit 1
 
 	fi
+	
+	# env
+	source "$GAIA_ROOT/script/sh/function/configure-third_party.conf.sh"
 
 }
 
@@ -110,7 +110,7 @@ function configure() {
 function cleanup() {
 
 	# print
-	echo -ne "  + Cleanup..."
+	echo -e "  + Cleanup... "
 
 	# name
 	unset GAIA_TARGET_PRETTY_NAME
@@ -134,8 +134,8 @@ function cleanup() {
 
 	# parameter
 	unset GAIA_PARALLEL_BUILD_JOB_COUNT
-
-	# third_party
+	
+	# env
 	source "$GAIA_ROOT/script/sh/function/cleanup-third_party.conf.sh"
 
 }
@@ -229,7 +229,7 @@ function print_footer() {
 function pop_cache() {
 
 	chmod u+x exec.sh
-	gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --command "./exec.sh" --window
+	gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
 	sleep 0.2
 	PID="$(pgrep exec.sh)"
 	wait_for_PID "$PID"
@@ -305,7 +305,7 @@ function push_checkout_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "git checkout tags/OSPL_V${GAIA_TARGET_MAJOR}_${GAIA_TARGET_MINOR}_OSS_RELEASE" >> exec.sh
+	echo "git checkout tags/OSPL_V${GAIA_TARGET_MAJOR}_${GAIA_TARGET_MINOR}_${GAIA_TARGET_PATCH}OSS_RELEASE" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -341,9 +341,9 @@ function push_configure_op_to_cache() {
 
 	# cmake exist
 	echo "#!/bin/bash" > exec.sh
-	echo "sed -i 's/soapcpp2 -v 2> soapcpp2.ver/# fuck this :) --> soapcpp2 -v 2> soapcpp2.ver/g' bin/checkconf" >> exec.sh
-	echo "sed -i 's/GSOAP_VERSION=/GSOAP_VERSION=$\(soapcpp2 -V\)\n\t# fuck that too :) --> /g' bin/checkconf" >> exec.sh
-	echo "export OPENSPLICE_QT_IS_ON=no && export GSOAPHOME=${GAIA_THIRD_PARTY_HOME}/gsoap-${GAIA_THIRD_PARTY_GSOAP_VERSION} && ./configure x86_64.linux-release" >> exec.sh
+	echo "sed -i 's/JAVAC_COMMAND=javac/JAVAC_COMMAND=/g' bin/checkconf" >> exec.sh
+	echo "sed -i 's/MAVEN_FOUND=/# fuck this :) --> MAVEN_FOUND=/g' bin/checkconf" >> exec.sh
+	echo "export OSPL_QT_IS_ON=no && ./configure x86_64.linux-release" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -361,7 +361,7 @@ function push_build_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "source envs-x86_64.linux-release.sh && export INCLUDE_SERVICES_CMSOAP=no && unset CFLAGS_LTO && make -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
+	echo "source envs-x86_64.linux-release.sh && make -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
@@ -379,7 +379,7 @@ function push_install_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "source envs-x86_64.linux-release.sh && export INCLUDE_SERVICES_CMSOAP=no && unset CFLAGS_LTO && make install" >> exec.sh
+	echo "source envs-x86_64.linux-release.sh && make install" >> exec.sh
 	echo "mkdir ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} && cp -rv install/HDE/x86_64.linux/* ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
