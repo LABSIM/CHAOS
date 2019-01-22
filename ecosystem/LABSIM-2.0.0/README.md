@@ -71,6 +71,6 @@
        - openscenegraph *v.3.6.3*
        - silverlining *v.5.0.17* -- ***license***
        - triton *v.4.0.4* -- ***license***
-    -  ***[[ TO DO ]]*** **Image Processing (IP)** -- *optional*
+    -  **Image Processing (IP)** -- *optional* -- *[ TODO ]* :)
        - opencv *v.3.1.0*
        - openpose *v.1.3.0*

@@ -243,4 +243,11 @@ man() {
 		man "$@"
 }
 
+# show weather CSP :)
+alias weather='curl wttr.in/Manchester'
+
+# pretty 'ls' & 'grep
+alias ls='ls --color=auto --human-readable --group-directories-first --classify'
+alias grep='grep --color=auto'
+
 # == EOF

@@ -345,7 +345,7 @@ function push_configure_op_to_cache() {
 
 	# cmake exist
 	echo "#!/bin/bash" > exec.sh
-	echo "../configure -prefix ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -platform linux-g++-64 -verbose -opensource -confirm-license -release -c++std c++14 -shared -reduce-exports -reduce-relocations -use-gold-linker -optimized-qmake -optimized-tools -no-avx2 -no-cups -no-pch -no-qt3d-input -opengl desktop -openssl -pkg-config -qml-debug -gui -widgets -accessibility -skip webengine -skip webchannel -skip webglplugin -skip websockets -skip webview -skip networkauth -skip purchasing -skip connectivity -skip wayland -skip gamepad -skip sensors -skip location -skip serialbus -skip serialport -skip enginio -skip virtualkeyboard -skip qtquick1 -nomake tests -no-compile-examples QMAKE_CFLAGS_ISYSTEM=" >> exec.sh
+	echo "../configure -prefix ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -platform linux-g++-64 -verbose -opensource -confirm-license -release -c++std c++14 -shared -reduce-exports -reduce-relocations -use-gold-linker -optimized-qmake -optimized-tools -no-cups -no-pch -no-qt3d-input -opengl desktop -openssl -pkg-config -qml-debug -gui -widgets -accessibility -skip webengine -skip webchannel -skip webglplugin -skip websockets -skip webview -skip networkauth -skip purchasing -skip connectivity -skip wayland -skip gamepad -skip sensors -skip location -skip serialbus -skip serialport -skip virtualkeyboard -nomake tests -no-compile-examples QMAKE_CFLAGS_ISYSTEM=" >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
