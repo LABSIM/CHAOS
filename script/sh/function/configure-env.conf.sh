@@ -50,6 +50,7 @@ if [ "${GAIA_FOUND_DSI_HOST}" = true ]; then
 	#
 	module unload texlive
 	module unload intel
+	module unload impi
 
 fi
 
