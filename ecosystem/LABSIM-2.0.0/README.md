@@ -46,18 +46,18 @@
     - **Development (DEV)** -- ***required***
        - make *v.4.2.1*
        - perl *v.5.28.1*
+       - c-ares *v.1.15.0*
+       - openssl *v.1.1.1b*
+       - git *v.2.21.0*
        - cmake *v.3.13.1*
        - xerces-c++ *v.3.2.2*
        - doxygen *v.1.8.14*
        - boost *v.1.69.0*
        - llvm *v.7.0.0*
     - **Simulation Frontend (SF)** -- *strongly recommended*
-       - c-ares *v.1.15.0*
-       - openssl *v.1.1.1a*
        - protobuf *v.3.6.1*
        - grpc *v.1.17.0*
     - **Simulation Backend (SB)** -- *strongly recommended*
-       - c-ares *v.1.15.0*
        - libev *v.4.24.0*
        - nghttp2 *v.1.35.1*
        - opensplice *v.6.9.181018*
