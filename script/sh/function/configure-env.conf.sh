@@ -39,11 +39,8 @@ if [ "${GAIA_FOUND_DSI_HOST}" = true ]; then
 	#
 	# ADD --> will be unloaded if by corresponding third_party dependancies
 	#
-	module add subversion
 	module add gcc
 	module add cmake
-	module add qt-framework
-	module add eclipse
 
 	#
 	# UNLOAD
@@ -51,6 +48,9 @@ if [ "${GAIA_FOUND_DSI_HOST}" = true ]; then
 	module unload texlive
 	module unload intel
 	module unload impi
+	module unload subversion
+	module unload qt-framework
+	module unload eclipse
 
 fi
 
@@ -84,22 +84,15 @@ export GAIA_THIRD_PARTY_HOME GAIA_DEV_HOME GAIA_COLOSSES_HOME GAIA_OLYMPIENS_HOM
 # Other export ...
 ###
 
-# On active le traitement des commandes tierces avec xhost 
-# TODO ?? remove this motherfucking line ??
-#xhost + > /dev/null 2>&1
-
 # on corrige la "superbe" instalation DSI...
 export PATH=$PATH:/usr/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/lib64/:/usr/lib64/:/lib/:/usr/lib/
 export CPATH=/usr/include
 
-# --> [ https://gcc.gnu.org/onlinedocs/cpp/Environment-Variables.html ]
-#export C_INCLUDE_PATH=$CPATH
-#export CPLUS_INCLUDE_PATH=$CPATH
-
 # Default ONERA's proxy... meme ca... 
 export http_proxy=http://proxy.onera:80
 export https_proxy=http://proxy.onera:80
+export no_proxy=.onera,.onera.net
 
 # link to --> [ https://sourceforge.net/p/autogen/bugs/183/ ]
 export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
