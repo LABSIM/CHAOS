@@ -1,5 +1,7 @@
+# ignore Eclipse related build directories
 /.project
 /.cproject
 /.settings/
 
+# ignore CMake build directories
 /build/
