@@ -311,7 +311,7 @@ function push_configure_op_to_cache() {
 
 		# cmake exist
 		echo "#!/bin/bash" > exec.sh
-		echo "cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} .." >> exec.sh
+		echo "cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -DOPENSSL_ROOT_DIR:PATH=${GAIA_THIRD_PARTY_HOME}/openssl-${GAIA_THIRD_PARTY_OPENSSL_VERSION} .." >> exec.sh
 		echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 	else

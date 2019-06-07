@@ -346,7 +346,7 @@ function push_configure_op_to_cache() {
 
 	# cmake exist
 	echo "#!/bin/bash" > exec.sh
-	echo "cmake -DCMAKE_INSTALL_PREFIX=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -DCMAKE_BUILD_TYPE=Release -Dprotobuf_BUILD_TESTS=OFF .." >> exec.sh
+	echo "cmake -DCMAKE_INSTALL_PREFIX=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -DCMAKE_BUILD_TYPE=Release --Dprotobuf_BUILD_TESTS=OFF .." >> exec.sh
 	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
