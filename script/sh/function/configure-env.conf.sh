@@ -87,8 +87,7 @@ export GAIA_THIRD_PARTY_HOME GAIA_DEV_HOME GAIA_COLOSSES_HOME GAIA_OLYMPIENS_HOM
 # on corrige la "superbe" instalation DSI...
 export PATH=$PATH:/usr/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/lib64/:/usr/lib64/:/lib/:/usr/lib/
-export CPATH=/usr/include:$CPATH
-export CPLUS_INCLUDE_PATH=/usr/local/include:/usr/include:$CPLUS_INCLUDE_PATH
+export CPATH=/usr/local/include:/usr/include:$CPATH
 
 # Default ONERA's proxy... meme ca... 
 export http_proxy=http://proxy.onera:80

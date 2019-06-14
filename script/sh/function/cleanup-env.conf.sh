@@ -63,6 +63,9 @@ if [ -n "$CPATH" ]; then
 	unset old_CPATH x
 fi
 
+# Cotire/CMake need CPLUS_INCLUDE_PATH but gcc need CPATH sooo :) ...
+export CPLUS_INCLUDE_PATH=$CPATH
+
 if [ -n "$PKG_CONFIG_PATH" ]; then
 	old_PKG_CONFIG_PATH=$PKG_CONFIG_PATH:; PKG_CONFIG_PATH=
 	while [ -n "$old_PKG_CONFIG_PATH" ]; do
