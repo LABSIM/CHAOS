@@ -31,10 +31,10 @@
        - c-ares *v.1.15.0*
        - openssl *v.1.1.1b*
        - git *v.2.21.0*
-       - cmake *v.3.14.5*
+       - cmake *v.3.16.3*
        - xerces-c++ *v.3.2.2*
        - doxygen *v.1.8.14*
-       - boost *v.1.70.0*
+       - boost *v.1.72.0*
        - llvm *v.8.0.0*
     - **Simulation Frontend (SF)** -- *strongly recommended*
        - protobuf *v.3.7.1*
