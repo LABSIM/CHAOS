@@ -18,16 +18,10 @@ RUN apt-get update && apt-get --assume-yes install git curl unzip tar perl
 
 # setup titans dir & clone LABSIM sources from server
 
-#WORKDIR /labsim/dev/titans
-#RUN git clone https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/LABSIM/GAIA.git \
-#    && cd GAIA \
-#    && ./bootstrap-gaia.sh \
-#    && ./gaia --target-ecosystem LABSIM-2.0.0 --enable-feature gnu
-
 WORKDIR /labsim/dev/titans
-COPY GAIA .
-RUN ls | echo
-RUN ./bootstrap-gaia.sh \
+RUN git clone https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/LABSIM/GAIA.git \
+    && cd GAIA \
+    && ./bootstrap-gaia.sh \
     && ./gaia --target-ecosystem LABSIM-2.0.0 --enable-feature gnu
 
 # setup third_party dir & install vcpkg
