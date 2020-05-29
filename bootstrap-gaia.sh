@@ -19,7 +19,7 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
-cd /script/sh/target/ 
+cd script/sh/target/ 
 sh install-PERL.sh 5 26 1
 cd ../../..
 cat script/sh/GAIA.bashrc >> ~/.bashrc
