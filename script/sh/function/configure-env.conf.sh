@@ -67,8 +67,8 @@ if [ "${GAIA_FOUND_DSI_HOST}" = true ]; then
 else
 
 	# Use home directory - default
-	GAIA_DEV_HOME="$(eval echo "~$(whoami)")/dev"
-	GAIA_THIRD_PARTY_HOME="$(eval echo "~$(whoami)")/third_party"
+	GAIA_DEV_HOME="$(eval echo "~$(whoami)")/labsim/dev"
+	GAIA_THIRD_PARTY_HOME="$(eval echo "~$(whoami)")/labsim/third_party"
 
 fi
 
