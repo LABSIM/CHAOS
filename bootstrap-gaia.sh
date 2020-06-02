@@ -19,6 +19,9 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
+# print
+echo "Bootstraping GAIA..."
+
 # get the source dir --> [ https://stackoverflow.com/questions/59895/getting-the-source-directory-of-a-bash-script-from-within ]
 pushd . > /dev/null
 SCRIPT_PATH="${BASH_SOURCE[0]}"
@@ -32,8 +35,16 @@ popd  > /dev/null
 
 # export GAIA root dir
 export GAIA_ROOT="$( cd "$(dirname "$SCRIPT_PATH/")" ; pwd )"
+echo "- found GAIA_ROOT ==> [${GAIA_ROOT}]"
 
 # install perl (at least)
+echo "- installing PERL v5.26.1"
 sh ${GAIA_ROOT}/script/sh/target/install-PERL.sh 5 26 1
+
+# setup
+echo "- setup GAIA environment"
 cat ${GAIA_ROOT}/script/sh/GAIA.bashrc >> ~/.bashrc
-source ~/.bashrc 
+
+# install perl (at least)
+echo "- check GAIA config"
+source ~/.bashrc && gaia
