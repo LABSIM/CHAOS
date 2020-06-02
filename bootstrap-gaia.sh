@@ -19,8 +19,21 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
-cd ./script/sh/target/ 
-sh install-PERL.sh 5 26 1
-cd ../../..
-cat ./script/sh/GAIA.bashrc >> ~/.bashrc
-source ~/.bashrc
+# get the source dir --> [ https://stackoverflow.com/questions/59895/getting-the-source-directory-of-a-bash-script-from-within ]
+pushd . > /dev/null
+SCRIPT_PATH="${BASH_SOURCE[0]}"
+if ([ -h "${SCRIPT_PATH}" ]); then
+  while([ -h "${SCRIPT_PATH}" ]); do cd `dirname "$SCRIPT_PATH"`; 
+  SCRIPT_PATH=`readlink "${SCRIPT_PATH}"`; done
+fi
+cd `dirname ${SCRIPT_PATH}` > /dev/null
+SCRIPT_PATH=`pwd`;
+popd  > /dev/null
+
+# export GAIA root dir
+export GAIA_ROOT="$( cd "$(dirname "$SCRIPT_PATH/")" ; pwd )"
+
+# install perl (at least)
+sh ${GAIA_ROOT}/script/sh/target/install-PERL.sh 5 26 1
+cat ${GAIA_ROOT}/script/sh/GAIA.bashrc >> ~/.bashrc
+source ~/.bashrc 
