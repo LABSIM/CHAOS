@@ -24,18 +24,16 @@
 ##############################################################################
 
 # get the source dir --> [ https://stackoverflow.com/questions/59895/getting-the-source-directory-of-a-bash-script-from-within ]
-pushd . > /dev/null
-SCRIPT_PATH="${BASH_SOURCE[0]}"
-if ([ -h "${SCRIPT_PATH}" ]); then
-  while([ -h "${SCRIPT_PATH}" ]); do cd `dirname "$SCRIPT_PATH"`; 
-  SCRIPT_PATH=`readlink "${SCRIPT_PATH}"`; done
-fi
-cd `dirname ${SCRIPT_PATH}` > /dev/null
-SCRIPT_PATH=`pwd`;
-popd  > /dev/null
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE/../../.." )" >/dev/null 2>&1 && pwd )"
 
 # GAIA root dir
-export GAIA_ROOT="$( cd "$(dirname "$SCRIPT_PATH/../../..")" ; pwd )"
+export GAIA_ROOT="${DIR}"
 
 # Distribution detail
 export GAIA_ECOSYSTEM_DETAIL=""
