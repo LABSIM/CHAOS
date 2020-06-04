@@ -244,12 +244,12 @@ function pop_cache() {
     else
 
 		# raw
-		echo -ne "\t ==(raw mode)"
-        sh exec.sh
+		echo -e "\t==(raw mode)"
+        ./exec.sh
 		echo -e "\t==> OK"
     
 	fi
-	
+
 }
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
