@@ -37,7 +37,7 @@ SCRIPT_PATH=`pwd`;
 popd  > /dev/null
 
 # export GAIA root dir
-export GAIA_ROOT="$( cd "$(dirname "$SCRIPT_PATH/")" ; pwd )"
+export GAIA_ROOT=${SCRIPT_PATH}
 echo "- found GAIA_ROOT ==> [${GAIA_ROOT}]"
 
 # install perl (at least)

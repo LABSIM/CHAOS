@@ -2,6 +2,19 @@
 =========================
 = 		INSTALL			=
 =========================
+
+== build 
+docker build \
+  --no-cache \
+  --build-arg GITHUB_USERNAME=your_username \
+  --build-arg GITHUB_TOKEN=your_token \
+  --tag labsim-ubuntu-ext-dev:latest \
+  -f dist/ubuntu-ext-dev/Dockerfile \
+  .
+
+== clean all local images
+docker rmi -f $(docker images -a -q)
+
   ________
  /       /|
 +-------+ |
