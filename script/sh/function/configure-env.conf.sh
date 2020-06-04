@@ -67,7 +67,7 @@ if [ "${GAIA_FOUND_DSI_HOST}" = true ]; then
 else
 
 	# if user == root 
-	if [ "$(whoami)" = "root"]; then
+	if [ "$(whoami)" = "root" ]; then
 
 		# Then, use root directory
 		GAIA_DEV_HOME="/labsim/dev"
