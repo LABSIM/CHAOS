@@ -36,19 +36,20 @@ if hash module 2>/dev/null; then
 else 
 
 	GAIA_FOUND_DSI_HOST=false
-	
-	if [ -f $(find ~/ -type f -name "*GAIA.conf.sh" 2>/dev/null) ]; then
+	local GAIA_CONF_FILE=""
 
-		source $(find ~/ -type f -name "*GAIA.conf.sh" 2>/dev/null)
-
-	elif [ -f $(find / -type f -name "*GAIA.conf.sh" 2>/dev/null) ]; then
-
-		source $(find / -type f -name "*GAIA.conf.sh" 2>/dev/null)
-
+	if [ -z $(find ~/ -type f -name "*GAIA.conf.sh" 2>/dev/null) ]; then
+		GAIA_CONF_FILE = $(find ~/ -type f -name "*GAIA.conf.sh" 2>/dev/null)
+	elif [ -z $(find / -type f -name "*GAIA.conf.sh" 2>/dev/null) ]; then
+		GAIA_CONF_FILE = $(find / -type f -name "*GAIA.conf.sh" 2>/dev/null)
 	else
 
 		echo "[GAIA] Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
 
+	fi
+	
+	if [ -f ${GAIA_CONF_FILE} ]; then
+		source ${GAIA_CONF_FILE}
 	fi
 
 fi
