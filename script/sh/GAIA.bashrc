@@ -38,9 +38,9 @@ else
 	GAIA_FOUND_DSI_HOST=false
 	set GAIA_CONF_FILE=""
 
-	if [ -z $(find ~/ -type f -name "*GAIA.conf.sh" 2>/dev/null) ]; then
+	if [ ! -z $(find ~/ -type f -name "*GAIA.conf.sh" 2>/dev/null) ]; then
 		GAIA_CONF_FILE=$(find ~/ -type f -name "*GAIA.conf.sh" 2>/dev/null)
-	elif [ -z $(find / -type f -name "*GAIA.conf.sh" 2>/dev/null) ]; then
+	elif [ ! -z $(find / -type f -name "*GAIA.conf.sh" 2>/dev/null) ]; then
 		GAIA_CONF_FILE=$(find / -type f -name "*GAIA.conf.sh" 2>/dev/null)
 	else
 
@@ -49,8 +49,11 @@ else
 	fi
 	
 	if [ -f ${GAIA_CONF_FILE} ]; then
+		echo "found conf : ${GAIA_CONF_FILE}"
 		source ${GAIA_CONF_FILE}
 	fi
+
+	unset GAIA_CONF_FILE
 
 fi
 
