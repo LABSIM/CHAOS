@@ -234,19 +234,19 @@ function pop_cache() {
 	if hash gnome-terminal 2>/dev/null; then
 
 		# display a nice & interactive procedure
-		echo -e "\t ==(interactive mode)"
+		echo -ne "\t ==(interactive mode)"
         gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
 		sleep 0.2
 		PID="$(pgrep exec.sh)"
 		wait_for_PID "$PID"
-		echo -ne "==> OK"
+		echo -e "==> OK"
 
     else
 
 		# raw
-		echo -e "\t==(raw mode)"
+		echo -ne "\t==(raw mode)"
         ./exec.sh
-		echo -e "\t==> OK"
+		echo -ne "\t==> OK"
     
 	fi
 	

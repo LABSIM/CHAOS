@@ -239,13 +239,13 @@ function pop_cache() {
 		sleep 0.2
 		PID="$(pgrep exec.sh)"
 		wait_for_PID "$PID"
-		echo "==> OK"
+		echo -e "==> OK"
 
     else
 
 		# raw
-		echo -e "\t==(raw mode)"
-        ./exec.sh
+		echo -ne "\t==(raw mode)"
+        ./exec.sh && read -p "Appuyez sur [Entree] pour continuer..."
 		echo -e "\t==> OK"
     
 	fi
@@ -266,7 +266,6 @@ function push_download_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "wget http://www.cpan.org/src/${GAIA_TARGET_MAJOR}.0/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
