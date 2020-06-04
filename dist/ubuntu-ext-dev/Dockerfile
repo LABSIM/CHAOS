@@ -33,13 +33,13 @@ RUN git clone https://github.com/Microsoft/vcpkg.git
 WORKDIR /labsim/dev/titans/GAIA
 RUN set -x \
     && chmod +x bootstrap-gaia.sh \
-    && ./bootstrap-gaia.sh  \
+    && /labsim/dev/titans/GAIA/bootstrap-gaia.sh  \
     && gaia --target-ecosystem LABSIM-2.0.0 --enable-feature gnu
 
 # configure vcpkg
 WORKDIR /labsim/third_party/vcpkg
 RUN set -x \
     && chmod +x booststrap-vcpkg.sh \ 
-    && ./bootstrap-vcpkg.sh -disableMetrics \
-    && ./vcpkg integrate install
+    && /labsim/third_party/vcpkg/bootstrap-vcpkg.sh -disableMetrics \
+    && vcpkg integrate install
 
