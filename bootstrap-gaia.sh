@@ -37,12 +37,9 @@ SCRIPT_PATH=`pwd`;
 popd  > /dev/null
 
 # export GAIA root dir
-export GAIA_ROOT=${SCRIPT_PATH}
+set GAIA_ROOT="${SCRIPT_PATH}"
+export GAIA_ROOT
 echo "- found GAIA_ROOT ==> [${GAIA_ROOT}]"
-
-# install perl (at least)
-echo "- installing PERL v5.26.1"
-sh ${GAIA_ROOT}/script/sh/target/install-PERL.sh 5 26 1
 
 # setup
 echo "- setup GAIA environment"

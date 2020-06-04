@@ -229,12 +229,27 @@ function print_footer() {
 function pop_cache() {
 
 	chmod u+x exec.sh
-	gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
-	sleep 0.2
-	PID="$(pgrep exec.sh)"
-	wait_for_PID "$PID"
-	echo -e "\t==> OK"
 
+	# check  
+	if hash gnome-terminal 2>/dev/null; then
+
+		# display a nice & interactive procedure
+		echo -ne "\t ==(interactive mode)"
+        gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
+		sleep 0.2
+		PID="$(pgrep exec.sh)"
+		wait_for_PID "$PID"
+		echo "==> OK"
+
+    else
+
+		# raw
+		echo -ne "\t ==(raw mode)"
+        sh exec.sh
+		echo -e "\t==> OK"
+    
+	fi
+	
 }
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
