@@ -66,9 +66,20 @@ if [ "${GAIA_FOUND_DSI_HOST}" = true ]; then
 
 else
 
-	# Use home directory - default
-	GAIA_DEV_HOME="$(eval echo "~$(whoami)")/labsim/dev"
-	GAIA_THIRD_PARTY_HOME="$(eval echo "~$(whoami)")/labsim/third_party"
+	# if user == root 
+	if [ "$(whoami)" = "root"]; then
+
+		# Then, use root directory
+		GAIA_DEV_HOME="/labsim/dev"
+		GAIA_THIRD_PARTY_HOME="/labsim/third_party"
+
+	else
+
+		# Otherwise, use home directory - default
+		GAIA_DEV_HOME="$(eval echo "~$(whoami)")/labsim/dev"
+		GAIA_THIRD_PARTY_HOME="$(eval echo "~$(whoami)")/labsim/third_party"
+	
+	fi
 
 fi
 

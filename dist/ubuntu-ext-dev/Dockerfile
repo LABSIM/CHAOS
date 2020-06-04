@@ -14,7 +14,12 @@ RUN if [ -z "$GITHUB_USERNAME" ]; then echo "[GAIA][Dockerfile] - ERROR : GITHUB
 RUN if [ -z "$GITHUB_TOKEN" ]; then echo "[GAIA][Dockerfile] - ERROR : GITHUB_TOKEN arg not set, maybe you should set [--build-arg GITHUB_TOKEN={value}] options in CLI"; exit 1; else : ; fi
 
 # update it - yes to every prompt - + recquired packages
-RUN apt-get update && apt-get --assume-yes install git curl unzip tar perl
+RUN apt-get update && apt-get --assume-yes install \
+    git \
+    curl \
+    unzip \
+    tar \
+    perl
 
 # setup titans dir & clone LABSIM sources from server
 WORKDIR /labsim/dev/titans
