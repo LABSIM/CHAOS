@@ -249,6 +249,7 @@ function pop_cache() {
 		# raw
 		echo -e "\t==(raw mode)"
         ./exec.sh
+		read -p "Appuyez sur [Entree] pour continuer..."
     
 	fi
 
