@@ -19,19 +19,22 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
+# debug
+set -x
+
 # print
 echo "Bootstraping GAIA..."
 
 # get the source dir --> [ https://stackoverflow.com/questions/59895/getting-the-source-directory-of-a-bash-script-from-within ]
-#pushd . > /dev/null
+pushd . > /dev/null
 SCRIPT_PATH="${BASH_SOURCE[0]}"
 if ([ -h "${SCRIPT_PATH}" ]); then
   while([ -h "${SCRIPT_PATH}" ]); do cd `dirname "$SCRIPT_PATH"`; 
   SCRIPT_PATH=`readlink "${SCRIPT_PATH}"`; done
 fi
-cd `dirname ${SCRIPT_PATH}` #> /dev/null
+cd `dirname ${SCRIPT_PATH}` > /dev/null
 SCRIPT_PATH=`pwd`;
-#popd  > /dev/null
+popd  > /dev/null
 
 # export GAIA root dir
 export GAIA_ROOT="$( cd "$(dirname "$SCRIPT_PATH/")" ; pwd )"
