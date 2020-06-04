@@ -41,6 +41,10 @@ else
 
 		source $(find ~/ -type f -name "*GAIA.conf.sh" 2>/dev/null)
 
+	elif [ -f $(find / -type f -name "*GAIA.conf.sh" 2>/dev/null) ]; then
+
+		source $(find / -type f -name "*GAIA.conf.sh" 2>/dev/null)
+
 	else
 
 		echo "[GAIA] Erreur dans la configuration de votre environment de travail... Contactez les administrateurs: Christian S. ou Nawfel K."
