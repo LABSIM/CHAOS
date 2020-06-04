@@ -15,6 +15,7 @@ RUN if [ -z "$GITHUB_TOKEN" ]; then echo "[GAIA][Dockerfile] - ERROR : GITHUB_TO
 
 # update it - yes to every prompt - + recquired packages
 RUN apt-get update && apt-get --assume-yes install \
+    build-essential \
     git \
     curl \
     wget \
