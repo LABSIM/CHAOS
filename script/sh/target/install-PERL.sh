@@ -233,20 +233,22 @@ function pop_cache() {
 	# check  
 	if hash gnome-terminal 2>/dev/null; then
 
+		# add interactive stop
+		echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+
 		# display a nice & interactive procedure
-		echo -ne "\t ==(interactive mode)"
+		echo -e "\t ==(interactive mode)"
         gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
 		sleep 0.2
 		PID="$(pgrep exec.sh)"
 		wait_for_PID "$PID"
-		echo -e "==> OK"
+		echo -ne "==> OK"
 
     else
 
 		# raw
-		echo -ne "\t==(raw mode)"
-        ./exec.sh && read -p "Appuyez sur [Entree] pour continuer..."
-		echo -e "\t==> OK"
+		echo -e "\t==(raw mode)"
+        ./exec.sh
     
 	fi
 
@@ -266,7 +268,7 @@ function push_download_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "wget http://www.cpan.org/src/${GAIA_TARGET_MAJOR}.0/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
-
+	
 }
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
@@ -283,8 +285,7 @@ function push_copy_op_to_cache() {
 	# finally, the op
 	echo "#!/bin/bash" > exec.sh
 	echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz ." >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-
+	
 }
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
@@ -302,8 +303,7 @@ function push_extract_op_to_cache() {
 	echo "#!/bin/bash" > exec.sh
 	echo "tar -xvzf ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
 	echo "rm ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-
+	
 }
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
@@ -320,7 +320,6 @@ function push_configure_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "./Configure -de -Dcc=gcc -Duse64bitall -Dprefix=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -338,8 +337,7 @@ function push_build_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "make -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-
+	
 }
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
@@ -356,8 +354,7 @@ function push_check_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "make check" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-
+	
 }
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
@@ -374,8 +371,7 @@ function push_install_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "make install" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-
+	
 }
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
@@ -412,8 +408,7 @@ function push_cpan_op_to_cache() {
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm IPC::System::Simple" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm XML::SimpleObject::LibXML" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm Graph" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
-
+	
 }
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
