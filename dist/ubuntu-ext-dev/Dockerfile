@@ -26,8 +26,8 @@ RUN git clone https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/LABSIM/GAIA.
     && git clone https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/LABSIM/RHEA.git \
     && git clone https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/LABSIM/KRONOS.git
 
-# setup third_party
-WORKDIR /labsim/third_party
+# setup third_party dev
+WORKDIR /labsim/dev/third_party
 RUN git clone https://github.com/Microsoft/vcpkg.git
 
 # configure gaia
