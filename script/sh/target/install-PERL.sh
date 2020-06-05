@@ -23,7 +23,7 @@
 if hash gnome-terminal 2>/dev/null; then
 
 	# import
-	#source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
+	source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
 	source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
 
 fi
@@ -252,9 +252,8 @@ function pop_cache() {
     else
 
 		# raw
-		echo -e "\t==(raw mode)"
+		echo -e "\t==(docker mode)"
         ./exec.sh
-		read -p "Appuyez sur [Entree] pour continuer..."
     
 	fi
 
