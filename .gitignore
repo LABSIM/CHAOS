@@ -169,3 +169,9 @@ inc/
 /MANIFEST.bak
 /pm_to_blib
 /*.zip
+
+###################
+# Secret files :) #
+###################
+github_token.txt
+github_username.txt

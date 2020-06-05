@@ -3,11 +3,16 @@
 = 		INSTALL			=
 =========================
 
+== store secret info
+echo 'your_super_secret_github_username' > github_username.txt
+echo 'your_super_secret_github_token' > github_token.txt
+
 == build 
 docker build \
   --no-cache \
-  --build-arg GITHUB_USERNAME=your_username \
-  --build-arg GITHUB_TOKEN=your_token \
+  --progress=plain \
+  --secret id=GITHUB_USERNAME,src=github_username.txt \
+  --secret id=GITHUB_TOKEN,src=github_token.txt \
   --tag labsim-ubuntu-ext-dev:latest \
   -f dist/ubuntu-ext-dev/Dockerfile \
   .
