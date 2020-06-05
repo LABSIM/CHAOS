@@ -19,14 +19,19 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
+# get the source dir --> [ https://stackoverflow.com/questions/59895/getting-the-source-directory-of-a-bash-script-from-within ]
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 
+# export GAIA root dir
+export GAIA_ROOT="${DIR}"
+echo "- setup GAIA_ROOT [${GAIA_ROOT}]"
 
-# print
-echo "Bootstraping GAIA..."
-chmod +x script/sh/bootstrap.sh
-./script/sh/bootstrap.sh
-
-# source env
-echo "- source GAIA config"
-source ~/.bashrc
-
+# setup
+cat ${GAIA_ROOT}/script/sh/GAIA.bashrc >> ~/.bashrc
+echo "- setup GAIA environment"

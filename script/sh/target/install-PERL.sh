@@ -19,12 +19,13 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
-# import
-#source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
-
-# check  
+# iff. interactive shell
 if hash gnome-terminal 2>/dev/null; then
+
+	# import
+	#source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
 	source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
+
 fi
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
