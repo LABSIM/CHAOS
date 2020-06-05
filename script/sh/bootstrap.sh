@@ -38,7 +38,7 @@ cat ${GAIA_ROOT}/script/sh/GAIA.bashrc >> ~/.bashrc
 
 # reload
 echo "- reload a clean GAIA environment"
-exec bash
+source ~/.bashrc
 
 # recquired PERL
 echo "- installing perl v5.31.3"
