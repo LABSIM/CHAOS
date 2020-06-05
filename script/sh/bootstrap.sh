@@ -41,5 +41,5 @@ echo "- reload a clean GAIA environment"
 source ~/.bashrc
 
 # recquired PERL
-echo "- installing perl v5.31.3"
-./script/sh/target/install-PERL.sh 5 31 3
+echo "- installing perl v5.30.3"
+./script/sh/target/install-PERL.sh 5 30 3
