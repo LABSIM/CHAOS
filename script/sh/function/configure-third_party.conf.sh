@@ -82,23 +82,24 @@ function declare_version()
 
 	fi
 	
-} # declare_version()
+} # function declare_version()
 
 # list all directories under home
 directories=$(find $GAIA_THIRD_PARTY_HOME/* -maxdepth 0 -type d 2>/dev/null | awk -F"/" '{print $NF}' | awk -F"-" '{print $1}')
+if [ ! -z  $directories ]; then
 
-#
-# remove duplicate names if any
-# [ https://stackoverflow.com/questions/13648410/how-can-i-get-unique-values-from-an-array-in-bash ]
-#
-unique_directories=$(tr ' ' '\n' <<< "${directories[@]}" | sort -u | tr '\n' ' ')
+	# remove duplicate names if any
+	# [ https://stackoverflow.com/questions/13648410/how-can-i-get-unique-values-from-an-array-in-bash ]
+	unique_directories=$(tr ' ' '\n' <<< "${directories[@]}" | sort -u | tr '\n' ' ')
 
-# then declare each version
-for dirname in $unique_directories; do
-	
-	declare_version "$dirname"
+	# then declare each independant version
+	for dirname in $unique_directories; do
+		
+		declare_version "$dirname"
 
-done
+	done
+
+fi
 
 return 0
 # == EOF
