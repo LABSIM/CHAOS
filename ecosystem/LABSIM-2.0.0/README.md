@@ -27,7 +27,7 @@
 	   	- gdb *v.8.2.1*
     - **Development (DEV)** -- ***required***
        - make *v.4.2.1*
-       - perl *v.5.28.1*
+       - perl *v.5.31.3*
        - c-ares *v.1.15.0*
        - openssl *v.1.1.1b*
        - git *v.2.21.0*

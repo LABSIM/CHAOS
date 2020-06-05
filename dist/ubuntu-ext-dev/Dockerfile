@@ -1,15 +1,11 @@
 # syntax = docker/dockerfile:1.0-experimental
 
-#
-# Stage 0
-#
-
 # Ubuntu latest base config 
 FROM ubuntu:rolling
 
 # update/install recquired packages - yes to every prompt - then, set locale
 RUN apt-get update && apt-get --assume-yes install \
-        build-essential git curl wget unzip tar perl locales \
+        build-essential git curl wget unzip tar locales \
     && locale-gen en_US.UTF-8  
 
 # setup local for environment
@@ -18,13 +14,7 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 # setup titans dir & clone LABSIM sources from server
-WORKDIR /labsim/dev/titans
-
-RUN --mount=type=secret,id=GITHUB_USERNAME,required \
-    --mount=type=secret,id=GITHUB_TOKEN,required \
-    cat /run/secrets/GITHUB_USERNAME \
-    && cat /run/secrets/GITHUB_TOKEN
-    
+WORKDIR /labsim/dev/titans 
 RUN --mount=type=secret,id=GITHUB_USERNAME,required \
     --mount=type=secret,id=GITHUB_TOKEN,required \
     git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git \

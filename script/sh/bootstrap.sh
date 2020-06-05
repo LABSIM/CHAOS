@@ -33,5 +33,13 @@ export GAIA_ROOT="${DIR}"
 echo "- setup GAIA_ROOT [${GAIA_ROOT}]"
 
 # setup
-cat ${GAIA_ROOT}/script/sh/GAIA.bashrc >> ~/.bashrc
 echo "- setup GAIA environment"
+cat ${GAIA_ROOT}/script/sh/GAIA.bashrc >> ~/.bashrc
+
+# sourcing
+echo "- source GAIA environment"
+source ~/.bashrc
+
+# recquired PERL
+echo "- installing perl v5.31.3"
+./target/install-PERL.sh 5 31 3
