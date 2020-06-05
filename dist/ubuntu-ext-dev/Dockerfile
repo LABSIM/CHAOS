@@ -30,6 +30,9 @@ RUN git clone https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/LABSIM/GAIA.
 WORKDIR /labsim/dev/third_party
 RUN git clone https://github.com/Microsoft/vcpkg.git
 
+# setup third_party install dir
+WORKDIR /labsim/third_party
+
 # configure gaia
 #WORKDIR /labsim/dev/titans/GAIA
 #RUN chmod +x bootstrap-gaia.sh \

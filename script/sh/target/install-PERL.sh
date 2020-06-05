@@ -20,8 +20,12 @@
 #
 
 # import
-source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
-source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
+#source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
+
+# check  
+if hash gnome-terminal 2>/dev/null; then
+	source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
+fi
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
