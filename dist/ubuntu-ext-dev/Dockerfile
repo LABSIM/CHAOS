@@ -19,7 +19,7 @@ ENV LC_ALL en_US.UTF-8
 
 # setup titans dir & clone LABSIM sources from server
 WORKDIR /labsim/dev/titans
-RUN --mount=type=secret,id=GITHUB_USERNAME,id=GITHUB_TOKEN,required cat https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git
+RUN --mount=type=secret,id=GITHUB_USERNAME,required --mount=type=secret,id=GITHUB_TOKEN,required cat https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git
 #RUN --mount=type=secret,id=GITHUB_USERNAME,required \
 #    --mount=type=secret,id=GITHUB_TOKEN,required \
 #    git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git \
