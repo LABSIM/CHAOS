@@ -9,19 +9,17 @@ FROM ubuntu:rolling
 ARG GITHUB_USERNAME
 ARG GITHUB_TOKEN
 
-# mandatory
-RUN if [ -z "$GITHUB_USERNAME" ]; then echo "[GAIA][Dockerfile] - ERROR : GITHUB_USERNAME arg not set, maybe you should set [--build-arg GITHUB_USERNAME={value}] options in CLI"; exit 1; else : ; fi
-RUN if [ -z "$GITHUB_TOKEN" ]; then echo "[GAIA][Dockerfile] - ERROR : GITHUB_TOKEN arg not set, maybe you should set [--build-arg GITHUB_TOKEN={value}] options in CLI"; exit 1; else : ; fi
+# mandatory check, update/install recquired packages - yes to every prompt - then, set locale
+RUN [ -z "$GITHUB_USERNAME" ] && echo "[GAIA][Dockerfile] - ERROR : GITHUB_USERNAME arg not set, maybe you should set [--build-arg GITHUB_USERNAME={value}] options in CLI"; exit 1; \
+    && [ -z "$GITHUB_TOKEN" ] && echo "[GAIA][Dockerfile] - ERROR : GITHUB_TOKEN arg not set, maybe you should set [--build-arg GITHUB_TOKEN={value}] options in CLI"; exit 1; \
+    && apt-get update && apt-get --assume-yes install \
+        build-essential git curl wget unzip tar perl locales \
+    && locale-gen en_US.UTF-8  
 
-# Set the locale
-RUN locale-gen en_US.UTF-8  
-ENV LANG en_US.UTF-8  
-ENV LANGUAGE en_US:en  
-ENV LC_ALL en_US.UTF-8 
- 
-# update it - yes to every prompt - + recquired packages
-RUN apt-get update && apt-get --assume-yes install \
-    build-essential git curl wget unzip tar perl
+# setup local for environment
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 # setup titans dir & clone LABSIM sources from server
 WORKDIR /labsim/dev/titans
