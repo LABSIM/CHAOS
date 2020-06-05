@@ -1,3 +1,5 @@
+# syntax = docker/dockerfile:1.0-experimental
+
 #
 # Stage 0
 #
