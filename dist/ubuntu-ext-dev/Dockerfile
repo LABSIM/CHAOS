@@ -36,8 +36,7 @@ WORKDIR /labsim/third_party
 # configure gaia
 WORKDIR /labsim/dev/titans/GAIA
 RUN chmod +x bootstrap-gaia.sh \
-    && ./bootstrap-gaia.sh  \
-    && source ~/.bashrc
+    && ./bootstrap-gaia.sh
 #    && gaia --target-ecosystem LABSIM-2.0.0 --enable-feature gnu
 
 # configure vcpkg
