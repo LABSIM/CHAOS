@@ -3,22 +3,86 @@
 = 		INSTALL			=
 =========================
 
-== store secret info
-echo 'your_super_secret_github_username' > github_username.txt
-echo 'your_super_secret_github_token' > github_token.txt
+---------------------------------------------------------------------------------------------------------------------------
+1. install docker desktop & enable BuildKit feature, optionally, install VisualStudio Code
+  -> [ https://www.docker.com/products/docker-desktop ]
+  -> [ https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds ]
 
-== build 
-docker build \
-  --no-cache \
-  --progress=plain \
-  --secret id=GITHUB_USERNAME,src=github_username.txt \
-  --secret id=GITHUB_TOKEN,src=github_token.txt \
-  --tag labsim-ubuntu-ext-dev:latest \
-  -f dist/ubuntu-ext-dev/Dockerfile \
-  .
+  +=======================================================================================================================+
+  |                                                       DEV                                                             |
+  +=======================================================================================================================+
+  |                                                                                                                       |
+  |  (1.a) -- Windows only -- activate WSL1(required) / WSL2(preffered)                                                   |
+  |    -> [ https://docs.microsoft.com/fr-fr/windows/wsl/install-win10 ]                                                  |
+  |                                                                                                                       |
+  |  (1.b) install VisualStudio code                                                                                      |
+  |    -> [ https://code.visualstudio.com/ ]                                                                              |
+  |                                                                                                                       |
+  |  (1.c) Install VSCode extension                                                                                       |
+  |    -> Docker [ https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker ]                      |
+  |    -> Kubernetes [ https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools ]  |
+  |    -> Remote dev [ https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack ] |
+  |    -> C++ [ https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools ]                                  |
+  |    -> CMake [ https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools ]                             |
+  |    -> Perl [ https://marketplace.visualstudio.com/items?itemName=d9705996.perl-toolbox ]                              |
+  |    -> INI [ https://marketplace.visualstudio.com/items?itemName=DavidWang.ini-for-vscode ]                            |
+  |    -> Shell [ https://marketplace.visualstudio.com/items?itemName=jeff-hykin.better-shellscript-syntax ]              |
+  |    -> Material Theme [ https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme ]           |
+  |                                                                                                                       |
+  +=======================================================================================================================+
 
-== clean all local images
-docker rmi -f $(docker images -a -q)
+---------------------------------------------------------------------------------------------------------------------------
+2. export secret info
+  
+  +=======================================================================================================================+
+  |                                                      LINUX                                                            |
+  +=======================================================================================================================+
+  |   [user@localhost]$ echo 'your_super_secret_github_username' > your/secret/path/github_username.txt                   |
+  |   [user@localhost]$ echo 'your_super_secret_github_token' > your/secret/path/github_token.txt                         |
+  +=======================================================================================================================+
+  |                                                     WINDOWS                                                           |
+  +=======================================================================================================================+
+  |   PS> Write-Output "your_super_secret_github_username" \                                                              |
+  |         | Out-File -append -encoding ASCII "your/secret/path/github_username.txt"                                     |
+  |   PS> Write-Output "your_super_secret_github_token" \                                                                 |
+  |         | Out-File -append -encoding ASCII "your/secret/path/github_token.txt"                                        |
+  +=======================================================================================================================+
+
+---------------------------------------------------------------------------------------------------------------------------
+3. cd GAIA dir & build container
+
+  +=======================================================================================================================+
+  |                                                      LINUX                                                            |
+  +=======================================================================================================================+
+  |   [user@localhost]$ docker build \                                                                                    |
+  |                            --no-cache \                                                                               |
+  |                            --progress=plain \                                                                         |
+  |                            --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt \                     |
+  |                            --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt \                           |
+  |                            --tag labsim-ubuntu-ext-dev:latest \                                                       |
+  |                            -f dist/ubuntu-ext-dev/Dockerfile \                                                        |
+  |                            .                                                                                          |
+  +=======================================================================================================================+
+  |                                                     WINDOWS                                                           |
+  +=======================================================================================================================+
+  |   PS> docker build \                                                                                                  |
+  |              --no-cache \                                                                                             |
+  |              --progress=plain \                                                                                       |
+  |              --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt \                                   |
+  |              --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt \                                         |
+  |              --tag labsim-ubuntu-ext-dev:latest \                                                                     |
+  |              -f dist/ubuntu-ext-dev/Dockerfile \                                                                      |
+  |              .                                                                                                        |
+  +=======================================================================================================================+
+
+---------------------------------------------------------------------------------------------------------------------------
+bonus. 
+
+  -> clean all local images: 
+  docker rmi -f $(docker images -a -q)
+  
+  -> list all local images: 
+  docker image ls
 
   ________
  /       /|

@@ -19,15 +19,6 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
-# iff. interactive shell
-if hash gnome-terminal 2>/dev/null; then
-
-	# import
-	source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
-	source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
-
-fi
-
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
 # CONFIGURE FUNCTION
@@ -98,6 +89,15 @@ function configure() {
 
 		echo -e "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
 		exit 1
+
+	fi
+		
+	# iff. interactive shell
+	if hash gnome-terminal 2>/dev/null; then
+
+		# import
+		source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
+		source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
 
 	fi
 	
@@ -238,16 +238,16 @@ function pop_cache() {
 	# check  
 	if hash gnome-terminal 2>/dev/null; then
 
-		# add interactive stop
+		# add interactive prompt
 		echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 		# display a nice & interactive procedure
-		echo -e "\t ==(interactive mode)"
+		echo -ne "\t ==(interactive mode)"
         gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
 		sleep 0.2
 		PID="$(pgrep exec.sh)"
 		wait_for_PID "$PID"
-		echo -ne "==> OK"
+		echo -e "==> OK"
 
     else
 

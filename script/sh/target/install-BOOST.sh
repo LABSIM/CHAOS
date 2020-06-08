@@ -19,10 +19,6 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
-# import
-source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
-source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
-
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
 # CONFIGURE FUNCTION
@@ -95,7 +91,16 @@ function configure() {
 		exit 1
 
 	fi
-	
+		
+	# iff. interactive shell
+	if hash gnome-terminal 2>/dev/null; then
+
+		# import
+		source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
+		source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
+
+	fi
+
 	# env
 	source "$GAIA_ROOT/script/sh/function/configure-third_party.conf.sh"
 	
@@ -229,11 +234,28 @@ function print_footer() {
 function pop_cache() {
 
 	chmod u+x exec.sh
-	gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
-	sleep 0.2
-	PID="$(pgrep exec.sh)"
-	wait_for_PID "$PID"
-	echo -e "\t==> OK"
+
+	# check  
+	if hash gnome-terminal 2>/dev/null; then
+
+		# add interactive prompt
+		echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+
+		# display a nice & interactive procedure
+		echo -ne "\t ==(interactive mode)"
+        gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
+		sleep 0.2
+		PID="$(pgrep exec.sh)"
+		wait_for_PID "$PID"
+		echo -e "==> OK"
+
+    else
+
+		# raw
+		echo -e "\t==(docker mode)"
+        ./exec.sh
+    
+	fi
 
 }
 
@@ -252,7 +274,6 @@ function push_download_op_to_cache() {
 	echo "#!/bin/bash" > exec.sh
 	echo "wget https://dl.bintray.com/boostorg/release/${GAIA_TARGET_VERSION}/source/${GAIA_TARGET_LC_NAME}_${GAIA_TARGET_VERSION//./_}.tar.gz" >> exec.sh
 	echo "mv ${GAIA_TARGET_LC_NAME}_${GAIA_TARGET_VERSION//./_}.tar.gz ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -270,7 +291,6 @@ function push_copy_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz ." >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -289,7 +309,6 @@ function push_extract_op_to_cache() {
 	echo "#!/bin/bash" > exec.sh
 	echo "tar -xzvf ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
 	echo "rm ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -307,7 +326,6 @@ function push_bootstrap_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "./bootstrap.sh" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -325,7 +343,6 @@ function push_build_and_install_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "./b2 --prefix=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} toolset=gcc address-model=64 variant=release threading=multi link=shared runtime-link=shared -j${GAIA_PARALLEL_BUILD_JOB_COUNT} install" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 

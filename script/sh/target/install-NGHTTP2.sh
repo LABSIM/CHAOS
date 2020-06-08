@@ -19,10 +19,6 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
-# import
-source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
-source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
-
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
 # CONFIGURE FUNCTION
@@ -93,6 +89,15 @@ function configure() {
 
 		echo -e "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
 		exit 1
+
+	fi
+		
+	# iff. interactive shell
+	if hash gnome-terminal 2>/dev/null; then
+
+		# import
+		source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
+		source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
 
 	fi
 	
@@ -229,11 +234,28 @@ function print_footer() {
 function pop_cache() {
 
 	chmod u+x exec.sh
-	gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
-	sleep 0.2
-	PID="$(pgrep exec.sh)"
-	wait_for_PID "$PID"
-	echo -e "\t==> OK"
+
+	# check  
+	if hash gnome-terminal 2>/dev/null; then
+
+		# add interactive prompt
+		echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+
+		# display a nice & interactive procedure
+		echo -ne "\t ==(interactive mode)"
+        gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
+		sleep 0.2
+		PID="$(pgrep exec.sh)"
+		wait_for_PID "$PID"
+		echo -e "==> OK"
+
+    else
+
+		# raw
+		echo -e "\t==(docker mode)"
+        ./exec.sh
+    
+	fi
 
 }
 
@@ -251,7 +273,6 @@ function push_clone_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "git clone https://github.com/${GAIA_TARGET_LC_NAME}/${GAIA_TARGET_LC_NAME}.git" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -269,7 +290,6 @@ function push_copy_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz ." >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -288,7 +308,6 @@ function push_extract_op_to_cache() {
 	echo "#!/bin/bash" > exec.sh
 	echo "tar -xvzf ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
 	echo "rm ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -306,7 +325,6 @@ function push_checkout_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "git checkout tags/v${GAIA_TARGET_VERSION}" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -324,7 +342,6 @@ function push_init_submodule_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "git submodule update --init --recursive" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -346,7 +363,6 @@ function push_configure_op_to_cache() {
 	# cmake exist
 	echo "#!/bin/bash" > exec.sh
 	echo "cmake -DCMAKE_INSTALL_PREFIX=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -DCMAKE_BUILD_TYPE=Release -DENABLE_APP=ON -DENABLE_THREADS=ON -DENABLE_ASIO_LIB=ON -DENABLE_EXAMPLES=OFF -DENABLE_DEBUG=OFF -DLIBEV_INCLUDE_DIR=${GAIA_THIRD_PARTY_HOME}/libev-${GAIA_THIRD_PARTY_LIBEV_VERSION}/include -DLIBEV_LIBRARY=${GAIA_THIRD_PARTY_HOME}/libev-${GAIA_THIRD_PARTY_LIBEV_VERSION}/lib/libev.so .." >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -364,7 +380,6 @@ function push_build_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "cmake --build . -- -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -382,7 +397,6 @@ function push_install_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "cmake --build . --target install" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 

@@ -19,10 +19,6 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
-# import 
-source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
-source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
-
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
 # CONFIGURE FUNCTION
@@ -93,6 +89,15 @@ function configure() {
 
 		echo -e "(pas de carte reseau connectee ! verifier vos parametres systemes et/ou contactez votre administrateur DSI => FAIL)... "
 		exit 1
+
+	fi
+		
+	# iff. interactive shell
+	if hash gnome-terminal 2>/dev/null; then
+
+		# import
+		source "$GAIA_ROOT/script/sh/function/trap.conf.sh"
+		source "$GAIA_ROOT/script/sh/function/pid.conf.sh"
 
 	fi
 	
@@ -229,11 +234,28 @@ function print_footer() {
 function pop_cache() {
 
 	chmod u+x exec.sh
-	gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
-	sleep 0.2
-	PID="$(pgrep exec.sh)"
-	wait_for_PID "$PID"
-	echo -e "\t==> OK"
+
+	# check  
+	if hash gnome-terminal 2>/dev/null; then
+
+		# add interactive prompt
+		echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+
+		# display a nice & interactive procedure
+		echo -ne "\t ==(interactive mode)"
+        gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
+		sleep 0.2
+		PID="$(pgrep exec.sh)"
+		wait_for_PID "$PID"
+		echo -e "==> OK"
+
+    else
+
+		# raw
+		echo -e "\t==(docker mode)"
+        ./exec.sh
+    
+	fi
 
 }
 
@@ -251,7 +273,6 @@ function push_clone_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "git clone https://github.com/ADLINK-IST/${GAIA_TARGET_LC_NAME}.git" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -269,7 +290,6 @@ function push_copy_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz ." >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -288,7 +308,6 @@ function push_extract_op_to_cache() {
 	echo "#!/bin/bash" > exec.sh
 	echo "tar -xvzf ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
 	echo "rm ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -306,7 +325,6 @@ function push_checkout_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "git checkout tags/OSPL_V${GAIA_TARGET_MAJOR}_${GAIA_TARGET_MINOR}_${GAIA_TARGET_PATCH}OSS_RELEASE" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -324,7 +342,6 @@ function push_init_submodule_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "git clone --recursive https://github.com/ADLINK-IST/MPC_ROOT.git submods/MPC_ROOT" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -344,7 +361,6 @@ function push_configure_op_to_cache() {
 	echo "sed -i 's/JAVAC_COMMAND=javac/JAVAC_COMMAND=/g' bin/checkconf" >> exec.sh
 	echo "sed -i 's/MAVEN_FOUND=/# fuck this :) --> MAVEN_FOUND=/g' bin/checkconf" >> exec.sh
 	echo "export OSPL_QT_IS_ON=no && ./configure x86_64.linux-release" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -362,7 +378,6 @@ function push_build_op_to_cache() {
 	# the op
 	echo "#!/bin/bash" > exec.sh
 	echo "source envs-x86_64.linux-release.sh && make -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
@@ -381,7 +396,6 @@ function push_install_op_to_cache() {
 	echo "#!/bin/bash" > exec.sh
 	echo "source envs-x86_64.linux-release.sh && make install" >> exec.sh
 	echo "mkdir ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} && cp -rv install/HDE/x86_64.linux/* ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}" >> exec.sh
-	echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 }
 
