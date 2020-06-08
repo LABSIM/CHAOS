@@ -36,10 +36,6 @@ echo "- setup GAIA_ROOT [${GAIA_ROOT}]"
 echo "- setup GAIA environment"
 cat ${GAIA_ROOT}/script/sh/GAIA.bashrc >> ~/.bashrc
 
-# reload
-echo "- reload a clean GAIA environment"
-source ~/.bashrc
-
 # required PERL
 echo "- installing perl v5.30.3"
-/bin/bash ${GAIA_ROOT}/script/sh/target/install-PERL.sh 5 30 3
+/bin/bash -i ${GAIA_ROOT}/script/sh/target/install-PERL.sh 5 30 3

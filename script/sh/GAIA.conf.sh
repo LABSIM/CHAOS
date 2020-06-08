@@ -219,7 +219,7 @@ function __internal_labsim_gaia() {
 alias gaia="__internal_labsim_gaia"
 
 # default language -> easier
-export LANG=en_US.UTF-8
+#export LANG=en_US.UTF-8
 
 ##############################################################################
 ## Magic Section ! Fun, Functions and more ..				    ##

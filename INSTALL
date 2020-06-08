@@ -59,8 +59,8 @@
   |                            --progress=plain \                                                                         |
   |                            --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt \                     |
   |                            --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt \                           |
-  |                            --tag labsim-ubuntu-ext-dev:latest \                                                       |
-  |                            -f dist/ubuntu-ext-dev/Dockerfile \                                                        |
+  |                            -f dist/{container}/Dockerfile \                                                           |
+  |                            --tag labsim-{container}:{tag} \                                                           |
   |                            .                                                                                          |
   +=======================================================================================================================+
   |                                                     WINDOWS                                                           |
@@ -70,8 +70,8 @@
   |              --progress=plain \                                                                                       |
   |              --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt \                                   |
   |              --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt \                                         |
-  |              --tag labsim-ubuntu-ext-dev:latest \                                                                     |
-  |              -f dist/ubuntu-ext-dev/Dockerfile \                                                                      |
+  |              -f dist/{container}/Dockerfile \                                                                         |
+  |              --tag labsim-{container}:{tag} \                                                                         |
   |              .                                                                                                        |
   +=======================================================================================================================+
 
@@ -83,6 +83,9 @@ bonus.
   
   -> list all local images: 
   docker image ls
+
+  -> run interactive shell
+  docker run --rm -it {container}:{tag}
 
   ________
  /       /|
