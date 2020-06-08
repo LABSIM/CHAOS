@@ -219,7 +219,7 @@ function __internal_labsim_gaia() {
 alias gaia="__internal_labsim_gaia"
 
 # Prevent multiple sourcing
-GAIA_ENV_HAS_BEEN_SOURCED=yes
+GAIA_HAS_BEEN_CONFIGURED=yes
 
 # default language -> easier
 #export LANG=en_US.UTF-8

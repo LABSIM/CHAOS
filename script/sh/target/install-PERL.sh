@@ -20,7 +20,7 @@
 #
 
 # iff.
-[[ $GAIA_HAS_BEEN_SOURCED != yes && -f ~/.bashrc ]] && source ~/.bashrc
+[[ $GAIA_HAS_BEEN_CONFIGURED != yes && -f ~/.bashrc ]] && source ~/.bashrc
 
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
