@@ -49,7 +49,6 @@ else
 	fi
 	
 	if [ -f ${GAIA_CONF_FILE} ]; then
-		echo "found conf : ${GAIA_CONF_FILE}"
 		source ${GAIA_CONF_FILE}
 	fi
 

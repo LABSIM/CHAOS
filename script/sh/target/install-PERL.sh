@@ -19,6 +19,9 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
+# iff.
+[[ $GAIA_HAS_BEEN_SOURCED != yes && -f ~/.bashrc ]] && source ~/.bashrc
+
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
 # CONFIGURE FUNCTION
