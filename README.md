@@ -8,8 +8,8 @@ Todo
 
 jump to your config :
 
-- [standalone linux](#Standalone Linux)
-- [docker](#Docker)
+- [standalone linux](#standalone-linux)
+- [docker](#docker)
 
 ### Standalone Linux
 
