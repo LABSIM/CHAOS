@@ -395,6 +395,7 @@ function push_cpan_op_to_cache() {
 
 	# finally, the op
 	echo "#!/bin/bash" > exec.sh
+	echo "source ${GAIA_ROOT}/script/sh/GAIA.bashrc" >> exec.sh
 	echo "curl -L http://cpanmin.us -o ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm" >> exec.sh
 	echo "chmod +x ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm --verbose local::lib" >> exec.sh
