@@ -395,27 +395,29 @@ function push_cpan_op_to_cache() {
 
 	# finally, the op
 	echo "#!/bin/bash" > exec.sh
-	echo "curl -L http://cpanmin.us | perl - App::cpanminus" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm local::lib" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm FindBin" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm Switch" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm Env" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm Config" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm Getopt::Long" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm Pod::Usage" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm Term::ANSIColor" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm Time::HiRes" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm List::Util" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm Data::Dumper" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm File::Copy::Recursive" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm File::Remove" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm File::Spec" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm File::HomeDir" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm YAML::XS" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm Net::Address::IP::Local" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm IPC::System::Simple" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm XML::SimpleObject::LibXML" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm Graph" >> exec.sh
+	echo "cd ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin"
+	echo "curl -L http://cpanmin.us -o cpanm" >> exec.sh
+	echo "chmod +x cpanm"
+	echo "cpanm local::lib" >> exec.sh
+	echo "cpanm FindBin" >> exec.sh
+	echo "cpanm Switch" >> exec.sh
+	echo "cpanm Env" >> exec.sh
+	echo "cpanm Config" >> exec.sh
+	echo "cpanm Getopt::Long" >> exec.sh
+	echo "cpanm Pod::Usage" >> exec.sh
+	echo "cpanm Term::ANSIColor" >> exec.sh
+	echo "cpanm Time::HiRes" >> exec.sh
+	echo "cpanm List::Util" >> exec.sh
+	echo "cpanm Data::Dumper" >> exec.sh
+	echo "cpanm File::Copy::Recursive" >> exec.sh
+	echo "cpanm File::Remove" >> exec.sh
+	echo "cpanm File::Spec" >> exec.sh
+	echo "cpanm File::HomeDir" >> exec.sh
+	echo "cpanm YAML::XS" >> exec.sh
+	echo "cpanm Net::Address::IP::Local" >> exec.sh
+	echo "cpanm IPC::System::Simple" >> exec.sh
+	echo "cpanm XML::SimpleObject::LibXML" >> exec.sh
+	echo "cpanm Graph" >> exec.sh
 	
 }
 
