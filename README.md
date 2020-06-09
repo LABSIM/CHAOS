@@ -93,7 +93,6 @@ Export secret info to enable 2FA container access !
 
 > for more info, [see here](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
 
-
 Finally, dir into your local GAIA root & build container
 
 - Linux :
