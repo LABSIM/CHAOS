@@ -8,10 +8,10 @@ Todo
 
 jump to your config :
 
-- [standalone linux](#standalone-linux-quick)
-- [docker](#docker-quick)
+- [standalone linux](#Standalone Linux)
+- [docker](#Docker)
 
-### Standalone Linux {#standalone-linux-quick}
+### Standalone Linux
 
 Run a standard shell from GAIA root directory.
 
@@ -50,7 +50,7 @@ Then, deploy your ecosystem with feature(s) :
                       --enable-feature <feature_A_name>,<feature_B_name>,(...),<feature_N_name>
 ```
 
-### Docker {#docker-quick}
+### Docker
 
 Install docker desktop & enable BuildKit feature
 
