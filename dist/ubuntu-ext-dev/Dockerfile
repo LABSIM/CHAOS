@@ -28,14 +28,11 @@ RUN --mount=type=secret,id=GITHUB_USERNAME,required \
 WORKDIR /labsim/dev/third_party
 RUN git clone https://github.com/Microsoft/vcpkg.git
 
-# setup third_party install dir
-WORKDIR /labsim/third_party
-
 # configure gaia
 WORKDIR /labsim/dev/titans/GAIA
 RUN chmod +x bootstrap-gaia.sh \
-    && ./bootstrap-gaia.sh
-#RUN gaia --target-ecosystem LABSIM-2.0.0 --enable-feature gnu,dev,sf,sb
+    && ./bootstrap-gaia.sh \
+    && gaia --target-ecosystem LABSIM-2.0.0 --enable-feature gnu,dev,sf,sb
 
 # configure vcpkg
 #WORKDIR /labsim/third_party/vcpkg
@@ -43,3 +40,5 @@ RUN chmod +x bootstrap-gaia.sh \
 #    && ./bootstrap-vcpkg.sh -disableMetrics \
 #    && vcpkg integrate install
 
+# cleanup temporary
+RUN rm -rf /tmp
