@@ -33,7 +33,7 @@ GAIA_ECOSYSTEM_DETAIL="$GAIA_ECOSYSTEM_DETAIL\n\t+--[ LABSIM : <Olympiens> ]"
 ######################################################################
 
 # BASE
-OLYMPIENS_HOME=$DEV_HOME/Olympiens
+OLYMPIENS_HOME=$DEV_HOME/olympiens
 
 export OLYMPIENS_HOME
 

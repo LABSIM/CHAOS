@@ -5,7 +5,9 @@
 
 # dynamically check DSI environment first (normally DSI configuration use "module" & create a "/tmp_user/$(hostname)/$(whoami)/" localhosted directory , sooooo....), then check 
 
-GAIA_HOME_DSI_HINT="/tmp_user/$(hostname --short)/$(whoami)"
+set GAIA_HOME_DSI_HINT="/tmp_user/$(hostname --short)/$(whoami)"
+set GAIA_CONF_FILE=""
+set GAIA_FOUND_DSI_HOST=false
 
 if hash module 2>/dev/null; then
 
@@ -19,10 +21,12 @@ if hash module 2>/dev/null; then
 		fi
 
 		GAIA_FOUND_DSI_HOST=true
+		GAIA_CONF_FILE=$(find $GAIA_HOME_DSI_HINT -type f -name "*GAIA.conf.sh" 2>/dev/null)
 
-		if [ -f "$(find ${GAIA_HOME_DSI_HINT} -type f -name "*GAIA.conf.sh" 2>/dev/null)" ]; then
+		if [ -f ${GAIA_CONF_FILE} ]; then
 
-			source $(find $GAIA_HOME_DSI_HINT -type f -name "*GAIA.conf.sh" 2>/dev/null)
+			echo "[GAIA][DSI] found ${GAIA_CONF_FILE} environment configuration file"
+			source ${GAIA_CONF_FILE}
 
 		else
 
@@ -35,9 +39,6 @@ if hash module 2>/dev/null; then
 	
 else 
 
-	GAIA_FOUND_DSI_HOST=false
-	set GAIA_CONF_FILE=""
-
 	if [ ! -z $(find ~/ -type f -name "*GAIA.conf.sh" 2>/dev/null) ]; then
 		GAIA_CONF_FILE=$(find ~/ -type f -name "*GAIA.conf.sh" 2>/dev/null)
 	elif [ ! -z $(find / -type f -name "*GAIA.conf.sh" 2>/dev/null) ]; then
@@ -49,13 +50,15 @@ else
 	fi
 	
 	if [ -f ${GAIA_CONF_FILE} ]; then
-		source ${GAIA_CONF_FILE}
-	fi
 
-	unset GAIA_CONF_FILE
+		echo "[GAIA] found ${GAIA_CONF_FILE} environment configuration file"
+		source ${GAIA_CONF_FILE}
+
+	fi
 
 fi
 
+unset GAIA_CONF_FILE
 unset GAIA_FOUND_DSI_HOST
 unset GAIA_HOME_DSI_HINT
 

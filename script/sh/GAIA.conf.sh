@@ -38,9 +38,6 @@ export GAIA_ROOT="${DIR}"
 # Distribution detail
 export GAIA_ECOSYSTEM_DETAIL=""
 
-# clean ASAP
-unset SCRIPT_PATH
-
 # configure
 source "${GAIA_ROOT}/script/sh/function/configure-env.conf.sh"
 source "${GAIA_ROOT}/script/sh/function/configure-third_party.conf.sh"

@@ -33,7 +33,7 @@ GAIA_ECOSYSTEM_DETAIL="$GAIA_ECOSYSTEM_DETAIL\n\t+--[ LABSIM : <Contract> ]"
 ######################################################################
 
 # BASE
-CONTRACT_HOME=$DEV_HOME/Contract
+CONTRACT_HOME=$DEV_HOME/contract
 
 export CONTRACT_HOME
 

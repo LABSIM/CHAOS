@@ -31,7 +31,7 @@ GAIA_ECOSYSTEM_DETAIL="$GAIA_ECOSYSTEM_DETAIL\n\t+--[ LABSIM : <Colosses> ]"
 ## 07/02/12 - Kinani Nawfel											##
 ######################################################################
 
-GAIA_COLOSSES_HOME=$GAIA_DEV_HOME/Colosses
+GAIA_COLOSSES_HOME=$GAIA_DEV_HOME/colosses
 
 export COLOSSES_HOME
 

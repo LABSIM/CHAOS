@@ -24,9 +24,9 @@ GAIA_ECOSYSTEM_DETAIL+="\n\t+--[ LABSIM : <Titans> ]"
 
 # == RHEA 
 
-if [ -d "${GAIA_DEV_HOME}/Titans/RHEA" ]; then
+if [ -d "${GAIA_DEV_HOME}/titans/RHEA" ]; then
 	
-	RHEA_ROOT=${GAIA_DEV_HOME}/Titans/RHEA
+	RHEA_ROOT=${GAIA_DEV_HOME}/titans/RHEA
 	
 	export RHEA_ROOT
 	
@@ -45,9 +45,9 @@ fi
 
 # == OCEAN 
 
-if [ -d "${GAIA_DEV_HOME}/Titans/OCEAN" ]; then
+if [ -d "${GAIA_DEV_HOME}/titans/OCEAN" ]; then
 	
-	OCEAN_ROOT=${GAIA_DEV_HOME}/Titans/OCEAN
+	OCEAN_ROOT=${GAIA_DEV_HOME}/titans/OCEAN
 	
 	export OCEAN_ROOT
 	
@@ -66,9 +66,9 @@ fi
 
 # == OURANOS
 
-if [ -d "${GAIA_DEV_HOME}/Titans/OURANOS" ]; then
+if [ -d "${GAIA_DEV_HOME}/titans/OURANOS" ]; then
 
-	OURANOS_ROOT=${GAIA_DEV_HOME}/Titans/OURANOS
+	OURANOS_ROOT=${GAIA_DEV_HOME}/titans/OURANOS
 	#OURANOS_INCLUDEDIR=$OURANOS_ROOT/include
 	#OURANOS_LIBRARYDIR=$OURANOS_ROOT/lib
 	#OURANOS_BINARYDIR=$OURANOS_ROOT/bin
@@ -85,9 +85,9 @@ fi
 
 # == THETYS
 
-if [ -d "${GAIA_DEV_HOME}/Titans/THETYS" ]; then
+if [ -d "${GAIA_DEV_HOME}/titans/THETYS" ]; then
 
-	THETYS_ROOT=${GAIA_DEV_HOME}/Titans/THETYS
+	THETYS_ROOT=${GAIA_DEV_HOME}/titans/THETYS
 	#THETYS_INCLUDEDIR=$THETYS_ROOT/include
 	#THETYS_LIBRARYDIR=$THETYS_ROOT/lib
 	#THETYS_BINARYDIR=$THETYS_ROOT/bin
@@ -104,9 +104,9 @@ fi
 
 # == KRONOS-DDS 
 
-if [ -d "${GAIA_DEV_HOME}/Titans/KRONOS-DDS" ]; then
+if [ -d "${GAIA_DEV_HOME}/titans/KRONOS-DDS" ]; then
 	
-	KRONOS_ROOT=${GAIA_DEV_HOME}/Titans/KRONOS
+	KRONOS_ROOT=${GAIA_DEV_HOME}/titans/KRONOS
 	#KRONOSDDS_INCLUDEDIR=$KRONOSDDS_ROOT/include
 	#KRONOSDDS_LIBRARYDIR=$KRONOSDDS_ROOT/lib
 	#KRONOSDDS_BINARYDIR=$KRONOSDDS_ROOT/bin
