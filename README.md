@@ -8,8 +8,9 @@ Todo
 
 jump to your config :
 
-- [standalone linux](#standalone-linux)
-- [docker](#docker)
+- [Standalone Linux](#standalone-linux)
+- [Docker Container](#docker)
+- _*Windows only*_ - [Windows Subsystem for Linux (WSL)](#wsl)
 
 ### Standalone Linux
 
@@ -49,6 +50,8 @@ Then, deploy your ecosystem with feature(s) :
 ```
 
 ### Docker
+
+> official documentation, [see here](https://code.visualstudio.com/docs/remote/containers)
 
 Install docker desktop & enable BuildKit feature
 
@@ -117,11 +120,29 @@ Finally, dir into your local GAIA root & build container
                    .
   ```
 
-Bonus !
+> Bonus !
+>
+> - clean all local images : `docker rmi -f $(docker images -a -q)`
+> - list all local images: `docker image ls`
+> - run interactive shell: `docker run --rm -it {container}:{tag}`
 
-- clean all local images : `docker rmi -f $(docker images -a -q)`
-- list all local images: `docker image ls`
-- run interactive shell: `docker run --rm -it {container}:{tag}`
+### WSL
+
+> official documentation, [see here](https://code.visualstudio.com/docs/remote/wsl)
+
+1. Activate WSL1(_required_) / WSL2(*preffered*) : [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
+2. Install Visual Studio Code : [VSCode](https://code.visualstudio.com/)
+3. Install VSCode extension :
+   - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+   - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
+   - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+   - [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
+   - [CMake](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
+   - [Perl](https://marketplace.visualstudio.com/items?itemName=d9705996.perl-toolbox)
+   - [INI](https://marketplace.visualstudio.com/items?itemName=DavidWang.ini-for-vscode)
+   - [Markdown](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
+   - [Shell](https://marketplace.visualstudio.com/items?itemName=jeff-hykin.better-shellscript-syntax)
+   - [Material Theme, bonus ;)](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme)
 
 ## License
 
