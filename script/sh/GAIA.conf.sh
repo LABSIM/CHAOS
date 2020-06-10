@@ -211,9 +211,6 @@ function gaia() {
 	&& echo -e "\n## END LABSIM ROUTINES\n"
 } # gaia()
 
-# Prevent multiple sourcing
-GAIA_HAS_BEEN_CONFIGURED=yes
-
 # default language -> easier
 #export LANG=en_US.UTF-8
 
@@ -225,7 +222,7 @@ GAIA_HAS_BEEN_CONFIGURED=yes
 # colored man :) --> #geek
 # [ https://gist.github.com/cocoalabs/2fb7dc2199b0d4bf160364b8e557eb66 ]
 #
-man() {
+function man() {
 	env \
 		LESS_TERMCAP_mb=$(printf "\e[1;31m") \
 		LESS_TERMCAP_md=$(printf "\e[1;31m") \

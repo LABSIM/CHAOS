@@ -19,9 +19,6 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
-# iff.
-[[ $GAIA_HAS_BEEN_CONFIGURED != yes && -f ~/.bashrc ]] && source ~/.bashrc
-
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
 # CONFIGURE FUNCTION
@@ -254,9 +251,9 @@ function pop_cache() {
 
     else
 
-		# raw
-		echo -e "\t==(docker mode)"
-        ./exec.sh
+		# non-interactive so we need to source GAIA env into current terminal
+		echo -e "\t==(non-interactive mode)=X"
+		/bin/bash -c "source ${GAIA_ROOT}/script/sh/GAIA.bashrc && ./exec.sh"
     
 	fi
 	

@@ -19,9 +19,6 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
-# iff.
-[[ $GAIA_HAS_BEEN_CONFIGURED != yes && -f ~/.bashrc ]] && source ~/.bashrc
-
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
 # CONFIGURE FUNCTION
@@ -237,11 +234,28 @@ function print_footer() {
 function pop_cache() {
 
 	chmod u+x exec.sh
-	gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
-	sleep 0.2
-	PID="$(pgrep exec.sh)"
-	wait_for_PID "$PID"
-	echo -e "\t==> OK"
+
+	# check  
+	if hash gnome-terminal 2>/dev/null; then
+
+		# add interactive prompt
+		echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
+
+		# display a nice & interactive procedure
+		echo -ne "\t==(interactive mode)"
+        gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
+		sleep 0.2
+		PID="$(pgrep exec.sh)"
+		wait_for_PID "$PID"
+		echo -e "==> OK"
+
+    else
+
+		# non-interactive so we need to source GAIA env into current terminal
+		echo -e "\t==(non-interactive mode)=X"
+		/bin/bash -c "source ${GAIA_ROOT}/script/sh/GAIA.bashrc && ./exec.sh"
+    
+	fi
 
 }
 

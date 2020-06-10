@@ -19,9 +19,6 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
-# iff.
-[[ $GAIA_HAS_BEEN_CONFIGURED != yes && -f ~/.bashrc ]] && source ~/.bashrc
-
 ###~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 #
 # CONFIGURE FUNCTION
@@ -245,7 +242,7 @@ function pop_cache() {
 		echo "read -p \"Appuyez sur [Entree] pour continuer...\"" >> exec.sh
 
 		# display a nice & interactive procedure
-		echo -ne "\t ==(interactive mode)"
+		echo -ne "\t==(interactive mode)"
         gnome-terminal --working-directory "$PWD" --title "LABSIM - ${GAIA_TARGET_UC_NAME} ${GAIA_TARGET_VERSION}" --hide-menubar --command "./exec.sh" --window
 		sleep 0.2
 		PID="$(pgrep exec.sh)"
@@ -254,9 +251,9 @@ function pop_cache() {
 
     else
 
-		# raw
-		echo -e "\t==(docker mode)"
-        ./exec.sh
+		# non-interactive so we need to source GAIA env into current terminal
+		echo -e "\t==(non-interactive mode)=X"
+		/bin/bash -c "source ${GAIA_ROOT}/script/sh/GAIA.bashrc && ./exec.sh"
     
 	fi
 

@@ -30,14 +30,12 @@ if [ -d "${GAIA_DEV_HOME}/titans/RHEA" ]; then
 	
 	export RHEA_ROOT
 	
-	# alias 
-	function __internal_labsim_rhea() {
+	# function 
+	function rhea() {
 		echo -e "\n## BEGIN LABSIM ROUTINES\n" \
 		&& time perl -I $RHEA_ROOT/script/module $RHEA_ROOT/script/RHEA.pl "$@"	\
 		&& echo -e "\n## END LABSIM ROUTINES\n"
-	} # __internal_labsim_rhea()
-	
-	alias rhea="__internal_labsim_rhea"
+	} # rhea()
 	
 	GAIA_ECOSYSTEM_DETAIL+="\n\t|\t* RHEA"
 	
@@ -51,14 +49,12 @@ if [ -d "${GAIA_DEV_HOME}/titans/OCEAN" ]; then
 	
 	export OCEAN_ROOT
 	
-	# alias 
-	function __internal_labsim_ocean() {
+	# function 
+	function ocean() {
 		echo -e "\n## BEGIN LABSIM ROUTINES\n" 									\
 		&& time perl -I $OCEAN_ROOT/script/module $OCEAN_ROOT/script/OCEAN.pl "$@"	\
 		&& echo -e "\n## END LABSIM ROUTINES\n"
-	} # __internal_labsim_ocean()
-	
-	alias ocean="__internal_labsim_ocean"
+	} # ocean()
 	
 	GAIA_ECOSYSTEM_DETAIL+="\n\t|\t* OCEAN"
 
