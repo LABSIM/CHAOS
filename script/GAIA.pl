@@ -634,7 +634,7 @@ sub function_DeployTargetEcosystem {
 							case "linux" {
 								
 								@command_line = (
-						    		$Config{sh},
+						    		"/bin/bash",
 						    		$var_gaia_root."/script/sh/target/install-".$third_party_ref->{Name}.".sh",
 						    		$third_party_ref->{Major},
 						    		$third_party_ref->{Minor},

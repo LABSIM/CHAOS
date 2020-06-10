@@ -32,7 +32,7 @@ RUN git clone https://github.com/Microsoft/vcpkg.git
 WORKDIR /labsim/dev/titans/GAIA
 RUN chmod +x bootstrap-gaia.sh \
     && ./bootstrap-gaia.sh --target-ecosystem LABSIM-2.0.0 --enable-feature gnu,dev,sf,sb
-
+    
 # configure vcpkg
 #WORKDIR /labsim/third_party/vcpkg
 #RUN chmod +x booststrap-vcpkg.sh \ 
