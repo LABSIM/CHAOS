@@ -31,7 +31,7 @@ RUN git clone https://github.com/Microsoft/vcpkg.git
 # configure gaia
 WORKDIR /labsim/dev/titans/GAIA
 RUN chmod +x bootstrap-gaia.sh \
-    && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem LABSIM-2.0.0 --enable-feature gnu --enable-feature dev --enable-feature sf --enable-feature sb
+    && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem LABSIM-2.0.0 --enable-feature gnu=0 --enable-feature dev=1 --enable-feature sf=2 --enable-feature sb=3  
     
 # configure vcpkg
 #WORKDIR /labsim/third_party/vcpkg

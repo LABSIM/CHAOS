@@ -298,12 +298,15 @@ sub function_ParseCommandLine {
 			log_Error("function_ParseCommandLine","found --target-ecosystem option but incompatible --list-available option detected ! check your command-line...") if($arg_listAvailable_flag);
 	
         },
-        'enable-feature=s' => sub {
+        'enable-feature=s%' => sub {
         	
         	# extract
         	my ($arg_name) = shift;
         	$arg_targetFeature_flag = 1;
-			push(@arg_targetFeature_array, split(/,/,join(',',@_)));
+
+			push(@{$list{$_[1]}}, $_[2])
+			sort values %list
+			@arg_targetFeature_array = ( keys %list );
 			
 			# check incompatibility
 			log_Error("function_ParseCommandLine","found --enable-feature option but incompatible --detailled-ecosystem option detected ! check your command-line...") if($arg_detailledEcosystem_flag);
@@ -837,10 +840,10 @@ B<gaia> I<[options]>
  Argument : REQUIRED=[ecosystem_name]
  Start deploying requested GAIA simulation software ecosystem on current host. A set of feature to enable should be specified.
  
-=item -e B<name>, --enable-feature=B<name>
+=item -e B<name>=B<order>, --enable-feature=B<name>=B<order>
 
- Argument : REQUIRED=[feature_name1, feature_name2, ...] | MULTITOKEN
- A comma separated list of target related feature to enable during deployment. A targeted ecosystem should be specified.
+ Argument : REQUIRED=[feature_name1=0, feature_name2=1, ...] | MULTITOKEN
+ A hash list of target related feature to enable during deployment and their respective order of execution. A targeted ecosystem should be specified.
 
 =item -h, --help
  
