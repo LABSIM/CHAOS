@@ -45,7 +45,7 @@ if [ ! $# -eq 0 ]; then
 
   # running gaia with arg
   echo "- running GAIA with arg [$@]"
-  /bin/bash -c "source ${GAIA_ROOT}/script/sh/GAIA.bashrc && gaia $@"
+  /bin/bash -c "source ${GAIA_ROOT}/script/sh/GAIA.bashrc && gaia $@" /bin/bash "$@"
 
 fi
 
