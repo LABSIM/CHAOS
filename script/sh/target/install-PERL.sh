@@ -463,8 +463,8 @@ print_header
 	pop_cache
 
 	# == check ==
-	push_check_op_to_cache
-	pop_cache
+	#push_check_op_to_cache
+	#pop_cache
 
 	# == install ==
 	push_install_op_to_cache
