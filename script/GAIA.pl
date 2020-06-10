@@ -303,12 +303,14 @@ sub function_ParseCommandLine {
         	# extract
         	my ($arg_name) = shift;
         	$arg_targetFeature_flag = 1;
-
 			my %arg_list;
-			push(@{$arg_list{$_[1]}}, $_[2])
-			sort values %arg_list
+			push(@{$arg_list{$_[1]}}, $_[2]);
+			sort values %arg_list;
 			@arg_targetFeature_array = ( keys %arg_list );
-			
+
+			# print info
+			log_Debug("function_ParseCommandLine","found feature in order [".join(",",@arg_targetFeature_array)); 
+
 			# check incompatibility
 			log_Error("function_ParseCommandLine","found --enable-feature option but incompatible --detailled-ecosystem option detected ! check your command-line...") if($arg_detailledEcosystem_flag);
 			log_Error("function_ParseCommandLine","found --enable-feature option but incompatible --list-available option detected ! check your command-line...") if($arg_listAvailable_flag);
