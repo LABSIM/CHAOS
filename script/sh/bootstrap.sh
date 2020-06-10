@@ -44,7 +44,7 @@ echo "- recquirement : installing perl v5.30.3 & CPAN modules"
 if [ ! $# -eq 0 ]; then
 
   # running gaia with arg
-  echo "- running GAIA"
+  echo "- running GAIA with arg [$@]"
   /bin/bash -c "source ${GAIA_ROOT}/script/sh/GAIA.bashrc && gaia $@"
 
 fi

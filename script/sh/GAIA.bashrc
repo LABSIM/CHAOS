@@ -25,7 +25,6 @@ if hash module 2>/dev/null; then
 
 		if [ -f ${GAIA_CONF_FILE} ]; then
 
-			echo "[GAIA][DSI] found ${GAIA_CONF_FILE} environment configuration file"
 			source ${GAIA_CONF_FILE}
 
 		else
@@ -51,7 +50,6 @@ else
 	
 	if [ -f ${GAIA_CONF_FILE} ]; then
 
-		echo "[GAIA] found ${GAIA_CONF_FILE} environment configuration file"
 		source ${GAIA_CONF_FILE}
 
 	fi
