@@ -298,11 +298,11 @@ sub function_ParseCommandLine {
 			log_Error("function_ParseCommandLine","found --target-ecosystem option but incompatible --list-available option detected ! check your command-line...") if($arg_listAvailable_flag);
 	
         },
-        'enable-feature=s@' => sub {
+        'enable-feature=s' => sub {
         	
         	# extract
         	my ($arg_name) = shift;
-        	$arg_targetFeature_flag   = 1;
+        	$arg_targetFeature_flag = 1;
 			push(@arg_targetFeature_array, split(/,/,join(',',@_)));
 			
 			# check incompatibility
