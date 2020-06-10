@@ -40,15 +40,6 @@ cat ${GAIA_ROOT}/script/sh/GAIA.bashrc >> ~/.bashrc
 echo "- recquirement : installing perl v5.30.3 & CPAN modules"
 /bin/bash -c "source ${GAIA_ROOT}/script/sh/GAIA.bashrc && ${GAIA_ROOT}/script/sh/target/install-PERL.sh 5 30 3"
 
-# check if any arg
-if [ ! $# -eq 0 ]; then
-
-  # running gaia with arg
-  echo "- running GAIA with arg [$@]"
-  /bin/bash -c "source ${GAIA_ROOT}/script/sh/GAIA.bashrc && gaia $@" /bin/bash "$@"
-
-fi
-
-# print
-  echo "- GAIA environment"
-/bin/bash -c "source ${GAIA_ROOT}/script/sh/GAIA.bashrc && gaia"
+# running gaia with arg
+echo "- running GAIA"
+/bin/bash -c "source ${GAIA_ROOT}/script/sh/GAIA.bashrc && gaia" /bin/bash "$@"
