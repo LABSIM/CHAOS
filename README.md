@@ -44,6 +44,26 @@ Then, deploy your ecosystem with feature(s) :
  [user@localhost]$ gaia --target-ecosystem <ecosystem_name> --enable-feature <feature_A_name>,<feature_B_name>,(...),<feature_N_name>
 ```
 
+### WSL
+
+> official documentation, [see here](https://code.visualstudio.com/docs/remote/wsl)
+
+1. Activate WSL1(_required_) : [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
+2. Install a WSL distro, for exemple [Ubuntu 20.04 LTS](https://www.microsoft.com/fr-fr/p/ubuntu-2004-lts/9n6svws3rx71). For more distro [see here](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10#install-your-linux-distribution-of-choice)
+3. Install Visual Studio Code : [VSCode](https://code.visualstudio.com/)
+4. Install VSCode extension :
+   - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+   - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
+   - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+   - [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
+   - [CMake](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
+   - [Perl](https://marketplace.visualstudio.com/items?itemName=d9705996.perl-toolbox)
+   - [INI](https://marketplace.visualstudio.com/items?itemName=DavidWang.ini-for-vscode)
+   - [Markdown](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
+   - [Shell](https://marketplace.visualstudio.com/items?itemName=jeff-hykin.better-shellscript-syntax)
+   - [Material Theme, bonus ;)](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme)
+5. From VSCode, run a wsl console & start developping as a [Standalone Linux](#standalone-linux) configuration.
+
 ### Docker
 
 > official documentation, [see here](https://code.visualstudio.com/docs/remote/containers)
@@ -106,24 +126,6 @@ Finally, dir into your local GAIA root & build container
 > - clean all local images : `docker rmi -f $(docker images -a -q)`
 > - list all local images: `docker image ls`
 > - run interactive shell: `docker run --rm -it {container}:{tag}`
-
-### WSL
-
-> official documentation, [see here](https://code.visualstudio.com/docs/remote/wsl)
-
-1. Activate WSL1(_required_) / WSL2(*preffered*) : [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
-2. Install Visual Studio Code : [VSCode](https://code.visualstudio.com/)
-3. Install VSCode extension :
-   - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-   - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
-   - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-   - [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
-   - [CMake](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
-   - [Perl](https://marketplace.visualstudio.com/items?itemName=d9705996.perl-toolbox)
-   - [INI](https://marketplace.visualstudio.com/items?itemName=DavidWang.ini-for-vscode)
-   - [Markdown](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
-   - [Shell](https://marketplace.visualstudio.com/items?itemName=jeff-hykin.better-shellscript-syntax)
-   - [Material Theme, bonus ;)](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme)
 
 ## License
 
