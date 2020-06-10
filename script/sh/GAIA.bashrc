@@ -5,9 +5,9 @@
 
 # dynamically check DSI environment first (normally DSI configuration use "module" & create a "/tmp_user/$(hostname)/$(whoami)/" localhosted directory , sooooo....), then check 
 
-set GAIA_HOME_DSI_HINT="/tmp_user/$(hostname --short)/$(whoami)"
-set GAIA_CONF_FILE=""
-set GAIA_FOUND_DSI_HOST=false
+GAIA_HOME_DSI_HINT="/tmp_user/$(hostname --short)/$(whoami)"
+GAIA_CONF_FILE=""
+GAIA_FOUND_DSI_HOST=false
 
 if hash module 2>/dev/null; then
 
