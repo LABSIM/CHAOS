@@ -254,6 +254,8 @@ sub function_ConfigureRuntimeModule {
 # command line parsing op
 sub function_ParseCommandLine {
 	
+	my %arg_target_feature;
+
 	# define arguments
     Getopt::Long::GetOptions(
 
@@ -301,15 +303,9 @@ sub function_ParseCommandLine {
         'enable-feature=s%' => sub {
         	
         	# extract
-        	my ($arg_name) = shift;
+			my ($arg_name, $arg_key, $arg_value) = @_;
         	$arg_targetFeature_flag = 1;
-			my %arg_list;
-			push(@{$arg_list{$_[1]}}, $_[2]);
-			sort values %arg_list;
-			@arg_targetFeature_array = ( keys %arg_list );
-
-			# print info
-			log_Debug("function_ParseCommandLine","found feature in order [".join(",",@arg_targetFeature_array)); 
+			$arg_target_feature{$arg_key} = $arg_value;
 
 			# check incompatibility
 			log_Error("function_ParseCommandLine","found --enable-feature option but incompatible --detailled-ecosystem option detected ! check your command-line...") if($arg_detailledEcosystem_flag);
@@ -344,7 +340,12 @@ sub function_ParseCommandLine {
     # check default usage options
 	Pod::Usage::pod2usage( { -verbose => 1, -exitval => GAIA_EXIT_SUCCESS } ) if $arg_help_flag;
 	Pod::Usage::pod2usage( { -verbose => 2, -exitval => GAIA_EXIT_SUCCESS } ) if $arg_man_flag;
-	
+
+	# sort & extract target in rigth order
+	sort values %arg_target_feature;
+	@arg_targetFeature_array = (keys %arg_target_feature);
+	log_Debug("function_ParseCommandLine","found --enable-feature option with execution order[".join(",",@arg_targetFeature_array)."]");
+			
 } # ParseCmdLine()
 
 #-----------------------------------------------------------------------------
