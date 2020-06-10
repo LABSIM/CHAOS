@@ -4,9 +4,9 @@
 FROM ubuntu:rolling
 
 # update/install recquired packages - yes to every prompt - then, set locale
-RUN apt-get update && apt-get --assume-yes install \
-        build-essential git curl wget unzip tar locales \
-    && locale-gen en_US.UTF-8  
+#RUN apt-get update && apt-get --assume-yes install \
+#        build-essential git curl wget unzip tar locales \
+#    && locale-gen en_US.UTF-8  
 
 # setup local for environment
 ENV LANG en_US.UTF-8
