@@ -203,17 +203,13 @@ GAIA_ECOSYSTEM_DETAIL+="\n\t+\n"
 source "${GAIA_ROOT}/script/sh/function/cleanup-env.conf.sh"
 source "${GAIA_ROOT}/script/sh/function/cleanup-third_party.conf.sh"
 
-# functions 
+# function
 
-function __internal_labsim_gaia() {
+function gaia() {
 	echo -e "\n## BEGIN LABSIM ROUTINES\n" \
 	&& time perl "${GAIA_ROOT}/script/GAIA.pl" "$@"	\
 	&& echo -e "\n## END LABSIM ROUTINES\n"
-} # __internal_labsim_gaia_ecosystem()
-
-# aliases
-
-alias gaia="__internal_labsim_gaia"
+} # gaia()
 
 # Prevent multiple sourcing
 GAIA_HAS_BEEN_CONFIGURED=yes
