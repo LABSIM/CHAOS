@@ -2,5 +2,5 @@
 
 chmod +x script/sh/bootstrap.sh
 echo "- invoking script/sh/bootstrap.sh [$@]"
-/bin/bash -c 'script/sh/bootstrap.sh' /bin/bash "$@"
+/bin/bash script/sh/bootstrap.sh "$@"
 source ~/.bashrc
