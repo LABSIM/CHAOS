@@ -304,9 +304,10 @@ sub function_ParseCommandLine {
         	my ($arg_name) = shift;
         	$arg_targetFeature_flag = 1;
 
-			push(@{$list{$_[1]}}, $_[2])
-			sort values %list
-			@arg_targetFeature_array = ( keys %list );
+			my %arg_list;
+			push(@{$arg_list{$_[1]}}, $_[2])
+			sort values %arg_list
+			@arg_targetFeature_array = ( keys %arg_list );
 			
 			# check incompatibility
 			log_Error("function_ParseCommandLine","found --enable-feature option but incompatible --detailled-ecosystem option detected ! check your command-line...") if($arg_detailledEcosystem_flag);
