@@ -42,4 +42,4 @@ echo "- requirement : installing perl v5.30.3 & CPAN modules"
 
 # running gaia with arg
 echo "- running GAIA [$@]"
-/bin/bash -c "source ${GAIA_ROOT}/script/sh/GAIA.bashrc && gaia" /bin/bash "$@"
+/bin/bash -c 'source ${GAIA_ROOT}/script/sh/GAIA.bashrc && echo "$@"' /bin/bash "$@"
