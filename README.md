@@ -29,7 +29,7 @@ List all available LABSIM software ecosystem.
 > Alternatively for a more complete description of one available LABSIM software ecosystem, run :
 
 ```console
-[user@localhost]$ gaia --detailled-ecosystem <ecosystem_name> | more
+[user@localhost]$ gaia --detailled-ecosystem {ecosystem} | more
 ```
 
 Then, deploy your ecosystem with feature(s) :
