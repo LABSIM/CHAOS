@@ -35,13 +35,20 @@ List all available LABSIM software ecosystem.
 Then, deploy your ecosystem with feature(s) :
 
 ```console
-[user@localhost]$ gaia --target-ecosystem <ecosystem_name> --enable-feature <f  eature_A_name> --enable-feature <feature_B_name> (..) --enable-feature <feature_N_name>
+[user@localhost]$ gaia \
+                    --target-ecosystem {ecosystem} \
+                    --enable-feature {feature_A} \
+                    --enable-feature {feature_B} \
+                    ... \
+                    --enable-feature {feature_N}
 ```
 
 > Alternatively, it could be compacted as follow :
 
  ```console
- [user@localhost]$ gaia --target-ecosystem <ecosystem_name> --enable-feature <feature_A_name>,<feature_B_name>,(...),<feature_N_name>
+ [user@localhost]$ gaia \
+                     --target-ecosystem {ecosystem} \
+                     --enable-feature {feature_A},{feature_B},...,{feature_N}
 ```
 
 ### WSL
@@ -117,8 +124,8 @@ Finally, dir into your local GAIA root & build container
   [user@localhost]$ docker build \
                       --no-cache \
                       --progress=plain \
-                      --build-arg GAIA_TARGET_ECOSYSTEM=LABSIM-2.0.0 \
-                      --build-arg GAIA_ENABLE_FEATURE=gnu,dev,sf,sb \
+                      --build-arg GAIA_TARGET_ECOSYSTEM={ecosystem} \
+                      --build-arg GAIA_ENABLE_FEATURE={feature_1},{feature_2},...,{feature_N} \
                       --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt \
                       --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt \
                       -f distro/{container}/Dockerfile \
@@ -132,8 +139,8 @@ Finally, dir into your local GAIA root & build container
   PS> docker build \
         --no-cache \
         --progress=plain \
-        --build-arg GAIA_TARGET_ECOSYSTEM=LABSIM-2.0.0 \
-        --build-arg GAIA_ENABLE_FEATURE=gnu,dev,sf,sb \
+        --build-arg GAIA_TARGET_ECOSYSTEM={ecosystem} \
+        --build-arg GAIA_ENABLE_FEATURE={feature_1},{feature_2},...,{feature_N} \
         --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt \
         --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt \
         -f distro/{container}/Dockerfile \
