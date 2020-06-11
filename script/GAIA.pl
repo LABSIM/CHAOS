@@ -419,7 +419,7 @@ sub function_ParseAllAvailableEcosystem {
     	foreach my $feature_filename (@sub_ecosystem_feature_filename) {
     		
     		# get only the first feature name (normally, there should be only one...)
-    		my ($feature_name, $feature_name_check) = $feature_filename =~ /[0-9]{*}-third_party-(.*?)\.feature/g;
+    		my ($feature_name, $feature_name_check) = $feature_filename =~ /[0-9]+-third_party-(.*?)\.feature/g;
     		if( defined($feature_name_check) ) {
     			    		
     			log_Warning("function_ParseAllAvailableEcosystem","multiple token found during regex name extraction... [".$feature_filename."] for feature [".$feature_name."] --> found [".$feature_name_check."]");
@@ -427,7 +427,7 @@ sub function_ParseAllAvailableEcosystem {
     		} # if()
 
 			# get only the first feature priority (normally, there should be only one...)
-    		my ($feature_priority, $feature_priority_check) = $feature_filename =~ /(.*?)-third_party-*\.feature/g;
+    		my ($feature_priority, $feature_priority_check) = $feature_filename =~ /([0-9]*?)-third_party-.*\.feature/g;
     		if( defined($feature_priority_check) ) {
     			    		
     			log_Warning("function_ParseAllAvailableEcosystem","multiple token found during regex priority extraction... [".$feature_filename."] for feature [".$feature_priority."] --> found [".$feature_priority_check."]");

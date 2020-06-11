@@ -101,8 +101,10 @@ Export secret info to enable 2FA container access !
 - Windows :
 
   ```console
-  PS> Write-Output "your_super_secret_github_username" | Out-File -append -encoding ASCII "your/secret/path/github_username.txt"
-  PS> Write-Output "your_super_secret_github_token" | Out-File -append -encoding ASCII "your/secret/path/github_token.txt"
+  PS> Write-Output "your_super_secret_github_username" \
+        | Out-File -append -encoding ASCII "your/secret/path/github_username.txt"
+  PS> Write-Output "your_super_secret_github_token" <br/> \
+        | Out-File -append -encoding ASCII "your/secret/path/github_token.txt"
   ```
 
 > for more info, [see here](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
@@ -112,13 +114,31 @@ Finally, dir into your local GAIA root & build container
 - Linux :
 
   ```console
-  [user@localhost]$ docker build --no-cache --progress=plain --build-arg GAIA_TARGET_ECOSYSTEM=LABSIM-2.0.0 --build-arg GAIA_ENABLE_FEATURE=gnu,dev,sf,sb --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt -f distro/{container}/Dockerfile --tag labsim-{container}:{tag} .
+  [user@localhost]$ docker build \
+                      --no-cache \
+                      --progress=plain \
+                      --build-arg GAIA_TARGET_ECOSYSTEM=LABSIM-2.0.0 \
+                      --build-arg GAIA_ENABLE_FEATURE=gnu,dev,sf,sb \
+                      --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt \
+                      --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt \
+                      -f distro/{container}/Dockerfile \
+                      --tag labsim-{container}:{tag} \
+                      .
   ```
 
 - Windows :
 
   ```console
-  PS> docker build --no-cache --progress=plain --build-arg GAIA_TARGET_ECOSYSTEM=LABSIM-2.0.0 --build-arg GAIA_ENABLE_FEATURE=gnu,dev,sf,sb --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt -f distro/{container}/Dockerfile --tag labsim-{container}:{tag} .
+  PS> docker build \
+        --no-cache \
+        --progress=plain \
+        --build-arg GAIA_TARGET_ECOSYSTEM=LABSIM-2.0.0 \
+        --build-arg GAIA_ENABLE_FEATURE=gnu,dev,sf,sb \
+        --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt \
+        --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt \
+        -f distro/{container}/Dockerfile \
+        --tag labsim-{container}:{tag} \
+        .
   ```
 
 > Bonus !
