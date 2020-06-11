@@ -112,13 +112,13 @@ Finally, dir into your local GAIA root & build container
 - Linux :
 
   ```console
-  [user@localhost]$ docker build --no-cache --progress=plain --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt -f distro/{container}/Dockerfile --tag labsim-{container}:{tag} .
+  [user@localhost]$ docker build --no-cache --progress=plain --build-arg GAIA_TARGET_ECOSYSTEM=LABSIM-2.0.0 --build-arg GAIA_ENABLE_FEATURE=gnu,dev,sf,sb --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt -f distro/{container}/Dockerfile --tag labsim-{container}:{tag} .
   ```
 
 - Windows :
 
   ```console
-  PS> docker build --no-cache --progress=plain --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt -f distro/{container}/Dockerfile --tag labsim-{container}:{tag} .
+  PS> docker build --no-cache --progress=plain --build-arg GAIA_TARGET_ECOSYSTEM=LABSIM-2.0.0 --build-arg GAIA_ENABLE_FEATURE=gnu,dev,sf,sb --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt -f distro/{container}/Dockerfile --tag labsim-{container}:{tag} .
   ```
 
 > Bonus !

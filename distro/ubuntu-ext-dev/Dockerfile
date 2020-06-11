@@ -3,6 +3,10 @@
 # Ubuntu latest base config 
 FROM ubuntu:rolling
 
+# mandatory argument
+ARG GAIA_TARGET_ECOSYSTEM
+ARG GAIA_ENABLE_FEATURE
+
 # update/install recquired packages - yes to every prompt - then, set locale
 RUN apt-get update && apt-get --assume-yes install \
         build-essential git curl wget unzip tar locales \ 
@@ -30,8 +34,10 @@ RUN git clone https://github.com/Microsoft/vcpkg.git
 
 # configure gaia
 WORKDIR /labsim/dev/titans/GAIA
-RUN chmod +x bootstrap-gaia.sh \
-    && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem LABSIM-2.0.0 --enable-feature gnu,dev,sf,sb
+RUN : "${GAIA_TARGET_ECOSYSTEM:?GAIA target-ecosystem argument needs to be set and non-empty.}" \
+    : "${GAIA_ENABLE_FEATURE:?GAIA enable-feature argument needs to be set and non-empty.}" \
+    && chmod +x bootstrap-gaia.sh \
+    && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
     
 # configure vcpkg
 #WORKDIR /labsim/third_party/vcpkg
