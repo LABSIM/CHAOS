@@ -6,7 +6,7 @@ FROM ubuntu:rolling
 # update/install recquired packages - yes to every prompt - then, set locale
 RUN apt-get update && apt-get --assume-yes install \
         build-essential git curl wget unzip tar locales \ 
-    && locale-gen en_US.UTF-8  
+    && locale-gen en_US.UTF-8
 
 # setup local for environment
 ENV LANG en_US.UTF-8
@@ -14,7 +14,7 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 # setup titans dir & clone LABSIM sources from server
-WORKDIR /labsim/dev/titans 
+WORKDIR /labsim/dev/titans
 RUN --mount=type=secret,id=GITHUB_USERNAME,required \
     --mount=type=secret,id=GITHUB_TOKEN,required \
     git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git \
@@ -31,11 +31,11 @@ RUN git clone https://github.com/Microsoft/vcpkg.git
 # configure gaia
 WORKDIR /labsim/dev/titans/GAIA
 RUN chmod +x bootstrap-gaia.sh \
-    && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem LABSIM-2.0.0 --enable-feature gnu=0 --enable-feature dev=1 --enable-feature sf=2 --enable-feature sb=3  
+    && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem LABSIM-2.0.0 --enable-feature gnu=0 --enable-feature dev=1 --enable-feature sf=2 --enable-feature sb=3
     
 # configure vcpkg
 #WORKDIR /labsim/third_party/vcpkg
-#RUN chmod +x booststrap-vcpkg.sh \ 
+#RUN chmod +x booststrap-vcpkg.sh \
 #    && ./bootstrap-vcpkg.sh -disableMetrics \
 #    && vcpkg integrate install
 
