@@ -253,8 +253,6 @@ sub function_ConfigureRuntimeModule {
 
 # command line parsing op
 sub function_ParseCommandLine {
-	
-	my %arg_target_feature;
 
 	# define arguments
     Getopt::Long::GetOptions(
@@ -300,12 +298,12 @@ sub function_ParseCommandLine {
 			log_Error("function_ParseCommandLine","found --target-ecosystem option but incompatible --list-available option detected ! check your command-line...") if($arg_listAvailable_flag);
 	
         },
-        'enable-feature=s%' => sub {
+        'enable-feature=s@' => sub {
         	
         	# extract
-			my ($arg_name, $arg_key, $arg_value) = @_;
+        	my ($arg_name) = shift;
         	$arg_targetFeature_flag = 1;
-			$arg_target_feature{$arg_key} = $arg_value;
+			push(@arg_targetFeature_array, split(/,/,join(',',@_)));
 
 			# check incompatibility
 			log_Error("function_ParseCommandLine","found --enable-feature option but incompatible --detailled-ecosystem option detected ! check your command-line...") if($arg_detailledEcosystem_flag);
@@ -341,10 +339,6 @@ sub function_ParseCommandLine {
 	Pod::Usage::pod2usage( { -verbose => 1, -exitval => GAIA_EXIT_SUCCESS } ) if $arg_help_flag;
 	Pod::Usage::pod2usage( { -verbose => 2, -exitval => GAIA_EXIT_SUCCESS } ) if $arg_man_flag;
 
-	# sort & extract target in rigth order
-	@arg_targetFeature_array = (sort {$arg_target_feature{$a} <=> $arg_target_feature{$b}} keys %arg_target_feature);
-	log_Debug("function_ParseCommandLine","found --enable-feature option with execution order[".join(",",@arg_targetFeature_array)."]");
-			
 } # ParseCmdLine()
 
 #-----------------------------------------------------------------------------
@@ -424,15 +418,23 @@ sub function_ParseAllAvailableEcosystem {
     	my @feature_array = ();
     	foreach my $feature_filename (@sub_ecosystem_feature_filename) {
     		
-    		# get only the first feature name (normally, there should be onlye one...)
-    		my ($feature_name, $feature_check) = $feature_filename =~ /third_party-(.*?)\.feature/g;
-    		if( defined($feature_check) ) {
+    		# get only the first feature name (normally, there should be only one...)
+    		my ($feature_name, $feature_name_check) = $feature_filename =~ /[0-9]{*}-third_party-(.*?)\.feature/g;
+    		if( defined($feature_name_check) ) {
     			    		
-    			log_Warning("function_ParseAllAvailableEcosystem","multiple token found during regex extraction... [".$feature_filename."] for feature [".$feature_name."] --> found [".$feature_check."]");
+    			log_Warning("function_ParseAllAvailableEcosystem","multiple token found during regex name extraction... [".$feature_filename."] for feature [".$feature_name."] --> found [".$feature_name_check."]");
+    		 
+    		} # if()
+
+			# get only the first feature priority (normally, there should be only one...)
+    		my ($feature_priority, $feature_priority_check) = $feature_filename =~ /(.*?)-third_party-*\.feature/g;
+    		if( defined($feature_priority_check) ) {
+    			    		
+    			log_Warning("function_ParseAllAvailableEcosystem","multiple token found during regex priority extraction... [".$feature_filename."] for feature [".$feature_priority."] --> found [".$feature_priority_check."]");
     		 
     		} # if()
     		
-    		log_Debug("function_ParseAllAvailableEcosystem","inspecting [".$sub_ecosystem_root."/".$feature_filename."] for feature [".$feature_name."]");
+    		log_Debug("function_ParseAllAvailableEcosystem","inspecting [".$sub_ecosystem_root."/".$feature_filename."] for feature [".$feature_name."] with priority [".$feature_priority."]");
     		 
     		# extract them
     		open(my $third_party_file_hndl, $sub_ecosystem_root."/".$feature_filename) or log_Error("function_ParseAllAvailableEcosystem","open(".$sub_ecosystem_root."/".$feature_filename.") error : $!");
@@ -447,23 +449,23 @@ sub function_ParseAllAvailableEcosystem {
     		
     		# Loop over third party
     		my @third_party_array = ();
-    		for my $priority_index (0 .. $#third_party_file_array) {
+    		for my $third_party_priority (0 .. $#third_party_file_array) {
     			
-    			log_Debug("function_ParseAllAvailableEcosystem","spliting row -> [".$third_party_file_array[$priority_index]."]");
+    			log_Debug("function_ParseAllAvailableEcosystem","spliting row -> [".$third_party_file_array[$third_party_priority]."]");
     			
     			# split thritd party row
-    			my ($third_party_name, $third_party_version) = split( / /, $third_party_file_array[$priority_index] ); # split on space
+    			my ($third_party_name, $third_party_version) = split( / /, $third_party_file_array[$third_party_priority] ); # split on space
     			my ($third_party_major, $third_party_minor, $third_party_patch) = split( /\./, $third_party_version ); # split on dot
     			
     			log_Debug(
     				"function_ParseAllAvailableEcosystem",
-    				"found priority -> [".($priority_index + 1)."] name -> [".$third_party_name."] version -> [".$third_party_version."] major -> [".$third_party_major."] minor -> [".$third_party_minor."] patch -> [".$third_party_patch."]"
+    				"found priority -> [".($third_party_priority)."] name -> [".$third_party_name."] version -> [".$third_party_version."] major -> [".$third_party_major."] minor -> [".$third_party_minor."] patch -> [".$third_party_patch."]"
     			);
     			
     			push @third_party_array, {
     				
     				Name     => $third_party_name,
-					Priority => ( $#third_party_file_array - $priority_index ),
+					Priority => $third_party_priority,
 					Major    => $third_party_major,
 					Minor    => $third_party_minor,
 					Patch    => $third_party_patch
@@ -473,8 +475,9 @@ sub function_ParseAllAvailableEcosystem {
 			} # for()
     		
     		push @feature_array, {
-    				
+    			
     			Name        => $feature_name,
+    			Priority    => $feature_priority,
 				Third_party => [ @third_party_array ]
     				
     		};
@@ -586,7 +589,7 @@ sub function_DumpDetailledEcosystem {
     		
     		for my $feature_ref ( @{ $ecosystem_ref->{Feature} } ) {
 			
-    			log_Info("function_DumpAvailableEcosystemDetail"," [feature] : ".$feature_ref->{Name});
+    			log_Info("function_DumpAvailableEcosystemDetail"," [feature] : ".$feature_ref->{Name}." (priority : ".$feature_ref->{Priority}.")");
     			
     			for my $third_party_ref ( @{ $feature_ref->{Third_party} } ) {
     				
@@ -622,47 +625,48 @@ sub function_DeployTargetEcosystem {
     	
     		log_Info("function_DeployTargetEcosystem","target : ecosystem [".$ecosystem_ref->{Name}."]");
     		
-    		for my $feature_ref ( @{ $ecosystem_ref->{Feature} } ) {
+    		for my $feature_ref ( sort { $a->{Priority} <=> $b->{Priority} } @{ $ecosystem_ref->{Feature} } ) { # ( @{ $ecosystem_ref->{Feature} } ) {
     		
     			if( any { /$feature_ref->{Name}/ } @arg_targetFeature_array ) {
     				
-    				log_Info("function_DeployTargetEcosystem","  add user-requested feature [".$feature_ref->{Name}."]");
+    				log_Info("function_DeployTargetEcosystem","  add user-requested feature [".$feature_ref->{Name}."] with priority [".$feature_ref->{Priority}."]");
     				
-				    foreach my $third_party_ref ( sort { $b->{Priority} <=> $a->{Priority} } @{ $feature_ref->{Third_party} } ) {
+				    foreach my $third_party_ref ( sort { $a->{Priority} <=> $b->{Priority} } @{ $feature_ref->{Third_party} } ) {
 				    
 				    	log_Info("function_DeployTargetEcosystem","    processing third_party [".$third_party_ref->{Name}."] with priority [".$third_party_ref->{Priority}."]");
 				    	log_Info("function_DeployTargetEcosystem","    ----------------------------------------------<EXTERNAL_SCRIPT>-----------------------------------------------");
 				    	
 				    	# so now, we can launch the corresponding target shell :)
 				    	my @command_line;
-						switch( $Config{osname} ) {
+
+						if (system("vcpkg  update")) {
+
+							switch( $Config{osname} ) {
 							
-							case "linux" {
+								case "linux" {
+									@command_line = (
+										"/bin/bash",
+										$var_gaia_root."/script/sh/target/install-".$third_party_ref->{Name}.".sh",
+										$third_party_ref->{Major},
+										$third_party_ref->{Minor},
+										$third_party_ref->{Patch}
+									);
+								} # Linux
 								
-								@command_line = (
-						    		"/bin/bash",
-						    		$var_gaia_root."/script/sh/target/install-".$third_party_ref->{Name}.".sh",
-						    		$third_party_ref->{Major},
-						    		$third_party_ref->{Minor},
-						    		$third_party_ref->{Patch}
-						    	);
-						    	
-							} # Linux
+								case "MSWin32" {
+									log_Warning("function_DeployTargetEcosystem","unsupported plateform - Win32 *.bat scripts are still in beta...");
+									exit(GAIA_EXIT_ERROR);
+								} # Windows
 							
-							case "MSWin32" {
-								
-								log_Warning("function_DeployTargetEcosystem","unsupported plateform - Win32 *.bat scripts are still in beta...");
-	    						exit(GAIA_EXIT_ERROR);
+								else {
+									log_Error("function_DeployTargetEcosystem","unsupported plateform");
+								}
 							
-							} # Windows
-				    	
-				    		else {
-				    			
-				    			log_Error("function_DeployTargetEcosystem","unsupported plateform");
-				    			
-				    		}
-				    	
-						} # switch()
+							} # switch()
+
+						} else {
+							print "SVN update successful";
+						}
 
 				    	# syscall
 				    	log_Debug("function_DeployTargetEcosystem","external command -> [ system(".join(" ", @command_line).") ]");
@@ -843,10 +847,10 @@ B<gaia> I<[options]>
  Argument : REQUIRED=[ecosystem_name]
  Start deploying requested GAIA simulation software ecosystem on current host. A set of feature to enable should be specified.
  
-=item -e B<name>=B<order>, --enable-feature=B<name>=B<order>
-
- Argument : REQUIRED=[feature_name1=0, feature_name2=1, ...] | MULTITOKEN
- A hash list of target related feature to enable during deployment and their respective order of execution. A targeted ecosystem should be specified.
+=item -e B<name>, --enable-feature=B<name>
+ 
+ Argument : REQUIRED=[feature_name1, feature_name2, ...] | MULTITOKEN
+ A comma separated list of target related feature to enable during deployment. A targeted ecosystem should be specified.
 
 =item -h, --help
  
