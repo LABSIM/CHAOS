@@ -342,7 +342,7 @@ sub function_ParseCommandLine {
 	Pod::Usage::pod2usage( { -verbose => 2, -exitval => GAIA_EXIT_SUCCESS } ) if $arg_man_flag;
 
 	# sort & extract target in rigth order
-	@arg_targetFeature_array = (sort {$arg_target_feature{$b} <=> $arg_target_feature{$a}} keys %arg_target_feature);
+	@arg_targetFeature_array = (sort {$arg_target_feature{$a} <=> $arg_target_feature{$b}} keys %arg_target_feature);
 	log_Debug("function_ParseCommandLine","found --enable-feature option with execution order[".join(",",@arg_targetFeature_array)."]");
 			
 } # ParseCmdLine()
