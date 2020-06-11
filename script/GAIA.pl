@@ -41,6 +41,7 @@ use File::HomeDir;                  # home
 use Time::HiRes qw(time);			# high-resolution timer
 use Data::Dumper;					# dump functionality
 use List::Util qw(any);				# find any string in array
+use IPC::Cmd qw[can_run run];		# system independant command execution
 
 # configure
 Getopt::Long::Configure qw(gnu_getopt);
