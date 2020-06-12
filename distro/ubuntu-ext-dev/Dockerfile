@@ -29,9 +29,8 @@ RUN --mount=type=secret,id=GITHUB_USERNAME,required \
     && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git
 
 # setup third_party dev
-WORKDIR /labsim/dev/third_party
-RUN git clone https://github.com/Microsoft/vcpkg.git \
-    && cd vcpkg/ \
+WORKDIR /labsim/dev/third_party/vcpkg
+RUN git clone https://github.com/Microsoft/vcpkg.git . \
     && chmod +x booststrap-vcpkg.sh \
     && ./bootstrap-vcpkg.sh -disableMetrics \
     && vcpkg integrate install
