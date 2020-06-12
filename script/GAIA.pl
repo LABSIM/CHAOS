@@ -683,7 +683,7 @@ sub function_DeployTargetEcosystem {
 				    	# syscall
 				    	log_Debug("function_DeployTargetEcosystem","external command -> [ ".join(" ", @$cmd_line)." ]");
 						if( scalar IPC::Cmd::run(
-								command => $cmd_line,
+								command => join(" ", @$cmd_line),
 								verbose => 1
 							)
 						) {
