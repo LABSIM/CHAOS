@@ -33,7 +33,7 @@ WORKDIR /labsim/dev/third_party/vcpkg
 RUN git clone https://github.com/Microsoft/vcpkg.git . \
     && chmod +x bootstrap-vcpkg.sh \
     && ./bootstrap-vcpkg.sh -disableMetrics \
-    && vcpkg integrate install
+    && ./vcpkg integrate install
 
 # configure GAIA GNU feature at least
 WORKDIR /labsim/dev/titans/GAIA
