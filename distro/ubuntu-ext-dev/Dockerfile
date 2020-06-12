@@ -31,7 +31,7 @@ RUN --mount=type=secret,id=GITHUB_USERNAME,required \
 # setup third_party dev
 WORKDIR /labsim/dev/third_party/vcpkg
 RUN git clone https://github.com/Microsoft/vcpkg.git . \
-    && chmod +x booststrap-vcpkg.sh \
+    && chmod +x bootstrap-vcpkg.sh \
     && ./bootstrap-vcpkg.sh -disableMetrics \
     && vcpkg integrate install
 
