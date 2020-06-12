@@ -637,21 +637,18 @@ sub function_DeployTargetEcosystem {
 				    	log_Info("function_DeployTargetEcosystem","    processing third_party [".$third_party_ref->{Name}."] with priority [".$third_party_ref->{Priority}."]");
 				    	log_Info("function_DeployTargetEcosystem","    ----------------------------------------------<EXTERNAL_SCRIPT>-----------------------------------------------");
 				    	
-						# temporary
-						my $cmd_line = "";
-						my $cmd_path = "";
-
 				    	# so now, we can launch the corresponding target shell :)
 						# check vcpk, if not use proper script depending of the OS
-						$cmd_path = IPC::Cmd::can_run("vcpkg");
-						if ($cmd_path eq "") {
+						my $cmd_line = "";
+						my $cmd_path = IPC::Cmd->can_run("vcpkg");
+						if (!defined $cmd_path) {
 
 							switch( $Config{osname} ) {
 
 								case "linux" {
 									log_Info("function_DeployTargetEcosystem","    > vcpkg not available, switching to default script/sh/target/*");
-									$cmd_path = IPC::Cmd::can_run("/bin/bash");
-									if ($cmd_path eq "") {
+									$cmd_path = IPC::Cmd->can_run("/bin/bash");
+									if (!defined $cmd_path) {
 										log_Error("function_DeployTargetEcosystem","/bin/bash not available !...");
 										exit(GAIA_EXIT_ERROR);
 									}
@@ -685,8 +682,8 @@ sub function_DeployTargetEcosystem {
 
 				    	# syscall
 				    	log_Debug("function_DeployTargetEcosystem","external command -> [ ".join(" ", @$cmd_line)." ]");
-						if( scalar IPC::Cmd::run(
-								command => join(" ", @$cmd_line),
+						if( scalar IPC::Cmd->run(
+								command => $cmd_line,
 								verbose => 1
 							)
 						) {
