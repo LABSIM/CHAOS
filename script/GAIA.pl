@@ -637,9 +637,12 @@ sub function_DeployTargetEcosystem {
 				    	log_Info("function_DeployTargetEcosystem","    processing third_party [".$third_party_ref->{Name}."] with priority [".$third_party_ref->{Priority}."]");
 				    	log_Info("function_DeployTargetEcosystem","    ----------------------------------------------<EXTERNAL_SCRIPT>-----------------------------------------------");
 				    	
+						# temporary
+						my $cmd_line = "";
+						my $cmd_path = "";
+
 				    	# so now, we can launch the corresponding target shell :)
 						# check vcpk, if not use proper script depending of the OS
-						my $cmd_line = "", $cmd_path = "";
 						$cmd_path = IPC::Cmd->can_run("vcpkg");
 						if ($cmd_path eq "") {
 
