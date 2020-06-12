@@ -1,7 +1,8 @@
 # syntax = docker/dockerfile:1.0-experimental
 
 # Ubuntu latest base config 
-FROM ubuntu:rolling
+FROM ubuntu:rolling as labsim-build-stage
+LABEL description="LABSIM build-stage container - for remote dev"
 
 # mandatory argument
 ARG GAIA_TARGET_ECOSYSTEM
@@ -40,7 +41,7 @@ WORKDIR /labsim/dev/titans/GAIA
 RUN : "${GAIA_TARGET_ECOSYSTEM:?GAIA target-ecosystem argument needs to be set and non-empty.}" \
     : "${GAIA_ENABLE_FEATURE:?GAIA enable-feature argument needs to be set and non-empty.}" \
     && chmod +x bootstrap-gaia.sh \
-    && gaia --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+    && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
     
 # configure vcpkg
 #WORKDIR /labsim/third_party/vcpkg
