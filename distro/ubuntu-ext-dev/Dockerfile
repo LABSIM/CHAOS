@@ -9,7 +9,7 @@ ARG GAIA_ENABLE_FEATURE
 
 # update/install recquired packages - yes to every prompt - then, set locale
 RUN apt-get update && apt-get --assume-yes install \
-        build-essential git curl wget unzip tar locales \ 
+        build-essential linux-headers-generic m4 git curl wget unzip tar locales \ 
     && locale-gen en_US.UTF-8
 
 # setup local for environment
