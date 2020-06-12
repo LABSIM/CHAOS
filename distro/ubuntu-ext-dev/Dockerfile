@@ -18,6 +18,13 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+# setup third_party dev
+WORKDIR /labsim/dev/third_party/vcpkg
+RUN git clone https://github.com/Microsoft/vcpkg.git . \
+    && chmod +x bootstrap-vcpkg.sh \
+    && ./bootstrap-vcpkg.sh -disableMetrics \
+    && ./vcpkg integrate install
+
 # setup titans dir & clone LABSIM sources from server
 WORKDIR /labsim/dev/titans
 RUN --mount=type=secret,id=GITHUB_USERNAME,required \
@@ -27,27 +34,13 @@ RUN --mount=type=secret,id=GITHUB_USERNAME,required \
     && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/THETYS.git \
     && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OCEAN.git \
     && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/RHEA.git \
-    && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git
-
-# setup third_party dev
-WORKDIR /labsim/dev/third_party/vcpkg
-RUN git clone https://github.com/Microsoft/vcpkg.git . \
-    && chmod +x bootstrap-vcpkg.sh \
-    && ./bootstrap-vcpkg.sh -disableMetrics \
-    && ./vcpkg integrate install
-
-# configure GAIA GNU feature at least
-WORKDIR /labsim/dev/titans/GAIA
-RUN : "${GAIA_TARGET_ECOSYSTEM:?GAIA target-ecosystem argument needs to be set and non-empty.}" \
+    && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git \
+    && cd GAIA \
+    : "${GAIA_TARGET_ECOSYSTEM:?GAIA target-ecosystem argument needs to be set and non-empty.}" \
     : "${GAIA_ENABLE_FEATURE:?GAIA enable-feature argument needs to be set and non-empty.}" \
     && chmod +x bootstrap-gaia.sh \
     && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
     
-# configure vcpkg
-#WORKDIR /labsim/third_party/vcpkg
-#RUN chmod +x booststrap-vcpkg.sh \
-#    && ./bootstrap-vcpkg.sh -disableMetrics \
-#    && vcpkg integrate install
 
 # cleanup temporary
 RUN rm -rf /tmp
