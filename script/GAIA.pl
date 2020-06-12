@@ -41,7 +41,7 @@ use File::HomeDir;                  # home
 use Time::HiRes qw(time);			# high-resolution timer
 use Data::Dumper;					# dump functionality
 use List::Util qw(any);				# find any string in array
-use IPC::Cmd qw[can_run run];		# system independant command execution
+use IPC::Cmd qw[can_run run QUOTE];	# system independant command execution
 
 # configure
 Getopt::Long::Configure qw(gnu_getopt);
@@ -649,7 +649,7 @@ sub function_DeployTargetEcosystem {
 									log_Info("function_DeployTargetEcosystem","    > vcpkg not available, switching to default script/sh/target/*");
 									$cmd_line = [
 										IPC::Cmd::can_run("/bin/bash"),
-										"-c source ".$var_gaia_root.'/script/sh/GAIA.bashrc && ${0} ${1+"$@"}',
+										"-c ". QUOTE ."source ".$var_gaia_root.'/script/sh/GAIA.bashrc && ${0} ${1+"$@"}'.QUOTE,
 										$var_gaia_root."/script/sh/target/install-".$third_party_ref->{Name}.".sh",
 										$third_party_ref->{Major},
 										$third_party_ref->{Minor},
@@ -673,7 +673,7 @@ sub function_DeployTargetEcosystem {
 							log_Info("function_DeployTargetEcosystem","    > vcpkg available ! using it");
 							$cmd_line = [
 								IPC::Cmd::can_run("/bin/bash"),
-								"-c source ".$var_gaia_root.'/script/sh/GAIA.bashrc && ${0} ${1+"$@"}',
+								"-c source "..$var_gaia_root.'/script/sh/GAIA.bashrc && ${0} ${1+"$@"}',
 								$var_gaia_root."/script/sh/target/install-".$third_party_ref->{Name}.".sh",
 								$third_party_ref->{Major},
 								$third_party_ref->{Minor},
@@ -682,7 +682,7 @@ sub function_DeployTargetEcosystem {
 						}
 
 				    	# syscall
-				    	log_Debug("function_DeployTargetEcosystem","external command -> [ system(".join(" ", @$cmd_line).") ]");
+				    	log_Debug("function_DeployTargetEcosystem","external command -> [ ".join(" ", @$cmd_line)." ]");
 						if( scalar IPC::Cmd::run(
 								command => $cmd_line,
 								verbose => 1

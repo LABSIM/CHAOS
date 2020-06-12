@@ -394,6 +394,7 @@ function push_cpan_op_to_cache() {
 	echo "#!/bin/bash" > exec.sh
 	echo "curl -L http://cpanmin.us -o ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm" >> exec.sh
 	echo "chmod +x ${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm" >> exec.sh
+	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm --verbose List::Util" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm --verbose local::lib" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm --verbose FindBin" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm --verbose Switch" >> exec.sh
@@ -403,7 +404,6 @@ function push_cpan_op_to_cache() {
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm --verbose Pod::Usage" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm --verbose Term::ANSIColor" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm --verbose Time::HiRes" >> exec.sh
-	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm --verbose List::Util" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm --verbose Data::Dumper" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm --verbose File::Copy::Recursive" >> exec.sh
 	echo "${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/bin/cpanm --verbose File::Remove" >> exec.sh
