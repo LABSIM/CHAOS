@@ -299,7 +299,7 @@ sub function_ParseCommandLine {
 			log_Error("function_ParseCommandLine","found --target-ecosystem option but incompatible --list-available option detected ! check your command-line...") if($arg_listAvailable_flag);
 	
         },
-        'enable-feature=s@' => sub {
+        'enable-feature|e=s@' => sub {
         	
         	# extract
         	my ($arg_name) = shift;
