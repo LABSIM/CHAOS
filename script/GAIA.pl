@@ -647,9 +647,9 @@ sub function_DeployTargetEcosystem {
 
 								case "linux" {
 									log_Info("function_DeployTargetEcosystem","    > vcpkg not available, switching to default script/sh/target/*");
-									$cmd_path = IPC::Cmd->can_run("/bin/bash");
+									$cmd_path = IPC::Cmd->can_run("bash");
 									if (!defined $cmd_path) {
-										log_Error("function_DeployTargetEcosystem","/bin/bash not available !...");
+										log_Error("function_DeployTargetEcosystem","bash not available !...");
 										exit(GAIA_EXIT_ERROR);
 									}
 									$cmd_line = [
