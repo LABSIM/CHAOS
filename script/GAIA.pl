@@ -639,9 +639,8 @@ sub function_DeployTargetEcosystem {
 				    	
 				    	# so now, we can launch the corresponding target shell :)
 						# check vcpk, if not use proper script depending of the OS
-						my $cmd_line;
-						my $cmd_path = IPC::Cmd::can_run("vcpkg");
-						if ($cmd_path eq "") {
+						my $cmd_line = "";
+						if (IPC::Cmd::can_run("vcpkg") eq "") {
 
 							switch( $Config{osname} ) {
 
