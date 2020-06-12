@@ -635,7 +635,6 @@ sub function_DeployTargetEcosystem {
 				    foreach my $third_party_ref ( sort { $a->{Priority} <=> $b->{Priority} } @{ $feature_ref->{Third_party} } ) {
 				    
 				    	log_Info("function_DeployTargetEcosystem","    processing third_party [".$third_party_ref->{Name}."] with priority [".$third_party_ref->{Priority}."]");
-				    	log_Info("function_DeployTargetEcosystem","    ----------------------------------------------<EXTERNAL_SCRIPT>-----------------------------------------------");
 				    	
 				    	# so now, we can launch the corresponding target shell :)
 						# check vcpk, if not use proper script depending of the OS
@@ -680,13 +679,11 @@ sub function_DeployTargetEcosystem {
 
 						}
 
-				    	# syscall
 				    	log_Debug("function_DeployTargetEcosystem","external command -> [ ".join(" ", @$cmd_line)." ]");
-						if( scalar IPC::Cmd::run(
-								command => join(" ", @$cmd_line),
-								verbose => 1
-							)
-						) {
+						log_Info("function_DeployTargetEcosystem","    ----------------------------------------------<EXTERNAL_SCRIPT>-----------------------------------------------");
+
+						# syscall
+						if(scalar IPC::Cmd::run( command => join(" ", @$cmd_line), verbose => 1)) {
 
 							log_Info("function_DeployTargetEcosystem","Success !");
 
@@ -695,7 +692,7 @@ sub function_DeployTargetEcosystem {
 				            log_Error("function_DeployTargetEcosystem","failed to execute: $!");
 							exit(GAIA_EXIT_ERROR);
 
-						}
+						} # if()
     					
 				    	log_Info("function_DeployTargetEcosystem","    ----------------------------------------------</EXTERNAL_SCRIPT>-----------------------------------------------");
 				    
