@@ -639,15 +639,21 @@ sub function_DeployTargetEcosystem {
 				    	
 				    	# so now, we can launch the corresponding target shell :)
 						# check vcpk, if not use proper script depending of the OS
-						my $cmd_line = "";
-						if (IPC::Cmd->can_run("vcpkg") eq "") {
+						my $cmd_line = "", $cmd_path = "";
+						$cmd_path = IPC::Cmd->can_run("vcpkg");
+						if ($cmd_path eq "") {
 
 							switch( $Config{osname} ) {
 
 								case "linux" {
 									log_Info("function_DeployTargetEcosystem","    > vcpkg not available, switching to default script/sh/target/*");
+									$cmd_path = IPC::Cmd->can_run("/bin/bash");
+									if ($cmd_path eq "") {
+										log_Error("function_DeployTargetEcosystem","/bin/bash not available !...");
+										exit(GAIA_EXIT_ERROR);
+									}
 									$cmd_line = [
-										IPC::Cmd->can_run("/bin/bash"),
+										$cmd_path,
 										"-c",
 										QUOTE ."source ".$var_gaia_root.'/script/sh/GAIA.bashrc && ${0} ${1+"$@"}'.QUOTE,
 										$var_gaia_root."/script/sh/target/install-".$third_party_ref->{Name}.".sh",
@@ -676,7 +682,7 @@ sub function_DeployTargetEcosystem {
 
 				    	# syscall
 				    	log_Debug("function_DeployTargetEcosystem","external command -> [ ".join(" ", @$cmd_line)." ]");
-						if( scalar IPC::Cmd->run(
+						if( scalar IPC::Cmd::run(
 								command => join(" ", @$cmd_line),
 								verbose => 1
 							)
