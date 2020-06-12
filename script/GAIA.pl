@@ -649,7 +649,8 @@ sub function_DeployTargetEcosystem {
 									log_Info("function_DeployTargetEcosystem","    > vcpkg not available, switching to default script/sh/target/*");
 									$cmd_line = [
 										IPC::Cmd::can_run("/bin/bash"),
-										"-c ". QUOTE ."source ".$var_gaia_root.'/script/sh/GAIA.bashrc && ${0} ${1+"$@"}'.QUOTE,
+										"-c",
+										QUOTE ."source ".$var_gaia_root.'/script/sh/GAIA.bashrc && ${0} ${1+"$@"}'.QUOTE,
 										$var_gaia_root."/script/sh/target/install-".$third_party_ref->{Name}.".sh",
 										$third_party_ref->{Major},
 										$third_party_ref->{Minor},
@@ -671,20 +672,13 @@ sub function_DeployTargetEcosystem {
 						} else {
 							
 							log_Info("function_DeployTargetEcosystem","    > vcpkg available ! using it");
-							$cmd_line = [
-								IPC::Cmd::can_run("/bin/bash"),
-								"-c source "..$var_gaia_root.'/script/sh/GAIA.bashrc && ${0} ${1+"$@"}',
-								$var_gaia_root."/script/sh/target/install-".$third_party_ref->{Name}.".sh",
-								$third_party_ref->{Major},
-								$third_party_ref->{Minor},
-								$third_party_ref->{Patch}
-							];
+
 						}
 
 				    	# syscall
 				    	log_Debug("function_DeployTargetEcosystem","external command -> [ ".join(" ", @$cmd_line)." ]");
 						if( scalar IPC::Cmd::run(
-								command => $cmd_line,
+								command => join(" ", @$cmd_line),
 								verbose => 1
 							)
 						) {
