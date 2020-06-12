@@ -638,64 +638,60 @@ sub function_DeployTargetEcosystem {
 				    	log_Info("function_DeployTargetEcosystem","    ----------------------------------------------<EXTERNAL_SCRIPT>-----------------------------------------------");
 				    	
 				    	# so now, we can launch the corresponding target shell :)
-				    	my @command_line;
+						# check vcpk, if not use proper script depending of the OS
+						my $cmd_line;
+						my $cmd_path = IPC::Cmd::can_run("vcpkg");
+						if ($cmd_path eq "") {
 
-						if (system("vcpkg  update")) {
-
-							switch( $Config{osname} ) {
 							
+							switch( $Config{osname} ) {
+
 								case "linux" {
-									@command_line = (
-										"/bin/bash",
+									log_Info("function_DeployTargetEcosystem","    > vcpkg not available, switching to default script/sh/target/*");
+									$cmd_line = [
+										"/bin/bash -c",
+										'source ${GAIA_ROOT}/script/sh/GAIA.bashrc && ${0} ${1+"$@"}'
 										$var_gaia_root."/script/sh/target/install-".$third_party_ref->{Name}.".sh",
 										$third_party_ref->{Major},
 										$third_party_ref->{Minor},
 										$third_party_ref->{Patch}
-									);
+									];
 								} # Linux
 								
 								case "MSWin32" {
-									log_Warning("function_DeployTargetEcosystem","unsupported plateform - Win32 *.bat scripts are still in beta...");
+									log_Info("function_DeployTargetEcosystem","    > vcpkg not available, switching to default script/ps1/target/*");
 									exit(GAIA_EXIT_ERROR);
 								} # Windows
 							
 								else {
-									log_Error("function_DeployTargetEcosystem","unsupported plateform");
+									log_Error("function_DeployTargetEcosystem","unsupported platform !!");
 								}
 							
 							} # switch()
 
 						} else {
-							print "SVN update successful";
+							
+							log_Info("function_DeployTargetEcosystem","    > vcpkg available ! using it");
+							
 						}
 
 				    	# syscall
-				    	log_Debug("function_DeployTargetEcosystem","external command -> [ system(".join(" ", @command_line).") ]");
-    					system(@command_line) if !$arg_dev_mode;  					
-    					
-    					# source home & update parent env from child env
-    					my $child_env = `. ~/.bashrc; env`;
-						my @child_env_array = split "\n", $child_env;
-						foreach (@child_env_array) {
-						   /([\w_]+)=(.*)/;
-						   $ENV{$1} = $2;
+				    	log_Debug("function_DeployTargetEcosystem","external command -> [ system(".join(" ", @$cmd_line).") ]");
+						if( scalar IPC::Cmd::run(
+								command => $cmd_line,
+								verbose => 1
+							)
+						) {
+
+							log_Info("function_DeployTargetEcosystem","Success !");
+
+						} else {
+							
+				            log_Error("function_DeployTargetEcosystem","failed to execute: $!");
+							exit(GAIA_EXIT_ERROR);
+
 						}
     					
-    					# log current 
-    					system("perl ".$FindBin::RealBin."/".$FindBin::RealScript);
-    					    					
-    					# check result
-		    	        if ($? == -1) {
-		    	        	
-				            log_Error("function_DeployTargetEcosystem","failed to execute: $!");
-				        
-		    	        } elsif ($? & 127) {
-				        
-				            log_Error("function_DeployTargetEcosystem","child died with signal ".($? & 127).", ".(($? & 128) ? "with" : "without")." coredump");
-				        
-		    	        }
-				        
-				        log_Debug("function_DeployTargetEcosystem","child exited with value [".($? >> 8)."]");
 				    	log_Info("function_DeployTargetEcosystem","    ----------------------------------------------</EXTERNAL_SCRIPT>-----------------------------------------------");
 				    
 				    } # foreach
