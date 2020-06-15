@@ -2,7 +2,9 @@
 
 # Ubuntu latest base config 
 FROM ubuntu:rolling as labsim-build-stage
-LABEL description="LABSIM build-stage container - for remote dev"
+
+# prettifyng
+LABEL description="LABSIM build-stage container for remote dev"
 
 # mandatory argument
 ARG GAIA_TARGET_ECOSYSTEM
@@ -25,7 +27,7 @@ RUN git clone https://github.com/Microsoft/vcpkg.git . \
     && ./bootstrap-vcpkg.sh -disableMetrics \
     && ./vcpkg integrate install
 
-# setup titans dir & clone LABSIM sources from server
+# setup titans dir, clone LABSIM sources from github, then integrate gaia ecosystem
 WORKDIR /labsim/dev/titans
 RUN --mount=type=secret,id=GITHUB_USERNAME,required \
     --mount=type=secret,id=GITHUB_TOKEN,required \
@@ -41,6 +43,5 @@ RUN --mount=type=secret,id=GITHUB_USERNAME,required \
     && chmod +x bootstrap-gaia.sh \
     && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
     
-
 # cleanup temporary
 RUN rm -rf /tmp
