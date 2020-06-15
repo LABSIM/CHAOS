@@ -33,7 +33,6 @@ RUN --mount=type=secret,id=GITHUB_USERNAME,required \
     && cd GAIA \
     : "${GAIA_TARGET_ECOSYSTEM:?GAIA target-ecosystem argument needs to be set and non-empty.}" \
     : "${GAIA_ENABLE_FEATURE:?GAIA enable-feature argument needs to be set and non-empty.}" \
-    && /bin/bash -c 'source /labsim/dev/titans/GAIA/script/sh/GAIA.bashrc && ${0} ${1+"$@"}' perl GAIA.pl --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE} \
     && chmod +x bootstrap-gaia.sh \
     && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature gnu
 
@@ -46,7 +45,7 @@ RUN git clone https://github.com/Microsoft/vcpkg.git . \
 
 # then integrate gaia ecosystem with required features
 WORKDIR /labsim/dev/titans/GAIA
-#RUN 
+RUN /bin/bash -c 'source /labsim/dev/titans/GAIA/script/sh/GAIA.bashrc && ${0} ${1+"$@"}' perl GAIA.pl --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
 
 # cleanup temporary
 RUN rm -rf /tmp
