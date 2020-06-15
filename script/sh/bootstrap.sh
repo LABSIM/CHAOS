@@ -37,18 +37,18 @@ echo "- configure GAIA"
 cat ${GAIA_ROOT}/script/sh/GAIA.bashrc >> ~/.bashrc
 
 # required PERL + CPAN module
-local perl_required_major_version="5"
-local perl_required_minor_version="30"
-local perl_required_patch_version="0"
-local perl_required_version="v${perl_required_major_version}.${perl_required_minor_version}.${perl_required_patch_version}"
+perl_required_major_version="5"
+perl_required_minor_version="30"
+perl_required_patch_version="0"
+perl_required_version="v${perl_required_major_version}.${perl_required_minor_version}.${perl_required_patch_version}"
 
 # has PERL ?
 if perl < /dev/null > /dev/null 2>&1 ; then
 
   # check perl version
-  local perl_major_version=$(perl -e 'print $^V;' | awk -F"v" '{print $NF}' | awk -F"." '{print $1}')
-	local perl_minor_version=$(perl -e 'print $^V;' | awk -F"v" '{print $NF}' | awk -F"." '{print $2}')
-	local perl_patch_version=$(perl -e 'print $^V;' | awk -F"v" '{print $NF}' | awk -F"." '{print $3}')
+  perl_major_version=$(perl -e 'print $^V;' | awk -F"v" '{print $NF}' | awk -F"." '{print $1}')
+	perl_minor_version=$(perl -e 'print $^V;' | awk -F"v" '{print $NF}' | awk -F"." '{print $2}')
+	perl_patch_version=$(perl -e 'print $^V;' | awk -F"v" '{print $NF}' | awk -F"." '{print $3}')
 
   if [ "$perl_major_version" -lt "$perl_required_major_version" ] || [ "$perl_minor_version" -lt "$perl_required_minor_version" ] || [ "$perl_patch_version" -lt "$perl_required_patch_version" ]; then
 
