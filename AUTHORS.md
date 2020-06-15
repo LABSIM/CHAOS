@@ -1,15 +1,9 @@
 
 # AUTHORS
 
-### LABSIM Team members (*LAB*oratoire de *SIM*ulation)
+![ONERA](https://www.fondamenti.fr/assets/img/portfolios/Onera-bloc-marque.png "Logo ONERA")
 
-<dl>
-  <dt>Nawfel KINANI</dt>
-  <dd>lead dev</dd>
-  <dd>< nawfel.kinani at onera.fr ></dd>
-  <dd>DTIS/ICNA</dd>
-</d1>
+## LABSIM Team members (*LAB*oratoire de *SIM*ulation)
 
-| | |
-|--| :--: |
-| ![ONERA](https://www.fondamenti.fr/assets/img/portfolios/Onera-bloc-marque.png "Logo ONERA") | Centre de Salon de provence - BA 701 FR-13661 SALON CEDEX AIR |
+| :--: | --: |
+| ![nkinani](https://avatars0.githubusercontent.com/u/4352738?s=460&u=4161f3b9e0658ec0213a548c459ddd0904a518e8&v=4) | <dl> <dt>Nawfel KINANI</dt> <dd>lead dev</dd> <dd>< nawfel.kinani at onera.fr ></dd> <dd>DTIS/ICNA</dd> <dd>Centre de Salon de provence - BA 701 FR-13661 SALON CEDEX AIR<dd> </d1> |
