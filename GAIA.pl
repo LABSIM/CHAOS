@@ -99,7 +99,7 @@ my @arg_targetFeature_array       = ();
 my $arg_dev_mode                  = 0;
 
 # root
-my $var_gaia_root = function_CleanPath($FindBin::RealBin."/..");
+my $var_gaia_root = function_CleanPath($FindBin::RealBin);
 	
 #-----------------------------------------------------------------------------
 # Logging
@@ -719,8 +719,8 @@ MAIN:
 	function_ParseCommandLine();
 	
 	# log
-	log_Debug("Main","found RealBin=[".$FindBin::RealBin);
-	log_Debug("Main","found GAIA root directory -> [".$var_gaia_root."]");
+	log_Debug("Main","invoked from RealBin=[".$FindBin::RealBin."] & RealScript:[".$FindBin::RealScript."]");
+	log_Debug("Main","set GAIA root directory to -> [".$var_gaia_root."]");
 	
 	# if not any flag just pretty print current ecosystem detail
 	if( !$arg_listAvailable_flag
