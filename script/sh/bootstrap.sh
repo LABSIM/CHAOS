@@ -37,8 +37,53 @@ echo "- configure GAIA"
 cat ${GAIA_ROOT}/script/sh/GAIA.bashrc >> ~/.bashrc
 
 # required PERL + CPAN module
-echo "- requirement : installing perl v5.30.3 & CPAN modules"
-/bin/bash -c 'source ${GAIA_ROOT}/script/sh/GAIA.bashrc && ${0} ${1+"$@"}' ${GAIA_ROOT}/script/sh/target/install-PERL.sh 5 30 3
+local perl_required_major_version=5
+local perl_required_minor_version=30
+local perl_required_patch_version=3
+local perl_required_version="v${perl_required_major_version}.${perl_required_minor_version}.${perl_required_patch_version}"
+
+# has PERL ?
+if perl < /dev/null > /dev/null 2>&1 ; then
+
+  # check perl version
+  local perl_major_version=$(perl -e 'print $^V;' | awk -F"v" '{print $NF}' | awk -F"." '{print $1}')
+	local perl_minor_version=$(perl -e 'print $^V;' | awk -F"v" '{print $NF}' | awk -F"." '{print $2}')
+	local perl_patch_version=$(perl -e 'print $^V;' | awk -F"v" '{print $NF}' | awk -F"." '{print $3}')
+
+  if [ "$perl_major_version" -lt "5" ] || [ "$perl_minor_version" -lt "30" ] || [ "$perl_patch_version" -lt "3" ]; then
+
+    #  perl, install
+    echo "- requirement : found installed perl $(perl -e 'print $^V;') but required is ${perl_required_version}"
+    /bin/bash -c 'source ${GAIA_ROOT}/script/sh/GAIA.bashrc && ${0} ${1+"$@"}' ${GAIA_ROOT}/script/sh/target/install-PERL.sh ${perl_required_major_version} ${perl_required_minor_version} ${perl_required_patch_version}
+
+  # PERL == ok
+  else
+    
+    # has CPANM ?
+    if cpanm < /dev/null > /dev/null 2>&1 ; then
+
+      # found CPANM, check module
+      echo "- requirement : found perl $(perl -e 'print $^V;') with CPANM, just check required PERL modules..."
+
+    else
+
+      # no CPANM, install it
+      echo "- requirement : found perl $(perl -e 'print $^V;') but not CPANM, installing it"
+
+    fi
+  
+    /bin/bash -c 'source ${GAIA_ROOT}/script/sh/GAIA.bashrc && ${0} ${1+"$@"}' ${GAIA_ROOT}/script/sh/target/install-CPANM.sh ${perl_required_major_version} ${perl_required_minor_version} ${perl_required_patch_version}
+  
+    
+  fi
+
+else
+
+  # no PERL, install it
+  echo "- requirement : installing perl ${perl_required_version} & CPANM modules"
+  /bin/bash -c 'source ${GAIA_ROOT}/script/sh/GAIA.bashrc && ${0} ${1+"$@"}' ${GAIA_ROOT}/script/sh/target/install-PERL.sh ${perl_required_major_version} ${perl_required_minor_version} ${perl_required_patch_version}
+
+fi
 
 # running gaia with arg
 echo "- running GAIA.pl [$@]"
