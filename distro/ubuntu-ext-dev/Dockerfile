@@ -10,8 +10,8 @@ LABEL description="LABSIM build-stage container for remote dev"
 ARG GAIA_TARGET_ECOSYSTEM
 ARG GAIA_ENABLE_FEATURE
 
-# update/install recquired packages - yes to every prompt - then, set locale
-RUN apt-get update && apt-get --assume-yes install \
+# update/upgrade/install recquired packages - yes to every prompt - then, set locale
+RUN apt-get update && apt-get --assume-yes upgrade && apt-get --assume-yes install \
         build-essential linux-headers-generic m4 git curl wget unzip tar locales \ 
     && locale-gen en_US.UTF-8
 
@@ -44,8 +44,9 @@ RUN git clone https://github.com/Microsoft/vcpkg.git . \
     && ./vcpkg integrate install
 
 # then integrate gaia ecosystem with required features
-WORKDIR /labsim/dev/titans/GAIA
-RUN /bin/bash -c 'source /labsim/dev/titans/GAIA/script/sh/GAIA.bashrc && ${0} ${1+"$@"}' perl GAIA.pl --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+#WORKDIR /labsim/dev/titans/GAIA
+#UN chmod +x GAIA.pl \
+#    && /bin/bash -c 'source /labsim/dev/titans/GAIA/script/sh/GAIA.bashrc && ${0} ${1+"$@"}' ./GAIA.pl --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
 
 # cleanup temporary
 RUN rm -rf /tmp
