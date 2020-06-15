@@ -330,7 +330,7 @@ function push_configure_op_to_cache() {
 
 		# cmake exist
 		echo "#!/bin/bash" > exec.sh
-		echo "cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -DOPENSSL_ROOT_DIR:PATH=${GAIA_THIRD_PARTY_HOME}/openssl-${GAIA_THIRD_PARTY_OPENSSL_VERSION} .." >> exec.sh
+		echo "cmake -DCMAKE_BUILD_TYPE:String=Release -DCMAKE_INSTALL_PREFIX=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} -DCMAKE_USE_OPENSSL:BOOL=ON -DOPENSSL_ROOT_DIR:PATH=${GAIA_THIRD_PARTY_HOME}/openssl-${GAIA_THIRD_PARTY_OPENSSL_VERSION} .." >> exec.sh
 
 	else
 
@@ -339,7 +339,7 @@ function push_configure_op_to_cache() {
 
 		# no cmake builtin -> bootstrap
 		echo "#!/bin/bash" > exec.sh
-		echo "./bootstrap --prefix=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} --parallel=${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
+		echo "./bootstrap --prefix=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION} --parallel=${GAIA_PARALLEL_BUILD_JOB_COUNT} -- -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_USE_OPENSSL:BOOL=ON -DOPENSSL_ROOT_DIR:PATH=${GAIA_THIRD_PARTY_HOME}/openssl-${GAIA_THIRD_PARTY_OPENSSL_VERSION}" >> exec.sh
 
 	fi
 
