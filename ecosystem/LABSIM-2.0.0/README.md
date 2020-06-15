@@ -12,7 +12,7 @@
 ## Detail
 
 - **Third party sofware** (a.k.a. *"feature"*)
-  - **GNU** -- ***required***
+  - **GNU** -- ***MANDATORY***
     - libtool *v.2.4.6*
     - libunistring *v.0.9.10*
     - bdw-gc *v.8.0.0*

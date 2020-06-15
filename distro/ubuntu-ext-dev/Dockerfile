@@ -20,14 +20,7 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-# setup third_party dev
-WORKDIR /labsim/dev/third_party/vcpkg
-RUN git clone https://github.com/Microsoft/vcpkg.git . \
-    && chmod +x bootstrap-vcpkg.sh \
-    && ./bootstrap-vcpkg.sh -disableMetrics \
-    && ./vcpkg integrate install
-
-# setup titans dir, clone LABSIM sources from github, then integrate gaia ecosystem
+# setup titans dir, clone LABSIM sources from github, then integrate gaia ecosystem + mandatory feature 
 WORKDIR /labsim/dev/titans
 RUN --mount=type=secret,id=GITHUB_USERNAME,required \
     --mount=type=secret,id=GITHUB_TOKEN,required \
@@ -41,7 +34,18 @@ RUN --mount=type=secret,id=GITHUB_USERNAME,required \
     : "${GAIA_TARGET_ECOSYSTEM:?GAIA target-ecosystem argument needs to be set and non-empty.}" \
     : "${GAIA_ENABLE_FEATURE:?GAIA enable-feature argument needs to be set and non-empty.}" \
     && chmod +x bootstrap-gaia.sh \
-    && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
-    
+    && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature gnu
+
+# setup third_party dev
+WORKDIR /labsim/dev/third_party/vcpkg
+RUN git clone https://github.com/Microsoft/vcpkg.git . \
+    && chmod +x bootstrap-vcpkg.sh \
+    && ./bootstrap-vcpkg.sh -disableMetrics \
+    && ./vcpkg integrate install
+
+# then integrate gaia ecosystem + mandatory feature 
+WORKDIR /labsim/dev/titans/GAIA
+RUN perl GAIA.pl --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+
 # cleanup temporary
 RUN rm -rf /tmp

@@ -1,5 +1,3 @@
-#!/usr/bin/perl -w
-
 #
 # GAIA : required LABSIM ground software ecosystem
 # Copyright (C) 2012-2016  Nawfel KINANI
