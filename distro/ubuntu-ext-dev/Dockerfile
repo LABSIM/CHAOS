@@ -20,6 +20,10 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+# then integrate gaia ecosystem with required features
+WORKDIR /labsim/dev/titans/GAIA
+RUN /bin/bash -c 'source /labsim/dev/titans/GAIA/script/sh/GAIA.bashrc && ${0} ${1+"$@"}' perl GAIA.pl --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+
 # setup titans dir, clone LABSIM sources from github, then integrate gaia mandatory GNU feature 
 WORKDIR /labsim/dev/titans
 RUN --mount=type=secret,id=GITHUB_USERNAME,required \
@@ -43,9 +47,6 @@ RUN git clone https://github.com/Microsoft/vcpkg.git . \
     && ./bootstrap-vcpkg.sh -disableMetrics \
     && ./vcpkg integrate install
 
-# then integrate gaia ecosystem with required features
-WORKDIR /labsim/dev/titans/GAIA
-RUN perl GAIA.pl --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
 
 # cleanup temporary
 RUN rm -rf /tmp
