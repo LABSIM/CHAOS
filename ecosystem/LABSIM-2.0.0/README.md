@@ -1,17 +1,13 @@
 
-# LABSIM simulation software ecosystem
+# GAIA Ecosystem description
 
-## Brief
-
-> *name* : ***LABSIM***
+> *fullname* : ***LABSIM simulation software ecosystem***
 >
 > *version* : ***v.2.0.0***
 >
 > *author* : Nawfel KINANI
 >
-> *dept* : DTIS
->
-> *unit* : ICNA
+> *dept/unit* : DTIS/ICNA
 
 ## Valid distros
 
