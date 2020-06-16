@@ -12,7 +12,7 @@ ARG GAIA_ENABLE_FEATURE
 
 # update/upgrade/install recquired packages - yes to every prompt - then, set locale & install specific perl module
 RUN apt-get update && apt-get --assume-yes upgrade && apt-get --assume-yes install \
-        build-essential linux-headers-generic m4 perl cpanminus git curl wget unzip tar locales \ 
+        build-essential linux-headers-generic pkg-config m4 perl cpanminus git curl wget unzip tar locales libffi-dev \ 
     && locale-gen en_US.UTF-8 \
     && cpanm --verbose \
         List::Util local::lib FindBin Switch Env Config Getopt::Long \
