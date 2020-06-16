@@ -10,6 +10,10 @@ LABEL description="LABSIM build-stage container for remote dev"
 ARG GAIA_TARGET_ECOSYSTEM
 ARG GAIA_ENABLE_FEATURE
 
+# tzdata : Timezone + noninteractive
+ARG TZ=Europe/Paris
+ARG DEBIAN_FRONTEND=noninteractive
+
 # update/upgrade/install recquired packages - yes to every prompt - then, set locale & install specific perl module
 RUN apt-get update && apt-get --assume-yes upgrade && apt-get --assume-yes install \
         build-essential linux-headers-generic pkg-config m4 perl cpanminus git curl wget unzip tar locales libffi-dev \ 
