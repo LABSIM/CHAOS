@@ -9,7 +9,11 @@
 > *dept* : DTIS
 > *unit* : ICNA
 
-## Detail
+## Valid distros
+
+- [Ubuntu-ext-dev](../disto/ubuntu-ext-dev)
+
+## Ecosystem Detail
 
 **Third party sofware** (a.k.a. *"feature"*)
 
