@@ -207,7 +207,7 @@ source "${GAIA_ROOT}/script/sh/function/cleanup-third_party.conf.sh"
 
 function gaia() {
 	echo -e "\n## BEGIN LABSIM ROUTINES\n" \
-	&& time perl "${GAIA_ROOT}/script/GAIA.pl" "$@"	\
+	&& time perl "${GAIA_ROOT}/GAIA.pl" "$@"	\
 	&& echo -e "\n## END LABSIM ROUTINES\n"
 } # gaia()
 
