@@ -4,16 +4,20 @@
 ## Brief
 
 > *name* : ***LABSIM***
+>
 > *version* : ***v.2.0.0***
+>
 > *author* : Nawfel KINANI
+>
 > *dept* : DTIS
+>
 > *unit* : ICNA
 
 ## Valid distros
 
 - [ubuntu-ext-dev](../../distro/ubuntu-ext-dev)
 
-## Ecosystem Detail
+## Ecosystem detail
 
 **Third party sofware** (a.k.a. *"feature"*)
 
