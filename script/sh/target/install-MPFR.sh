@@ -273,7 +273,7 @@ function push_download_op_to_cache() {
 	# finally, the op
 	echo "#!/bin/bash" > exec.sh
 	if [ "${GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY}" = true ]; then
-		echo "wget http://www.mpfr.org/mpfr-current/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
+		echo "wget https://www.mpfr.org/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.xz" >> exec.sh
 	else 
 		echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.xz ." >> exec.sh
 	fi
