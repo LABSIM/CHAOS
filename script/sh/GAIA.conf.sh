@@ -234,8 +234,8 @@ function man() {
 		man "$@"
 }
 
-# show weather CSP :)
-alias weather='curl wttr.in/Manchester'
+# show weather :)
+alias weather='curl wttr.in/Arles'
 
 # pretty 'ls' & 'grep
 alias ls='ls --color=auto --human-readable --group-directories-first --classify'
