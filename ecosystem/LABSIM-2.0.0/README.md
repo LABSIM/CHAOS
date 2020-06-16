@@ -15,18 +15,18 @@
   - **GNU** -- ***MANDATORY***
     - libtool *v.2.4.6*
     - libunistring *v.0.9.10*
-    - bdw-gc *v.8.0.0*
-    - guile *v.2.2.4*
-    - binutils *v.2.31.1*
-    - gmp *v.6.1.2*
-    - mpfr *v.4.0.1*
+    - bdw-gc *v.8.0.4*
+    - guile *v.3.0.2*
+    - binutils *v.2.33.1*
+    - gmp *v.6.2.0*
+    - mpfr *v.4.0.2*
     - mpc *v.1.1.0*
     - autogen *v.5.18.16*
     - isl *v.0.22.1*
     - gcc *v.10.1.0*
     - gdb *v.9.2.0*
-  - **Development (DEV)** -- ***required***
     - make *v.4.2.1*
+  - **Development (DEV)** -- ***required***
     - perl *v.5.30.3*
     - c-ares *v.1.15.0*
     - openssl *v.1.1.1b*
