@@ -35,7 +35,8 @@
     - xerces-c++ *v.3.2.2*
     - doxygen *v.1.8.14*
     - boost *v.1.73.0*
-    - llvm *v.8.0.0*
+  - **LLVM** -- *optional*
+    - llvm *v.10.0.0*
   - **Simulation Frontend (SF)** -- *strongly recommended*
     - protobuf *v.3.12.3*
     - grpc *v.1.29.1*
