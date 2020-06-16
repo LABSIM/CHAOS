@@ -272,7 +272,8 @@ function push_download_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "wget https://cmake.org/files/v${GAIA_TARGET_MAJOR}.${GAIA_TARGET_MINOR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
+	echo "wget https://github.com/Kitware/${GAIA_TARGET_PRETTY_NAME}/releases/download/v${GAIA_TARGET_VERSION}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz
+" >> exec.sh
 
 }
 
