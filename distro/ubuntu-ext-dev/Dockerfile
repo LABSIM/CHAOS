@@ -11,8 +11,8 @@ ARG GAIA_TARGET_ECOSYSTEM
 ARG GAIA_ENABLE_FEATURE
 
 # tzdata : Timezone + noninteractive
-ARG TZ=Europe/Paris
-ARG DEBIAN_FRONTEND=noninteractive
+#ARG TZ=Europe/Paris
+#RG DEBIAN_FRONTEND=noninteractive
 
 # update/upgrade/install recquired packages - yes to every prompt - then, set locale & install specific perl module
 RUN apt-get update && apt-get --assume-yes upgrade && apt-get --assume-yes install \
@@ -28,30 +28,31 @@ RUN apt-get update && apt-get --assume-yes upgrade && apt-get --assume-yes insta
         unzip \
         tar \
         locales \
-        libffi-dev \
-    && locale-gen en_US.UTF-8 \
-    && cpanm --verbose \
-        List::Util \
-        local::lib \
-        FindBin \
-        Switch \
-        Env \
-        Config \
-        Getopt::Long \
-        Pod::Usage \
-        Term::ANSIColor \
-        Time::HiRes \
-        Data::Dumper \
-        File::Copy::Recursive \
-        File::Remove \
-        File::Spec \
-        File::HomeDir \
-        YAML::XS \
-        Net::Address::IP::Local \
-        IPC::System::Simple \
-        IPC::Cmd \
-        XML::SimpleObject::LibXML \
-        Graph
+        tzdata \
+        libffi-dev 
+    #&& locale-gen en_US.UTF-8 \
+    #&& cpanm --verbose \
+    #    List::Util \
+    #    local::lib \
+    #    FindBin \
+    #    Switch \
+    #    Env \
+    #    Config \
+    #    Getopt::Long \
+    #    Pod::Usage \
+    #    Term::ANSIColor \
+    #    Time::HiRes \
+    #    Data::Dumper \
+    #    File::Copy::Recursive \
+    #    File::Remove \
+    #    File::Spec \
+    #    File::HomeDir \
+    #    YAML::XS \
+    #    Net::Address::IP::Local \
+    #    IPC::System::Simple \
+    #    IPC::Cmd \
+    #    XML::SimpleObject::LibXML \
+    #    Graph
 
 # setup local for environment
 ENV LANG en_US.UTF-8
