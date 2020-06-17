@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1.0-experimental
 
 # Ubuntu latest base config 
-FROM ubuntu:rolling as labsim-build-stage
+FROM ubuntu:18.04 as labsim-build-stage
 
 # prettifyng
 LABEL description="LABSIM build-stage container for remote dev"
