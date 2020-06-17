@@ -152,7 +152,7 @@ Finally, dir into your local GAIA root & build container
 
 | Bug/Problem | Advice |
 | :--: | :-- |
-| - *Win10* - suuuuuper slow internet speed | run a powershell as admin & [see here](https://github.com/docker/for-win/issues/698#issuecomment-314902326) |
+| - *Win10* - suuuuuper slow internet speed | 1. run a powershell as admin <br/>2. [run this command](https://github.com/docker/for-win/issues/698#issuecomment-314902326) <br/>3. reboot host <br/>4. clean & purge docker data |
 
 #### Bonus
 
