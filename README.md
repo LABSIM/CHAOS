@@ -148,11 +148,17 @@ Finally, dir into your local GAIA root & build container
         .
   ```
 
-> Bonus !
->
-> - clean all local images : `docker rmi -f $(docker images -a -q)`
-> - list all local images: `docker image ls`
-> - run interactive shell: `docker run --rm -it {container}:{tag}`
+#### Troubleshooting
+
+| Bug/Problem | Advice |
+| :--: | :-- |
+| suuuuuper slow internet speed | [see here](https://github.com/docker/for-win/issues/698#issuecomment-314902326) |
+
+#### Bonus
+
+- clean all local images: `docker rmi -f $(docker images -a -q)`
+- list all local images: `docker image ls`
+- run interactive shell: `docker run --rm -it {container}:{tag}`
 
 ## License
 
