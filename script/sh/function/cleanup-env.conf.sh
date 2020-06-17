@@ -80,5 +80,7 @@ if [ -n "$PKG_CONFIG_PATH" ]; then
 	unset old_PKG_CONFIG_PATH x
 fi
 
+export PATH LD_LIBRARY_PATH CPATH PKG_CONFIG_PATH
+
 return 0
 # == EOF
