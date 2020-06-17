@@ -61,9 +61,9 @@ RUN apt-get update \
         Graph
 
 # setup local for environment
-ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
 
 # setup third_party dev
 WORKDIR /labsim/dev/third_party/vcpkg
