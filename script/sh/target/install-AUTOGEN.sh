@@ -311,7 +311,7 @@ function push_configure_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "./configure --prefix=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}" >> exec.sh
+	echo "CFLAGS=\"-Wno-format-truncation\" ./configure --prefix=${GAIA_THIRD_PARTY_HOME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}" >> exec.sh
 
 }
 

@@ -20,9 +20,11 @@ RUN apt-get update \
  && apt-get --assume-yes install \
         automake \
         autoconf \
+        autogen \
+        make \
+        libtool \
         pkg-config \
         m4 \
-        libtool \
         build-essential \
         linux-headers-generic \
         texinfo \
