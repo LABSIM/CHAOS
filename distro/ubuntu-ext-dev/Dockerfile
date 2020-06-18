@@ -35,9 +35,11 @@ RUN apt-get update \
         tar \
         locales \
         tzdata \
-        libffi-dev \
         perl \
         cpanminus \
+        libffi-dev \
+        libzstd-dev \
+        zstd \
  && apt-get clean \
  && locale-gen en_US.UTF-8 \
  && cpanm --verbose \
