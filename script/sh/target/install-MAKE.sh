@@ -273,7 +273,12 @@ function push_download_op_to_cache() {
 	# finally, the op
 	echo "#!/bin/bash" > exec.sh
 	if [ "${GAIA_FOUND_AVAILABLE_INTERNET_CONNECTIVITY}" = true ]; then
-		echo "wget https://ftp.gnu.org/gnu/${GAIA_TARGET_LC_NAME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
+		if [ "${GAIA_TARGET_PATCH}" -eq "0" ]; then
+			echo "wget https://ftp.gnu.org/gnu/${GAIA_TARGET_LC_NAME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_MAJOR}.${GAIA_TARGET_MINOR}.tar.gz" >> exec.sh
+			echo "mv ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_MAJOR}.${GAIA_TARGET_MINOR}.tar.gz ${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
+		else
+			echo "wget https://ftp.gnu.org/gnu/${GAIA_TARGET_LC_NAME}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz" >> exec.sh
+		fi
 	else 
 		echo "cp --verbose ${GAIA_OFFLINE_DIR}/${GAIA_TARGET_LC_NAME}-${GAIA_TARGET_VERSION}.tar.gz ." >> exec.sh
 	fi
