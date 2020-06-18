@@ -25,6 +25,7 @@ RUN apt-get update \
         libtool \
         build-essential \
         linux-headers-generic \
+        texinfo \
         curl \
         wget \
         git \
