@@ -14,10 +14,9 @@ ARG GAIA_ENABLE_FEATURE
 ARG TZ=Europe/Paris
 ARG DEBIAN_FRONTEND=noninteractive
 
-# update/upgrade/install recquired packages - yes to every prompt - then, set locale & install specific perl module
+# update/install recquired packages - yes to every prompt - then, set locale & install specific perl module
 RUN apt-get update \
- && apt-get --assume-yes upgrade \
- && apt-get --assume-yes install \
+ && apt-get --no-install-recommends --assume-yes install \
         automake \
         autoconf \
         autogen \
@@ -41,6 +40,7 @@ RUN apt-get update \
         libzstd-dev \
         zstd \
  && apt-get clean \
+ && rm -rf /var/lib/apt/lists/* \
  && locale-gen en_US.UTF-8 \
  && cpanm --verbose \
         List::Util \
