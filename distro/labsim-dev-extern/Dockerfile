@@ -1,7 +1,11 @@
 # syntax = docker/dockerfile:1.0-experimental
 
-# Base : Debian:buster -> buildpack-deps:buster -> gcc:10.1.0
-FROM gcc:10.1.0 as labsim-setup-stage
+# -> Debian:buster 
+#  -> buildpack-deps:buster-curl 
+#   -> buildpack-deps:buster-scm 
+#    -> buildpack-deps:buster 
+#     -> gcc:10.1.0
+FROM gcc:10.1.0 as labsim-dev
 
 # prettifyng
 LABEL description="LABSIM container for remote dev"
@@ -11,9 +15,12 @@ ARG GAIA_TARGET_ECOSYSTEM
 ARG GAIA_ENABLE_FEATURE
 ARG DEBIAN_FRONTEND=noninteractive
 
-# update/install recquired packages - yes to every prompt - then, set locale & install specific perl module
+# update/install recquired packages - yes to every prompt - then, cleanup & set locale
 RUN apt-get update \
  && apt-get --no-install-recommends --assume-yes install \
+        gawk \
+        bison \
+        flex \
         locales \
         libzstd-dev \
         zstd \
@@ -22,13 +29,13 @@ RUN apt-get update \
  && locale-gen en_US.UTF-8 \
  && localedef -i en_US -f UTF-8 en_US.UTF-8
 
-# setup local for environment
+# timezone & locales
 ENV TZ "Europe/Paris"
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 
-# setup titans dir, clone LABSIM sources from github, then integrate gaia mandatory GNU feature 
+# setup LABSIM titans : create dirs, clone sources from github, then integrate gaia features
 WORKDIR /labsim/dev/titans
 RUN --mount=type=secret,id=GITHUB_USERNAME,required \
     --mount=type=secret,id=GITHUB_TOKEN,required \
@@ -42,7 +49,6 @@ RUN --mount=type=secret,id=GITHUB_USERNAME,required \
     : "${GAIA_TARGET_ECOSYSTEM:?GAIA target-ecosystem argument needs to be set and non-empty.}" \
     : "${GAIA_ENABLE_FEATURE:?GAIA enable-feature argument needs to be set and non-empty.}" \
  && chmod +x bootstrap-gaia.sh \
-#  && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature gnu
  && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
 
 # cleanup temporary
