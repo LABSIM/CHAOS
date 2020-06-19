@@ -4,14 +4,11 @@
 FROM ubuntu:rolling as labsim-setup-stage
 
 # prettifyng
-LABEL description="LABSIM build-stage container for remote dev"
+LABEL description="LABSIM build-stage container for intern dev"
 
-# mandatory argument
+# mandatory argument & noninteractive
 ARG GAIA_TARGET_ECOSYSTEM
 ARG GAIA_ENABLE_FEATURE
-
-# tzdata : Timezone + noninteractive
-ARG TZ=Europe/Paris
 ARG DEBIAN_FRONTEND=noninteractive
 
 # update/install recquired packages - yes to every prompt - then, set locale & install specific perl module
@@ -43,30 +40,10 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
  && locale-gen en_US.UTF-8 \
- && cpanm --verbose \
-        List::Util \
-        local::lib \
-        FindBin \
-        Switch \
-        Env \
-        Config \
-        Getopt::Long \
-        Pod::Usage \
-        Term::ANSIColor \
-        Time::HiRes \
-        Data::Dumper \
-        File::Copy::Recursive \
-        File::Remove \
-        File::Spec \
-        File::HomeDir \
-        YAML::XS \
-        Net::Address::IP::Local \
-        IPC::System::Simple \
-        IPC::Cmd \
-        XML::SimpleObject::LibXML \
-        Graph
+ && localedef -i en_US -f UTF-8 en_US.UTF-8
 
-# setup local for environment
+# setup timezone & locales for environment
+ENV TZ "Europe/Paris"
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8

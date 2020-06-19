@@ -39,7 +39,7 @@ cat ${GAIA_ROOT}/script/sh/GAIA.bashrc >> ~/.bashrc
 # required PERL + CPAN module
 perl_required_major_version="5"
 perl_required_minor_version="30"
-perl_required_patch_version="0"
+perl_required_patch_version="3"
 perl_required_version="v${perl_required_major_version}.${perl_required_minor_version}.${perl_required_patch_version}"
 
 # has PERL ?
