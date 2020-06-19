@@ -367,7 +367,7 @@ function push_install_op_to_cache() {
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "make install" >> exec.sh
+	echo "make install_sw" >> exec.sh
 
 }
 
