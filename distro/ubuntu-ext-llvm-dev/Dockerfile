@@ -42,7 +42,29 @@ RUN apt-get update \
         zstd \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
- && locale-gen en_US.UTF-8 
+ && locale-gen en_US.UTF-8 \
+ && cpanm --verbose \
+        List::Util \
+        local::lib \
+        FindBin \
+        Switch \
+        Env \
+        Config \
+        Getopt::Long \
+        Pod::Usage \
+        Term::ANSIColor \
+        Time::HiRes \
+        Data::Dumper \
+        File::Copy::Recursive \
+        File::Remove \
+        File::Spec \
+        File::HomeDir \
+        YAML::XS \
+        Net::Address::IP::Local \
+        IPC::System::Simple \
+        IPC::Cmd \
+        XML::SimpleObject::LibXML \
+        Graph
 
 # setup local for environment
 ENV LANGUAGE en_US:en
