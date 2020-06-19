@@ -11,7 +11,8 @@
 
 ## Valid distros
 
-- [ubuntu-ext-dev](../../distro/ubuntu-ext-dev)
+- [ubuntu-dev-intern](../../distro/ubuntu-dev-intern)
+- [ubuntu-dev-extern](../../distro/ubuntu-dev-extern)
 
 ## Ecosystem detail
 

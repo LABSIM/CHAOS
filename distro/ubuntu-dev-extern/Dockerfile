@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1.0-experimental
 
 # Ubuntu latest base config 
-FROM ubuntu:rolling as labsim-build-stage
+FROM ubuntu:rolling as labsim-setup-stage
 
 # prettifyng
 LABEL description="LABSIM build-stage container for remote dev"
@@ -70,13 +70,6 @@ RUN apt-get update \
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
-
-# setup third_party dev
-WORKDIR /labsim/dev/third_party/vcpkg
-RUN git clone https://github.com/Microsoft/vcpkg.git . \
- && chmod +x bootstrap-vcpkg.sh \
- && ./bootstrap-vcpkg.sh -disableMetrics \
- && ./vcpkg integrate install
 
 # setup titans dir, clone LABSIM sources from github, then integrate gaia mandatory GNU feature 
 WORKDIR /labsim/dev/titans
