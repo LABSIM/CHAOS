@@ -4,7 +4,7 @@
 FROM gcc:10.1.0 as labsim-setup-stage
 
 # prettifyng
-LABEL description="LABSIM build-stage container for remote dev"
+LABEL description="LABSIM container for remote dev"
 
 # mandatory argument + noninteractive
 ARG GAIA_TARGET_ECOSYSTEM
