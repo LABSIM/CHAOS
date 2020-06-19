@@ -30,7 +30,7 @@ RUN apt-get update \
         curl \
         wget \
         git \
-        openssl \
+        ca-certificates \
         unzip \
         tar \
         locales \
