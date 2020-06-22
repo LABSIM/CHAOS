@@ -358,9 +358,8 @@ function push_configure_op_to_cache() {
 
 	# cmake exist
 	echo "#!/bin/bash" > exec.sh
-	echo "sed -i 's/JAVAC_COMMAND=javac/JAVAC_COMMAND=/g' bin/checkconf" >> exec.sh
-	echo "sed -i 's/MAVEN_FOUND=/# fuck this :) --> MAVEN_FOUND=/g' bin/checkconf" >> exec.sh
-	echo "export OSPL_QT_IS_ON=no && ./configure x86_64.linux-release" >> exec.sh
+	echo "sed -i 's/GCC_FULLVERSION | gawk /GCC_FULLVERSION | gawk -F . /g' bin/checkconf" >> exec.sh
+	echo "./configure x86_64.linux-release" >> exec.sh
 
 }
 
