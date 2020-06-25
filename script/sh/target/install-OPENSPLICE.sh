@@ -358,7 +358,7 @@ function push_configure_op_to_cache() {
 
 	# GCC > 10.* then legacy C support + bug version detection... amateur
 	echo "#!/bin/bash" > exec.sh
-	echo "sed -i 's/CFLAGS\t\t =/CFLAGS\t\t = -fcommon/g' setup/x86_64.linux-default.mak" >> exec.sh
+	echo "sed -i 's/CFLAGS\\t\\t =/CFLAGS\\t\\t = -fcommon/g' setup/x86_64.linux-default.mak" >> exec.sh
 	#echo "sed -i 's/CXXFLAGS\t =/CXXFLAGS\t = -fcommon/g' setup/x86_64.linux-default.mak" >> exec.sh
 	echo "sed -i 's/GCC_FULLVERSION | gawk /GCC_FULLVERSION | gawk -F . /g' bin/checkconf" >> exec.sh
 	echo "./configure x86_64.linux-release" >> exec.sh
