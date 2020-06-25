@@ -1,6 +1,6 @@
 # GAIA distro description
 
-> *fullname* : ***LABSIM external development distro***
+> *fullname* : ***LABSIM external development distro - GNU GCC base***
 >
 > *version* : ***rolling***
 >
