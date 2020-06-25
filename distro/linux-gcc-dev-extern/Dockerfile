@@ -8,7 +8,7 @@
 FROM gcc:10.1.0 as labsim-dev
 
 # prettifyng
-LABEL description="LABSIM container for remote dev"
+LABEL description="LABSIM external development distro - Linux & GNU GCC based"
 
 # mandatory argument + noninteractive
 ARG GAIA_TARGET_ECOSYSTEM
