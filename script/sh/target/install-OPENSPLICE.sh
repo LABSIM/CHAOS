@@ -337,11 +337,11 @@ function push_checkout_op_to_cache() {
 function push_init_submodule_op_to_cache() {
 
 	# print
-	echo -ne "  + Intitialisation des submodule pour ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
+	echo -ne "  + Intitialisation des submodules pour ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
 
 	# the op
 	echo "#!/bin/bash" > exec.sh
-	echo "git clone --recursive https://github.com/ADLINK-IST/MPC_ROOT.git submods/MPC_ROOT" >> exec.sh
+	echo "git submodule update --init --recursive" >> exec.sh
 
 }
 
@@ -356,8 +356,10 @@ function push_configure_op_to_cache() {
 	# print
 	echo -ne "  + Configuration de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
 
-	# cmake exist
+	# GCC > 10.* then legacy C support + bug version detection... amateur
 	echo "#!/bin/bash" > exec.sh
+	echo "sed -i 's/CFLAGS\t\t =/CFLAGS\t\t = -fcommon/g' setup/x86_64.linux-default.mak" >> exec.sh
+	#echo "sed -i 's/CXXFLAGS\t =/CXXFLAGS\t = -fcommon/g' setup/x86_64.linux-default.mak" >> exec.sh
 	echo "sed -i 's/GCC_FULLVERSION | gawk /GCC_FULLVERSION | gawk -F . /g' bin/checkconf" >> exec.sh
 	echo "./configure x86_64.linux-release" >> exec.sh
 
@@ -375,7 +377,7 @@ function push_build_op_to_cache() {
 	echo -ne "  + Build de ${GAIA_TARGET_PRETTY_NAME} ${GAIA_TARGET_VERSION}..."
 
 	# the op
-	echo "#!/bin/bash" > exec.sh
+	echo "#!/bin/bash" > exec.s
 	echo "source envs-x86_64.linux-release.sh && make -j${GAIA_PARALLEL_BUILD_JOB_COUNT}" >> exec.sh
 
 }
