@@ -1,9 +1,5 @@
 # CHAOS
 
-## Overview
-
-Todo
-
 ## Quick Start
 
 From your local dev directory, prompt a term & run :
