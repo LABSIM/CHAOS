@@ -30,18 +30,18 @@
 	],
 
 	// Default path to open when attaching to a new container.
-	//"workspaceFolder": "/labsim/dev/titans/",
+	"workspaceFolder": "/labsim/dev/titans/",
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		// ===== langage linter =====
-		"ms-vscode.cpptools"
-		// "ms-vscode.cmake-tools",
-		// "davidanson.vscode-markdownlint",
-		// "davidwang.ini-for-vscode",
-		// "jeff-hykin.better-shellscript-syntax",
-		// "d9705996.perl-toolbox",
-		// "redhat.vscode-yaml"
+		"ms-vscode.cpptools",
+		"ms-vscode.cmake-tools",
+		"davidanson.vscode-markdownlint",
+		"davidwang.ini-for-vscode",
+		"jeff-hykin.better-shellscript-syntax",
+		"d9705996.perl-toolbox",
+		"redhat.vscode-yaml"
 	],
 	
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

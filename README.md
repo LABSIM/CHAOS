@@ -8,69 +8,55 @@ Todo
 
 jump to your config :
 
-- _*Windows only*_ - [Windows Subsystem for Linux (WSL)](#wsl)
 - [Docker Container](#docker)
-
-### WSL
-
-> official documentation, [see here](https://code.visualstudio.com/docs/remote/wsl)
-
-1. Activate WSL1(_required_) : [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
-2. Install a WSL distro, for exemple [Ubuntu 20.04 LTS](https://www.microsoft.com/fr-fr/p/ubuntu-2004-lts/9n6svws3rx71). For more distro [see here](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10#install-your-linux-distribution-of-choice)
-3. Install Visual Studio Code : [VSCode](https://code.visualstudio.com/)
-4. Install VSCode extension :
-   - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-   - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
-   - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-   - [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
-   - [CMake](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
-   - [Perl](https://marketplace.visualstudio.com/items?itemName=d9705996.perl-toolbox)
-   - [INI](https://marketplace.visualstudio.com/items?itemName=DavidWang.ini-for-vscode)
-   - [Markdown](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
-   - [Shell](https://marketplace.visualstudio.com/items?itemName=jeff-hykin.better-shellscript-syntax)
-   - [Material Theme, bonus ;)](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme)
-5. From VSCode, run a wsl console & start developping as a [Standalone Linux](#standalone-linux) configuration.
+- _*Windows only*_ - [Windows Subsystem for Linux (WSL)](#wsl)
 
 ### Docker
 
-> official documentation, [see here](https://code.visualstudio.com/docs/remote/containers)
-
-Install docker desktop & enable BuildKit feature
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop)
-- [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
-
-If you want to dev from a container :
-
-1. _*Windows only*_ Activate WSL2(_required_) : [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10) + [Update WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10#update-to-wsl-2)
-2. Install Visual Studio Code : [VSCode](https://code.visualstudio.com/)
-3. Install VSCode extension :
-   - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-   - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
-   - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-   - [Material Theme, bonus ;)](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme)
-
-Export secret info to enable 2FA container access !
+From your local dev directory, prompt a term & run :
 
 - Linux :
 
   ```console
-  [user@localhost]$ echo 'your_super_secret_github_username' > your/secret/path/github_username.txt
-  [user@localhost]$ echo 'your_super_secret_github_token' > your/secret/path/github_token.txt
+  [user@localhost]$ git clone https://github.com/LABSIM/CHAOS.git
+  [user@localhost]$ cd CHAOS/
+  ```
+
+- Windows :
+
+  ```console
+  PS> git clone https://github.com/LABSIM/CHAOS.git
+  PS> cd CHAOS/
+  ```
+
+Export secret info to enable 2FA devcontainer access !
+
+- Linux :
+
+  ```console
+  [user@localhost]$ echo 'your_super_secret_github_username' > your/local/secret/path/github_username.txt
+  [user@localhost]$ echo 'your_super_secret_github_token' > your/local/secret/path/github_token.txt
   ```
 
 - Windows :
 
   ```console
   PS> Write-Output "your_super_secret_github_username" \
-        | Out-File -append -encoding ASCII "your/secret/path/github_username.txt"
+        | Out-File -append -encoding ASCII "your/local/secret/path/github_username.txt"
   PS> Write-Output "your_super_secret_github_token" <br/> \
-        | Out-File -append -encoding ASCII "your/secret/path/github_token.txt"
+        | Out-File -append -encoding ASCII "your/local/secret/path/github_token.txt"
   ```
 
 > for more info, [see here](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
 
-Finally, dir into your local CHAOS root & build container
+Install docker desktop & enable BuildKit feature
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
+- [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
+
+> official documentation, [see here](https://code.visualstudio.com/docs/remote/containers)
+
+Finally, dir into your local CHAOS root & build container :
 
 - Linux :
 
@@ -101,6 +87,59 @@ Finally, dir into your local CHAOS root & build container
         --tag labsim-{container}:{tag} \
         .
   ```
+
+So now you should have a labsim-{container}:{tag} container ready to run ! Launch it with the following :
+
+- Linux :
+
+  ```console
+  [user@localhost]$ docker run --rm -it labsim-{container}:{tag}
+  ```
+
+- Windows :
+
+  ```console
+  PS> docker run --rm -it labsim-{container}:{tag}
+  ```
+
+& check the GAIA configuration with :
+
+- Linux@Docker :
+
+  ```console
+  [root@labsim-{container}:{tag}]$ gaia
+  ```
+
+Then, if you want to dev from the inside of our freshly build container, do :
+
+1. _*Windows only*_ Activate WSL2(_required_) : [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10) + [Update WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10#update-to-wsl-2)
+2. Install Visual Studio Code : [VSCode](https://code.visualstudio.com/)
+3. Install VSCode extension :
+   - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+   - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
+   - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+   - [Material Theme, bonus ;)](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme)
+
+
+### WSL _*under construction*_
+
+> official documentation, [see here](https://code.visualstudio.com/docs/remote/wsl)
+
+1. Activate WSL1(_required_) : [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
+2. Install a WSL distro, for exemple [Ubuntu 20.04 LTS](https://www.microsoft.com/fr-fr/p/ubuntu-2004-lts/9n6svws3rx71). For more distro [see here](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10#install-your-linux-distribution-of-choice)
+3. Install Visual Studio Code : [VSCode](https://code.visualstudio.com/)
+4. Install VSCode extension :
+   - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+   - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
+   - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+   - [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
+   - [CMake](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
+   - [Perl](https://marketplace.visualstudio.com/items?itemName=d9705996.perl-toolbox)
+   - [INI](https://marketplace.visualstudio.com/items?itemName=DavidWang.ini-for-vscode)
+   - [Markdown](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
+   - [Shell](https://marketplace.visualstudio.com/items?itemName=jeff-hykin.better-shellscript-syntax)
+   - [Material Theme, bonus ;)](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme)
+5. From VSCode, run a wsl console & start developping as a [Standalone Linux](#standalone-linux) configuration.
 
 #### Troubleshooting
 
