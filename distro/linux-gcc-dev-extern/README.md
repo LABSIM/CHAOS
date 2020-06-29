@@ -1,4 +1,4 @@
-# GAIA distro description
+# CHAOS distro description
 
 > *fullname* : ***LABSIM external development distro - Linux & GNU GCC based***
 >
