@@ -109,28 +109,29 @@ Then, if you want to dev from the inside of our freshly build container, do :
 
 1. Install [VisualStudio Code](https://code.visualstudio.com/)
 2. Open VSCode
-   - install the following VSCode extension :
+   - then "File" => "Open Workspace" => navigate to your CHAOS_ROOT directory & select the [labsim-dev.code-workspace](labsim-dev.code-workspace) configuration file
+   - install the following VSCode extensions (shortcut: [Ctrl]+[Shift]+[X]), normally they should also appear under the "recommended" section :
       -  [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
       -  [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
       -  [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
       -  [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme), bonus ;)
-   - then "File" => "Open Workspace" => navigate to your CHAOS_ROOT directory & select the [labsim-dev.code-workspace](labsim-dev.code-workspace) configuration file
    - press [_F1_] & type ```Remote-Containers: Reopen in Container```, [_Enter_]
 3. *Happy Coding !*
 
-### Troubleshooting
+## Troubleshooting
 
 | Bug/Problem | Advice |
 | :--: | :-- |
 | - *Win10* - suuuuuper slow internet speed | 1. run a powershell as admin <br/>2. [run this command](https://github.com/docker/for-win/issues/698#issuecomment-314902326) <br/>3. reboot host <br/>4. clean & purge docker data |
 
-### Bonus
+## Bonus
 
 > official documentation, [see here](https://code.visualstudio.com/docs/remote/containers)
 
 - clean all local images: `docker rmi -f $(docker images -a -q)`
 - list all local images: `docker image ls`
 - run interactive shell: `docker run --rm -it {container}:{tag}`
+- see running container stats from shell: `docker stats`
 
 ## License
 
