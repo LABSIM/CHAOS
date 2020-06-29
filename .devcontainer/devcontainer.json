@@ -1,0 +1,59 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.122.1/containers/docker-existing-dockerfile
+{
+	"name": "LABSIM external development distro - Linux & GNU GCC based",
+
+	// Sets the run context to one level up instead of the .devcontainer folder.
+	"context": "..",
+
+	// Set the associated image from local registry
+	"image": "labsim-gcc-dev-extern:1.0",
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": { 
+
+		// Linux - default $SHELL as a interactive shell
+		"terminal.integrated.shell.linux": "/bin/bash",
+		// "terminal.integrated.shellArgs.linux": [
+		// 	"-l",
+		// 	"-i"
+		// ]
+
+	},
+
+	// interactive + ptrace-based debugger like C++, Go, and Rust
+	"runArgs": [ 
+		"-it", 
+		"--cap-add=SYS_PTRACE", 
+		"--security-opt", 
+		"seccomp=unconfined"
+	],
+
+	// Default path to open when attaching to a new container.
+	//"workspaceFolder": "/labsim/dev/titans/",
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		// ===== langage linter =====
+		"ms-vscode.cpptools"
+		// "ms-vscode.cmake-tools",
+		// "davidanson.vscode-markdownlint",
+		// "davidwang.ini-for-vscode",
+		// "jeff-hykin.better-shellscript-syntax",
+		// "d9705996.perl-toolbox",
+		// "redhat.vscode-yaml"
+	],
+	
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [8080, 80]
+
+	// Uncomment the next line to run commands after the container is created - for example installing curl.
+	// "postCreateCommand": "apt-get update && apt-get install -y curl",
+
+	// Uncomment to use the Docker CLI from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker.
+	// "mounts": [ "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind" ],
+
+	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+	// "remoteUser": "vscode"
+
+}

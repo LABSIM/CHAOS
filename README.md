@@ -1,4 +1,4 @@
-# GAIA
+# CHAOS
 
 ## Overview
 
@@ -8,48 +8,8 @@ Todo
 
 jump to your config :
 
-- [Standalone Linux](#standalone-linux)
-- [Docker Container](#docker)
 - _*Windows only*_ - [Windows Subsystem for Linux (WSL)](#wsl)
-
-### Standalone Linux
-
-Run a standard shell from GAIA root directory.
-
-```console
- [user@localhost]$ ./bootstrap-gaia.sh
-```
-
-List all available LABSIM software ecosystem.
-
-```console
-[user@localhost]$ gaia --list-available
-```
-
-> Alternatively for a more complete description of one available LABSIM software ecosystem, run :
-
-```console
-[user@localhost]$ gaia --detailled-ecosystem {ecosystem} | more
-```
-
-Then, deploy your ecosystem with feature(s) :
-
-```console
-[user@localhost]$ gaia \
-                    --target-ecosystem {ecosystem} \
-                    --enable-feature {feature_A} \
-                    --enable-feature {feature_B} \
-                    ... \
-                    --enable-feature {feature_N}
-```
-
-> Alternatively, it could be compacted as follow :
-
- ```console
- [user@localhost]$ gaia \
-                     --target-ecosystem {ecosystem} \
-                     --enable-feature {feature_A},{feature_B},...,{feature_N}
-```
+- [Docker Container](#docker)
 
 ### WSL
 
@@ -88,12 +48,6 @@ If you want to dev from a container :
    - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
    - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
    - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-   - [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
-   - [CMake](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
-   - [Perl](https://marketplace.visualstudio.com/items?itemName=d9705996.perl-toolbox)
-   - [INI](https://marketplace.visualstudio.com/items?itemName=DavidWang.ini-for-vscode)
-   - [Markdown](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
-   - [Shell](https://marketplace.visualstudio.com/items?itemName=jeff-hykin.better-shellscript-syntax)
    - [Material Theme, bonus ;)](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme)
 
 Export secret info to enable 2FA container access !
