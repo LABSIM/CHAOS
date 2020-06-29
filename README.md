@@ -78,6 +78,7 @@ Finally, dir into your local CHAOS root & build container :
         --tag labsim-{container}:{tag} \
         .
   ```
+> see [**here**](https://github.com/LABSIM/GAIA/tree/master/ecosystem) for a list of available GAIA ecosystem & features
 
 So now you should have a labsim-{container}:{tag} container ready to run ! Launch it with the following :
 
