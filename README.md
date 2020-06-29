@@ -78,7 +78,7 @@ Finally, dir into your local CHAOS root & build container :
         --tag labsim-{container}:{tag} \
         .
   ```
-> see [**here**](https://github.com/LABSIM/GAIA/tree/master/ecosystem) for a list of available GAIA ecosystem & features
+> for a list of available GAIA ecosystems & features, [**see here**](https://github.com/LABSIM/GAIA/tree/master/ecosystem)
 
 So now you should have a labsim-{container}:{tag} container ready to run ! Launch it with the following :
 
@@ -123,7 +123,7 @@ Then, if you want to dev from the inside of our freshly build container, do :
 
 ## Bonus
 
-> official documentation, [see here](https://code.visualstudio.com/docs/remote/containers)
+> official documentation, [**see here**](https://code.visualstudio.com/docs/remote/containers)
 
 - clean all local images: `docker rmi -f $(docker images -a -q)`
 - list all local images: `docker image ls`
