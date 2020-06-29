@@ -103,7 +103,7 @@ So now you should have a labsim-{container}:{tag} container ready to run ! Launc
 
 Then, if you want to dev from the inside of our freshly build container, do :
 
-1. _**Windows only**_ Activate WSL2(_required_) :
+1. Activate WSL2 - _**Windows only**_ / **required** :
    -  [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
    -  [Update WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10#update-to-wsl-2)
    -  [Docker WSL2 Backend](https://docs.docker.com/docker-for-windows/wsl/#install)
@@ -118,15 +118,15 @@ Then, if you want to dev from the inside of our freshly build container, do :
    - press [_F1_] & type ```Remote-Containers: Reopen in Container```, [_Enter_]
 4.  *Happy Coding !*
 
-> official documentation, [see here](https://code.visualstudio.com/docs/remote/containers)
-
-#### Troubleshooting
+### Troubleshooting
 
 | Bug/Problem | Advice |
 | :--: | :-- |
 | - *Win10* - suuuuuper slow internet speed | 1. run a powershell as admin <br/>2. [run this command](https://github.com/docker/for-win/issues/698#issuecomment-314902326) <br/>3. reboot host <br/>4. clean & purge docker data |
 
-#### Bonus
+### Bonus
+
+> official documentation, [see here](https://code.visualstudio.com/docs/remote/containers)
 
 - clean all local images: `docker rmi -f $(docker images -a -q)`
 - list all local images: `docker image ls`
