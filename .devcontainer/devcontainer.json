@@ -31,6 +31,7 @@
 
 	// Default path to open when attaching to a new container.
 	"workspaceFolder": "/labsim/dev/titans/",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/labsim/dev/titans/CHAOS,type=bind,consistency=cached",
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [

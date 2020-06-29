@@ -112,14 +112,20 @@ So now you should have a labsim-{container}:{tag} container ready to run ! Launc
 
 Then, if you want to dev from the inside of our freshly build container, do :
 
-1. _*Windows only*_ Activate WSL2(_required_) : [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10) + [Update WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10#update-to-wsl-2)
-2. Install Visual Studio Code : [VSCode](https://code.visualstudio.com/)
-3. Install VSCode extension :
-   - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-   - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
-   - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-   - [Material Theme, bonus ;)](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme)
-
+1. _*Windows only*_ Activate WSL2(_required_) : 
+  - [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
+  - [Update WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10#update-to-wsl-2)
+  - [Docker WSL2 Backend](https://docs.docker.com/docker-for-windows/wsl/#install)
+2. Install [VisualStudio Code](https://code.visualstudio.com/)
+3. Open VSCode
+  1. install the following VSCode extension :
+    - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+    - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
+    - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+    - [Material Theme, bonus ;)](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme)
+  2. then "File" => "Open Workspace" => navigate to your CHAOS_ROOT directory & select the [labsim-dev.code-workspace](labsim-dev.code-workspace) configuration file
+  3. press _F1_ & type ```Remote-Containers: Reopen in Container```, _Enter_
+  4. *Happy Coding !*
 
 ### WSL _*under construction*_
 
