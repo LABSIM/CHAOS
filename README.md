@@ -48,19 +48,19 @@ Install docker desktop & enable BuildKit feature
   -  [Docker WSL2 Backend](https://docs.docker.com/docker-for-windows/wsl/#install)
 
 Finally, dir into your local CHAOS root & build container :
-
+labsim-gcc-dev-extern:latest
 - Linux :
 
   ```console
   [user@localhost]$ docker build \
                       --no-cache \
                       --progress=plain \
-                      --build-arg GAIA_TARGET_ECOSYSTEM={ecosystem} \
-                      --build-arg GAIA_ENABLE_FEATURE={feature_1},{feature_2},...,{feature_N} \
-                      --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt \
-                      --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt \
-                      -f distro/{container}/Dockerfile \
-                      --tag labsim-{container}:{tag} \
+                      --build-arg GAIA_TARGET_ECOSYSTEM=LABSIM-2.0.0 \
+                      --build-arg GAIA_ENABLE_FEATURE=dev,sf,sb \
+                      --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt \
+                      --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt \
+                      -f distro/gcc-dev-extern/Dockerfile \
+                      --tag labsim-gcc-dev-extern:latest \
                       .
   ```
 
@@ -70,28 +70,28 @@ Finally, dir into your local CHAOS root & build container :
   PS> docker build \
         --no-cache \
         --progress=plain \
-        --build-arg GAIA_TARGET_ECOSYSTEM={ecosystem} \
-        --build-arg GAIA_ENABLE_FEATURE={feature_1},{feature_2},...,{feature_N} \
-        --secret id=GITHUB_USERNAME,src=your/secret/path/github_username.txt \
-        --secret id=GITHUB_TOKEN,src=your/secret/path/github_token.txt \
-        -f distro/{container}/Dockerfile \
-        --tag labsim-{container}:{tag} \
+        --build-arg GAIA_TARGET_ECOSYSTEM=LABSIM-2.0.0 \
+        --build-arg GAIA_ENABLE_FEATURE=dev,sf,sb \
+        --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt \
+        --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt \
+        -f distro/gcc-dev-extern/Dockerfile \
+        --tag labsim-gcc-dev-extern:latest \
         .
   ```
 > for a list of available GAIA ecosystems & features, [*see here*](https://github.com/LABSIM/GAIA/tree/master/ecosystem)
 
-So now you should have a labsim-{container}:{tag} container ready to run ! Launch it with the following :
+So now you should have a labsim-gcc-dev-extern:latest container ready to run ! Launch it with the following :
 
 - Linux :
 
   ```console
-  [user@localhost]$ docker run --rm -it labsim-{container}:{tag}
+  [user@localhost]$ docker run --rm -it labsim-gcc-dev-extern:latest
   ```
 
 - Windows :
 
   ```console
-  PS> docker run --rm -it labsim-{container}:{tag}
+  PS> docker run --rm -it labsim-gcc-dev-extern:latest
   ```
 
 & check the GAIA configuration with :
@@ -99,7 +99,7 @@ So now you should have a labsim-{container}:{tag} container ready to run ! Launc
 - Linux@Docker :
 
   ```console
-  [root@labsim-{container}:{tag}]$ gaia
+  [root@labsim-gcc-dev-extern:latest]$ gaia
   ```
 
 Then, if you want to dev from the inside of our freshly build container, do :
