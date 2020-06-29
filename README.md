@@ -59,7 +59,7 @@ labsim-gcc-dev-extern:latest
                       --build-arg GAIA_ENABLE_FEATURE=dev,sf,sb \
                       --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt \
                       --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt \
-                      -f distro/gcc-dev-extern/Dockerfile \
+                      -f distro/linux-gcc-dev-extern/Dockerfile \
                       --tag labsim-gcc-dev-extern:latest \
                       .
   ```
@@ -74,7 +74,7 @@ labsim-gcc-dev-extern:latest
         --build-arg GAIA_ENABLE_FEATURE=dev,sf,sb \
         --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt \
         --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt \
-        -f distro/gcc-dev-extern/Dockerfile \
+        -f distro/linux-gcc-dev-extern/Dockerfile \
         --tag labsim-gcc-dev-extern:latest \
         .
   ```
