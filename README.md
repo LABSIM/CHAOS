@@ -42,7 +42,7 @@ Install docker desktop & enable BuildKit feature
 
 If you want to dev from a container :
 
-1. _*Windows only*_ Activate WSL2(_required_) : [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
+1. _*Windows only*_ Activate WSL2(_required_) : [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10) + [Update WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10#update-to-wsl-2)
 2. Install Visual Studio Code : [VSCode](https://code.visualstudio.com/)
 3. Install VSCode extension :
    - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
