@@ -36,7 +36,7 @@ Export secret info to enable 2FA devcontainer access !
         | Out-File -append -encoding ASCII "your/local/secret/path/github_token.txt"
   ```
 
-> for more info, [see here](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
+> for more info, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
 
 Install docker desktop & enable BuildKit feature
 
@@ -78,7 +78,7 @@ Finally, dir into your local CHAOS root & build container :
         --tag labsim-{container}:{tag} \
         .
   ```
-> for a list of available GAIA ecosystems & features, [**see here**](https://github.com/LABSIM/GAIA/tree/master/ecosystem)
+> for a list of available GAIA ecosystems & features, [*see here*](https://github.com/LABSIM/GAIA/tree/master/ecosystem)
 
 So now you should have a labsim-{container}:{tag} container ready to run ! Launch it with the following :
 
@@ -123,7 +123,7 @@ Then, if you want to dev from the inside of our freshly build container, do :
 
 ## Bonus
 
-> official documentation, [**see here**](https://code.visualstudio.com/docs/remote/containers)
+> official documentation, [*see here*](https://code.visualstudio.com/docs/remote/containers)
 
 - clean all local images: `docker rmi -f $(docker images -a -q)`
 - list all local images: `docker image ls`
