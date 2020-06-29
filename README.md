@@ -6,13 +6,6 @@ Todo
 
 ## Quick Start
 
-jump to your config :
-
-- [Docker Container](#docker)
-- _*Windows only*_ - [Windows Subsystem for Linux (WSL)](#wsl)
-
-### Docker
-
 From your local dev directory, prompt a term & run :
 
 - Linux :
@@ -53,8 +46,6 @@ Install docker desktop & enable BuildKit feature
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
 - [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
-
-> official documentation, [see here](https://code.visualstudio.com/docs/remote/containers)
 
 Finally, dir into your local CHAOS root & build container :
 
@@ -112,7 +103,7 @@ So now you should have a labsim-{container}:{tag} container ready to run ! Launc
 
 Then, if you want to dev from the inside of our freshly build container, do :
 
-1. _*Windows only*_ Activate WSL2(_required_) :
+1. _**Windows only**_ Activate WSL2(_required_) :
    -  [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
    -  [Update WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10#update-to-wsl-2)
    -  [Docker WSL2 Backend](https://docs.docker.com/docker-for-windows/wsl/#install)
@@ -127,25 +118,7 @@ Then, if you want to dev from the inside of our freshly build container, do :
    - press [_F1_] & type ```Remote-Containers: Reopen in Container```, [_Enter_]
 4.  *Happy Coding !*
 
-### WSL _*under construction*_
-
-> official documentation, [see here](https://code.visualstudio.com/docs/remote/wsl)
-
-1. Activate WSL1(_required_) : [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
-2. Install a WSL distro, for exemple [Ubuntu 20.04 LTS](https://www.microsoft.com/fr-fr/p/ubuntu-2004-lts/9n6svws3rx71). For more distro [see here](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10#install-your-linux-distribution-of-choice)
-3. Install Visual Studio Code : [VSCode](https://code.visualstudio.com/)
-4. Install VSCode extension :
-   - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-   - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
-   - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-   - [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
-   - [CMake](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
-   - [Perl](https://marketplace.visualstudio.com/items?itemName=d9705996.perl-toolbox)
-   - [INI](https://marketplace.visualstudio.com/items?itemName=DavidWang.ini-for-vscode)
-   - [Markdown](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
-   - [Shell](https://marketplace.visualstudio.com/items?itemName=jeff-hykin.better-shellscript-syntax)
-   - [Material Theme, bonus ;)](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme)
-5. From VSCode, run a wsl console & start developping as a [Standalone Linux](#standalone-linux) configuration.
+> official documentation, [see here](https://code.visualstudio.com/docs/remote/containers)
 
 #### Troubleshooting
 
