@@ -13,7 +13,7 @@
 		"--security-opt",
 		"seccomp=unconfined"
 	],
-	"workspaceFolder": "/labsim/dev/titans/CHAOS",
+	"workspaceFolder": "/labsim/dev",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/labsim/dev/titans/CHAOS,type=bind,consistency=cached",
 	"extensions": [
 		"ms-vscode.cpptools",
