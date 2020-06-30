@@ -18,7 +18,9 @@
 	"workspaceFolder": "/labsim/dev",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/labsim/dev/titans/CHAOS,type=bind,consistency=cached",
 	"extensions": [
+		"ms-vscode.cpptools",
 		"ms-vscode.cmake-tools",
+		"twxs.cmake",
 		"davidanson.vscode-markdownlint",
 		"davidwang.ini-for-vscode",
 		"jeff-hykin.better-shellscript-syntax",

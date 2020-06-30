@@ -44,6 +44,7 @@
 		"recommendations": [
 			"ms-vscode.cpptools",
 			"ms-vscode.cmake-tools",
+			"twxs.cmake",
 			"davidanson.vscode-markdownlint",
 			"davidwang.ini-for-vscode",
 			"jeff-hykin.better-shellscript-syntax",
