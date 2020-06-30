@@ -52,5 +52,9 @@ RUN --mount=type=secret,id=GITHUB_USERNAME,required \
  && chmod +x bootstrap-gaia.sh \
  && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
 
+# setup LABSIM workspace
+WORKDIR /labsim/dev
+COPY distro/linux-gcc-dev-extern/labsim.code-workspace .
+
 # cleanup temporary
 RUN rm -rf /tmp

@@ -13,8 +13,7 @@
 		"--security-opt",
 		"seccomp=unconfined"
 	],
-	"postCreateCommand": "wget https://github.com/microsoft/vscode-cpptools/releases/download/0.29.0-insiders/cpptools-linux.vsix && code --install-extension cpptools-linux.vsix",
-	"workspaceFolder": "/labsim/dev/titans/",
+	"workspaceFolder": "/labsim/dev/titans/CHAOS",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/labsim/dev/titans/CHAOS,type=bind,consistency=cached",
 	"extensions": [
 		"ms-vscode.cpptools",

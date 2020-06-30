@@ -74,8 +74,8 @@ local.properties
 !.vscode/extensions.json
 *.code-workspace
 
-# Except labsim dev shared workspace
-!labsim-dev.code-workspace 
+# Except  labsim dev distro specific shared workspace
+!distro/*/labsim.code-workspace 
 
 # Local History for Visual Studio Code
 .history/
