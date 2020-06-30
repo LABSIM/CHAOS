@@ -113,6 +113,11 @@ Then, if you want to dev from the inside of our freshly build container, do :
       -  [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
       -  [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme), bonus ;)
    - press [_F1_] & type ```Remote-Containers: Reopen in Container```, [_Enter_]
+   - open the worskspace when prompted to
+   - **HACK** - actually, the VSCode cpp extension seems buggy, so we must install it from package
+      - press [_F1_] & type ```Extensions: Install from VSIX...```, [_Enter_]
+      - navigate to ```/labsim/dev/``` directory, then select the ```cpptools-linux.vsix```
+      - reload extensions as prosposed
 3. *Happy Coding !*
 
 ## Troubleshooting
