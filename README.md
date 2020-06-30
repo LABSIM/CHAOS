@@ -105,15 +105,15 @@ So now you should have a labsim-gcc-dev-extern:latest container ready to run ! L
 Then, if you want to dev from the inside of our freshly build container, do :
 
 1. Install [VisualStudio Code](https://code.visualstudio.com/)
-2. Open VSCode
-   - install the following VSCode extensions (shortcut: [Ctrl]+[Shift]+[X]), normally they should also appear under the "recommended" section :
+2. Open VSCode, then :
+   - install the following extensions (shortcut: [Ctrl]+[Shift]+[X]) :
       -  [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) : ms-azuretools.vscode-docker
       -  [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) : ms-kubernetes-tools.vscode-kubernetes-tools
       -  [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) : ms-vscode-remote.vscode-remote-extensionpack
       -  *BONUS!* [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme) : Equinusocio.vsc-material-theme
    - press [_F1_] & type ```Remote-Containers: Reopen in Container```, [_Enter_]
    - open the worskspace when prompted to
-   - **HACK** - actually, the VSCode cpp extension seems buggy, so we must install it from package
+   - **HACK** - If an error message poped up, well... It seems that the cpptool extension is buggy from inside a container, so we must force/install it from package :
       - press [_F1_] & type ```Extensions: Install from VSIX...```, [_Enter_]
       - navigate to ```/labsim/dev/``` directory, then select the ```cpptools-linux.vsix```
       - reload extensions as prosposed
