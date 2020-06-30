@@ -55,6 +55,7 @@ RUN --mount=type=secret,id=GITHUB_USERNAME,required \
 # setup LABSIM workspace
 WORKDIR /labsim/dev
 COPY distro/linux-gcc-dev-extern/labsim.code-workspace .
+RUN wget https://github.com/microsoft/vscode-cpptools/releases/download/0.29.0-insiders/cpptools-linux.vsix
 
 # cleanup temporary
 RUN rm -rf /tmp

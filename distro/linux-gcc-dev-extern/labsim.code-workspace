@@ -1,4 +1,5 @@
 {
+	// setup dev folders
 	"folders": [
 		{
 			"name": "CHAOS",
@@ -29,22 +30,26 @@
 			"path": "./titans/OURANOS"
 		}
 	],
-	"launch": {
-		"configurations": [],
-		"compounds": []
-	},
-	"tasks": {
-		"version": "2.0.0",
-		"tasks": []
-	},
+
+	// interactive shell
 	"settings": {
+		"terminal.integrated.shell.linux": "/bin/bash",
+		"terminal.integrated.shellArgs.linux": [ "-i" ],
+		"terminal.integrated.inheritEnv": true,
+		"terminal.integrated.detectLocale": "auto" 
 	},
+
+	// Normally these extensions should already be installed... just in case
 	"extensions": {
 		"recommendations": [
-			"ms-azuretools.vscode-docker",
-			"ms-kubernetes-tools.vscode-kubernetes-tools",
-			"ms-vscode-remote.vscode-remote-extensionpack",
-			"Equinusocio.vsc-material-theme"
+			"ms-vscode.cpptools",
+			"ms-vscode.cmake-tools",
+			"davidanson.vscode-markdownlint",
+			"davidwang.ini-for-vscode",
+			"jeff-hykin.better-shellscript-syntax",
+			"d9705996.perl-toolbox",
+			"redhat.vscode-yaml"
 		]
 	}
+
 }
