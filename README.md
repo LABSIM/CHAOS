@@ -106,12 +106,11 @@ Then, if you want to dev from the inside of our freshly build container, do :
 
 1. Install [VisualStudio Code](https://code.visualstudio.com/)
 2. Open VSCode
-   - then "File" => "Open Workspace" => navigate to your CHAOS_ROOT directory & select the [labsim-dev.code-workspace](labsim-dev.code-workspace) configuration file
    - install the following VSCode extensions (shortcut: [Ctrl]+[Shift]+[X]), normally they should also appear under the "recommended" section :
-      -  [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-      -  [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
-      -  [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-      -  [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme), bonus ;)
+      -  [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) : ms-azuretools.vscode-docker
+      -  [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) : ms-kubernetes-tools.vscode-kubernetes-tools
+      -  [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) : ms-vscode-remote.vscode-remote-extensionpack
+      -  *BONUS!* [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme) : Equinusocio.vsc-material-theme
    - press [_F1_] & type ```Remote-Containers: Reopen in Container```, [_Enter_]
    - open the worskspace when prompted to
    - **HACK** - actually, the VSCode cpp extension seems buggy, so we must install it from package
