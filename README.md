@@ -20,6 +20,8 @@ Export secret info to enable 2FA access for git + container !
         | Out-File -append -encoding ASCII "C:/your/local/secret/path/github_token.txt"
   ```
 
+> for more info, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
+
 From your local dev directory, prompt a term & run :
 
 - Linux :
@@ -35,8 +37,6 @@ From your local dev directory, prompt a term & run :
   PS> git clone "https://$(cat C:/your/local/secret/path/github_username.txt):$(cat C:/your/local/secret/path/github_token.txt)@github.com/LABSIM/CHAOS.git"
   PS> cd CHAOS/
   ```
-
-> for more info, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
 
 Install docker desktop & enable BuildKit feature
 
