@@ -2,38 +2,38 @@
 
 ## Quick Start
 
-From your local dev directory, prompt a term & run :
+Export secret info to enable 2FA access for git + container !
 
 - Linux :
 
   ```console
-  [user@localhost]$ git clone https://github.com/LABSIM/CHAOS.git
-  [user@localhost]$ cd CHAOS/
-  ```
-
-- Windows :
-
-  ```console
-  PS> git clone https://github.com/LABSIM/CHAOS.git
-  PS> cd CHAOS/
-  ```
-
-Export secret info to enable 2FA devcontainer access !
-
-- Linux :
-
-  ```console
-  [user@localhost]$ echo 'your_super_secret_github_username' > your/local/secret/path/github_username.txt
-  [user@localhost]$ echo 'your_super_secret_github_token' > your/local/secret/path/github_token.txt
+  [user@localhost]$ echo 'your_super_secret_github_username' > /your/local/secret/path/github_username.txt
+  [user@localhost]$ echo 'your_super_secret_github_token' > /your/local/secret/path/github_token.txt
   ```
 
 - Windows :
 
   ```console
   PS> Write-Output "your_super_secret_github_username" \
-        | Out-File -append -encoding ASCII "your/local/secret/path/github_username.txt"
+        | Out-File -append -encoding ASCII "C:/your/local/secret/path/github_username.txt"
   PS> Write-Output "your_super_secret_github_token" <br/> \
-        | Out-File -append -encoding ASCII "your/local/secret/path/github_token.txt"
+        | Out-File -append -encoding ASCII "C:/your/local/secret/path/github_token.txt"
+  ```
+
+From your local dev directory, prompt a term & run :
+
+- Linux :
+
+  ```console
+  [user@localhost]$ git clone "https://$(cat /your/local/secret/path/github_username.txt):$(cat /your/local/secret/path/github_token.txt)@github.com/LABSIM/CHAOS.git"
+  [user@localhost]$ cd CHAOS/
+  ```
+
+- Windows :
+
+  ```console
+  PS> git clone "https://$(cat C:/your/local/secret/path/github_username.txt):$(cat C:/your/local/secret/path/github_token.txt)@github.com/LABSIM/CHAOS.git"
+  PS> cd CHAOS/
   ```
 
 > for more info, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
