@@ -36,7 +36,8 @@
 		"terminal.integrated.shell.linux": "/bin/bash",
 		"terminal.integrated.shellArgs.linux": [ "-l", "-i" ],
 		"terminal.integrated.inheritEnv": true,
-		"terminal.integrated.detectLocale": "auto"
+		"terminal.integrated.detectLocale": "auto",
+		"cmake.cmakePath": "${env:CMAKE_MODULE_PATH}/../../../bin/cmake"
 	},
 
 	// Normally these extensions should already be installed... just in case
