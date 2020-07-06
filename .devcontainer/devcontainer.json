@@ -5,9 +5,10 @@
 	"context": "..",
 	"settings": { 
 		"terminal.integrated.shell.linux": "/bin/bash",
-		"terminal.integrated.shellArgs.linux": [ "-i" ],
+		"terminal.integrated.shellArgs.linux": [ "-l" ],
 		"terminal.integrated.inheritEnv": true,
-		"terminal.integrated.detectLocale": "auto" 
+		"terminal.integrated.detectLocale": "auto",
+		"terminal.integrated.automationShell.linux": "/bin/bash"
 	},
 	"runArgs": [ 
 		"-it",

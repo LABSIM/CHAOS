@@ -33,41 +33,7 @@
 
 	"settings": {
 
-		"terminal.integrated.shell.linux": "/bin/bash",
-		"terminal.integrated.shellArgs.linux": [ "-l" ],
-		"terminal.integrated.inheritEnv": true,
-		"terminal.integrated.detectLocale": "auto",
-		"terminal.integrated.automationShell.linux": "/bin/bash",
-
-		"cmake.cmakePath": "/labsim/third_party/cmake-3.17.3/bin/cmake",
-		"cmake.environment": {
-			"PATH": "${env:PATH}",
-			"LD_LIBRARY_PATH": "${env:LD_LIBRARY_PATH}",
-			"PKG_CONFIG_PATH": "${env:PKG_CONFIG_PATH}",
-			"CPATH": "${env:CPATH}",
-			"CMAKE_MODULE_PATH": "${env:CMAKE_MODULE_PATH}",
-			"BOOST_ROOT": "${env:BOOST_ROOT}"
-		},
-		"cmake.configureEnvironment": {
-			"PATH": "${env:PATH}",
-			"LD_LIBRARY_PATH": "${env:LD_LIBRARY_PATH}",
-			"PKG_CONFIG_PATH": "${env:PKG_CONFIG_PATH}",
-			"CPATH": "${env:CPATH}",
-			"CMAKE_MODULE_PATH": "${env:CMAKE_MODULE_PATH}",
-			"BOOST_ROOT": "${env:BOOST_ROOT}"
-		},
-		"cmake.buildEnvironment": {
-			"PATH": "${env:PATH}",
-			"LD_LIBRARY_PATH": "${env:LD_LIBRARY_PATH}",
-			"PKG_CONFIG_PATH": "${env:PKG_CONFIG_PATH}",
-			"CPATH": "${env:CPATH}",
-			"CMAKE_MODULE_PATH": "${env:CMAKE_MODULE_PATH}",
-			"BOOST_ROOT": "${env:BOOST_ROOT}"
-		},
-		"cmake.configureOnOpen": false,
-		"cmake.buildBeforeRun": true,
-		"cmake.sourceDirectory": "${workspaceFolder}",
-		"cmake.buildDirectory": "${workspaceFolder}/build"
+		"cmake.cmakePath": "/labsim/third_party/cmake-3.17.3/bin/cmake"
 
 	},
 
