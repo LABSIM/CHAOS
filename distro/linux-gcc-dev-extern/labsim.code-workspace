@@ -48,11 +48,27 @@
 			"CMAKE_MODULE_PATH": "${env:CMAKE_MODULE_PATH}",
 			"BOOST_ROOT": "${env:BOOST_ROOT}"
 		},
+		"cmake.configureEnvironment": {
+			"PATH": "${env:PATH}",
+			"LD_LIBRARY_PATH": "${env:LD_LIBRARY_PATH}",
+			"PKG_CONFIG_PATH": "${env:PKG_CONFIG_PATH}",
+			"CPATH": "${env:CPATH}",
+			"CMAKE_MODULE_PATH": "${env:CMAKE_MODULE_PATH}",
+			"BOOST_ROOT": "${env:BOOST_ROOT}"
+		},
+		"cmake.buildEnvironment": {
+			"PATH": "${env:PATH}",
+			"LD_LIBRARY_PATH": "${env:LD_LIBRARY_PATH}",
+			"PKG_CONFIG_PATH": "${env:PKG_CONFIG_PATH}",
+			"CPATH": "${env:CPATH}",
+			"CMAKE_MODULE_PATH": "${env:CMAKE_MODULE_PATH}",
+			"BOOST_ROOT": "${env:BOOST_ROOT}"
+		},
 		"cmake.configureOnOpen": false,
 		"cmake.buildBeforeRun": true,
 		"cmake.sourceDirectory": "${workspaceFolder}",
 		"cmake.buildDirectory": "${workspaceFolder}/build"
-		
+
 	},
 
 	// Normally these extensions should already be installed... just in case

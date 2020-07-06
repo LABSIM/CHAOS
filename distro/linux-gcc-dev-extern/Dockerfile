@@ -55,7 +55,6 @@ RUN --mount=type=secret,id=GITHUB_USERNAME,required \
 # setup LABSIM workspace
 WORKDIR /labsim/dev
 COPY distro/linux-gcc-dev-extern/labsim.code-workspace .
-
 # for the moment, this extension fail to install by itself, so we provide a temporary archive
 RUN wget https://github.com/microsoft/vscode-cpptools/releases/download/0.29.0-insiders/cpptools-linux.vsix
 
