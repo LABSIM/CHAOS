@@ -3,12 +3,11 @@
 	"name": "LABSIM external development distro - Linux & GNU GCC based",
 	"image": "labsim-gcc-dev-extern:latest",
 	"context": "..",
-	"settings": { 
+	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash",
-		"terminal.integrated.shellArgs.linux": [ "-l" ],
+		"terminal.integrated.shellArgs.linux": [ "-l", "-i" ],
 		"terminal.integrated.inheritEnv": true,
-		"terminal.integrated.detectLocale": "auto",
-		"terminal.integrated.automationShell.linux": "/bin/bash"
+		"terminal.integrated.detectLocale": "auto"
 	},
 	"runArgs": [ 
 		"-it",
