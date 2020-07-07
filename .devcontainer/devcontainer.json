@@ -6,7 +6,7 @@
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash",
 		"terminal.integrated.shellArgs.linux": [ "-l", "-i" ],
-		"terminal.integrated.inheritEnv": false,
+		"terminal.integrated.inheritEnv": true,
 		"terminal.integrated.detectLocale": "auto",
 		"terminal.integrated.copyOnSelection": true,
 		"terminal.integrated.cwd": "/labsim/dev"
