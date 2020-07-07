@@ -25,6 +25,7 @@ RUN apt-get update \
         libzstd-dev \
         zstd \
         gdb \
+        ccache \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
  && locale-gen en_US.UTF-8 \
