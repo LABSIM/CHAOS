@@ -56,11 +56,10 @@ RUN --mount=type=secret,id=GITHUB_USERNAME,required \
  && chmod +x bootstrap-gaia.sh \
  && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
 
-# setup LABSIM workspace
+# setup LABSIM workspace, actually, the mscode-cpp extension fail to install by itself, so we provide a temporary archive
 WORKDIR /labsim/dev
-COPY distro/linux-gcc-dev-extern/labsim.code-workspace .
-# for the moment, this extension fail to install by itself, so we provide a temporary archive
 RUN wget https://github.com/microsoft/vscode-cpptools/releases/download/0.29.0-insiders/cpptools-linux.vsix
+COPY distro/linux-gcc-dev-extern/labsim.code-workspace .
 
 # cleanup temporary
 RUN rm -rf /tmp
