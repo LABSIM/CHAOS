@@ -28,12 +28,17 @@
 		{
 			"name": "OURANOS",
 			"path": "./titans/OURANOS"
+		},
+		{
+			"name": "ZEUS",
+			"path": "./olympiens/ZEUS"
 		}
 	],
 
 	"settings": {
 
-		"cmake.cmakePath": "/labsim/third_party/cmake-3.17.3/bin/cmake"
+		// "cmake.cmakePath": "/labsim/third_party/cmake-3.17.3/bin/cmake",
+		"cmake.configureOnOpen": false
 
 	},
 
