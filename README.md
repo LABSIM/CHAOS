@@ -86,7 +86,10 @@ Finally, dir into your local CHAOS root & build our dev-container base image lab
 >
 > ecosystem & features can be configured through theses *additionnal* args :
 >
-> ```--build-arg GAIA_TARGET_ECOSYSTEM=<ecosystem-name> --build-arg GAIA_ENABLE_FEATURE=<feature-A>,<feature-B>,<feature-N>```
+> ```console
+> --build-arg GAIA_TARGET_ECOSYSTEM=<ecosystem-name> 
+> --build-arg GAIA_ENABLE_FEATURE=<feature-A>,<feature-B>,<feature-N>
+> ```
 >
 > for a complete list of available GAIA ecosystems & features, [*see here*](https://github.com/LABSIM/GAIA/tree/master/ecosystem)
 
