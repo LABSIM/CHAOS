@@ -2,6 +2,7 @@
 {
 	"name": "LABSIM external development distro - Linux & GNU GCC based",
 	"image": "labsim-gcc-dev-extern:latest",
+	"remoteUser": "labsim",
 	"context": "..",
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash",
@@ -17,8 +18,8 @@
 		"--security-opt",
 		"seccomp=unconfined"
 	],
-	"workspaceFolder": "/labsim/dev",
-	"workspaceMount": "source=${localWorkspaceFolder},target=/labsim/dev/titans/CHAOS,type=bind,consistency=cached",
+	"workspaceFolder": "/home/labsim/dev",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/labsim/dev/titans/CHAOS,type=bind,consistency=cached",
 	"extensions": [
 		"ms-vscode.cpptools",
 		"ms-vscode.cmake-tools",
