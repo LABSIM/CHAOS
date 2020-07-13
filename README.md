@@ -82,14 +82,13 @@ Finally, dir into your local CHAOS root & build our dev-container base image lab
         .
   ```
 
->
-> for a list of available GAIA ecosystems & features, [*see here*](https://github.com/LABSIM/GAIA/tree/master/ecosystem)
->
-> ecosystem & features can be configured through theses *additionnal* args : </br>
-> ```--build-arg GAIA_TARGET_ECOSYSTEM=<ecosystem-name> </br> --build-arg GAIA_ENABLE_FEATURE=<feature-A>,<feature-B>,<feature-N>```
->
 > actually, the default GAIA Ecosystem is ```LABSIM-2.0.0``` with features ```dev,sf,sb```
 >
+> ecosystem & features can be configured through theses *additionnal* args :
+>
+> ```--build-arg GAIA_TARGET_ECOSYSTEM=<ecosystem-name> --build-arg GAIA_ENABLE_FEATURE=<feature-A>,<feature-B>,<feature-N>```
+>
+> for a complete list of available GAIA ecosystems & features, [*see here*](https://github.com/LABSIM/GAIA/tree/master/ecosystem)
 
 So now you should have a labsim-gcc-dev-extern:latest container ready to run ! Launch it with the following :
 
