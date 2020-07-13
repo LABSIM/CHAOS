@@ -82,9 +82,7 @@ Finally, dir into your local CHAOS root & build our dev-container base image lab
         .
   ```
 
-> actually, the default GAIA Ecosystem is ```LABSIM-2.0.0``` with features ```dev,sf,sb```
->
-> ecosystem & features can be configured through theses *additionnal* args :
+> actually, the default GAIA Ecosystem is ```LABSIM-2.0.0``` with features ```dev,sf,sb``` but they can be configured through theses *additionnal* args :
 >
 > ```console
 > --build-arg GAIA_TARGET_ECOSYSTEM=<ecosystem-name> 
