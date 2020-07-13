@@ -42,8 +42,8 @@ Install docker desktop & enable BuildKit feature
 
 - Linux (Ubuntu) :
   - [DockerCE + DockerCLI + Containerd](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
-  - [MicroK8s](https://ubuntu.com/kubernetes/install#single-node)(Kubernetes for Ubuntu)
-  - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-using-native-package-management)(Kubernetes CLI)
+  - [MicroK8s](https://ubuntu.com/kubernetes/install#single-node) _(Kubernetes for Ubuntu)_
+  - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-using-native-package-management) _(Kubernetes CLI)_
   - [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
 
 - Windows :
@@ -62,8 +62,6 @@ Finally, dir into your local CHAOS root & build our dev-container base image lab
   [user@localhost]$ docker build \
                       --no-cache \
                       --progress=plain \
-                      --build-arg GAIA_TARGET_ECOSYSTEM=LABSIM-2.0.0 \
-                      --build-arg GAIA_ENABLE_FEATURE=dev,sf,sb \
                       --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt \
                       --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt \
                       -f distro/linux-gcc-dev-extern/Dockerfile \
@@ -77,15 +75,19 @@ Finally, dir into your local CHAOS root & build our dev-container base image lab
   PS> docker build \
         --no-cache \
         --progress=plain \
-        --build-arg GAIA_TARGET_ECOSYSTEM=LABSIM-2.0.0 \
-        --build-arg GAIA_ENABLE_FEATURE=dev,sf,sb \
         --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt \
         --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt \
         -f distro/linux-gcc-dev-extern/Dockerfile \
         --tag labsim-gcc-dev-extern:latest \
         .
   ```
+
 > for a list of available GAIA ecosystems & features, [*see here*](https://github.com/LABSIM/GAIA/tree/master/ecosystem)
+>
+> ecosystem & features can be configured through theses *additionnal* args :
+> ```--build-arg GAIA_TARGET_ECOSYSTEM=<ecosystem-name> --build-arg GAIA_ENABLE_FEATURE=<feature-A>,<feature-B>,<feature-N>```
+>
+> actually, the default GAIA Ecosystem is ```LABSIM-2.0.0``` with features ```dev,sf,sb```
 
 So now you should have a labsim-gcc-dev-extern:latest container ready to run ! Launch it with the following :
 
