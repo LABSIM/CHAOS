@@ -13,7 +13,7 @@ Prerequisites are :
 
 Export secret info to enable 2FA access for git + container !
 
-  ```console
+  ```PowerShell
   PS> Write-Output "your_super_secret_github_username" \
         | Out-File -append -encoding ASCII "C:/your/local/secret/path/github_username.txt"
   PS> Write-Output "your_super_secret_github_token" <br/> \
@@ -22,16 +22,16 @@ Export secret info to enable 2FA access for git + container !
 
 > for more info, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
 
-From your local dev directory, prompt a term & run :
+From your local dev directory, prompt a PowerShell & run :
 
-  ```console
+  ```PowerShell
   PS> git clone "https://$(cat C:/your/local/secret/path/github_username.txt):$(cat C:/your/local/secret/path/github_token.txt)@github.com/LABSIM/CHAOS.git"
   PS> cd CHAOS/
   ```
 
 Finally, dir into your local CHAOS root & build our dev-container base image labsim-gcc-dev-extern:latest
 
-  ```console
+  ```PowerShell
   PS> docker build \
         --no-cache \
         --progress=plain \
@@ -44,7 +44,7 @@ Finally, dir into your local CHAOS root & build our dev-container base image lab
 
 > actually, the default GAIA Ecosystem is ```LABSIM-2.0.0``` with features ```dev,sf,sb``` but they can be configured through theses *additionnal* args :
 >
-> ```console
+> ```PowerShell
 > --build-arg GAIA_TARGET_ECOSYSTEM=<ecosystem-name> 
 > --build-arg GAIA_ENABLE_FEATURE=<feature-A>,<feature-B>,<feature-N>
 > ```
@@ -53,7 +53,7 @@ Finally, dir into your local CHAOS root & build our dev-container base image lab
 
 So now you should have a labsim-gcc-dev-extern:latest container ready to run ! Launch it with the following :
 
-  ```console
+  ```PowerShell
   PS> docker run --rm -it labsim-gcc-dev-extern:latest
   ```
 
