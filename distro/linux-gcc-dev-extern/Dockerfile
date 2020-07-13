@@ -88,12 +88,12 @@ RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required \
     #
  && cd titans/GAIA \
  && chmod +x bootstrap-gaia.sh \
- && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE} \
+ && ./bootstrap-gaia.sh --verbosity-level debug --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
     #
     # actually, the mscode-cpp extension fail to install by itself, so we provide a temporary archive
     #
- && cd ../.. \
- && wget https://github.com/microsoft/vscode-cpptools/releases/download/0.29.0-insiders/cpptools-linux.vsix
+#  && cd ../.. \
+#  && wget https://github.com/microsoft/vscode-cpptools/releases/download/0.29.0-insiders/cpptools-linux.vsix
 
 # inject the LABSIM SSE VSCode workspace
 COPY --chown=labsim:labsim distro/linux-gcc-dev-extern/labsim.code-workspace .

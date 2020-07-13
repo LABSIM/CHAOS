@@ -10,7 +10,7 @@
 		"terminal.integrated.inheritEnv": true,
 		"terminal.integrated.detectLocale": "auto",
 		"terminal.integrated.copyOnSelection": true,
-		"terminal.integrated.cwd": "/labsim/dev"
+		"terminal.integrated.cwd": "/home/labsim/dev"
 	},
 	"runArgs": [ 
 		"-it",
