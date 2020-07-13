@@ -8,9 +8,17 @@
 FROM gcc:10.1.0 as labsim-dev
 
 # prettifyng
-LABEL description="LABSIM external development distro - Linux & GNU GCC based"
+LABEL description="LABSIM external development distro - Linux & GNU GCC based" \
+      maintainer="nawfel.kinani@onera.fr" \
+      version="1.0" \
+      org.name="ONERA" \
+      org.department="DTIS" \
+      org.unit="ICNA" \
+      org.laboratory="LABSIM" \
+      org.center="Salon-de-Provence" \
+      license="GNU GPLv3"
 
-# mandatory argument + noninteractive
+# mandatory argument
 ARG GAIA_TARGET_ECOSYSTEM
 ARG GAIA_ENABLE_FEATURE
 
@@ -54,15 +62,19 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 
+# add labsim user
+RUN useradd --no-log-init --user-group --create-home --shell /bin/bash labsim
+USER labsim
+
 # setup LABSIM Simulation Software Ecosysten : create dirs, clone sources from github, then integrate gaia features & VSCode workspace
 # WORKDIR /labsim/dev/olympiens
 # WORKDIR /labsim/dev/titans
-WORKDIR /labsim/dev
+WORKDIR /home/labsim/dev
 #
 # mount secrets
 #
-RUN --mount=type=secret,id=GITHUB_USERNAME,required \
-    --mount=type=secret,id=GITHUB_TOKEN,required \
+RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required \
+    --mount=type=secret,mode=0444,id=GITHUB_TOKEN,required \
     #
     # clone sources
     #
