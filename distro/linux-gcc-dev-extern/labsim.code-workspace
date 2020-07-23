@@ -37,7 +37,7 @@
 
 	"settings": {
 
-		"cmake.cmakePath": "/labsim/third_party/cmake-3.17.3/bin/cmake",
+		"cmake.cmakePath": "/home/labsim/third_party/cmake-3.17.3/bin/cmake",
 		"cmake.configureOnOpen": false
 
 	},
