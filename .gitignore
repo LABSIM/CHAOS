@@ -1,67 +1,49 @@
-#####################################################################################
-# from [ https://github.com/github/gitignore/blob/master/Global/Eclipse.gitignore ] #
-#####################################################################################
+##############################################################################################
+# from [ https://github.com/github/gitignore/blob/master/Global/Windows.gitignore ]          #
+##############################################################################################
 
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.settings/
-.loadpath
-.recommenders
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
 
-# External tool builders
-.externalToolBuilders/
+# Dump file
+*.stackdump
 
-# Locally stored "Eclipse launch configurations"
-*.launch
+# Folder config file
+[Dd]esktop.ini
 
-# PyDev specific (Python IDE for Eclipse)
-*.pydevproject
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
 
-# CDT-specific (C/C++ Development Tooling)
-.cproject
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
 
-# CDT- autotools
-.autotools
+# Windows shortcuts
+*.lnk
 
-# Java annotation processor (APT)
-.factorypath
+##############################################################################################
+# from [ https://github.com/github/gitignore/blob/master/Global/Linux.gitignore ]            #
+##############################################################################################
 
-# PDT-specific (PHP Development Tools)
-.buildpath
+*~
 
-# sbteclipse plugin
-.target
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
 
-# Tern plugin
-.tern-project
+# KDE directory preferences
+.directory
 
-# TeXlipse plugin
-.texlipse
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
 
-# STS (Spring Tool Suite)
-.springBeans
-
-# Code Recommenders
-.recommenders/
-
-# Annotation Processing
-.apt_generated/
-.apt_generated_test/
-
-# Scala IDE specific (Scala & Java development for Eclipse)
-.cache-main
-.scala_dependencies
-.worksheet
-
-# Uncomment this line if you wish to ignore the project description file.
-# Typically, this file would be tracked if it contains build/dependency configurations:
-.project
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
 
 ##############################################################################################
 # from [ https://github.com/github/gitignore/blob/master/Global/VisualStudioCode.gitignore ] #
@@ -72,110 +54,18 @@ local.properties
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+!.vscode/c_cpp_properties.json
 *.code-workspace
-
-# Except  labsim dev distro specific shared workspace
-!distro/*/labsim.code-workspace 
 
 # Local History for Visual Studio Code
 .history/
 
-############################################################################
-# from [ https://github.com/github/gitignore/blob/master/CMake.gitignore ] #
-############################################################################
+##############################################################################################
 
-CMakeLists.txt.user
-CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
-Makefile
-cmake_install.cmake
-install_manifest.txt
-compile_commands.json
-CTestTestfile.cmake
-_deps
+# inhibit VSCode rules for labsim dev distro specific shared workspace
+!distro/*/labsim.code-workspace 
 
-##############################################################################
-# from [ https://github.com/github/gitignore/blob/master/C%2B%2B.gitignore ] #
-##############################################################################
-
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-###########################################################################
-# from [ https://github.com/github/gitignore/blob/master/Perl.gitignore ] #
-###########################################################################
-
-!Build/
-.last_cover_stats
-/META.yml
-/META.json
-/MYMETA.*
-*.o
-*.pm.tdy
-*.bs
-
-# Devel::Cover
-cover_db/
-
-# Devel::NYTProf
-nytprof.out
-
-# Dizt::Zilla
-/.build/
-
-# Module::Build
-_build/
-Build
-Build.bat
-
-# Module::Install
-inc/
-
-# ExtUtils::MakeMaker
-/blib/
-/_eumm/
-/*.gz
-/Makefile
-/Makefile.old
-/MANIFEST.bak
-/pm_to_blib
-/*.zip
-
-###################
 # Secret files :) #
-###################
 github_username.txt
 github_token.txt
 gitlab_username.txt
