@@ -10,4 +10,4 @@
 
 ## Distro detail
 
-Base: [gcc:10.1.0](https://hub.docker.com/_/gcc)
+Base: [gcc:11.2.0](https://hub.docker.com/_/gcc)

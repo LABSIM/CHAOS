@@ -1,11 +1,11 @@
 # syntax = docker/dockerfile:experimental
 
-# -> Debian:buster 
-#  -> buildpack-deps:buster-curl 
-#   -> buildpack-deps:buster-scm 
-#    -> buildpack-deps:buster 
-#     -> gcc:10.1.0
-FROM gcc:10.1.0 as labsim-dev
+# -> Debian:bullseye 
+#  -> buildpack-deps:bullseye-curl 
+#   -> buildpack-deps:bullseye-scm 
+#    -> buildpack-deps:bullseye 
+#     -> gcc:11.2.0-bullseye
+FROM gcc:11.2.0-bullseye as labsim-dev
 
 # prettifyng
 LABEL description="LABSIM external development distro - Linux & GNU GCC based" \
@@ -44,7 +44,7 @@ RUN apt-get update \
     #
     # cleanup
     #
- && apt-get autoremove -y \
+ && apt-get autoremove --purge -y \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
     #
