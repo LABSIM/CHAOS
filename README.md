@@ -32,9 +32,9 @@ From your local dev directory, prompt a PowerShell & run :
 Finally, dir into your local CHAOS root & build our dev-container base image labsim-gcc-dev-extern:latest
 
   ```PowerShell
-  PS> docker build \
+  PS> docker buildx build \
         --no-cache \
-        --progress=plain \
+        --progress=auto \
         --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt \
         --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt \
         -f distro/linux-gcc-dev-extern/Dockerfile \
@@ -111,9 +111,9 @@ From your local dev directory, prompt a term & run :
 Finally, dir into your local CHAOS root & build our dev-container base image labsim-gcc-dev-extern:latest
 
   ```console
-  [user@localhost]$ docker build \
+  [user@localhost]$ docker buildx build \
                       --no-cache \
-                      --progress=plain \
+                      --progress=auto \
                       --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt \
                       --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt \
                       -f distro/linux-gcc-dev-extern/Dockerfile \
