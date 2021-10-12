@@ -1,4 +1,4 @@
-# syntax = docker/dockerfile:latest
+# syntax = docker/dockerfile:1.3-labs
 
 # -> Debian:bullseye 
 #  -> buildpack-deps:bullseye-curl 
