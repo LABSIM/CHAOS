@@ -37,6 +37,7 @@ Finally, dir into your local CHAOS root & build our dev-container base image lab
         --progress=auto \
         --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt \
         --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt \
+        --builder "$(docker buildx create --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=104857600)"
         -f distro/linux-gcc-dev-extern/Dockerfile \
         --tag labsim-gcc-dev-extern:latest \
         .
@@ -116,6 +117,7 @@ Finally, dir into your local CHAOS root & build our dev-container base image lab
                       --progress=auto \
                       --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt \
                       --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt \
+                      --builder "$(docker buildx create --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=104857600)"
                       -f distro/linux-gcc-dev-extern/Dockerfile \
                       --tag labsim-gcc-dev-extern:latest \
                       .
