@@ -71,8 +71,8 @@ WORKDIR /home/labsim/dev
 #
 # mount secrets
 #
-RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required \
-    --mount=type=secret,mode=0444,id=GITHUB_TOKEN,required \
+RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
+    --mount=type=secret,mode=0444,id=GITHUB_TOKEN,required=true \
     #
     # clone sources
     #
