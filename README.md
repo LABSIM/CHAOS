@@ -34,7 +34,8 @@ Finally, dir into your local CHAOS root & build our dev-container base image lab
   ```PowerShell
   PS> docker buildx build \
         --no-cache \
-        --progress=auto \
+        --progress=full \
+        --load \
         --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt \
         --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt \
         --builder "$(docker buildx create --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=104857600)" \
@@ -114,7 +115,8 @@ Finally, dir into your local CHAOS root & build our dev-container base image lab
   ```console
   [user@localhost]$ docker buildx build \
                       --no-cache \
-                      --progress=auto \
+                      --progress=full \
+                      --load \
                       --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt \
                       --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt \
                       --builder "$(docker buildx create --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=104857600)" \
