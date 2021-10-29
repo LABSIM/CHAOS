@@ -1,5 +1,13 @@
 # syntax = docker/dockerfile:1.3-labs
 
+
+################################
+#                              #
+#         LABSIM-BASE          #
+#                              #
+################################
+
+
 # -> Debian:bullseye 
 #  -> buildpack-deps:bullseye-curl 
 #   -> buildpack-deps:bullseye-scm 
@@ -54,28 +62,36 @@ RUN apt-get update \
 # ARG DEBIAN_FRONTEND=dialog
 
 # timezone & env locales
-ENV TZ "Europe/Paris"
-    LANGUAGE en_US:en
-    LC_ALL en_US.UTF-8
-    LANG en_US.UTF-8
+ENV TZ=Europe/Paris \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8
 
 # add & set labsim user
 RUN useradd --no-log-init --user-group --create-home --shell /bin/bash labsim
 USER labsim
 
-# -> Debian:bullseye 
-#  -> buildpack-deps:bullseye-curl 
-#   -> buildpack-deps:bullseye-scm 
-#    -> buildpack-deps:bullseye 
-#     -> gcc:11.2.0-bullseye
-#      -> labsim-base:latest
-FROM labsim-base:latest as labsim-dev
+
+################################
+#                              #
+#     LABSIM-DEVCONTAINER      #
+#                              #
+################################
+
+
+# multi stage build
+FROM labsim-base as labsim-devcontainer
 
 # setup LABSIM Simulation Software Ecosysten : create dir, clone sources from github, then integrate gaia features & VSCode workspace
 WORKDIR /home/labsim/dev
 
+# mandatory GAIA argument
+ARG GAIA_TARGET_ECOSYSTEM="LABSIM-2.0.0" \
+    GAIA_ENABLE_FEATURE="dev,sf"
+#    GAIA_ENABLE_FEATURE="dev,sf,sb"
+
 #
-# mount secrets & clone LABSIM repositories
+# mount secrets, clone LABSIM repositories & bootstrap GAIA
 #
 RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
     --mount=type=secret,mode=0444,id=GITHUB_TOKEN,required=true \
@@ -85,16 +101,7 @@ RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
  && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OCEAN.git titans/OCEAN \
  && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/RHEA.git titans/RHEA \
  && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git titans/KRONOS \
- && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/ZEUS.git olympiens/ZEUS
-
-# mandatory GAIA argument
-ARG GAIA_TARGET_ECOSYSTEM="LABSIM-2.0.0"
-    GAIA_ENABLE_FEATURE="dev,sf,sb"
-
-#
-# bootstrap GAIA
-#
-RUN cd titans/GAIA \
+ && cd titans/GAIA \
  && chmod +x bootstrap-gaia.sh \
  && ./bootstrap-gaia.sh --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
 
@@ -106,3 +113,4 @@ RUN cd titans/GAIA \
 
 # inject the LABSIM SSE VSCode workspace
 COPY --chown=labsim:labsim distro/linux-gcc-dev-extern/labsim.code-workspace .
+
