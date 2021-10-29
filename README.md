@@ -70,7 +70,7 @@ So now you should have a labsim-gcc-dev-extern:latest container ready to run ! L
 Then, if you want to dev from the inside of our freshly build container, do :
 
 1. Install [VisualStudio Code](https://code.visualstudio.com/)
-2. Open VSCode, then :
+2. Open VSCode, File > Open Folder... > Navigate to CHAOS dir and then :
    - install the following extensions (shortcut: [Ctrl]+[Shift]+[X]) :
       -  [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) : ms-azuretools.vscode-docker
       -  [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) : ms-kubernetes-tools.vscode-kubernetes-tools
@@ -151,7 +151,7 @@ So now you should have a labsim-gcc-dev-extern:latest container ready to run ! L
 Then, if you want to dev from the inside of our freshly build container, do :
 
 1. Install [VisualStudio Code](https://code.visualstudio.com/)
-2. Open VSCode, then :
+2. Open VSCode, File > Open Folder... > Navigate to CHAOS dir and then :
    - install the following extensions (shortcut: [Ctrl]+[Shift]+[X]) :
       -  [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) : ms-azuretools.vscode-docker
       -  [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) : ms-kubernetes-tools.vscode-kubernetes-tools
