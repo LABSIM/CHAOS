@@ -101,15 +101,15 @@ Then, if you want to dev from the inside of our freshly build container, do :
 
 1. Open VSCode, File > Open Folder... > Navigate to CHAOS dir > [_Enter_]
 2. Install the following extensions (shortcut: [Ctrl]+[Shift]+[X]) :
-  - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) : ms-azuretools.vscode-docker
-  - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) : ms-kubernetes-tools.vscode-kubernetes-tools
-  - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) : ms-vscode-remote.vscode-remote-extensionpack
-  - *BONUS!* [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme) : Equinusocio.vsc-material-theme
+   - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) : ms-azuretools.vscode-docker
+   - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) : ms-kubernetes-tools.vscode-kubernetes-tools
+   - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) : ms-vscode-remote.vscode-remote-extensionpack
+   - *BONUS!* [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme) : Equinusocio.vsc-material-theme
 3. Press [_F1_] & type ```Remote-Containers: Reopen in Container```, [_Enter_]
 4. Open the worskspace when prompted to. Should pop in the lower right corner (?) **HACK** If an error message poped up, well... It seems that the cpptool extension is buggy from inside a container, so we must force/install it from package :
-  - press [_F1_] & type ```Extensions: Install from VSIX...```, [_Enter_]
-  - navigate to ```/labsim/dev/``` directory, then select the ```cpptools-linux.vsix```
-  - reload extensions as prosposed
+   - press [_F1_] & type ```Extensions: Install from VSIX...```, [_Enter_]
+   - navigate to ```/labsim/dev/``` directory, then select the ```cpptools-linux.vsix```
+   - reload extensions as prosposed
 5. *Happy Coding !*
 
 ## Troubleshooting
