@@ -9,14 +9,18 @@
     -  [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
     -  [Update WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10#update-to-wsl-2)
     -  [Docker WSL2 Backend](https://docs.docker.com/docker-for-windows/wsl/#install)
+  - [VisualStudio Code](https://code.visualstudio.com/)
 
 - Ubuntu Linux (every LTS >= 18.04):
   - [DockerCE + DockerCLI + Containerd](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
   - [MicroK8s](https://ubuntu.com/kubernetes/install#single-node) _(Kubernetes for Ubuntu)_
   - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-using-native-package-management) _(Kubernetes CLI)_
   - [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
+  - [VisualStudio Code](https://code.visualstudio.com/)
 
-## Quick start : devcontainer
+## Quick start
+
+### Building our devcontainer
 
 Export secret info to enable 2FA access for git + container ! For further informations, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
 
@@ -82,22 +86,22 @@ So now you should have a labsim-gcc-dev-extern:latest container ready to run ! L
   [labsim@labsim-gcc-dev-extern:latest]$ gaia
   ```
 
+### Configuring VSCode IDE
+
 Then, if you want to dev from the inside of our freshly build container, do :
 
-1. Install [VisualStudio Code](https://code.visualstudio.com/)
-2. Open VSCode, File > Open Folder... > Navigate to CHAOS dir and then :
-   - install the following extensions (shortcut: [Ctrl]+[Shift]+[X]) :
-      -  [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) : ms-azuretools.vscode-docker
-      -  [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) : ms-kubernetes-tools.vscode-kubernetes-tools
-      -  [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) : ms-vscode-remote.vscode-remote-extensionpack
-      -  *BONUS!* [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme) : Equinusocio.vsc-material-theme
-   - press [_F1_] & type ```Remote-Containers: Reopen in Container```, [_Enter_]
-   - open the worskspace when prompted to
-   - **HACK** - If an error message poped up, well... It seems that the cpptool extension is buggy from inside a container, so we must force/install it from package :
-      - press [_F1_] & type ```Extensions: Install from VSIX...```, [_Enter_]
-      - navigate to ```/labsim/dev/``` directory, then select the ```cpptools-linux.vsix```
-      - reload extensions as prosposed
-3. *Happy Coding !*
+1. Open VSCode, File > Open Folder... > Navigate to CHAOS dir > [_Enter_]
+2. Install the following extensions (shortcut: [Ctrl]+[Shift]+[X]) :
+  - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) : ms-azuretools.vscode-docker
+  - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) : ms-kubernetes-tools.vscode-kubernetes-tools
+  - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) : ms-vscode-remote.vscode-remote-extensionpack
+  - *BONUS!* [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme) : Equinusocio.vsc-material-theme
+3. Press [_F1_] & type ```Remote-Containers: Reopen in Container```, [_Enter_]
+4. Open the worskspace when prompted to. Should pop in the lower right corner (?) **HACK** If an error message poped up, well... It seems that the cpptool extension is buggy from inside a container, so we must force/install it from package :
+  - press [_F1_] & type ```Extensions: Install from VSIX...```, [_Enter_]
+  - navigate to ```/labsim/dev/``` directory, then select the ```cpptools-linux.vsix```
+  - reload extensions as prosposed
+5. *Happy Coding !*
 
 ## Troubleshooting
 
