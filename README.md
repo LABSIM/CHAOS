@@ -3,6 +3,7 @@
 ## Prerequisites
 
 - Windows (>=7) :
+  - [Git](https://git-scm.com/)
   - [Docker Desktop](https://www.docker.com/products/docker-desktop)
   - [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
   - Activate WSL2 **required** :
@@ -20,9 +21,9 @@
 
 ## Quick start
 
-### Building our devcontainer
+### 1. Clone CHAOS
 
-Export secret info to enable 2FA access for git + container ! For further informations, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
+export secret info to enable 2FA access for git + container ! For further informations, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
 
  ```PowerShell
  PS> Write-Output "your_super_secret_github_username" \
@@ -38,19 +39,21 @@ or
  [user@localhost]$ echo 'your_super_secret_github_token' > /your/local/secret/path/github_token.txt
  ```
 
-then, from your local dev directory, prompt a PowerShell & run :
+then, clone CHAOS sources into your local dev directory :
 
   ```console
-  git clone "https://$(cat C:/your/local/secret/path/github_username.txt):$(cat C:/your/local/secret/path/github_token.txt)@github.com/LABSIM/CHAOS.git"
+  git -C /your/local/dev/directory clone "https://$(cat C:/your/local/secret/path/github_username.txt):$(cat C:/your/local/secret/path/github_token.txt)@github.com/LABSIM/CHAOS.git"
   ```
 
-dir into your local CHAOS root :
+### 2. Build the dev-container
+
+first of all, dir into your freshly cloned CHAOS root :
   
   ```console
-  cd CHAOS/
+  cd /your/local/dev/directory/CHAOS/
   ```
 
-Finally, build our dev-container base image labsim-gcc-dev-extern:latest
+then lauch the buildx process for our dev-container base image labsim-gcc-dev-extern:latest
 
   ```console
   docker buildx build \
@@ -86,7 +89,13 @@ So now you should have a labsim-gcc-dev-extern:latest container ready to run ! L
   [labsim@labsim-gcc-dev-extern:latest]$ gaia
   ```
 
-### Configuring VSCode IDE
+don't forget to exit our running container :
+
+  ```console
+  [labsim@labsim-gcc-dev-extern:latest]$ exit
+  ```
+
+### 3. Configure VSCode
 
 Then, if you want to dev from the inside of our freshly build container, do :
 
