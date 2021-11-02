@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Windows (>=7) :
+- Windows (>=10) :
   - [Git](https://git-scm.com/)
   - [WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install)
   - [Docker Desktop](https://www.docker.com/products/docker-desktop)
