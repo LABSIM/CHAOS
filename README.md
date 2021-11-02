@@ -8,7 +8,7 @@
   - [Docker Desktop](https://www.docker.com/products/docker-desktop)
   - [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
   - [Docker WSL2 Backend](https://docs.docker.com/desktop/windows/wsl/)
-  - IDE: *at least one*
+  - IDE: **at least one**
      - [VisualStudio Code](https://code.visualstudio.com/)
 
 - Ubuntu Linux: **every LTS >= 18.04**
@@ -17,7 +17,7 @@
   - [MicroK8s](https://ubuntu.com/kubernetes/install#single-node) _(Kubernetes for Ubuntu)_
   - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management) _(Kubernetes CLI)_
   - [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
-  - IDE: *at least one*
+  - IDE: **at least one**
      - [VisualStudio Code](https://code.visualstudio.com/)
 
 ## Quick start
@@ -96,7 +96,7 @@ don't forget to exit our running container :
   [labsim@labsim-gcc-dev-extern:latest]$ exit
   ```
 
-### 3. Configure your prefered IDE
+### 3. Configure your preferred IDE
   
 #### 3.1. VSCode
 
