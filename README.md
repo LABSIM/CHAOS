@@ -4,18 +4,16 @@
 
 - Windows (>=7) :
   - [Git](https://git-scm.com/)
+  - [WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install)
   - [Docker Desktop](https://www.docker.com/products/docker-desktop)
   - [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
-  - Activate WSL2 **required** :
-    -  [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
-    -  [Update WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10#update-to-wsl-2)
-    -  [Docker WSL2 Backend](https://docs.docker.com/docker-for-windows/wsl/#install)
+  - [Docker WSL2 Backend](https://docs.docker.com/desktop/windows/wsl/)
   - [VisualStudio Code](https://code.visualstudio.com/)
 
 - Ubuntu Linux (every LTS >= 18.04):
   - [DockerCE + DockerCLI + Containerd](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
   - [MicroK8s](https://ubuntu.com/kubernetes/install#single-node) _(Kubernetes for Ubuntu)_
-  - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-using-native-package-management) _(Kubernetes CLI)_
+  - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#kubectl-install-0) _(Kubernetes CLI)_
   - [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
   - [VisualStudio Code](https://code.visualstudio.com/)
 
