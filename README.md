@@ -13,7 +13,7 @@
 
 - Ubuntu Linux: **every LTS >= 18.04**
   - [Git](https://git-scm.com/)
-  - [DockerCE + DockerCLI + Containerd](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+  - [DockerCE/EE](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
   - [MicroK8s](https://ubuntu.com/kubernetes/install#single-node) _(Kubernetes for Ubuntu)_
   - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management) _(Kubernetes CLI)_
   - [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
