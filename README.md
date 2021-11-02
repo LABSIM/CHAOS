@@ -22,6 +22,13 @@
 
 ## Quick start
 
+Directly jump to corresponding section:
+
+1. [Clone CHAOS](#1-clone-chaos)
+2. [Build the dev-container](#2-build-the-dev-container)
+3. [Configure your preferred IDE](#3-configure-your-preferred-ide)
+   - [VSCode](#31-vscode)
+
 ### 1. Clone CHAOS
 
 export secret info to enable 2FA access for git + container ! For further informations, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
