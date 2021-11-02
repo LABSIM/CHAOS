@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Windows (>=10) :
+- Windows: **>= 10 (with build >= 19041)**
   - [Git](https://git-scm.com/)
   - [WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install)
   - [Docker Desktop](https://www.docker.com/products/docker-desktop)
@@ -10,7 +10,7 @@
   - [Docker WSL2 Backend](https://docs.docker.com/desktop/windows/wsl/)
   - [VisualStudio Code](https://code.visualstudio.com/)
 
-- Ubuntu Linux (every LTS >= 18.04):
+- Ubuntu Linux: **every LTS >= 18.04**
   - [DockerCE + DockerCLI + Containerd](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
   - [MicroK8s](https://ubuntu.com/kubernetes/install#single-node) _(Kubernetes for Ubuntu)_
   - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management) _(Kubernetes CLI)_
