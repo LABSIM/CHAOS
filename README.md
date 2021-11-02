@@ -1,5 +1,11 @@
 # CHAOS
 
+Directly jump to corresponding main section:
+- [Prerequisites](#prerequisites)
+- [Quick start](#quick-start)
+- [Troubleshooting](#troubleshooting)
+- [Bonus](#bonus)
+
 ## Prerequisites
 
 - Windows: **>= 10 (with build >= 19041)**
@@ -22,7 +28,7 @@
 
 ## Quick start
 
-Directly jump to corresponding section:
+Directly jump to corresponding sub-section:
 
 1. [Clone CHAOS](#1-clone-chaos)
 2. [Build the dev-container](#2-build-the-dev-container)
