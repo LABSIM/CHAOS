@@ -1,25 +1,39 @@
 # CHAOS
 
+Directly jump to corresponding main section:
+- [Prerequisites](#prerequisites)
+- [Quick start](#quick-start)
+- [Troubleshooting](#troubleshooting)
+- [Bonus](#bonus)
+
 ## Prerequisites
 
-- Windows (>=7) :
+- Windows: **>= 10 (with build >= 19041)**
   - [Git](https://git-scm.com/)
+  - [WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install)
   - [Docker Desktop](https://www.docker.com/products/docker-desktop)
   - [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
-  - Activate WSL2 **required** :
-    -  [WSL](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10)
-    -  [Update WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10#update-to-wsl-2)
-    -  [Docker WSL2 Backend](https://docs.docker.com/docker-for-windows/wsl/#install)
-  - [VisualStudio Code](https://code.visualstudio.com/)
+  - [Docker WSL2 Backend](https://docs.docker.com/desktop/windows/wsl/)
+  - IDE: **at least one**
+     - [VisualStudio Code](https://code.visualstudio.com/)
 
-- Ubuntu Linux (every LTS >= 18.04):
-  - [DockerCE + DockerCLI + Containerd](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+- Ubuntu Linux: **every LTS >= 18.04**
+  - [Git](https://git-scm.com/)
+  - [DockerCE/EE](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
   - [MicroK8s](https://ubuntu.com/kubernetes/install#single-node) _(Kubernetes for Ubuntu)_
-  - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-using-native-package-management) _(Kubernetes CLI)_
+  - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management) _(Kubernetes CLI)_
   - [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
-  - [VisualStudio Code](https://code.visualstudio.com/)
+  - IDE: **at least one**
+     - [VisualStudio Code](https://code.visualstudio.com/)
 
 ## Quick start
+
+Directly jump to corresponding sub-section:
+
+1. [Clone CHAOS](#1-clone-chaos)
+2. [Build the dev-container](#2-build-the-dev-container)
+3. [Configure your preferred IDE](#3-configure-your-preferred-ide)
+   - [VSCode](#31-vscode)
 
 ### 1. Clone CHAOS
 
@@ -95,7 +109,9 @@ don't forget to exit our running container :
   [labsim@labsim-gcc-dev-extern:latest]$ exit
   ```
 
-### 3. Configure VSCode
+### 3. Configure your preferred IDE
+  
+#### 3.1. VSCode
 
 Then, if you want to dev from the inside of our freshly build container, do :
 
