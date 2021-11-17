@@ -91,8 +91,7 @@ WORKDIR /home/labsim/dev
 
 # mandatory GAIA argument
 ARG GAIA_TARGET_ECOSYSTEM="LABSIM-2.0.0" \
-    GAIA_ENABLE_FEATURE="dev,sf"
-#    GAIA_ENABLE_FEATURE="dev,sf,sb"
+    GAIA_ENABLE_FEATURE="dev,sf,sb"
 
 #
 # mount secrets, clone LABSIM repositories & bootstrap GAIA
