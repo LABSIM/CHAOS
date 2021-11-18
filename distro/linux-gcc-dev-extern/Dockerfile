@@ -46,8 +46,6 @@ RUN apt-get update \
       zstd \
       gdb \
       ccache \
-      default-jdk \
-      maven \
       libncurses-dev \
       libacl1-dev \
     #
