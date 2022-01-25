@@ -28,6 +28,7 @@
 		"davidwang.ini-for-vscode",
 		"jeff-hykin.better-shellscript-syntax",
 		"d9705996.perl-toolbox",
-		"redhat.vscode-yaml"
+		"redhat.vscode-yaml",
+		"eamodio.gitlens"
 	]
 }
