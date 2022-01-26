@@ -29,6 +29,7 @@
 		"jeff-hykin.better-shellscript-syntax",
 		"d9705996.perl-toolbox",
 		"redhat.vscode-yaml",
-		"eamodio.gitlens"
+		"eamodio.gitlens",
+		"github.vscode-pull-request-github"
 	]
 }
