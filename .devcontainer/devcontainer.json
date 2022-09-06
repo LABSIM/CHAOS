@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json 
 {
-	"name": "LABSIM external development distro - Linux & GNU GCC based",
-	"image": "labsim-gcc-dev-extern:latest",
+	"name": "LABSIM devcontainer distro - Linux & GNU GCC",
+	"image": "labsim-devcontainer:2.0.0",
 	"remoteUser": "labsim",
 	"context": "..",
 	"settings": {
