@@ -197,5 +197,3 @@ Nawfel KINANI
 > - < nawfel.kinani at onera.fr >
 > - DTIS/ICNA
 > - Centre de Salon de provence - BA 701 FR-13661 SALON CEDEX AIR
-
-\
