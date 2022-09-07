@@ -183,6 +183,6 @@ Then, if you want to dev from the inside of our freshly build container, do :
 
 ## License
 
-Code licensed under the ![GNU GPLv3](https://www.gnu.org/graphics/gplv3-with-text-84x42.png).
+![GNU GPLv3](https://www.gnu.org/graphics/gplv3-with-text-84x42.png).
 
 See [COPYING](COPYING) file.
