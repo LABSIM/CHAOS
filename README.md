@@ -43,81 +43,65 @@ Directly jump to corresponding sub-section:
 
 simply clone CHAOS sources into your local dev directory :
 
-  ```console
-  git -C /your/local/dev/directory clone "https://$(cat C:/your/local/secret/path/github_username.txt):$(cat C:/your/local/secret/path/github_token.txt)@github.com/LABSIM/CHAOS.git"
-  ```
+```console
+[user@localhost]$ git -C /your/local/dev/directory clone https://github.com/LABSIM/CHAOS.git
+```
 
 ### 2. Prepare the builder driver 
 
 the build log may be too heavy for the default builder driver so, if recquired, run the following command to increase the log builder setting :
 
-  ```console
-  docker buildx create --driver docker-container --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=1000000000 --bootstrap --use
-  ```
+```console
+[user@localhost]$ docker buildx create --driver docker-container --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=1000000000 --bootstrap --use
+```
 
 ### 3. Build the labsim-base
 
 first of all, dir into your freshly cloned CHAOS root :
   
-  ```console
-  cd /your/local/dev/directory/CHAOS/
-  ```
+```console
+[user@localhost]$ cd /your/local/dev/directory/CHAOS/
+```
 
 then, lauch the docker buildx process for our base image labsim-base:2.0.0
 
-  ```console
-  docker buildx build \
-                --no-cache \
-                --load \
-                --file distro/docker/Dockerfile \
-                --target labsim-base \
-                --tag local/labsim-base:2.0.0 \
-                .
-  ```
+```console
+[user@localhost]$ docker buildx build --no-cache --load --file distro/docker/Dockerfile --target labsim-base --tag local/labsim-base:2.0.0
+```
 
 So now you should have a labsim-base:2.0.0 container ready to run ! Launch it with the following :
 
-  ```console
-  docker run --rm -it labsim-base:2.0.0
-  ```
+```console
+[user@localhost]$ docker run --rm -it labsim-base:2.0.0
+```
 
 don't forget to exit our running container :
 
-  ```console
-  [labsim@labsim-base:2.0.0]$ exit
-  ```
+```console
+[labsim@labsim-base:2.0.0]$ exit
+```
 
 ### 4. Build the labsim-devcontainer
 
 export secret info to enable 2FA access for git + container ! For further informations, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
 
- ```PowerShell
- PS> Write-Output "your_super_secret_github_username" \
-       | Out-File -append -encoding ASCII "C:/your/local/secret/path/github_username.txt"
- PS> Write-Output "your_super_secret_github_token" <br/> \
-       | Out-File -append -encoding ASCII "C:/your/local/secret/path/github_token.txt"
- ```
+```PowerShell
+PS> Write-Output "your_super_secret_github_username" | Out-File -append -encoding ASCII "C:/your/local/secret/path/github_username.txt"
+PS> Write-Output "your_super_secret_github_token" | Out-File -append -encoding ASCII "C:/your/local/secret/path/github_token.txt"
+```
 
 or
 
- ```console
- [user@localhost]$ echo 'your_super_secret_github_username' > /your/local/secret/path/github_username.txt
- [user@localhost]$ echo 'your_super_secret_github_token' > /your/local/secret/path/github_token.txt
- ```
+```console
+[user@localhost]$ echo 'your_super_secret_github_username' > /your/local/secret/path/github_username.txt
+[user@localhost]$ echo 'your_super_secret_github_token' > /your/local/secret/path/github_token.txt
+```
 
 then, lauch the docker buildx process for our labsim devcontainer image labsim-devcontainer:2.0.0
 
-  ```console
-  docker buildx build \
-                --no-cache \
-                --load \
-                --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt \
-                --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt \
-                --file distro/docker/Dockerfile \
-                --target labsim-devcontainer \
-                --tag labsim-devcontainer:2.0.0 \
-                .
-  ```
+```console
+[user@localhost]$ docker buildx build --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/docker/Dockerfile --target labsim-devcontainer --tag labsim-devcontainer:2.0.0
+```
 
 > actually, the default GAIA Ecosystem is ```LABSIM-2.0.0``` with features ```dev,sf,sb``` but they can be configured through theses *additionnal* args :
 >
@@ -130,21 +114,21 @@ then, lauch the docker buildx process for our labsim devcontainer image labsim-d
 
 So now you should have a labsim-devcontainer:2.0.0 container ready to run ! Launch it with the following :
 
-  ```console
-  docker run --rm -it labsim-devcontainer:2.0.0
-  ```
+```console
+[user@localhost]$docker run --rm -it labsim-devcontainer:2.0.0
+```
 
 & check the GAIA configuration with :
 
-  ```console
-  [labsim@labsim-devcontainer:2.0.0]$ gaia
-  ```
+```console
+[labsim@labsim-devcontainer:2.0.0]$ gaia
+```
 
 don't forget to exit our running container :
 
-  ```console
-  [labsim@labsim-devcontainer:2.0.0]$ exit
-  ```
+```console
+[labsim@labsim-devcontainer:2.0.0]$ exit
+```
 
 ### 5. Configure your preferred IDE
   
