@@ -115,7 +115,7 @@ then, lauch the docker buildx process for our labsim devcontainer image labsim-d
 So now you should have a labsim-devcontainer:2.0.0 container ready to run ! Launch it with the following :
 
 ```console
-[user@localhost]$docker run --rm -it labsim-devcontainer:2.0.0
+[user@localhost]$ docker run --rm -it labsim-devcontainer:2.0.0
 ```
 
 & check the GAIA configuration with :
