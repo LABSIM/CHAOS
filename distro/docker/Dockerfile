@@ -45,6 +45,7 @@ RUN apt-get update \
       libzstd-dev \
       zstd \
       gdb \
+      binutils \
       ccache \
       libncurses-dev \
       libacl1-dev \
