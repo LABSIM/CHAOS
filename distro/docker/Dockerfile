@@ -38,16 +38,23 @@ RUN apt-get update \
     # install specific tools - yes to every prompt - no recommmended
     #
  && apt-get --no-install-recommends --assume-yes install \
-      gawk \
-      bison \
-      flex \
-      locales \
-      libzstd-dev \
-      zstd \
-      gdb \
-      ccache \
-      libncurses-dev \
-      libacl1-dev \
+    apt-transport-https \
+    bison \
+    ca-certificates \
+    ccache \
+    clang-format \
+    clang-tidy \
+    flex \
+    gawk \
+    gnupg2 \
+    gdb \
+    git \
+    locales \
+    libzstd-dev \
+    libncurses-dev \
+    libacl1-dev \
+    wget \
+    zstd \
     #
     # cleanup
     #
@@ -67,7 +74,7 @@ ENV TZ=Europe/Paris \
     LANG=en_US.UTF-8
 
 # add & set labsim user
-RUN useradd --no-log-init --user-group --create-home --shell /bin/bash labsim
+RUN useradd --create-home --user-group --shell /bin/bash --no-log-init labsim 
 USER labsim
 
 
