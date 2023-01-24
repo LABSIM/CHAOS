@@ -4,9 +4,7 @@
 >
 > *fullname* : ***LABSIM distros - Linux & GNU GCC***
 >
-> *author* : Nawfel KINANI
->
-> *dept/unit* : DTIS/ICNA
+> *author* : Nawfel KINANI - DTIS/ICNA
 
 ## Distro detail
 

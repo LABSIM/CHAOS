@@ -163,7 +163,7 @@ Then, if you want to dev from the inside of our freshly build container, do :
 - list all local images: `docker image ls`
 - run interactive shell: `docker run --rm -it {container}:{tag}`
 - see running container stats from shell: `docker stats`
-- *! CAUTION !* full cleanup: `docker system prune`
+- *! CAUTION !* full cleanup: `docker system prune --all --force --volumes`
 
 ## License
 
