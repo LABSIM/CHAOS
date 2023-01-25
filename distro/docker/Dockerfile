@@ -296,8 +296,8 @@ RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
  && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/RHEA.git titans/RHEA \
  && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git titans/KRONOS \
  && cd titans/GAIA \
- && chmod +x bootstrap-gaia.sh 
- #&& ./bootstrap-gaia.sh --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+ && chmod +x bootstrap-gaia.sh \
+ && ./bootstrap-gaia.sh --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
  
 # inject the LABSIM SSE VSCode workspace
 COPY --chown=labsim:labsim distro/docker/labsim.code-workspace .

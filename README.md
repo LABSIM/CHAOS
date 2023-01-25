@@ -5,6 +5,7 @@
 Directly jump to corresponding main section:
 - [Prerequisites](#prerequisites)
 - [Quick start](#quick-start)
+- [External links](#external-links)
 - [Troubleshooting](#troubleshooting)
 - [Bonus](#bonus)
 
@@ -149,6 +150,12 @@ Then, if you want to dev from the inside of our freshly build container, do :
    - reload extensions as prosposed
 5. *Happy Coding !*
 
+## External links
+
+> Official development containers specification, [*see here*](https://containers.dev/)
+
+> VSCode devcontainer documentation, [*see here*](https://code.visualstudio.com/docs/remote/containers)
+
 ## Troubleshooting
 
 | Bug/Problem | Advice |
@@ -157,13 +164,13 @@ Then, if you want to dev from the inside of our freshly build container, do :
 
 ## Bonus
 
-> official documentation, [*see here*](https://code.visualstudio.com/docs/remote/containers)
-
-- clean all local images: `docker rmi -f $(docker images -a -q)`
-- list all local images: `docker image ls`
-- run interactive shell: `docker run --rm -it {container}:{tag}`
-- see running container stats from shell: `docker stats`
-- *! CAUTION !* full cleanup: `docker system prune --all --force --volumes`
+| Command | Description |
+| :-- | :-- |
+| `docker rmi -f $(docker images -a -q)` | clean all local images |
+| `docker image ls` | list all local images |
+| `docker run --rm -it {container}:{tag}` | run interactive shell |
+| `docker stats` | see running container stats from shell |
+| `docker system prune --all --force --volumes` | **! CAUTION !** full cleanup |
 
 ## License
 
