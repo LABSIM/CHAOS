@@ -63,7 +63,7 @@ first of all, dir into your freshly cloned CHAOS root :
 [user@localhost]$ cd /your/local/dev/directory/CHAOS/
 ```
 
-export secret info to enable 2FA access for git + container ! For further informations, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
+export secret info to enable 2FA access for git + container ! For further informations, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) 
 
 ```PowerShell
 PS> Write-Output "your_super_secret_github_username" | Out-File -append -encoding ASCII "C:/your/local/secret/path/github_username.txt"
@@ -77,50 +77,48 @@ or
 [user@localhost]$ echo 'your_super_secret_github_token' > /your/local/secret/path/github_token.txt
 ```
 
-then, lauch the docker buildx process for our container `<chaos-target>:<gaia-sse-version>`
+then, lauch the docker buildx process for our container `<chaos-target>:<chaos-version>`
 
+```console
+[user@localhost]$ docker buildx build --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/docker/Dockerfile --target <chaos-target> --tag <chaos-target>:<chaos-version>
+```
 > by convention, we advise :
 > - `<chaos-target>` == CHAOS build target name
-> - `<gaia-sse-version>` == GAIA Simulation Software Ecosystem (SSE) version
+> - `<chaos-version>` == CHAOS build version, **a good rule of thumbs should be that it matched the intended GAIA Simulation Software Ecosystem (SSE) version**, see `<gaia-sse-version>` under
 >
-> available `<chaos-target>` are : 
+> available `<chaos-target>` : 
 > - **labsim-base-gcc-bullseye** : a Debian Bullseye Linux distro with a GNU GCC compiler environment whithout SSE
 > - **labsim-devcontainer-gcc-bullseye** : a Debian Bullseye Linux distro with a GNU GCC compiler environment shipped with the desired SSE
 > - **labsim-base-llvm-bullseye** : a Debian Bullseye Linux distro with a LLVM compiler environment whithout SSE
 > - **labsim-devcontainer-gcc-bullseye** : a Debian Bullseye Linux distro with a LLVM compiler environment shipped with the desired SSE
->
-> available `<gaia-sse-version>` are :
-> - **2.0.0** : GAIA SSE v.[2.0.0](https://github.com/LABSIM/GAIA/tree/master/ecosystem/2.0.0)
 
-```console
-[user@localhost]$ docker buildx build --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/docker/Dockerfile --target <chaos-target> --tag <chaos-target>:<gaia-sse-version>
-```
-
-> actually, the default SSE is configured to be the  v.[2.0.0](https://github.com/LABSIM/GAIA/tree/master/ecosystem/2.0.0) with features `dev,sf,sb`, but they can be configured through theses *additionnal* args :
+> actually, the default GAIA SSE is configured to be the v.[2.0.0](https://github.com/LABSIM/GAIA/tree/master/ecosystem/2.0.0) with features `dev,sf,sb`, but they can be configured through theses *additionnal* args :
 >
 > ```console
 > --build-arg GAIA_TARGET_ECOSYSTEM=<gaia-sse-version>
 > --build-arg GAIA_ENABLE_FEATURE=<gaia-sse-feature-A>,<gaia-sse-feature-B>,<gaia-sse-feature-N>
 > ```
 >
-> for a complete list of available GAIA SSE versions & features, [*see here*](https://github.com/LABSIM/GAIA/tree/master/ecosystem)
+> for a complete list of available `<gaia-sse-version>` & `<gaia-sse-feature>`, [*see here*](https://github.com/LABSIM/GAIA/tree/master/ecosystem)
 
-So now you should have a `<chaos-target>:<gaia-sse-version>` container ready to run ! Launch it with the following :
+> furthermore, github tokens are temporary loaded during the build stage via the secret mount mechanism, more informations [*here*](https://docs.docker.com/engine/reference/commandline/buildx_build/#secret)
+
+so now you should have a `<chaos-target>:<chaos-version>` container loaded into your local registry & ready to run ! Launch it with the following :
 
 ```console
-[user@localhost]$ docker run --rm -it <chaos-target>:<gaia-sse-version>
+[user@localhost]$ docker run --rm -it <chaos-target>:<chaos-version>
 ```
 
 & check the GAIA configuration, if any, with :
 
 ```console
-[labsim@<chaos-target>:<gaia-sse-version>]$ gaia
+[labsim@<chaos-target>:<chaos-version>]$ gaia
 ```
 
 don't forget to exit our running container :
 
 ```console
-[labsim@<chaos-target>:<gaia-sse-version>]$ exit
+[labsim@<chaos-target>:<chaos-version>]$ exit
 ```
 
 ### 4. Configure your preferred IDE
@@ -135,13 +133,14 @@ Then, if you want to dev from the inside of our freshly build container, do :
    - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) : ms-kubernetes-tools.vscode-kubernetes-tools
    - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) : ms-vscode-remote.vscode-remote-extensionpack
    - *BONUS!* [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme) : Equinusocio.vsc-material-theme
-3. Update the `image` field of the .devcontainer/devcontainer.json configuration file to be `<chaos-target>:<gaia-sse-version>`
-3. Press [_F1_] & type ```Remote-Containers: Reopen in Container```, [_Enter_]
-4. Open the worskspace when prompted to. Should pop in the lower right corner (?) **HACK** If an error message poped up, well... It seems that the cpptool extension is buggy from inside a container, so we must force/install it from package :
-   - press [_F1_] & type ```Extensions: Install from VSIX...```, [_Enter_]
-   - navigate to ```/labsim/dev/``` directory, then select the ```cpptools-linux.vsix```
-   - reload extensions as prosposed
-5. *Happy Coding !*
+3. Update the `image` field of the .devcontainer/devcontainer.json configuration file to be `<chaos-target>:<chaos-version>`
+4. Press [_F1_] & type ```Remote-Containers: Reopen in Container```, [_Enter_]
+5. Open the worskspace when prompted to. Should pop in the lower right corner
+>  **HACK** : If an error message poped up, well... It seems that the cpptool extension is buggy from inside a container, so we must force/install it from package :
+>   - press [_F1_] & type ```Extensions: Install from VSIX...```, [_Enter_]
+>   - navigate to ```/labsim/dev/``` directory, then select the ```cpptools-linux.vsix```
+>   - reload extensions as prosposed
+6. *Happy Coding !*
 
 ## External links
 
