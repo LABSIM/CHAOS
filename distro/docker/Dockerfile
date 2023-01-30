@@ -119,6 +119,11 @@ LABEL description="LABSIM base distro - Linux Debian 11 & LLVM 15.0.7" \
 ARG DEBIAN_FRONTEND=noninteractive
 
 #
+# LLVM version 
+#
+ARG LLVM_VERSION=15
+
+#
 # update
 #
 RUN apt-get --quiet update \
@@ -146,9 +151,9 @@ RUN apt-get --quiet update \
     lsb-release \
     make \
     patch \
+    software-properties-common \
     wget \
     zstd \
-
     #
     # LLVM specific package
     # - cmake required by default
@@ -157,16 +162,41 @@ RUN apt-get --quiet update \
     cmake \
     ninja-build \
     #
-    # Automatic installation script, see [https://apt.llvm.org/]
+    # LLVM installation
+    # - see [https://apt.llvm.org/]
     #
- && wget https://apt.llvm.org/llvm.sh
- && chmod +x llvm.sh
- && ./llvm.sh 15 all
-#     #
-#     # "install" into standard env
-#     #
-#  && for f in /usr/lib/llvm-15/bin/*; do ln -sf "$f" /usr/local/bin; done \
-#  && ln -s /usr/lib/llvm-15/lib/python3.9/site-packages/lldb/* /usr/lib/python3/dist-packages/lldb
+ && wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc \
+ && add-apt-repository "deb http://apt.llvm.org/bullseye/ llvm-toolchain-bullseye-$LLVM_VERSION main" \
+ && apt-get --quiet update \
+ && apt-get install --quiet --no-install-recommends --assume-yes \
+    llvm-$LLVM_VERSION-dev \
+    llvm-$LLVM_VERSION-tools \
+    lld-$LLVM_VERSION \
+    lldb-$LLVM_VERSION \
+    clang-$LLVM_VERSION \
+    clangd-$LLVM_VERSION \
+    clang-tidy-$LLVM_VERSION \
+    clang-format-$LLVM_VERSION \
+    clang-tools-$LLVM_VERSION \
+    libomp-$LLVM_VERSION-dev \
+    libc++-$LLVM_VERSION-dev \
+    libc++abi-$LLVM_VERSION-dev \
+    libclang-common-$LLVM_VERSION-dev \
+    libclang-$LLVM_VERSION-dev \
+    libclang-cpp$LLVM_VERSION-dev \
+    libclang-rt-$LLVM_VERSION-dev \
+    libunwind-$LLVM_VERSION-dev \
+    libpolly-$LLVM_VERSION-dev \
+    #
+    # "install" into standard env
+    #
+ && for f in /usr/lib/llvm-15/bin/*; do ln -sf "$f" /usr/local/bin; done \
+    #
+    # LLVM python installation
+    # - see [https://github.com/llvm/llvm-project/issues/55575]
+    #
+ && mkdir -p /usr/lib/lib/python3.9/site-packages \
+ && ln -s /usr/lib/llvm-15/lib/python3.9/site-packages/lldb /usr/lib/lib/python3.9/site-packages/lldb \
     #
     # apt cleanup
     #
@@ -219,7 +249,7 @@ LABEL description="LABSIM devcontainer distro - Linux Debian 11 & GNU GCC 12.2.0
 WORKDIR /home/labsim/dev
 
 # mandatory GAIA argument
-ARG GAIA_TARGET_ECOSYSTEM="LABSIM-2.0.0" \
+ARG GAIA_TARGET_ECOSYSTEM="2.0.0" \
     GAIA_ENABLE_FEATURE="dev,sb,sf"
 
 #
@@ -254,7 +284,7 @@ COPY --chown=labsim:labsim distro/docker/labsim.code-workspace .
 FROM labsim-base-llvm-bullseye as labsim-devcontainer-llvm-bullseye
 
 # prettifyng
-LABEL description="LABSIM devcontainer distro - Linux Debian 11 & GNU GCC 12.2.0" \
+LABEL description="LABSIM devcontainer distro - Linux Debian 11 & LLVM 15.0.7" \
       maintainer="nawfel.kinani@onera.fr" \
       version="2.0.0" \
       org.name="ONERA" \
@@ -268,7 +298,7 @@ LABEL description="LABSIM devcontainer distro - Linux Debian 11 & GNU GCC 12.2.0
 WORKDIR /home/labsim/dev
 
 # mandatory GAIA argument
-ARG GAIA_TARGET_ECOSYSTEM="LABSIM-2.0.0" \
+ARG GAIA_TARGET_ECOSYSTEM="2.0.0" \
     GAIA_ENABLE_FEATURE="dev,sb,sf"
 
 #
