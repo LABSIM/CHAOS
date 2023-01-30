@@ -139,14 +139,16 @@ RUN apt-get --quiet update \
     flex \
     gawk \
     gnupg2 \
-    locales \
     libzstd-dev \
     libncurses-dev \
     libacl1-dev \
+    locales \
+    lsb-release \
     make \
     patch \
     wget \
     zstd \
+
     #
     # LLVM specific package
     # - cmake required by default
@@ -155,31 +157,16 @@ RUN apt-get --quiet update \
     cmake \
     ninja-build \
     #
-    # set repository key
-    # --> Fingerprint: 6084 F3CF 814B 57C1 CF12 EFD5 15CF 4D18 AF4F 7421
+    # Automatic installation script, see [https://apt.llvm.org/]
     #
- && wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - \
-    #
-    # install llvm toolchain from apt repos 
-    # see [http://apt.llvm.org/]
-    #
- && echo "deb http://apt.llvm.org/bullseye/ llvm-toolchain-bullseye-15 main" > /etc/apt/sources.list.d/llvm.list \
- #&& echo "deb-src http://apt.llvm.org/bullseye/ llvm-toolchain-bullseye-15 main" > /etc/apt/sources.list.d/llvm.list  \
- && apt-get --quiet update \
- && apt-get install --quiet --assume-yes -t llvm-toolchain-bullseye-15 \
-    clang-15 \
-    clangd-15 \
-    clang-tidy-15 \
-    clang-format-15 \
-    clang-tools-15 \
-    lldb-15 \
-    lld-15 \
-    libc++-15-dev \
-    libc++abi-15-dev \
-    #
-    # "install" into standard env
-    #
- && for f in /usr/lib/llvm-15/bin/*; do ln -sf "$f" /usr/local/bin; done \
+ && wget https://apt.llvm.org/llvm.sh
+ && chmod +x llvm.sh
+ && ./llvm.sh 15 all
+#     #
+#     # "install" into standard env
+#     #
+#  && for f in /usr/lib/llvm-15/bin/*; do ln -sf "$f" /usr/local/bin; done \
+#  && ln -s /usr/lib/llvm-15/lib/python3.9/site-packages/lldb/* /usr/lib/python3/dist-packages/lldb
     #
     # apt cleanup
     #
