@@ -1,12 +1,20 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json 
 {
-	"name": "LABSIM devcontainer distro - Linux & GNU GCC",
+	"name": "LABSIM devcontainer distro - Linux & LLVM",
 	"image": "labsim-devcontainer-llvm:2.0.0",
 	"remoteUser": "labsim",
 	"context": "..",
 	"settings": {
-		"terminal.integrated.shell.linux": "/bin/bash",
-		"terminal.integrated.shellArgs.linux": [ "-l", "-i" ],
+		"terminal.integrated.profiles.linux": {
+			"interactive standard shell (login)": {
+				"path": "/bin/bash",
+				"args": [ 
+					"-l", 
+					"-i" 
+				]
+			}
+		},
+		"terminal.integrated.defaultProfile.linux": "interactive standard shell (login)",
 		"terminal.integrated.inheritEnv": true,
 		"terminal.integrated.detectLocale": "auto",
 		"terminal.integrated.copyOnSelection": true,
