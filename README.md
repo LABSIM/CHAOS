@@ -136,18 +136,19 @@ Then, if you want to dev from the inside of our freshly build container, do :
    - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) : ms-azuretools.vscode-docker
    - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) : ms-kubernetes-tools.vscode-kubernetes-tools
    - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) : ms-vscode-remote.vscode-remote-extensionpack
-   - *BONUS!* [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme) : Equinusocio.vsc-material-theme
+   - _BONUS!_ [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme) : Equinusocio.vsc-material-theme
 3. Update the `image` field of the .devcontainer/devcontainer.json configuration file to be `<chaos-target>:<chaos-version>`
 4. Press [_F1_] & type ```Remote-Containers: Reopen in Container```, [_Enter_]
 5. Open the worskspace when prompted to. Should pop in the lower right corner
+6. _Happy Coding !_
+
+>**_Iff._** using an LLVM based devcontainer [see here](https://github.com/llvm/llvm-project/tree/main/lldb/tools/lldb-vscode#Installation-Visual-Studio-Code) about how to configure an integrated lldb debugger
 
 > **HACK** : If an error message poped up, well... It seems that the cpptool extension is buggy from inside a container, so we must force/install it from package :
 >
 >- press [_F1_] & type ```Extensions: Install from VSIX...```, [_Enter_]
 >- navigate to ```/labsim/dev/``` directory, then select the ```cpptools-linux.vsix```
 >- reload extensions as prosposed
-
-6. _Happy Coding !_
 
 ## External links
 
