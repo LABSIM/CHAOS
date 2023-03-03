@@ -94,7 +94,7 @@ then, lauch the docker buildx process for our container `<chaos-target>:<chaos-v
 > - **labsim-base-gcc-bullseye** : a Debian Bullseye Linux distro with a GNU GCC compiler environment whithout SSE
 > - **labsim-devcontainer-gcc-bullseye** : a Debian Bullseye Linux distro with a GNU GCC compiler environment shipped with the desired SSE
 > - **labsim-base-llvm-bullseye** : a Debian Bullseye Linux distro with a LLVM compiler environment whithout SSE
-> - **labsim-devcontainer-gcc-bullseye** : a Debian Bullseye Linux distro with a LLVM compiler environment shipped with the desired SSE
+> - **labsim-devcontainer-llvm-bullseye** : a Debian Bullseye Linux distro with a LLVM compiler environment shipped with the desired SSE
 >
 > actually, the default GAIA SSE is configured to be the v.[2.0.0](https://github.com/LABSIM/GAIA/tree/master/ecosystem/2.0.0) with features `dev,sf,sb`, but they can be configured through theses _additionnal_ args :
 >
@@ -142,7 +142,7 @@ Then, if you want to dev from the inside of our freshly build container, do :
 5. Open the worskspace when prompted to. Should pop in the lower right corner
 6. _Happy Coding !_
 
->**_Iff._** using an LLVM based devcontainer [see here](https://github.com/llvm/llvm-project/tree/main/lldb/tools/lldb-vscode#Installation-Visual-Studio-Code) about how to configure an integrated lldb debugger
+>**_Iff._** using an LLVM based devcontainer [see here](https://github.com/llvm/llvm-project/tree/main/lldb/tools/lldb-vscode#Installation-Visual-Studio-Code) about how to configure an integrated lldb debugger or, if you are a lazy one, as I am, simply install the [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb) package from marketplace. But, be advise that it ship it's own LLDB binary so it will squeeze the devcontainer built-in...
 
 > **HACK** : If an error message poped up, well... It seems that the cpptool extension is buggy from inside a container, so we must force/install it from package :
 >
