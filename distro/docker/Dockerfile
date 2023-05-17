@@ -215,7 +215,10 @@ ENV TZ=Europe/Paris \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     CC=/usr/local/bin/clang \
-    CXX=/usr/local/bin/clang++
+    CXX=/usr/local/bin/clang++ \
+    CXXFLAGS=-stdlib=libc++ \
+    LDFLAGS=-lc++ -lc++abi
+
 
 # add & set labsim user
 RUN useradd --create-home --user-group --shell /bin/bash --no-log-init labsim 
