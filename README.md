@@ -91,8 +91,8 @@ then, lauch the docker buildx process for our container `<chaos-target>:<chaos-v
 >
 > available `<chaos-target>` :
 >
-> - **labsim-base-gcc-bookworm** : a Debian Bullseye Linux distro with a GNU GCC compiler environment whithout SSE
-> - **labsim-devcontainer-gcc-bookworm** : a Debian Bullseye Linux distro with a GNU GCC compiler environment shipped with the desired SSE
+> - **labsim-base-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
+> - **labsim-devcontainer-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
 > - **labsim-base-llvm-bullseye** : a Debian Bullseye Linux distro with a LLVM compiler environment whithout SSE
 > - **labsim-devcontainer-llvm-bullseye** : a Debian Bullseye Linux distro with a LLVM compiler environment shipped with the desired SSE
 >
