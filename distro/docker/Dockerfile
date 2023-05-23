@@ -87,7 +87,7 @@ ENV TZ=Europe/Paris \
 
 # check/install cpanm by default (need to be root...)
 USER root
-RUN if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - --sudo App::cpanminus; fi
+RUN sh -C 'if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - --sudo App::cpanminus; fi'
 
 # add & set labsim user
 RUN useradd --create-home --user-group --shell /bin/bash --no-log-init labsim 
@@ -225,7 +225,7 @@ ENV TZ=Europe/Paris \
     
 # check/install cpanm by default (need to be root...)
 USER root
-RUN if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - --sudo App::cpanminus; fi
+RUN sh -C 'if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - --sudo App::cpanminus; fi'
 
 # add & set labsim user
 RUN useradd --create-home --user-group --shell /bin/bash --no-log-init labsim 
