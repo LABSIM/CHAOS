@@ -85,6 +85,10 @@ ENV TZ=Europe/Paris \
     CC=/usr/local/bin/gcc \
     CXX=/usr/local/bin/g++
 
+# install cpanm by default
+USER root
+RUN curl -L http://cpanmin.us | perl - --sudo App::cpanminus
+
 # add & set labsim user
 RUN useradd --create-home --user-group --shell /bin/bash --no-log-init labsim 
 USER labsim
