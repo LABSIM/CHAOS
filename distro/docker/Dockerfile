@@ -85,9 +85,9 @@ ENV TZ=Europe/Paris \
     CC=/usr/local/bin/gcc \
     CXX=/usr/local/bin/g++
 
-# install cpanm by default
+# check/install cpanm by default (need to be root...)
 USER root
-RUN curl -L http://cpanmin.us | perl - --sudo App::cpanminus
+RUN if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - --sudo App::cpanminus; fi
 
 # add & set labsim user
 RUN useradd --create-home --user-group --shell /bin/bash --no-log-init labsim 
@@ -222,7 +222,10 @@ ENV TZ=Europe/Paris \
     CXX=/usr/local/bin/clang++ \
     CXXFLAGS="-stdlib=libc++" \
     LDFLAGS="-lc++ -lc++abi"
-
+    
+# check/install cpanm by default (need to be root...)
+USER root
+RUN if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - --sudo App::cpanminus; fi
 
 # add & set labsim user
 RUN useradd --create-home --user-group --shell /bin/bash --no-log-init labsim 
