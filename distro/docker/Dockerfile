@@ -3,21 +3,21 @@
 
 ####################################
 #                                  #
-#     LABSIM-BASE-GCC-BULLSEYE     #
+#     LABSIM-BASE-GCC-BOOKWORM     #
 #                                  #
 # ================================ #
-# -> Debian:bullseye               #
-#  -> buildpack-deps:bullseye-curl #
-#   -> buildpack-deps:bullseye-scm #
-#    -> buildpack-deps:bullseye    #
-#     -> gcc:12.2.0-bullseye       #
+# -> Debian:bookworm               #
+#  -> buildpack-deps:bookworm-curl #
+#   -> buildpack-deps:bookworm-scm #
+#    -> buildpack-deps:bookworm    #
+#     -> gcc:13.1.0-bookworm       #
 ####################################
 
 
-FROM gcc:12.2.0-bullseye as labsim-base-gcc-bullseye
+FROM gcc:13.1.0-bookworm as labsim-base-gcc-bookworm
 
 # prettifyng
-LABEL description="LABSIM base distro - Linux Debian 11 & GNU GCC 12.2.0" \
+LABEL description="LABSIM base distro - Linux Debian 12 & GNU GCC 13.1.0" \
       maintainer="nawfel.kinani@onera.fr" \
       version="2.0.0" \
       org.name="ONERA" \
@@ -227,18 +227,18 @@ USER labsim
 
 ####################################
 #                                  #
-# LABSIM-DEVCONTAINER-GCC-BULLSEYE #
+# LABSIM-DEVCONTAINER-GCC-BOOKWORM #
 #                                  #
 # ================================ #
-# -> labsim-base-gcc-bullseye      #
+# -> labsim-base-gcc-bookworm      #
 ####################################
 
 
 # multi stage build
-FROM labsim-base-gcc-bullseye as labsim-devcontainer-gcc-bullseye
+FROM labsim-base-gcc-bookworm as labsim-devcontainer-gcc-bookworm
 
 # prettifyng
-LABEL description="LABSIM devcontainer distro - Linux Debian 11 & GNU GCC 12.2.0" \
+LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 13.1.0" \
       maintainer="nawfel.kinani@onera.fr" \
       version="2.0.0" \
       org.name="ONERA" \
