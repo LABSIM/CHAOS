@@ -81,7 +81,7 @@ or
 then, lauch the docker buildx process for our container `<chaos-target>:<chaos-version>`
 
 ```console
-[user@localhost]$ docker buildx build --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/docker/Dockerfile --target <chaos-target> --tag <chaos-target>:<chaos-version>
+[user@localhost]$ docker buildx build --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/docker/Dockerfile --target <chaos-target> --tag <chaos-target>:<chaos-version> .
 ```
 
 > by convention, we advise :
