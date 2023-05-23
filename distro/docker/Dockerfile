@@ -104,7 +104,7 @@ USER labsim
 FROM buildpack-deps:bullseye as labsim-base-llvm-bullseye
 
 # prettifyng
-LABEL description="LABSIM base distro - Linux Debian 11 & LLVM 15.0.7" \
+LABEL description="LABSIM base distro - Linux Debian 11 & LLVM 16.0.3" \
       maintainer="nawfel.kinani@onera.fr" \
       version="2.0.0" \
       org.name="ONERA" \
@@ -121,7 +121,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 #
 # LLVM version 
 #
-ARG LLVM_VERSION=15
+ARG LLVM_VERSION=16
 
 #
 # update
@@ -190,13 +190,13 @@ RUN apt-get --quiet update \
     #
     # "install" into standard env
     #
- && for f in /usr/lib/llvm-15/bin/*; do ln -sf "$f" /usr/local/bin; done \
+ && for f in /usr/lib/llvm-16/bin/*; do ln -sf "$f" /usr/local/bin; done \
     #
     # LLVM python installation
     # - see [https://github.com/llvm/llvm-project/issues/55575]
     #
  && mkdir -p /usr/lib/lib/python3.9/site-packages \
- && ln -s /usr/lib/llvm-15/lib/python3.9/site-packages/lldb /usr/lib/lib/python3.9/site-packages/lldb \
+ && ln -s /usr/lib/llvm-16/lib/python3.9/site-packages/lldb /usr/lib/lib/python3.9/site-packages/lldb \
     #
     # apt cleanup
     #
@@ -216,8 +216,8 @@ ENV TZ=Europe/Paris \
     LANG=en_US.UTF-8 \
     CC=/usr/local/bin/clang \
     CXX=/usr/local/bin/clang++ \
-    CXXFLAGS=-stdlib=libc++ \
-    LDFLAGS=-lc++ -lc++abi
+    CXXFLAGS="-stdlib=libc++" \
+    LDFLAGS="-lc++ -lc++abi"
 
 
 # add & set labsim user
@@ -287,7 +287,7 @@ COPY --chown=labsim:labsim distro/docker/labsim.code-workspace .
 FROM labsim-base-llvm-bullseye as labsim-devcontainer-llvm-bullseye
 
 # prettifyng
-LABEL description="LABSIM devcontainer distro - Linux Debian 11 & LLVM 15.0.7" \
+LABEL description="LABSIM devcontainer distro - Linux Debian 11 & LLVM 16.0.3" \
       maintainer="nawfel.kinani@onera.fr" \
       version="2.0.0" \
       org.name="ONERA" \
