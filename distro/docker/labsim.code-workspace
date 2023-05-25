@@ -28,6 +28,10 @@
 		{
 			"name": "OURANOS",
 			"path": "./titans/OURANOS"
+		},
+		{
+			"name": "ZEUS",
+			"path": "./olympiens/ZEUS"
 		}
 	],
 
