@@ -87,10 +87,6 @@ ENV TZ=Europe/Paris \
 
 # add & set labsim user
 RUN useradd --create-home --user-group --shell /bin/bash --no-log-init labsim 
-USER labsim
-
-# check/install cpanm by default (sudoer...)
-RUN sh -C 'if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - --sudo App::cpanminus; fi'
 
 
 ####################################
@@ -210,8 +206,8 @@ RUN apt-get --quiet update \
     # then, setup locale
     #
  && locale-gen en_US.UTF-8 \
- && localedef -i en_US -f UTF-8 en_US.UTF-8
-
+ && localedef -i en_US -f UTF-8 en_US.UTF-8 
+ 
 # timezone & env locales
 ENV TZ=Europe/Paris \
     LANGUAGE=en_US:en \
@@ -221,13 +217,9 @@ ENV TZ=Europe/Paris \
     CXX=/usr/local/bin/clang++ \
     CXXFLAGS="-stdlib=libc++" \
     LDFLAGS="-lc++ -lc++abi"
-    
+
 # add & set labsim user
 RUN useradd --create-home --user-group --shell /bin/bash --no-log-init labsim 
-USER labsim
-
-# check/install cpanm by default (sudoer...)
-RUN sh -C 'if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - --sudo App::cpanminus; fi'
 
 
 ####################################
@@ -253,6 +245,9 @@ LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 13.1.0
       org.center="Salon-de-Provence" \
       license="GNU GPLv3"
 
+# set user ID
+USER labsim
+
 # setup LABSIM Simulation Software Ecosysten : create dir, clone sources from github, then integrate gaia features & VSCode workspace
 WORKDIR /home/labsim/dev
 
@@ -260,17 +255,26 @@ WORKDIR /home/labsim/dev
 ARG GAIA_TARGET_ECOSYSTEM="2.0.0" \
     GAIA_ENABLE_FEATURE="dev,sb,sf"
 
+# RUN sh -c 'if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - App::cpanminus; fi'
+
 #
-# mount secrets, clone LABSIM repositories & bootstrap GAIA
+# mount build secrets
 #
 RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
     --mount=type=secret,mode=0444,id=GITHUB_TOKEN,required=true \
-    git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git titans/GAIA \
- && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OURANOS.git titans/OURANOS \
+    #
+    # clone LABSIM repositories
+    #
+    git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git titans/GAIA \
+ && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OURANOS.git titans/OURANOS \
  && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/THETYS.git titans/THETYS \
- && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OCEAN.git titans/OCEAN \
- && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/RHEA.git titans/RHEA \
- && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git titans/KRONOS \
+ && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OCEAN.git titans/OCEAN \
+ && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/RHEA.git titans/RHEA \
+ && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git titans/KRONOS \
+ && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/ZEUS.git olympiens/ZEUS \
+    #
+    # finally, bootstrap GAIA
+    #
  && cd titans/GAIA \
  && chmod +x bootstrap-gaia.sh \
  && ./bootstrap-gaia.sh --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
@@ -302,6 +306,9 @@ LABEL description="LABSIM devcontainer distro - Linux Debian 11 & LLVM 16.0.3" \
       org.center="Salon-de-Provence" \
       license="GNU GPLv3"
 
+# set user ID
+USER labsim
+
 # setup LABSIM Simulation Software Ecosysten : create dir, clone sources from github, then integrate gaia features & VSCode workspace
 WORKDIR /home/labsim/dev
 
@@ -310,16 +317,23 @@ ARG GAIA_TARGET_ECOSYSTEM="2.0.0" \
     GAIA_ENABLE_FEATURE="dev,sb,sf"
 
 #
-# mount secrets, clone LABSIM repositories & bootstrap GAIA
+# mount build secrets
 #
 RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
     --mount=type=secret,mode=0444,id=GITHUB_TOKEN,required=true \
-    git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git titans/GAIA \
- && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OURANOS.git titans/OURANOS \
+    #
+    # clone LABSIM repositories
+    #
+    git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git titans/GAIA \
+ && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OURANOS.git titans/OURANOS \
  && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/THETYS.git titans/THETYS \
- && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OCEAN.git titans/OCEAN \
- && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/RHEA.git titans/RHEA \
- && git clone https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git titans/KRONOS \
+ && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OCEAN.git titans/OCEAN \
+ && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/RHEA.git titans/RHEA \
+ && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git titans/KRONOS \
+ && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/ZEUS.git olympiens/ZEUS \
+    #
+    # finally, bootstrap GAIA
+    #
  && cd titans/GAIA \
  && chmod +x bootstrap-gaia.sh \
  && ./bootstrap-gaia.sh --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
