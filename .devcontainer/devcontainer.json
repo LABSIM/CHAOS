@@ -1,25 +1,8 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json 
 {
 	"name": "LABSIM devcontainer distro - Linux & LLVM",
-	"image": "labsim-devcontainer-llvm:2.0.0",
+	"image": "labsim-devcontainer-llvm-bullseye:2.0.0",
 	"remoteUser": "labsim",
-	"context": "..",
-	"settings": {
-		"terminal.integrated.profiles.linux": {
-			"interactive standard shell (login)": {
-				"path": "/bin/bash",
-				"args": [ 
-					"-l", 
-					"-i" 
-				]
-			}
-		},
-		"terminal.integrated.defaultProfile.linux": "interactive standard shell (login)",
-		"terminal.integrated.inheritEnv": true,
-		"terminal.integrated.detectLocale": "auto",
-		"terminal.integrated.copyOnSelection": true,
-		"terminal.integrated.cwd": "/home/labsim/dev"
-	},
 	"runArgs": [ 
 		"-it",
 		"--cap-add=SYS_PTRACE",
@@ -28,16 +11,33 @@
 	],
 	"workspaceFolder": "/home/labsim/dev",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/home/labsim/dev/titans/CHAOS,type=bind,consistency=cached",
-	"extensions": [
-		"ms-vscode.cpptools",
-		"ms-vscode.cmake-tools",
-		"twxs.cmake",
-		"davidanson.vscode-markdownlint",
-		"davidwang.ini-for-vscode",
-		"jeff-hykin.better-shellscript-syntax",
-		"d9705996.perl-toolbox",
-		"redhat.vscode-yaml",
-		"eamodio.gitlens",
-		"github.vscode-pull-request-github"
-	]
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.profiles.linux": {
+					"labsim-dev": {
+						"path": [ "/usr/bin/env bash", "/bin/bash" ],
+						"args": [ "-l", "-i" ]
+					}
+				},
+				"terminal.integrated.defaultProfile.linux": "bash",
+				"terminal.integrated.inheritEnv": true,
+				"terminal.integrated.detectLocale": "auto",
+				"terminal.integrated.copyOnSelection": true,
+				"terminal.integrated.cwd": "~/dev"
+			},
+			"extensions": [
+				"ms-vscode.cpptools",
+				"ms-vscode.cmake-tools",
+				"twxs.cmake",
+				"davidanson.vscode-markdownlint",
+				"davidwang.ini-for-vscode",
+				"jeff-hykin.better-shellscript-syntax",
+				"d9705996.perl-toolbox",
+				"redhat.vscode-yaml",
+				"eamodio.gitlens",
+				"github.vscode-pull-request-github"
+			]
+		}
+	}
 }

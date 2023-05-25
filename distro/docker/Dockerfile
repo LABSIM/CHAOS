@@ -276,8 +276,8 @@ RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
     # finally, bootstrap GAIA
     #
  && cd titans/GAIA \
- && chmod +x bootstrap-gaia.sh \
- && ./bootstrap-gaia.sh --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+ && chmod +x GAIA-bootstrap \
+ && ./GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
  
 # inject the LABSIM SSE VSCode workspace
 COPY --chown=labsim:labsim distro/docker/labsim.code-workspace .
@@ -335,8 +335,8 @@ RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
     # finally, bootstrap GAIA
     #
  && cd titans/GAIA \
- && chmod +x bootstrap-gaia.sh \
- && ./bootstrap-gaia.sh --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+ && chmod +x GAIA-bootstrap \
+ && ./GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
  
 # inject the LABSIM SSE VSCode workspace
 COPY --chown=labsim:labsim distro/docker/labsim.code-workspace .
