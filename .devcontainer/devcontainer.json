@@ -1,5 +1,6 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json 
 {
+	
 	"name": "LABSIM devcontainer distro - Linux & LLVM",
 	"image": "labsim-devcontainer-llvm-bullseye:2.0.0",
 	"remoteUser": "labsim",
@@ -11,9 +12,48 @@
 	],
 	"workspaceFolder": "/home/labsim/dev",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/home/labsim/dev/titans/CHAOS,type=bind,consistency=cached",
+
 	"customizations": {
+	
 		"vscode": {
+
 			"settings": {
+				
+				//
+				// for further explanation
+				// see [ https://gist.github.com/hyperupcall/99e355405611be6c4e0a38b6e3e8aad0 ]
+				//
+
+				// Disable sending telemetry
+				"clangd.checkUpdates": false, // Clangd
+				"code-runner.enableAppInsights": false, // Code Runner
+				"docker-explorer.enableTelemetry": false, // Docker
+				"extensions.ignoreRecommendations": true, // VSCode Core
+				"julia.enableTelemetry": false, // Julia
+				"Lua.telemetry.enable": false, // Lua
+				"pros.useGoogleAnalytics": false, // PROS
+				"redhat.telemetry.enabled": false, // Red Hat
+				"rpcServer.showStartupMessage": false, // VSCode Remote Development
+				"sonarlint.disableTelemetry": true, // SonarLint
+				//"telemetry.enableCrashReporter": false, // VSCode Core [[depreciated]]
+				"telemetry.enableTelemetry": false, // VSCode Core
+				"telemetry.telemetryLevel": "off", // VSCode Core
+				"terraform.telemetry.enabled": false, // HashiCorp Terraform
+
+				// Disable showing release notes
+				"gitlens.showWhatsNewAfterUpgrades": false, // GitLens
+				"java.help.showReleaseNotes": false, // Language Support for Java
+				"update.showReleaseNotes": false, // VSCode Core
+
+				// Disable showing welcome pages / walkthroughs
+				"gitlens.showWelcomeOnInstall": false, // GitLens
+				"kite.showWelcomeNotificationOnStartup": false, // Kite
+				"material-icon-theme.showWelcomeMessage": false, // Material Icon Theme
+				"pros.showWelcomeOnStartup": false, // PROS
+				"vsicons.dontShowNewVersionMessage": true, // VSCode Icons
+				"workbench.welcomePage.walkthroughs.openOnInstall": false, // VSCode Core
+
+				//
 				"terminal.integrated.profiles.linux": {
 					"labsim-dev": {
 						"path": [ "/usr/bin/env bash", "/bin/bash" ],
@@ -25,8 +65,11 @@
 				"terminal.integrated.detectLocale": "auto",
 				"terminal.integrated.copyOnSelection": true,
 				"terminal.integrated.cwd": "~/dev"
-			},
+				
+			}, /* settings */
+
 			"extensions": [
+
 				"ms-vscode.cpptools",
 				"ms-vscode.cmake-tools",
 				"twxs.cmake",
@@ -37,7 +80,11 @@
 				"redhat.vscode-yaml",
 				"eamodio.gitlens",
 				"github.vscode-pull-request-github"
-			]
-		}
-	}
+
+			] /* extensions */
+
+		} /* vscode */
+
+	} /* customizations */
+
 }
