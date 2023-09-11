@@ -10,14 +10,14 @@
 #  -> buildpack-deps:bookworm-curl #
 #   -> buildpack-deps:bookworm-scm #
 #    -> buildpack-deps:bookworm    #
-#     -> gcc:13.1.0-bookworm       #
+#     -> gcc:13.2.0-bookworm       #
 ####################################
 
 
-FROM gcc:13.1.0-bookworm as labsim-base-gcc-bookworm
+FROM gcc:13.2.0-bookworm as labsim-base-gcc-bookworm
 
 # prettifyng
-LABEL description="LABSIM base distro - Linux Debian 12 & GNU GCC 13.1.0" \
+LABEL description="LABSIM base distro - Linux Debian 12 & GNU GCC 13.2.0" \
       maintainer="nawfel.kinani@onera.fr" \
       version="2.0.0" \
       org.name="ONERA" \
@@ -235,7 +235,7 @@ RUN useradd --create-home --user-group --shell /bin/bash --no-log-init labsim
 FROM labsim-base-gcc-bookworm as labsim-devcontainer-gcc-bookworm
 
 # prettifyng
-LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 13.1.0" \
+LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 13.2.0" \
       maintainer="nawfel.kinani@onera.fr" \
       version="2.0.0" \
       org.name="ONERA" \
