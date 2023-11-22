@@ -81,15 +81,16 @@ PS> Write-Output "your_super_secret_github_token" | Out-File -append -encoding A
 then, lauch the docker buildx process for our container `<chaos-target>:<chaos-version>`
 
 ```console
-[user@hostname]$ docker buildx build --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/labsim/docker/Dockerfile --target <chaos-target> --tag <chaos-target>:<chaos-version> .
+[user@hostname]$ docker buildx build --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/<chaos-section>/docker/Dockerfile --target <chaos-target> --tag <chaos-target>:<chaos-version> .
 ```
 
 > by convention, we advise :
 >
+> - `<chaos-section>` == CHAOS high-level section name containing multiple target
 > - `<chaos-target>` == CHAOS build target name
 > - `<chaos-version>` == CHAOS build version, **a good rule of thumbs should be that it matched the intended GAIA Simulation Software Ecosystem (SSE) version**, see `<gaia-sse-version>` under
 >
-> available `<chaos-target>` :
+> available `<chaos-target>` for each `<chaos-section>` :
 >
 > 1. [LABSIM](distro/labsim/docker/Dockerfile) :
 >    - **labsim-base-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
