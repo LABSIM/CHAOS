@@ -45,7 +45,7 @@ Directly jump to corresponding sub-section:
 simply clone CHAOS sources into your local dev directory :
 
 ```console
-[user@localhost]$ git -C /your/local/dev/directory clone https://github.com/LABSIM/CHAOS.git
+[user@hostname]$ git -C /your/local/dev/directory clone https://github.com/LABSIM/CHAOS.git
 ```
 
 ### 2. Prepare the builder driver
@@ -53,7 +53,7 @@ simply clone CHAOS sources into your local dev directory :
 the build log may be too heavy for the default builder driver so, if recquired, run the following command to increase the log builder setting :
 
 ```console
-[user@localhost]$ docker buildx create --driver docker-container --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=1000000000 --bootstrap --use
+[user@hostname]$ docker buildx create --driver docker-container --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=1000000000 --bootstrap --use
 ```
 
 ### 3. Build the container
@@ -61,27 +61,27 @@ the build log may be too heavy for the default builder driver so, if recquired, 
 first of all, dir into your freshly cloned CHAOS root :
   
 ```console
-[user@localhost]$ cd /your/local/dev/directory/CHAOS/
+[user@hostname]$ cd /your/local/dev/directory/CHAOS/
 ```
 
 export secret info to enable 2FA access for git + container ! For further informations, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
 
-```PowerShell
-PS> Write-Output "your_super_secret_github_username" | Out-File -append -encoding ASCII "C:/your/local/secret/path/github_username.txt"
-PS> Write-Output "your_super_secret_github_token" | Out-File -append -encoding ASCII "C:/your/local/secret/path/github_token.txt"
+```console
+[user@hostname]$ echo 'your_super_secret_github_username' > /your/local/secret/path/github_username.txt
+[user@hostname]$ echo 'your_super_secret_github_token' > /your/local/secret/path/github_token.txt
 ```
 
-or
+or... 
 
-```console
-[user@localhost]$ echo 'your_super_secret_github_username' > /your/local/secret/path/github_username.txt
-[user@localhost]$ echo 'your_super_secret_github_token' > /your/local/secret/path/github_token.txt
+```PowerShell
+PS> Write-Output "your_super_secret_github_username" | Out-File -append -encoding ASCII "C:\your\local\secret\path\github_username.txt"
+PS> Write-Output "your_super_secret_github_token" | Out-File -append -encoding ASCII "C:\your\local\secret\path\github_token.txt"
 ```
 
 then, lauch the docker buildx process for our container `<chaos-target>:<chaos-version>`
 
 ```console
-[user@localhost]$ docker buildx build --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/docker/Dockerfile --target <chaos-target> --tag <chaos-target>:<chaos-version> .
+[user@hostname]$ docker buildx build --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/labsim/docker/Dockerfile --target <chaos-target> --tag <chaos-target>:<chaos-version> .
 ```
 
 > by convention, we advise :
@@ -91,10 +91,14 @@ then, lauch the docker buildx process for our container `<chaos-target>:<chaos-v
 >
 > available `<chaos-target>` :
 >
-> - **labsim-base-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
-> - **labsim-devcontainer-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
-> - **labsim-base-llvm-bullseye** : a Debian Bullseye Linux distro with a LLVM compiler environment whithout SSE
-> - **labsim-devcontainer-llvm-bullseye** : a Debian Bullseye Linux distro with a LLVM compiler environment shipped with the desired SSE
+> 1. [LABSIM](distro/labsim/docker/Dockerfile) :
+>    - **labsim-base-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
+>    - **labsim-devcontainer-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
+>    - **labsim-base-llvm-bullseye** : a Debian Bullseye Linux distro with a LLVM compiler environment whithout SSE
+>    - **labsim-devcontainer-llvm-bullseye** : a Debian Bullseye Linux distro with a LLVM compiler environment shipped with the desired SSE
+> 2. [SCHEME-GATEWAY](distro/scheme-gateway/docker/Dockerfile) :
+>    - **scheme-gateway-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
+>    - **scheme-gateway-devcontainer-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
 >
 > actually, the default GAIA SSE is configured to be the v.[2.0.0](https://github.com/LABSIM/GAIA/tree/master/ecosystem/2.0.0) with features `dev,sf,sb`, but they can be configured through theses _additionnal_ args :
 >
@@ -110,19 +114,19 @@ then, lauch the docker buildx process for our container `<chaos-target>:<chaos-v
 so now you should have a `<chaos-target>:<chaos-version>` container loaded into your local registry & ready to run ! Launch it with the following :
 
 ```console
-[user@localhost]$ docker run --rm -it <chaos-target>:<chaos-version>
+[user@hostname]$ docker run --rm -it <chaos-target>:<chaos-version>
 ```
 
 & check the GAIA configuration, if any, with :
 
 ```console
-[labsim@<chaos-target>:<chaos-version>]$ gaia
+[user@hostname]$ gaia
 ```
 
 don't forget to exit our running container :
 
 ```console
-[labsim@<chaos-target>:<chaos-version>]$ exit
+[user@hostname]$ exit
 ```
 
 ### 4. Configure your preferred IDE

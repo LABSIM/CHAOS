@@ -340,4 +340,3 @@ RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
  
 # inject the LABSIM SSE VSCode workspace
 COPY --chown=labsim:labsim distro/docker/labsim.code-workspace .
-
