@@ -1,0 +1,62 @@
+# syntax = docker/dockerfile:1.4.3
+
+
+#####################################
+#                                   #
+# LABSIM-DEVCONTAINER-LLVM-BOOKWORM #
+#                                   #
+# ================================= #
+# -> labsim-base-llvm-bookworm      #
+#####################################
+
+
+# multi stage build
+FROM labsim-base-llvm-bookworm as labsim-devcontainer-llvm-bookworm
+
+# prettifyng
+LABEL description="LABSIM devcontainer distro - Linux Debian 12 & LLVM 19.1.0" \
+      maintainer="nawfel.kinani@onera.fr" \
+      version="2.0.0" \
+      org.name="ONERA" \
+      org.department="DTIS" \
+      org.unit="ICNA" \
+      org.laboratory="LABSIM" \
+      org.center="Salon-de-Provence" \
+      license="GNU GPLv3"
+
+# set user ID
+USER labsim
+
+# setup LABSIM Simulation Software Ecosysten : create dir, clone sources from github, then integrate gaia features & VSCode workspace
+WORKDIR /home/labsim/dev
+
+# mandatory GAIA argument
+ARG GAIA_TARGET_ECOSYSTEM="2.0.0" 
+ARG GAIA_ENABLE_FEATURE="dev,sb,sf"
+
+# RUN sh -c 'if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - App::cpanminus; fi'
+
+#
+# mount build secrets
+#
+# RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
+#     --mount=type=secret,mode=0444,id=GITHUB_TOKEN,required=true \
+#     #
+#     # clone LABSIM repositories
+#     #
+#     git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git titans/GAIA \
+#  && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OURANOS.git titans/OURANOS \
+#  && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/THETYS.git titans/THETYS \
+#  && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OCEAN.git titans/OCEAN \
+#  && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/RHEA.git titans/RHEA \
+#  && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git titans/KRONOS \
+#  && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/ZEUS.git olympiens/ZEUS \
+#     #
+#     # finally, bootstrap GAIA
+#     #
+#  && cd titans/GAIA \
+#  && chmod +x GAIA-bootstrap \
+#  && ./GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+ 
+# inject the LABSIM SSE VSCode workspace
+COPY --chown=labsim:labsim distro/labsim/oci/labsim.code-workspace .

@@ -14,21 +14,24 @@ Directly jump to corresponding main section:
 
 - Windows: **>= 10 (with build >= 19041)**
   - [Git](https://git-scm.com/)
-  - [WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install)
-  - [Docker Desktop](https://www.docker.com/products/docker-desktop)
-  - [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
-  - [Docker WSL2 Backend](https://docs.docker.com/desktop/windows/wsl/)
+  - enable [WSL2](https://docs.microsoft.com/fr-fr/windows/wsl/install) feature
+  - Container engine : **at least one**
+    - [Docker Desktop](https://www.docker.com/products/docker-desktop) + [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds) + activate the [WSL2 Backend](https://docs.docker.com/desktop/windows/wsl/) for Docker Desktop
+    - _(preferred)_ [Podman](https://podman.io/) Engine(CLI) or Desktop
   - IDE: **at least one**
     - [VisualStudio Code](https://code.visualstudio.com/)
 
 - Ubuntu Linux: **every LTS >= 18.04**
   - [Git](https://git-scm.com/)
-  - [DockerCE/EE](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
-  - [MicroK8s](https://ubuntu.com/kubernetes/install#single-node) _(Kubernetes for Ubuntu)_
-  - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management) _(Kubernetes CLI)_
-  - [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
+  - Container engine : **at least one**
+    - [DockerCE/EE](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository) + [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
+    - _(preferred)_ [Podman](https://podman.io/) Engine(CLI) or Desktop
   - IDE: **at least one**
     - [VisualStudio Code](https://code.visualstudio.com/)
+  - _(optional)_ [MicroK8s](https://ubuntu.com/kubernetes/install#single-node) : Kubernetes for Ubuntu
+  - _(optional)_ [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management) : Kubernetes CLI
+
+> see [here](https://github.com/containers) or [there](https://opencontainers.org/) for more info about the Open Containers Initiative (OCI).
 
 ## Quick start
 
@@ -49,6 +52,8 @@ simply clone CHAOS sources into your local dev directory :
 ```
 
 ### 2. Prepare the builder driver
+
+> **ONLY** for the docker stack
 
 the build log may be too heavy for the default builder driver so, if recquired, run the following command to increase the log builder setting :
 
@@ -80,8 +85,17 @@ PS> Write-Output "your_super_secret_github_token" | Out-File -append -encoding A
 
 then, lauch the docker buildx process for our container `<chaos-target>:<chaos-version>`
 
+1. Docker stack :
+
 ```console
 [user@hostname]$ docker buildx build --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/<chaos-section>/docker/Dockerfile --target <chaos-target> --tag <chaos-target>:<chaos-version> .
+```
+
+2. Podman stack:
+
+
+```console
+[user@hostname]$ podman build --format oci --isolation rootless --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/<chaos-section>/oci/<chaos-target>/Containerfile --tag <chaos-target>:<chaos-version> .
 ```
 
 > by convention, we advise :
@@ -95,8 +109,8 @@ then, lauch the docker buildx process for our container `<chaos-target>:<chaos-v
 > 1. [LABSIM](distro/labsim/docker/Dockerfile) :
 >    - **labsim-base-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
 >    - **labsim-devcontainer-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
->    - **labsim-base-llvm-bullseye** : a Debian Bullseye Linux distro with a LLVM compiler environment whithout SSE
->    - **labsim-devcontainer-llvm-bullseye** : a Debian Bullseye Linux distro with a LLVM compiler environment shipped with the desired SSE
+>    - **labsim-base-llvm-bookworm** : a Debian Bookworm Linux distro with a LLVM compiler environment whithout SSE
+>    - **labsim-devcontainer-llvm-bookworm** : a Debian Bookworm Linux distro with a LLVM compiler environment shipped with the desired SSE
 > 2. [SCHEME-GATEWAY](distro/scheme-gateway/docker/Dockerfile) :
 >    - **scheme-gateway-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
 >    - **scheme-gateway-devcontainer-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
@@ -114,8 +128,17 @@ then, lauch the docker buildx process for our container `<chaos-target>:<chaos-v
 
 so now you should have a `<chaos-target>:<chaos-version>` container loaded into your local registry & ready to run ! Launch it with the following :
 
+1. Docker stack :
+
 ```console
 [user@hostname]$ docker run --rm -it <chaos-target>:<chaos-version>
+```
+
+2. Podman stack:
+
+
+```console
+[user@hostname]$ podman run --rm -it <chaos-target>:<chaos-version>
 ```
 
 & check the GAIA configuration, if any, with :
