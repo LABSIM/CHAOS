@@ -24,8 +24,13 @@ LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 14.1.0
       org.center="Salon-de-Provence" \
       license="GNU GPLv3"
 
-# set user ID
-USER labsim
+# RUN sh -c 'if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - App::cpanminus; fi'
+
+RUN \
+    #
+    # add labsim user
+    #
+    useradd --create-home --user-group --shell /bin/bash --no-log-init labsim
 
 # setup LABSIM Simulation Software Ecosysten : create dir, clone sources from github, then integrate gaia features & VSCode workspace
 WORKDIR /home/labsim/dev
@@ -33,8 +38,6 @@ WORKDIR /home/labsim/dev
 # mandatory GAIA argument
 ARG GAIA_TARGET_ECOSYSTEM="2.0.0"
 ARG GAIA_ENABLE_FEATURE="dev,sb,sf"
-
-# RUN sh -c 'if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - App::cpanminus; fi'
 
 #
 # mount build secrets
@@ -50,7 +53,7 @@ RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
  && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OCEAN.git titans/OCEAN \
  && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/RHEA.git titans/RHEA \
  && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git titans/KRONOS \
- && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/ZEUS.git olympiens/ZEUS \
+#  && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/ZEUS.git olympiens/ZEUS \
     #
     # finally, bootstrap GAIA
     #
@@ -60,3 +63,11 @@ RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
  
 # inject the LABSIM SSE VSCode workspace
 COPY --chown=labsim:labsim distro/labsim/docker/labsim.code-workspace .
+
+# give all access to labsim:labsim
+RUN \
+    chown -R labsim /home/labsim \
+ && chgrp -R labsim /home/labsim
+
+# set default userID
+USER labsim:labsim 
