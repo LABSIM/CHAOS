@@ -115,7 +115,7 @@ then, lauch the docker buildx process for our container `<chaos-target>:<chaos-v
 >    - **scheme-gateway-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
 >    - **scheme-gateway-devcontainer-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
 >
-> actually, the default GAIA SSE is configured to be the v.[2.0.0](https://github.com/LABSIM/GAIA/tree/master/ecosystem/2.0.0) with features `dev,sf,sb`, but they can be configured through theses _additionnal_ args :
+> actually, the default GAIA SSE is configured to be the v.[2.0.1](https://github.com/LABSIM/GAIA/tree/master/ecosystem/2.0.1) with features `dev,sf,sb`, but they can be configured through theses _additionnal_ args :
 >
 > ```console
 > --build-arg GAIA_TARGET_ECOSYSTEM=<gaia-sse-version>

@@ -18,7 +18,7 @@ FROM labsim-base-gcc-bookworm as labsim-devcontainer-gcc-bookworm
 # prettifyng
 LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 14.1.0" \
       maintainer="nawfel.kinani@onera.fr" \
-      version="2.0.0" \
+      version="2.0.1" \
       org.name="ONERA" \
       org.department="DTIS" \
       org.unit="ICNA" \
@@ -29,7 +29,7 @@ LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 14.1.0
 #
 # mandatory argument : GAIA + user
 #
-ARG GAIA_TARGET_ECOSYSTEM="2.0.0"
+ARG GAIA_TARGET_ECOSYSTEM="2.0.1"
 ARG GAIA_ENABLE_FEATURE="dev,sb,sf"
 ARG USERNAME=labsim
 ARG USER_UID=1000
@@ -59,8 +59,8 @@ RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
     # finally, bootstrap GAIA
     #
  && cd titans/GAIA \
- && chmod +x GAIA-bootstrap
-#  && ./GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+ && chmod +x GAIA-bootstrap \
+ && ./GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
 
 #
 # inject the LABSIM SSE VSCode workspace

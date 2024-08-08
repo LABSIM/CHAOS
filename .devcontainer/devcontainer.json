@@ -2,7 +2,7 @@
 {
 	
 	"name": "LABSIM devcontainer distro - Linux & LLVM",
-	"image": "labsim-devcontainer-llvm-bookworm:3.0.0",
+	"image": "labsim-devcontainer-llvm-bookworm:2.0.1",
 	"remoteUser": "labsim",
 	"userEnvProbe": "loginInteractiveShell",
 	"capAdd": [ "SYS_PTRACE", "SYS_ADMIN" ],
