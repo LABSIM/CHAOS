@@ -2,15 +2,15 @@
 {
 	
 	"name": "LABSIM devcontainer distro - Linux & LLVM",
-	"image": "labsim-devcontainer-llvm-bullseye:2.0.0",
+	"image": "labsim-devcontainer-llvm-bookworm:3.0.0",
 	"remoteUser": "labsim",
 	"userEnvProbe": "loginInteractiveShell",
-	"capAdd": [ "SYS_PTRACE" ],
-	"securityOpt": [ "seccomp=unconfined" ],
+	"capAdd": [ "SYS_PTRACE", "SYS_ADMIN" ],
+	"securityOpt": [ "seccomp=unconfined", "apparmor=unconfined", "label=disable" ],
 	"workspaceFolder": "/home/labsim/dev",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/home/labsim/dev/titans/CHAOS,type=bind,consistency=cached",
 
-	"customizations": {
+	"customizations": { 
 	
 		"vscode": {
 

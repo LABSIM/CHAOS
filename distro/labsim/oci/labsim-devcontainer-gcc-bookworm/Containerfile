@@ -13,6 +13,8 @@
 # multi stage build
 FROM labsim-base-gcc-bookworm as labsim-devcontainer-gcc-bookworm
 
+# RUN sh -c 'if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - App::cpanminus; fi'
+
 # prettifyng
 LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 14.1.0" \
       maintainer="nawfel.kinani@onera.fr" \
@@ -24,20 +26,19 @@ LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 14.1.0
       org.center="Salon-de-Provence" \
       license="GNU GPLv3"
 
-# RUN sh -c 'if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - App::cpanminus; fi'
-
-RUN \
-    #
-    # add labsim user
-    #
-    useradd --create-home --user-group --shell /bin/bash --no-log-init labsim
-
-# setup LABSIM Simulation Software Ecosysten : create dir, clone sources from github, then integrate gaia features & VSCode workspace
-WORKDIR /home/labsim/dev
-
-# mandatory GAIA argument
+#
+# mandatory argument : GAIA + user
+#
 ARG GAIA_TARGET_ECOSYSTEM="2.0.0"
 ARG GAIA_ENABLE_FEATURE="dev,sb,sf"
+ARG USERNAME=labsim
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+#
+# setup LABSIM Simulation Software Ecosysten : create dir, clone sources from github, then integrate gaia features & VSCode workspace
+#
+WORKDIR /home/$USERNAME/dev
 
 #
 # mount build secrets
@@ -58,16 +59,35 @@ RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
     # finally, bootstrap GAIA
     #
  && cd titans/GAIA \
- && chmod +x GAIA-bootstrap \
- && ./GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
- 
+ && chmod +x GAIA-bootstrap
+#  && ./GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+
+#
 # inject the LABSIM SSE VSCode workspace
-COPY --chown=labsim:labsim distro/labsim/docker/labsim.code-workspace .
+#
+COPY distro/labsim/docker/labsim.code-workspace .
 
-# give all access to labsim:labsim
+#
+# Create the labsim dev user
+#
+RUN groupadd --gid $USER_GID $USERNAME \
+   && useradd --uid $USER_UID --gid $USER_GID --create-home --shell /bin/bash --no-log-init $USERNAME \
+   #
+   # Add sudo support (Omit if you don't need to install software after connecting.)
+   #
+   && apt-get update \
+   && apt-get install -y sudo \
+   && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+   && chmod 0440 /etc/sudoers.d/$USERNAME
+
+#
+# give all access to labsim
+#
 RUN \
-    chown -R labsim /home/labsim \
- && chgrp -R labsim /home/labsim
+    chown -R $USERNAME /home/$USERNAME \
+ && chgrp -R $USERNAME /home/$USERNAME
 
-# set default userID
-USER labsim:labsim 
+#
+# Set the default user (Omit if you want to keep the default as root.)
+#
+USER $USERNAME

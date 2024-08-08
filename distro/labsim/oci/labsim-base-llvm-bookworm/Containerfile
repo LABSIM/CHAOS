@@ -25,13 +25,11 @@ LABEL description="LABSIM base distro - Linux Debian 12 & LLVM 19.1.0" \
       org.center="Salon-de-Provence" \
       license="GNU GPLv3"
 
+#
 # avoid warnings by switching to noninteractive during build 
 # --> ARG because it is not persisted in the final image vs. ENV
+#
 ARG DEBIAN_FRONTEND=noninteractive
-
-#
-# LLVM version 
-#
 ARG LLVM_VERSION=19
 
 #
@@ -166,11 +164,6 @@ RUN \
     #
  && locale-gen en_US.UTF-8 \
  && localedef -i en_US -f UTF-8 en_US.UTF-8
-#     #
-#     # let systemd start for a user enable lingering
-#     # - see [https://www.freedesktop.org/software/systemd/man/latest/loginctl.html]
-#     #
-#  && loginctl enable-linger labsim
  
 # timezone & env locales
 ENV TZ=Europe/Paris \

@@ -27,7 +27,7 @@ Directly jump to corresponding main section:
     - [DockerCE/EE](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository) + [BuildKit](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds)
     - _(preferred)_ [Podman](https://podman.io/) Engine(CLI) or Desktop
   - IDE: **at least one**
-    - [VisualStudio Code](https://code.visualstudio.com/)
+    - [VisualStudio Code](https://code.visualstudio.com/) + specific [Podman's IDE configuration](https://blog.while-true-do.io/podman-configure-vscode-for-containers/)
   - _(optional)_ [MicroK8s](https://ubuntu.com/kubernetes/install#single-node) : Kubernetes for Ubuntu
   - _(optional)_ [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management) : Kubernetes CLI
 
