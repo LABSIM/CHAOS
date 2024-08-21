@@ -5,8 +5,19 @@
 	"image": "labsim-devcontainer-llvm-bookworm:2.0.1",
 	"remoteUser": "labsim",
 	"userEnvProbe": "loginInteractiveShell",
-	"capAdd": [ "SYS_PTRACE", "SYS_ADMIN" ],
-	"securityOpt": [ "seccomp=unconfined", "apparmor=unconfined", "label=disable" ],
+	"capAdd": [ 
+
+		"SYS_PTRACE", 
+		"SYS_ADMIN" 
+
+	],
+	"securityOpt": [ 
+
+		"seccomp=unconfined", 
+		"apparmor=unconfined", 
+		"label=disable" 
+		
+	],
 	"workspaceFolder": "/home/labsim/dev",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/home/labsim/dev/titans/CHAOS,type=bind,consistency=cached",
 
@@ -14,55 +25,55 @@
 	
 		"vscode": {
 
-			"settings": {
+			// "settings": {
 				
-				//
-				// for further explanation
-				// see [ https://gist.github.com/hyperupcall/99e355405611be6c4e0a38b6e3e8aad0 ]
-				//
+			// 	//
+			// 	// for further explanation
+			// 	// see [ https://gist.github.com/hyperupcall/99e355405611be6c4e0a38b6e3e8aad0 ]
+			// 	//
 
-				// Disable sending telemetry
-				"clangd.checkUpdates": false, // Clangd
-				"code-runner.enableAppInsights": false, // Code Runner
-				"docker-explorer.enableTelemetry": false, // Docker
-				"extensions.ignoreRecommendations": true, // VSCode Core
-				"julia.enableTelemetry": false, // Julia
-				"Lua.telemetry.enable": false, // Lua
-				"pros.useGoogleAnalytics": false, // PROS
-				"redhat.telemetry.enabled": false, // Red Hat
-				"rpcServer.showStartupMessage": false, // VSCode Remote Development
-				"sonarlint.disableTelemetry": true, // SonarLint
-				//"telemetry.enableCrashReporter": false, // VSCode Core [[depreciated]]
-				"telemetry.enableTelemetry": false, // VSCode Core
-				"telemetry.telemetryLevel": "off", // VSCode Core
-				"terraform.telemetry.enabled": false, // HashiCorp Terraform
+			// 	// Disable sending telemetry
+			// 	"clangd.checkUpdates": false, // Clangd
+			// 	"code-runner.enableAppInsights": false, // Code Runner
+			// 	"docker-explorer.enableTelemetry": false, // Docker
+			// 	"extensions.ignoreRecommendations": true, // VSCode Core
+			// 	"julia.enableTelemetry": false, // Julia
+			// 	"Lua.telemetry.enable": false, // Lua
+			// 	"pros.useGoogleAnalytics": false, // PROS
+			// 	"redhat.telemetry.enabled": false, // Red Hat
+			// 	"rpcServer.showStartupMessage": false, // VSCode Remote Development
+			// 	"sonarlint.disableTelemetry": true, // SonarLint
+			// 	//"telemetry.enableCrashReporter": false, // VSCode Core [[depreciated]]
+			// 	"telemetry.enableTelemetry": false, // VSCode Core
+			// 	"telemetry.telemetryLevel": "off", // VSCode Core
+			// 	"terraform.telemetry.enabled": false, // HashiCorp Terraform
 
-				// Disable showing release notes
-				"gitlens.showWhatsNewAfterUpgrades": false, // GitLens
-				"java.help.showReleaseNotes": false, // Language Support for Java
-				"update.showReleaseNotes": false, // VSCode Core
+			// 	// Disable showing release notes
+			// 	"gitlens.showWhatsNewAfterUpgrades": false, // GitLens
+			// 	"java.help.showReleaseNotes": false, // Language Support for Java
+			// 	"update.showReleaseNotes": false, // VSCode Core
 
-				// Disable showing welcome pages / walkthroughs
-				"gitlens.showWelcomeOnInstall": false, // GitLens
-				"kite.showWelcomeNotificationOnStartup": false, // Kite
-				"material-icon-theme.showWelcomeMessage": false, // Material Icon Theme
-				"pros.showWelcomeOnStartup": false, // PROS
-				"vsicons.dontShowNewVersionMessage": true, // VSCode Icons
-				"workbench.welcomePage.walkthroughs.openOnInstall": false, // VSCode Core
+			// 	// Disable showing welcome pages / walkthroughs
+			// 	"gitlens.showWelcomeOnInstall": false, // GitLens
+			// 	"kite.showWelcomeNotificationOnStartup": false, // Kite
+			// 	"material-icon-theme.showWelcomeMessage": false, // Material Icon Theme
+			// 	"pros.showWelcomeOnStartup": false, // PROS
+			// 	"vsicons.dontShowNewVersionMessage": true, // VSCode Icons
+			// 	"workbench.welcomePage.walkthroughs.openOnInstall": false, // VSCode Core
 
-				"terminal.integrated.profiles.linux": {
-					"labsim-dev": {
-						"path": [ "/usr/bin/env bash", "/bin/bash" ],
-						"args": [ "-l", "-i" ]
-					}
-				},
-				"terminal.integrated.defaultProfile.linux": "bash",
-				"terminal.integrated.inheritEnv": true,
-				"terminal.integrated.detectLocale": "auto",
-				"terminal.integrated.copyOnSelection": true,
-				"terminal.integrated.cwd": "/home/labsim/dev"
+			// 	"terminal.integrated.profiles.linux": {
+			// 		"labsim-dev": {
+			// 			"path": [ "/usr/bin/env bash", "/bin/bash" ],
+			// 			"args": [ "-l", "-i" ]
+			// 		}
+			// 	},
+			// 	"terminal.integrated.defaultProfile.linux": "bash",
+			// 	"terminal.integrated.inheritEnv": true,
+			// 	"terminal.integrated.detectLocale": "auto",
+			// 	"terminal.integrated.copyOnSelection": true,
+			// 	"terminal.integrated.cwd": "/home/labsim/dev"
 				
-			}, /* settings */
+			// }, /* settings */
 
 			"extensions": [
 
