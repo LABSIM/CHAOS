@@ -9,7 +9,6 @@
 		{ "name": "OCEAN",   "path": "./titans/OCEAN"   },
 		{ "name": "GAIA",    "path": "./titans/GAIA"    },
 		{ "name": "OURANOS", "path": "./titans/OURANOS" }
-		// { "name": "ZEUS",    "path": "./olympiens/ZEUS" }
 
 	], /* folders */
 
