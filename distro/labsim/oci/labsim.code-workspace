@@ -50,4 +50,25 @@
 
 	}, /* settings */
 
+	"extensions": {
+		
+		"recommendations": [
+
+			"ms-vscode.cpptools",
+			"ms-vscode.cmake-tools",
+			"redhat.vscode-xml",
+			"redhat.vscode-yaml",
+			"github.vscode-pull-request-github",
+			"vadimcn.vscode-lldb",
+			"twxs.cmake",
+			"davidanson.vscode-markdownlint",
+			"davidwang.ini-for-vscode",
+			"jeff-hykin.better-shellscript-syntax",
+			"d9705996.perl-toolbox",
+			"eamodio.gitlens"
+
+		] /* recommendations */
+		
+	} /* extensions */
+
 }

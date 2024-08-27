@@ -3,23 +3,28 @@
 	
 	"name": "LABSIM devcontainer distro - Linux & LLVM",
 	"image": "labsim-devcontainer-llvm-bookworm:2.0.1",
+	
+	"containerUser": "labsim",
 	"remoteUser": "labsim",
-	"userEnvProbe": "loginInteractiveShell",
-	"capAdd": [ 
+	
+	"runArgs": [
+		"--userns=keep-id", // retain the user GID/PID
+		"--memory=0",       // optional, but I found issues with running out of heap memory while building the container
+		"--cpus=0"          // optional, but will enable the container access to all your cores
+	],
 
+	"workspaceFolder": "/home/labsim/dev",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/labsim/dev/titans/CHAOS,type=bind,consistency=cached,Z",
+
+	"capAdd": [ 
 		"SYS_PTRACE", 
 		"SYS_ADMIN" 
-
 	],
 	"securityOpt": [ 
-
 		"seccomp=unconfined", 
 		"apparmor=unconfined", 
 		"label=disable" 
-		
 	],
-	"workspaceFolder": "/home/labsim/dev",
-	"workspaceMount": "source=${localWorkspaceFolder},target=/home/labsim/dev/titans/CHAOS,type=bind,consistency=cached",
 
 	"customizations": { 
 	
