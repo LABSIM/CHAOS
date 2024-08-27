@@ -10,16 +10,16 @@
 #  -> buildpack-deps:bookworm-curl #
 #   -> buildpack-deps:bookworm-scm #
 #    -> buildpack-deps:bookworm    #
-#     -> gcc:13.2.0-bookworm       #
+#     -> gcc:14.1.0-bookworm       #
 ####################################
 
 
-FROM gcc:13.2.0-bookworm as labsim-base-gcc-bookworm
+FROM docker.io/gcc:14.1.0-bookworm as labsim-base-gcc-bookworm
 
 # prettifyng
-LABEL description="LABSIM base distro - Linux Debian 12 & GNU GCC 13.2.0" \
+LABEL description="LABSIM base distro - Linux Debian 12 & GNU GCC 14.1.0" \
       maintainer="nawfel.kinani@onera.fr" \
-      version="2.0.0" \
+      version="2.0.1" \
       org.name="ONERA" \
       org.department="DTIS" \
       org.unit="ICNA" \
@@ -27,8 +27,10 @@ LABEL description="LABSIM base distro - Linux Debian 12 & GNU GCC 13.2.0" \
       org.center="Salon-de-Provence" \
       license="GNU GPLv3"
 
+#
 # avoid warnings by switching to noninteractive during build 
 # --> ARG because it is not persisted in the final image vs. ENV
+#
 ARG DEBIAN_FRONTEND=noninteractive
 
 #
@@ -85,27 +87,24 @@ ENV TZ=Europe/Paris \
     CC=/usr/local/bin/gcc \
     CXX=/usr/local/bin/g++
 
-# add & set labsim user
-RUN useradd --create-home --user-group --shell /bin/bash --no-log-init labsim 
-
 
 ####################################
 #                                  #
-#    LABSIM-BASE-LLVM-BULLSEYE     #
+#    LABSIM-BASE-LLVM-BOOKWORM     #
 #                                  #
 # ================================ #
-# -> Debian:bullseye               #
-#  -> buildpack-deps:bullseye-curl #
-#   -> buildpack-deps:bullseye-scm #
+# -> Debian:bookworm               #
+#  -> buildpack-deps:bookworm-curl #
+#   -> buildpack-deps:bookworm-scm #
 ####################################
 
 
-FROM buildpack-deps:bullseye as labsim-base-llvm-bullseye
+FROM docker.io/buildpack-deps:bookworm as labsim-base-llvm-bookworm
 
 # prettifyng
-LABEL description="LABSIM base distro - Linux Debian 11 & LLVM 16.0.3" \
+LABEL description="LABSIM base distro - Linux Debian 12 & LLVM 19.1.0" \
       maintainer="nawfel.kinani@onera.fr" \
-      version="2.0.0" \
+      version="2.0.1" \
       org.name="ONERA" \
       org.department="DTIS" \
       org.unit="ICNA" \
@@ -113,23 +112,42 @@ LABEL description="LABSIM base distro - Linux Debian 11 & LLVM 16.0.3" \
       org.center="Salon-de-Provence" \
       license="GNU GPLv3"
 
+#
 # avoid warnings by switching to noninteractive during build 
 # --> ARG because it is not persisted in the final image vs. ENV
+#
 ARG DEBIAN_FRONTEND=noninteractive
-
-#
-# LLVM version 
-#
-ARG LLVM_VERSION=16
+ARG LLVM_VERSION=19
 
 #
 # update
 #
-RUN apt-get --quiet update \
+RUN \
+    #
+    # repo installation specific tools
+    #
+    apt-get --quiet update \
+ && apt-get install --quiet --no-install-recommends --assume-yes \
+    software-properties-common \
+    wget \
+    gpg \
+    #
+    # LLVM repo installation
+    # - see [https://apt.llvm.org/]
+    # add it twice to workaround:
+    # https://github.com/llvm/llvm-project/issues/62475
+    #
+ && wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc \    
+ && add-apt-repository -y "deb http://apt.llvm.org/bookworm/  llvm-toolchain-bookworm-$LLVM_VERSION main" \
+ && add-apt-repository -y "deb http://apt.llvm.org/bookworm/  llvm-toolchain-bookworm-$LLVM_VERSION main" \
+    #
+    # refresh
+    #
+ && apt-get --quiet update \
     #
     # install specific tools - yes to every prompt - no recommmended quiet
     #
- && apt-get install --quiet --no-install-recommends --assume-yes \
+ && apt-get install --no-install-recommends --assume-yes \
     #
     # generic package
     #
@@ -150,52 +168,78 @@ RUN apt-get --quiet update \
     lsb-release \
     make \
     patch \
-    software-properties-common \
-    wget \
     zstd \
     #
-    # LLVM specific package
+    # LLVM specific dependancies
     # - cmake required by default
     # - ninja build strongly recommended
     #
     cmake \
     ninja-build \
     #
-    # LLVM installation
+    # LLVM full packages
     # - see [https://apt.llvm.org/]
     #
- && wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc \
- && add-apt-repository "deb http://apt.llvm.org/bullseye/ llvm-toolchain-bullseye-$LLVM_VERSION main" \
- && apt-get --quiet update \
- && apt-get install --quiet --no-install-recommends --assume-yes \
+    # LLVM
+    libllvm-$LLVM_VERSION-ocaml-dev \
+    libllvm$LLVM_VERSION \
+    llvm-$LLVM_VERSION \
     llvm-$LLVM_VERSION-dev \
-    llvm-$LLVM_VERSION-tools \
-    lld-$LLVM_VERSION \
-    lldb-$LLVM_VERSION \
+    llvm-$LLVM_VERSION-runtime \
+    # Clang and co
     clang-$LLVM_VERSION \
-    clangd-$LLVM_VERSION \
-    clang-tidy-$LLVM_VERSION \
-    clang-format-$LLVM_VERSION \
     clang-tools-$LLVM_VERSION \
-    libomp-$LLVM_VERSION-dev \
-    libc++-$LLVM_VERSION-dev \
-    libc++abi-$LLVM_VERSION-dev \
     libclang-common-$LLVM_VERSION-dev \
     libclang-$LLVM_VERSION-dev \
-    libclang-cpp$LLVM_VERSION-dev \
+    libclang1-$LLVM_VERSION \
+    clang-format-$LLVM_VERSION \
+    python3-clang-$LLVM_VERSION \
+    clangd-$LLVM_VERSION \
+    clang-tidy-$LLVM_VERSION \
+    # compiler-rt
     libclang-rt-$LLVM_VERSION-dev \
-    libunwind-$LLVM_VERSION-dev \
+    # polly
     libpolly-$LLVM_VERSION-dev \
+    # libfuzzer
+    libfuzzer-$LLVM_VERSION-dev \
+    # lldb
+    lldb-$LLVM_VERSION \
+    # lld (linker)
+    lld-$LLVM_VERSION \
+    # libc++
+    libc++-$LLVM_VERSION-dev \
+    libc++abi-$LLVM_VERSION-dev \
+    # OpenMP
+    libomp-$LLVM_VERSION-dev \
+    # libclc
+    libclc-$LLVM_VERSION-dev \
+    # libunwind
+    libunwind-$LLVM_VERSION-dev \
+    # mlir
+    libmlir-$LLVM_VERSION-dev \
+    mlir-$LLVM_VERSION-tools \
+    # bolt
+    libbolt-$LLVM_VERSION-dev \
+    bolt-$LLVM_VERSION \
+    # flang
+    flang-$LLVM_VERSION \
+    # wasm support
+    libclang-rt-$LLVM_VERSION-dev-wasm32 \
+    libclang-rt-$LLVM_VERSION-dev-wasm64 \
+    libc++-$LLVM_VERSION-dev-wasm32 \
+    libc++abi-$LLVM_VERSION-dev-wasm32 \
+    libclang-rt-$LLVM_VERSION-dev-wasm32 \
+    libclang-rt-$LLVM_VERSION-dev-wasm64 \
     #
     # "install" into standard env
     #
- && for f in /usr/lib/llvm-16/bin/*; do ln -sf "$f" /usr/local/bin; done \
+ && for f in /usr/lib/llvm-$LLVM_VERSION/bin/*; do ln -sf "$f" /usr/local/bin; done \
     #
     # LLVM python installation
     # - see [https://github.com/llvm/llvm-project/issues/55575]
     #
  && mkdir -p /usr/lib/lib/python3.9/site-packages \
- && ln -s /usr/lib/llvm-16/lib/python3.9/site-packages/lldb /usr/lib/lib/python3.9/site-packages/lldb \
+ && ln -s /usr/lib/llvm-$LLVM_VERSION/lib/python3.9/site-packages/lldb /usr/lib/lib/python3.9/site-packages/lldb \
     #
     # apt cleanup
     #
@@ -206,7 +250,7 @@ RUN apt-get --quiet update \
     # then, setup locale
     #
  && locale-gen en_US.UTF-8 \
- && localedef -i en_US -f UTF-8 en_US.UTF-8 
+ && localedef -i en_US -f UTF-8 en_US.UTF-8
  
 # timezone & env locales
 ENV TZ=Europe/Paris \
@@ -217,9 +261,6 @@ ENV TZ=Europe/Paris \
     CXX=/usr/local/bin/clang++ \
     CXXFLAGS="-stdlib=libc++" \
     LDFLAGS="-lc++ -lc++abi"
-
-# add & set labsim user
-RUN useradd --create-home --user-group --shell /bin/bash --no-log-init labsim 
 
 
 ####################################
@@ -234,10 +275,12 @@ RUN useradd --create-home --user-group --shell /bin/bash --no-log-init labsim
 # multi stage build
 FROM labsim-base-gcc-bookworm as labsim-devcontainer-gcc-bookworm
 
+# RUN sh -c 'if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - App::cpanminus; fi'
+
 # prettifyng
-LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 13.2.0" \
+LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 14.1.0" \
       maintainer="nawfel.kinani@onera.fr" \
-      version="2.0.0" \
+      version="2.0.1" \
       org.name="ONERA" \
       org.department="DTIS" \
       org.unit="ICNA" \
@@ -245,60 +288,94 @@ LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 13.2.0
       org.center="Salon-de-Provence" \
       license="GNU GPLv3"
 
-# set user ID
-USER labsim
+#
+# mandatory argument : GAIA + user
+#
+ARG GAIA_TARGET_ECOSYSTEM="2.0.1"
+ARG GAIA_ENABLE_FEATURE="dev,sb,sf"
+ARG USERNAME=labsim
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
 
-# setup LABSIM Simulation Software Ecosysten : create dir, clone sources from github, then integrate gaia features & VSCode workspace
-WORKDIR /home/labsim/dev
-
-# mandatory GAIA argument
-ARG GAIA_TARGET_ECOSYSTEM="2.0.0" \
-    GAIA_ENABLE_FEATURE="dev,sb,sf"
-
-# RUN sh -c 'if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - App::cpanminus; fi'
+RUN \
+    #
+    # create the labsim dev user
+    #
+    groupadd --gid $USER_GID $USERNAME \
+ && useradd --uid $USER_UID --gid $USER_GID --create-home --shell /bin/bash --no-log-init $USERNAME \
+    #
+    # add sudo support (Omit if you don't need to install software after connecting.)
+    #
+ && apt-get update \
+ && apt-get install -y sudo \
+ && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+ && chmod 0440 /etc/sudoers.d/$USERNAME \
+    #
+    # apt cleanup
+    #
+ && apt-get autoremove --quiet --purge -y \
+ && apt-get clean --quiet \
+ && rm -rf /var/lib/apt/lists/* 
 
 #
-# mount build secrets
+# setup the LABSIM Simulation Software Ecosystem (SSE) : 
+# -> default user
+# -> default dev dir
+# -> clone repos
+# -> integrate GAIA features 
+# -> setup VSCode workspace
 #
-RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
+USER $USERNAME
+WORKDIR /home/$USERNAME/dev
+RUN \
+    #
+    # mount build secrets
+    #
+    --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
     --mount=type=secret,mode=0444,id=GITHUB_TOKEN,required=true \
     #
     # clone LABSIM repositories
     #
-    git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git titans/GAIA \
- && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OURANOS.git titans/OURANOS \
- && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/THETYS.git titans/THETYS \
- && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OCEAN.git titans/OCEAN \
- && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/RHEA.git titans/RHEA \
- && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git titans/KRONOS \
- && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/ZEUS.git olympiens/ZEUS \
+    sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git titans/GAIA \
+ && sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OURANOS.git titans/OURANOS \
+ && sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/THETYS.git titans/THETYS \
+ && sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OCEAN.git titans/OCEAN \
+ && sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/RHEA.git titans/RHEA \
+ && sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git titans/KRONOS \
     #
-    # finally, bootstrap GAIA
+    # give all access to labsim
     #
- && cd titans/GAIA \
- && chmod +x GAIA-bootstrap \
- && ./GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
- 
-# inject the LABSIM SSE VSCode workspace
-COPY --chown=labsim:labsim distro/docker/labsim.code-workspace .
+&& sudo chown -R $USERNAME /home/$USERNAME \
+&& sudo chgrp -R $USERNAME /home/$USERNAME
+    #
+    # bootstrap & run GAIA
+    #
+#  && cd titans/GAIA \
+#  && bash GAIA-bootstrap \
+#  && gaia --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+
+#
+# finally, inject the LABSIM SSE VSCode workspace
+#
+COPY --chown=$USERNAME:$USERNAME distro/labsim/oci/labsim.code-workspace .
 
 
 #####################################
 #                                   #
-# LABSIM-DEVCONTAINER-LLVM-BULLSEYE #
+# LABSIM-DEVCONTAINER-LLVM-BOOKWORM #
 #                                   #
 # ================================= #
-# -> labsim-base-llvm-bullseye      #
+# -> labsim-base-llvm-bookworm      #
 #####################################
 
 
 # multi stage build
-FROM labsim-base-llvm-bullseye as labsim-devcontainer-llvm-bullseye
+FROM labsim-base-llvm-bookworm as labsim-devcontainer-llvm-bookworm
 
 # prettifyng
-LABEL description="LABSIM devcontainer distro - Linux Debian 11 & LLVM 16.0.3" \
+LABEL description="LABSIM devcontainer distro - Linux Debian 12 & LLVM 19.1.0" \
       maintainer="nawfel.kinani@onera.fr" \
-      version="2.0.0" \
+      version="2.0.1" \
       org.name="ONERA" \
       org.department="DTIS" \
       org.unit="ICNA" \
@@ -306,37 +383,79 @@ LABEL description="LABSIM devcontainer distro - Linux Debian 11 & LLVM 16.0.3" \
       org.center="Salon-de-Provence" \
       license="GNU GPLv3"
 
-# set user ID
-USER labsim
-
-# setup LABSIM Simulation Software Ecosysten : create dir, clone sources from github, then integrate gaia features & VSCode workspace
-WORKDIR /home/labsim/dev
-
-# mandatory GAIA argument
-ARG GAIA_TARGET_ECOSYSTEM="2.0.0" \
-    GAIA_ENABLE_FEATURE="dev,sb,sf"
+#
+# mandatory argument : 
+# - avoid warnings by switching to noninteractive during build
+# - GAIA specific 
+# - user name/UID/GUID
+#
+ARG DEBIAN_FRONTEND=noninteractive
+ARG GAIA_TARGET_ECOSYSTEM="2.0.1" 
+ARG GAIA_ENABLE_FEATURE="dev,sb,sf"
+ARG USERNAME=labsim
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
 
 #
-# mount build secrets
+# rootless mode
 #
-RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
+RUN \
+    #
+    # create the labsim dev user
+    #
+    groupadd --gid $USER_GID $USERNAME \
+ && useradd --uid $USER_UID --gid $USER_GID --create-home --shell /bin/bash --no-log-init $USERNAME \
+    #
+    # add sudo support (Omit if you don't need to install software after connecting.)
+    #
+ && apt-get update \
+ && apt-get install -y sudo \
+ && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+ && chmod 0440 /etc/sudoers.d/$USERNAME \
+    #
+    # apt cleanup
+    #
+ && apt-get autoremove --quiet --purge -y \
+ && apt-get clean --quiet \
+ && rm -rf /var/lib/apt/lists/* 
+
+#
+# setup the LABSIM Simulation Software Ecosystem (SSE) : 
+# -> default user
+# -> default dev dir
+# -> clone repos
+# -> integrate GAIA features 
+# -> setup VSCode workspace
+#
+USER $USERNAME
+WORKDIR /home/$USERNAME/dev
+RUN \
+    #
+    # mount build secrets
+    #
+    --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
     --mount=type=secret,mode=0444,id=GITHUB_TOKEN,required=true \
     #
     # clone LABSIM repositories
     #
-    git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git titans/GAIA \
- && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OURANOS.git titans/OURANOS \
- && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/THETYS.git titans/THETYS \
- && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OCEAN.git titans/OCEAN \
- && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/RHEA.git titans/RHEA \
- && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git titans/KRONOS \
- && git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/ZEUS.git olympiens/ZEUS \
+    sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git titans/GAIA \
+ && sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OURANOS.git titans/OURANOS \
+ && sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/THETYS.git titans/THETYS \
+ && sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OCEAN.git titans/OCEAN \
+ && sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/RHEA.git titans/RHEA \
+ && sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/KRONOS.git titans/KRONOS \
     #
-    # finally, bootstrap GAIA
+    # give all access to labsim
     #
- && cd titans/GAIA \
- && chmod +x GAIA-bootstrap \
- && ./GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
- 
-# inject the LABSIM SSE VSCode workspace
-COPY --chown=labsim:labsim distro/docker/labsim.code-workspace .
+&& sudo chown -R $USERNAME /home/$USERNAME \
+&& sudo chgrp -R $USERNAME /home/$USERNAME
+    #
+    # bootstrap & run GAIA
+    #
+#  && cd titans/GAIA \
+#  && bash GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+
+#
+# finally, inject the LABSIM SSE VSCode workspace
+#
+COPY --chown=$USERNAME:$USERNAME distro/labsim/oci/labsim.code-workspace .

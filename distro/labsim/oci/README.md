@@ -6,7 +6,7 @@
 >
 > *author* : Nawfel KINANI - DTIS/ICNA
 
-## Stage build targets
+## Independant build targets
 
 1. GCC Toolchain
    1. **labsim-base-gcc-bookworm**

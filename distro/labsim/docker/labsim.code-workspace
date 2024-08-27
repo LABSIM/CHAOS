@@ -8,8 +8,7 @@
 		{ "name": "THETYS",  "path": "./titans/THETYS"  },
 		{ "name": "OCEAN",   "path": "./titans/OCEAN"   },
 		{ "name": "GAIA",    "path": "./titans/GAIA"    },
-		{ "name": "OURANOS", "path": "./titans/OURANOS" },
-		{ "name": "ZEUS",    "path": "./olympiens/ZEUS" }
+		{ "name": "OURANOS", "path": "./titans/OURANOS" }
 
 	], /* folders */
 
@@ -52,8 +51,9 @@
 	}, /* settings */
 
 	"extensions": {
-
+		
 		"recommendations": [
+
 			"ms-vscode.cpptools",
 			"ms-vscode.cmake-tools",
 			"redhat.vscode-xml",
@@ -66,8 +66,9 @@
 			"jeff-hykin.better-shellscript-syntax",
 			"d9705996.perl-toolbox",
 			"eamodio.gitlens"
-		]
 
+		] /* recommendations */
+		
 	} /* extensions */
 
 }
