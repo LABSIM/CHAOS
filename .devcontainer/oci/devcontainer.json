@@ -15,7 +15,7 @@
 	],
 
 	"workspaceFolder": "/home/labsim/dev",
-	"workspaceMount": "source=${localWorkspaceFolder},target=/home/labsim/dev/titans/CHAOS,type=bind,consistency=cached",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/labsim/dev/titans/CHAOS,type=bind,consistency=cached,Z",
 
 	"capAdd": [ 
 		"SYS_PTRACE", 
