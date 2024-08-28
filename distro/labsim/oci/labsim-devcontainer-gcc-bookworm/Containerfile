@@ -13,8 +13,6 @@
 # multi stage build
 FROM labsim-base-gcc-bookworm as labsim-devcontainer-gcc-bookworm
 
-# RUN sh -c 'if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - App::cpanminus; fi'
-
 # prettifyng
 LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 14.1.0" \
       maintainer="nawfel.kinani@onera.fr" \

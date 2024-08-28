@@ -14,7 +14,7 @@
 ####################################
 
 
-FROM docker.io/gcc:14.1.0-bookworm as labsim-base-gcc-bookworm
+FROM docker.io/gcc:14.1.0-bookworm AS labsim-base-gcc-bookworm
 
 # prettifyng
 LABEL description="LABSIM base distro - Linux Debian 12 & GNU GCC 14.1.0" \
@@ -99,7 +99,7 @@ ENV TZ=Europe/Paris \
 ####################################
 
 
-FROM docker.io/buildpack-deps:bookworm as labsim-base-llvm-bookworm
+FROM docker.io/buildpack-deps:bookworm AS labsim-base-llvm-bookworm
 
 # prettifyng
 LABEL description="LABSIM base distro - Linux Debian 12 & LLVM 19.1.0" \
@@ -273,9 +273,7 @@ ENV TZ=Europe/Paris \
 
 
 # multi stage build
-FROM labsim-base-gcc-bookworm as labsim-devcontainer-gcc-bookworm
-
-# RUN sh -c 'if ! cpanm < /dev/null > /dev/null 2>&1 ; then curl -L http://cpanmin.us | perl - App::cpanminus; fi'
+FROM labsim-base-gcc-bookworm:2.0.1 AS labsim-devcontainer-gcc-bookworm
 
 # prettifyng
 LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 14.1.0" \
@@ -370,7 +368,7 @@ COPY --chown=$USERNAME:$USERNAME distro/labsim/oci/labsim.code-workspace .
 
 
 # multi stage build
-FROM labsim-base-llvm-bookworm as labsim-devcontainer-llvm-bookworm
+FROM labsim-base-llvm-bookworm:2.0.1 AS labsim-devcontainer-llvm-bookworm
 
 # prettifyng
 LABEL description="LABSIM devcontainer distro - Linux Debian 12 & LLVM 19.1.0" \

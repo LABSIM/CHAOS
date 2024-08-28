@@ -1,30 +1,28 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json 
 {
 	
-	"name": "LABSIM devcontainer distro - Linux & LLVM",
+	"name": "[docker stack] LABSIM - Linux & LLVM",
+
 	"image": "labsim-devcontainer-llvm-bookworm:2.0.1",
 	
-	"containerUser": "labsim",
 	"remoteUser": "labsim",
-	
+	"userEnvProbe": "loginInteractiveShell",
+
+	"capAdd": [ 
+		"SYS_PTRACE"
+	],
+
+	"securityOpt": [ 
+		"seccomp=unconfined"
+	],
+
 	"runArgs": [
-		"--userns=keep-id", // retain the user GID/PID
-		"--memory=0",       // optional, but I found issues with running out of heap memory while building the container
-		"--cpus=0"          // optional, but will enable the container access to all your cores
+		"--memory=0", // optional, but I found issues with running out of heap memory while building the container
+		"--cpus=0"    // optional, but will enable the container access to all your cores
 	],
 
 	"workspaceFolder": "/home/labsim/dev",
-	"workspaceMount": "source=${localWorkspaceFolder},target=/home/labsim/dev/titans/CHAOS,type=bind,consistency=cached,Z",
-
-	"capAdd": [ 
-		"SYS_PTRACE", 
-		"SYS_ADMIN" 
-	],
-	"securityOpt": [ 
-		"seccomp=unconfined", 
-		"apparmor=unconfined", 
-		"label=disable" 
-	],
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/labsim/dev/titans/CHAOS,type=bind,consistency=cached",
 
 	"customizations": { 
 	

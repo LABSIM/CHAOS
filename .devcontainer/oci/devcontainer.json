@@ -1,0 +1,55 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json 
+{
+	
+	"name": "[OCI stack] LABSIM - Linux & LLVM",
+
+	"image": "labsim-devcontainer-llvm-bookworm:2.0.1",
+	
+	"containerUser": "labsim",
+	"remoteUser": "labsim",
+	
+	"runArgs": [
+		"--userns=keep-id", // retain the user GID/PID
+		"--memory=0",       // optional, but I found issues with running out of heap memory while building the container
+		"--cpus=0"          // optional, but will enable the container access to all your cores
+	],
+
+	"workspaceFolder": "/home/labsim/dev",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/labsim/dev/titans/CHAOS,type=bind,consistency=cached",
+
+	"capAdd": [ 
+		"SYS_PTRACE", 
+		"SYS_ADMIN" 
+	],
+	"securityOpt": [ 
+		"seccomp=unconfined", 
+		"apparmor=unconfined", 
+		"label=disable" 
+	],
+
+	"customizations": { 
+	
+		"vscode": {
+
+			"extensions": [
+
+				"ms-vscode.cpptools",
+				"ms-vscode.cmake-tools",
+				"redhat.vscode-xml",
+				"redhat.vscode-yaml",
+				"github.vscode-pull-request-github",
+				"vadimcn.vscode-lldb",
+				"twxs.cmake",
+				"davidanson.vscode-markdownlint",
+				"davidwang.ini-for-vscode",
+				"jeff-hykin.better-shellscript-syntax",
+				"d9705996.perl-toolbox",
+				"eamodio.gitlens"
+
+			] /* extensions */
+
+		} /* vscode */
+
+	} /* customizations */
+
+}
