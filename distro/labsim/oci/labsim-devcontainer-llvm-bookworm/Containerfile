@@ -89,12 +89,12 @@ RUN \
     # give all access to labsim
     #
 && sudo chown -R $USERNAME /home/$USERNAME \
-&& sudo chgrp -R $USERNAME /home/$USERNAME
+&& sudo chgrp -R $USERNAME /home/$USERNAME \
     #
     # bootstrap & run GAIA
     #
-#  && cd titans/GAIA \
-#  && bash GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+ && cd titans/GAIA \
+ && usr/bin/env bash GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
 
 #
 # finally, inject the LABSIM SSE VSCode workspace
