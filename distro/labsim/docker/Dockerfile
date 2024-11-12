@@ -354,7 +354,7 @@ RUN \
 #
 # finally, inject the LABSIM SSE VSCode workspace
 #
-COPY --chown=$USERNAME:$USERNAME distro/labsim/oci/labsim.code-workspace .
+COPY --chown=$USERNAME:$USERNAME distro/labsim/docker/labsim.code-workspace /home/$USERNAME/dev
 
 
 #####################################
@@ -455,4 +455,4 @@ RUN \
 #
 # finally, inject the LABSIM SSE VSCode workspace
 #
-COPY --chown=$USERNAME:$USERNAME distro/labsim/oci/labsim.code-workspace .
+COPY --chown=$USERNAME:$USERNAME distro/labsim/docker/labsim.code-workspace /home/$USERNAME/dev

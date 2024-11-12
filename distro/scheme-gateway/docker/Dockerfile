@@ -87,7 +87,7 @@ RUN \
 #
 # finally, inject the LABSIM SSE VSCode workspace
 #
-COPY --chown=$USERNAME:$USERNAME distro/scheme-gateway/docker/scheme-gateway.code-workspace .
+COPY --chown=$USERNAME:$USERNAME distro/scheme-gateway/docker/scheme-gateway.code-workspace /home/$USERNAME/dev
 
 
 #############################################
@@ -176,4 +176,4 @@ RUN \
 #
 # finally, inject the LABSIM SSE VSCode workspace
 #
-COPY --chown=$USERNAME:$USERNAME distro/scheme-gateway/docker/scheme-gateway.code-workspace .
+COPY --chown=$USERNAME:$USERNAME distro/scheme-gateway/docker/scheme-gateway.code-workspace /home/$USERNAME/dev
