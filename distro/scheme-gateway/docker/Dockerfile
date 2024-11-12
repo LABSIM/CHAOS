@@ -1,108 +1,20 @@
 # syntax = docker/dockerfile:1.4.3
 
 
-####################################
-#                                  #
-# SCHEME-GATEWAY-BASE-GCC-BOOKWORM #
-#                                  #
-# ================================ #
-# -> Debian:bookworm               #
-#  -> buildpack-deps:bookworm-curl #
-#   -> buildpack-deps:bookworm-scm #
-#    -> buildpack-deps:bookworm    #
-#     -> gcc:13.2.0-bookworm       #
-####################################
-
-
-FROM gcc:13.2.0-bookworm as scheme-gateway-base-gcc-bookworm
-
-# prettifyng
-LABEL description="SCHEME-GATEWAY base distro - Linux Debian 12 & GNU GCC 13.2.0" \
-      maintainer="nawfel.kinani@onera.fr" \
-      version="2.0.0" \
-      org.name="ONERA" \
-      org.department="DTIS" \
-      org.unit="ICNA" \
-      org.laboratory="LABSIM" \
-      org.center="Salon-de-Provence" \
-      license="GNU GPLv3"
-
-# avoid warnings by switching to noninteractive during build 
-# --> ARG because it is not persisted in the final image vs. ENV
-ARG DEBIAN_FRONTEND=noninteractive
-
-#
-# update
-#
-RUN apt-get --quiet update \
-    #
-    # install specific tools - yes to every prompt - no recommmended
-    #
- && apt-get install --quiet --no-install-recommends --assume-yes \
-    #
-    # generic package
-    #
-    apt-transport-https \
-    autoconf \
-    automake \
-    bison \
-    ccache \
-    dpkg-dev \
-    file \
-    flex \
-    gawk \
-    gnupg2 \
-    locales \
-    libzstd-dev \
-    libncurses-dev \
-    libacl1-dev \
-    make \
-    patch \
-    wget \
-    zstd \
-    #
-    # GCC specific package
-    # - default distro supplied GDB
-    #
-    gdb \
-    #
-    # cleanup
-    #
- && apt-get autoremove --purge -y \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/* \
-    #
-    # then, setup locale
-    #
- && locale-gen en_US.UTF-8 \
- && localedef -i en_US -f UTF-8 en_US.UTF-8
-
-# timezone & env locales
-ENV TZ=Europe/Paris \
-    LANGUAGE=en_US:en \
-    LC_ALL=en_US.UTF-8 \
-    LANG=en_US.UTF-8 \
-    CC=/usr/local/bin/gcc \
-    CXX=/usr/local/bin/g++
-
-# add & set labsim user
-RUN useradd --create-home --user-group --shell /bin/bash --no-log-init scheme 
-
-
 ############################################
 #                                          #
 # SCHEME-GATEWAY-DEVCONTAINER-GCC-BOOKWORM #
 #                                          #
 # ======================================== #
-# -> scheme-gateway-base-gcc-bookworm      #
+# -> labsim-base-gcc-bookworm              #
 ############################################
 
 
 # multi stage build
-FROM scheme-gateway-base-gcc-bookworm as scheme-gateway-devcontainer-gcc-bookworm
+FROM labsim-base-gcc-bookworm:2.0.1 AS scheme-gateway-devcontainer-gcc-bookworm
 
 # prettifyng
-LABEL description="SCHEME-GATEWAY devcontainer distro - Linux Debian 12 & GNU GCC 13.2.0" \
+LABEL description="SCHEME-GATEWAY devcontainer distro - Linux Debian 12 & GNU GCC 14.1.0" \
       maintainer="nawfel.kinani@onera.fr" \
       version="0.0.1" \
       org.name="ONERA" \
@@ -112,31 +24,156 @@ LABEL description="SCHEME-GATEWAY devcontainer distro - Linux Debian 12 & GNU GC
       org.center="Salon-de-Provence" \
       license="GNU GPLv3"
 
-# set user ID
-USER scheme
+#
+# mandatory argument : GAIA + user
+#
+ARG GAIA_TARGET_ECOSYSTEM="2.0.1"
+ARG GAIA_ENABLE_FEATURE="dev,sb,sf"
+ARG USERNAME=labsim
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
 
-# setup LABSIM Simulation Software Ecosysten : create dir, clone sources from github, then integrate gaia features & VSCode workspace
-WORKDIR /home/scheme/dev
-
-# mandatory GAIA argument
-ARG GAIA_TARGET_ECOSYSTEM="2.0.0" \
-    GAIA_ENABLE_FEATURE="dev,sf"
+RUN \
+    #
+    # create the labsim dev user
+    #
+    groupadd --gid $USER_GID $USERNAME \
+ && useradd --uid $USER_UID --gid $USER_GID --create-home --shell /bin/bash --no-log-init $USERNAME \
+    #
+    # add sudo support (Omit if you don't need to install software after connecting.)
+    #
+ && apt-get update \
+ && apt-get install -y sudo \
+ && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+ && chmod 0440 /etc/sudoers.d/$USERNAME \
+    #
+    # apt cleanup
+    #
+ && apt-get autoremove --quiet --purge -y \
+ && apt-get clean --quiet \
+ && rm -rf /var/lib/apt/lists/* 
 
 #
-# mount build secrets
+# setup the LABSIM Simulation Software Ecosystem (SSE) : 
+# -> default user
+# -> default dev dir
+# -> clone repos
+# -> integrate GAIA features 
+# -> setup VSCode workspace
 #
-RUN --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
+USER $USERNAME
+WORKDIR /home/$USERNAME/dev
+RUN \
+    #
+    # mount build secrets
+    #
+    --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
     --mount=type=secret,mode=0444,id=GITHUB_TOKEN,required=true \
     #
     # clone LABSIM repositories
     #
-    git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git titans/GAIA \
+    sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git titans/GAIA \
     #
-    # finally, bootstrap GAIA
+    # give all access to labsim
+    #
+&& sudo chown -R $USERNAME /home/$USERNAME \
+&& sudo chgrp -R $USERNAME /home/$USERNAME \
+    #
+    # bootstrap & run GAIA
     #
  && cd titans/GAIA \
- && chmod +x GAIA-bootstrap \
- && ./GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
- 
-# inject the LABSIM SSE VSCode workspace
-COPY --chown=scheme:scheme distro/scheme-gateway/docker/scheme-gateway.code-workspace .
+ && /usr/bin/env bash GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+
+#
+# finally, inject the LABSIM SSE VSCode workspace
+#
+COPY --chown=$USERNAME:$USERNAME distro/scheme-gateway/docker/scheme-gateway.code-workspace .
+
+
+#############################################
+#                                           #
+# SCHEME-GATEWAY-DEVCONTAINER-LLVM-BOOKWORM #
+#                                           #
+# ========================================= #
+# -> labsim-base-llvm-bookworm              #
+#############################################
+
+
+# multi stage build
+FROM labsim-base-llvm-bookworm:2.0.1 AS scheme-gateway-devcontainer-llvm-bookworm
+
+# prettifyng
+LABEL description="SCHEME-GATEWAY devcontainer distro - Linux Debian 12 & LLVM 19.1.0" \
+      maintainer="nawfel.kinani@onera.fr" \
+      version="2.0.1" \
+      org.name="ONERA" \
+      org.department="DTIS" \
+      org.unit="ICNA" \
+      org.laboratory="LABSIM" \
+      org.center="Salon-de-Provence" \
+      license="GNU GPLv3"
+
+#
+# mandatory argument : GAIA + user
+#
+ARG GAIA_TARGET_ECOSYSTEM="2.0.1"
+ARG GAIA_ENABLE_FEATURE="dev,sb,sf"
+ARG USERNAME=labsim
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN \
+    #
+    # create the labsim dev user
+    #
+    groupadd --gid $USER_GID $USERNAME \
+ && useradd --uid $USER_UID --gid $USER_GID --create-home --shell /bin/bash --no-log-init $USERNAME \
+    #
+    # add sudo support (Omit if you don't need to install software after connecting.)
+    #
+ && apt-get update \
+ && apt-get install -y sudo \
+ && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+ && chmod 0440 /etc/sudoers.d/$USERNAME \
+    #
+    # apt cleanup
+    #
+ && apt-get autoremove --quiet --purge -y \
+ && apt-get clean --quiet \
+ && rm -rf /var/lib/apt/lists/* 
+
+#
+# setup the LABSIM Simulation Software Ecosystem (SSE) : 
+# -> default user
+# -> default dev dir
+# -> clone repos
+# -> integrate GAIA features 
+# -> setup VSCode workspace
+#
+USER $USERNAME
+WORKDIR /home/$USERNAME/dev
+RUN \
+    #
+    # mount build secrets
+    #
+    --mount=type=secret,mode=0444,id=GITHUB_USERNAME,required=true \
+    --mount=type=secret,mode=0444,id=GITHUB_TOKEN,required=true \
+    #
+    # clone LABSIM repositories
+    #
+    sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git titans/GAIA \
+    #
+    # give all access to labsim
+    #
+&& sudo chown -R $USERNAME /home/$USERNAME \
+&& sudo chgrp -R $USERNAME /home/$USERNAME \
+    #
+    # bootstrap & run GAIA
+    #
+ && cd titans/GAIA \
+ && /usr/bin/env bash GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+
+#
+# finally, inject the LABSIM SSE VSCode workspace
+#
+COPY --chown=$USERNAME:$USERNAME distro/scheme-gateway/docker/scheme-gateway.code-workspace .

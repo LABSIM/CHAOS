@@ -6,7 +6,7 @@
 
 	], /* folders */
 
-	//
+//
 	// Normally these settings & extensions should already be configured/installed from our devcontainer.json... just in case
 	// for further explanation
 	// see [ https://gist.github.com/hyperupcall/99e355405611be6c4e0a38b6e3e8aad0 ]
@@ -45,8 +45,9 @@
 	}, /* settings */
 
 	"extensions": {
-
+		
 		"recommendations": [
+
 			"ms-vscode.cpptools",
 			"ms-vscode.cmake-tools",
 			"redhat.vscode-xml",
@@ -59,8 +60,9 @@
 			"jeff-hykin.better-shellscript-syntax",
 			"d9705996.perl-toolbox",
 			"eamodio.gitlens"
-		]
 
+		] /* recommendations */
+		
 	} /* extensions */
 
 }
