@@ -28,7 +28,7 @@ LABEL description="SCHEME-GATEWAY devcontainer distro - Linux Debian 12 & GNU GC
 # mandatory argument : GAIA + user
 #
 ARG GAIA_TARGET_ECOSYSTEM="2.0.1"
-ARG GAIA_ENABLE_FEATURE="dev,sb,sf"
+ARG GAIA_ENABLE_FEATURE="dev"
 ARG USERNAME=labsim
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -118,7 +118,7 @@ LABEL description="SCHEME-GATEWAY devcontainer distro - Linux Debian 12 & LLVM 1
 # mandatory argument : GAIA + user
 #
 ARG GAIA_TARGET_ECOSYSTEM="2.0.1"
-ARG GAIA_ENABLE_FEATURE="dev,sb,sf"
+ARG GAIA_ENABLE_FEATURE="dev"
 ARG USERNAME=labsim
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
