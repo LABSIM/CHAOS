@@ -2,7 +2,9 @@
 	// setup dev folders ==> SCHEME-GATEWAY ONLY
 	"folders": [
 
-		{ "name": "SCHEME-GATEWAY", "path": "./SCHEME-GATEWAY" }
+		{ "name": "SCHEME-GATEWAY", "path": "./SCHEME-GATEWAY" },
+		{ "name": "GAIA", "path": "./titans/GAIA" }
+		{ "name": "OURANOS", "path": "./titans/OURANOS" }
 
 	], /* folders */
 
