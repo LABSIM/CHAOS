@@ -3,6 +3,8 @@
 	"folders": [
 
 		{ "name": "SCHEME-GATEWAY", "path": "./SCHEME-GATEWAY" },
+		{ "name": "SCHEME-GATEWAY-API", "path": "./SCHEME-GATEWAY-API" },
+		{ "name": "SCHEME-GATEWAY-DOC", "path": "./SCHEME-GATEWAY-DOC" },
 		{ "name": "GAIA", "path": "./titans/GAIA" }
 		{ "name": "OURANOS", "path": "./titans/OURANOS" }
 
