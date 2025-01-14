@@ -41,7 +41,7 @@ Directly jump to corresponding sub-section:
 2. [Prepare](#2-prepare-the-environment)
 3. [Build](#3-build-the-container)
    - [Docker](#31-docker-stack)
-   - [OCI - Podman](#31-oci-podman-stack)
+   - [OCI - Podman](#32-podman-stack)
 4. [Configure](#4-configure-your-preferred-ide)
    1. [VSCode](#41-vscode)
 
@@ -144,7 +144,7 @@ don't forget to exit our running container :
 [user@hostname]$ exit
 ```
 
-#### 3.2. OCI - Podman stack
+#### 3.2. Podman stack
 
 ```console
 [user@hostname]$ podman build --format oci --isolation rootless --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/<chaos-section>/oci/<chaos-target>/Containerfile --tag <chaos-target>:<chaos-version> .
