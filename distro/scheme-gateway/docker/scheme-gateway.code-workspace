@@ -1,14 +1,18 @@
 {
-	// setup dev folders ==> SCHEME-GATEWAY ONLY
+
+	// setup dev
 	"folders": [
 
 		{ "name": "SCHEME-GATEWAY", "path": "./SCHEME-GATEWAY" },
-		{ "name": "GAIA", "path": "./titans/GAIA" }
-		{ "name": "OURANOS", "path": "./titans/OURANOS" }
+		{ "name": "SCHEME-GATEWAY-API", "path": "./SCHEME-GATEWAY-API" },
+		{ "name": "SCHEME-GATEWAY-DOC", "path": "./SCHEME-GATEWAY-DOC" },
+		{ "name": "CHAOS", "path": "./titans/CHAOS" },
+		{ "name": "GAIA", "path": "./titans/GAIA" },
+		{ "name": "OURANOS", "path": "./titans/OURANOS" },
 
 	], /* folders */
 
-//
+	//
 	// Normally these settings & extensions should already be configured/installed from our devcontainer.json... just in case
 	// for further explanation
 	// see [ https://gist.github.com/hyperupcall/99e355405611be6c4e0a38b6e3e8aad0 ]

@@ -5,7 +5,7 @@
 Directly jump to corresponding main section:
 
 - [Prerequisites](#prerequisites)
-- [Quick start](#quick-start)
+- [Usage](#usage)
 - [External links](#external-links)
 - [Troubleshooting](#troubleshooting)
 - [Bonus](#bonus)
@@ -33,35 +33,27 @@ Directly jump to corresponding main section:
 
 > see [here](https://github.com/containers) or [there](https://opencontainers.org/) for more info about the Open Containers Initiative (OCI).
 
-## Quick start
+## Usage
 
 Directly jump to corresponding sub-section:
 
-1. [Clone CHAOS](#1-clone-chaos)
-2. [Prepare the builder driver](#2-prepare-the-builder-driver)
-3. [Build the container](#3-build-the-container)
-4. [Configure your preferred IDE](#4-configure-your-preferred-ide)
-   - [VSCode](#41-vscode)
+1. [Clone](#1-clone-chaos)
+2. [Prepare](#2-prepare-the-environment)
+3. [Build](#3-build-the-container)
+   - [Docker](#31-docker-stack)
+   - [OCI - Podman](#31-oci-podman-stack)
+4. [Configure](#4-configure-your-preferred-ide)
+   1. [VSCode](#41-vscode)
 
 ### 1. Clone CHAOS
 
-simply clone CHAOS sources into your local dev directory :
+simply clone CHAOS repo into your local dev directory :
 
 ```console
 [user@hostname]$ git -C /your/local/dev/directory clone https://github.com/LABSIM/CHAOS.git
 ```
 
-### 2. Prepare the builder driver
-
-> **ONLY** for the docker stack
-
-the build log may be too heavy for the default builder driver so, if recquired, run the following command to increase the log builder setting :
-
-```console
-[user@hostname]$ docker buildx create --driver docker-container --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=1000000000 --bootstrap --use
-```
-
-### 3. Build the container
+### 2. Prepare the environment
 
 first of all, dir into your freshly cloned CHAOS root :
   
@@ -69,7 +61,8 @@ first of all, dir into your freshly cloned CHAOS root :
 [user@hostname]$ cd /your/local/dev/directory/CHAOS/
 ```
 
-export secret info to enable 2FA access for git + container ! For further informations, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
+export secret info *(personal access token)* to enable git 2FA from a container ! For further informations, [*see here*](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
+
 
 ```console
 [user@hostname]$ echo 'your_super_secret_github_username' > /your/local/secret/path/github_username.txt
@@ -83,59 +76,89 @@ PS> Write-Output "your_super_secret_github_username" | Out-File -append -encodin
 PS> Write-Output "your_super_secret_github_token" | Out-File -append -encoding ASCII "C:\your\local\secret\path\github_token.txt"
 ```
 
-then, lauch the docker buildx process for our container `<chaos-target>:<chaos-version>`
+then, we'll lauch the build stage for our container `<chaos-target>:<chaos-version>`
 
-1. Docker stack :
+> furthermore, private github tokens are temporary loaded during the build stage via the secret mount mechanism, more informations [_here_](https://docs.docker.com/engine/reference/commandline/buildx_build/#secret)
+
+### 3. Build the container
+
+depending on your container engine, available `<chaos-target>` &  build procedure may be subject to some minor changes.
+
+by convention, we advise :
+
+- `<chaos-section>` == CHAOS high-level section name containing multiple target foreach *project*
+- `<chaos-target>` == CHAOS specific build target name
+- `<chaos-version>` == CHAOS build version, **a good rule of thumbs should be that it matched the intended GAIA Simulation Software Ecosystem (SSE) version**, see under
+
+actually, the default GAIA SSE is configured to be the v.`2.0.1` with features `dev,sf,sb`, but they can be configured through theses _additionnal_ args in any of the folowwing container engine :
+
+```console
+--build-arg GAIA_TARGET_ECOSYSTEM=<gaia-sse-version>
+--build-arg GAIA_ENABLE_FEATURE=<gaia-sse-feature-A>,<gaia-sse-feature-B>,<gaia-sse-feature-N>
+```
+
+for a complete list of available each `<gaia-sse-version>` & `<gaia-sse-feature>`, see the LABSIM private GAIA repository [_here_](https://github.com/LABSIM/GAIA/tree/master/ecosystem)
+
+#### 3.1. Docker stack
+
+> **MAY** be required
+> 
+> the build log may be too heavy for the default builder driver so, if required, run the following command to increase the log builder setting :
+> 
+> ```console
+> [user@hostname]$ docker buildx create --driver docker-container --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=1000000000 --bootstrap --use
+> ```
+
+start by running the following command
 
 ```console
 [user@hostname]$ docker build --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/<chaos-section>/docker/Dockerfile --target <chaos-target> --tag <chaos-target>:<chaos-version> .
 ```
 
-2. Podman stack:
+available `<chaos-target>` for each `<chaos-section>` are :
 
-
-```console
-[user@hostname]$ podman build --format oci --isolation rootless --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/<chaos-section>/oci/<chaos-target>/Containerfile --tag <chaos-target>:<chaos-version> .
-```
-
-> by convention, we advise :
->
-> - `<chaos-section>` == CHAOS high-level section name containing multiple target
-> - `<chaos-target>` == CHAOS build target name
-> - `<chaos-version>` == CHAOS build version, **a good rule of thumbs should be that it matched the intended GAIA Simulation Software Ecosystem (SSE) version**, see `<gaia-sse-version>` under
->
-> available `<chaos-target>` for each `<chaos-section>` :
->
-> 1. [LABSIM](distro/labsim/docker/Dockerfile) :
->    - **labsim-base-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
->    - **labsim-devcontainer-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
->    - **labsim-base-llvm-bookworm** : a Debian Bookworm Linux distro with a LLVM compiler environment whithout SSE
->    - **labsim-devcontainer-llvm-bookworm** : a Debian Bookworm Linux distro with a LLVM compiler environment shipped with the desired SSE
-> 2. [SCHEME-GATEWAY](distro/scheme-gateway/docker/Dockerfile) :
->    - **scheme-gateway-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
->    - **scheme-gateway-devcontainer-gcc-bookworm** : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
->
-> actually, the default GAIA SSE is configured to be the v.[2.0.1](https://github.com/LABSIM/GAIA/tree/master/ecosystem/2.0.1) with features `dev,sf,sb`, but they can be configured through theses _additionnal_ args :
->
-> ```console
-> --build-arg GAIA_TARGET_ECOSYSTEM=<gaia-sse-version>
-> --build-arg GAIA_ENABLE_FEATURE=<gaia-sse-feature-A>,<gaia-sse-feature-B>,<gaia-sse-feature-N>
-> ```
->
-> for a complete list of available `<gaia-sse-version>` & `<gaia-sse-feature>`, [_see here_](https://github.com/LABSIM/GAIA/tree/master/ecosystem)
->
-> furthermore, github tokens are temporary loaded during the build stage via the secret mount mechanism, more informations [_here_](https://docs.docker.com/engine/reference/commandline/buildx_build/#secret)
+ 1. [LABSIM](distro/labsim/docker/Dockerfile) section (docker multi-stage build) :
+    - **labsim-base-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
+    - **labsim-devcontainer-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
+    - **labsim-base-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM compiler environment whithout SSE
+    - **labsim-devcontainer-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM compiler environment shipped with the desired SSE
+ 2. [SCHEME-GATEWAY](distro/scheme-gateway/docker/Dockerfile) section (docker multi-stage build) :
+    - **scheme-gateway-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
+    - **scheme-gateway-devcontainer-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
 
 so now you should have a `<chaos-target>:<chaos-version>` container loaded into your local registry & ready to run ! Launch it with the following :
-
-1. Docker stack :
 
 ```console
 [user@hostname]$ docker run --rm -it <chaos-target>:<chaos-version>
 ```
 
-2. Podman stack:
+& check the GAIA configuration, if any, with :
 
+```console
+[user@hostname]$ gaia
+```
+
+don't forget to exit our running container :
+
+```console
+[user@hostname]$ exit
+```
+
+#### 3.2. OCI - Podman stack
+
+```console
+[user@hostname]$ podman build --format oci --isolation rootless --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/<chaos-section>/oci/<chaos-target>/Containerfile --tag <chaos-target>:<chaos-version> .
+```
+
+available `<chaos-target>` for each `<chaos-section>` are :
+
+ 1. **LABSIM** section :
+    - [labsim-base-gcc-bookworm](distro/labsim/oci/labsim-base-gcc-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
+    - [labsim-devcontainer-gcc-bookworm](distro/labsim/oci/labsim-devcontainer-gcc-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
+    - [labsim-base-llvm-bookworm](distro/labsim/oci/labsim-base-llvm-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a LLVM compiler environment whithout SSE
+    - [labsim-devcontainer-llvm-bookworm](distro/labsim/oci/labsim-devcontainer-llvm-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a LLVM compiler environment shipped with the desired SSE
+
+so now you should have a `<chaos-target>:<chaos-version>` container loaded into your local registry & ready to run ! Launch it with the following :
 
 ```console
 [user@hostname]$ podman run --rm -it <chaos-target>:<chaos-version>
@@ -165,8 +188,7 @@ Then, if you want to dev from the inside of our freshly build container, do :
    - [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) : ms-kubernetes-tools.vscode-kubernetes-tools
    - [Remote dev](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) : ms-vscode-remote.vscode-remote-extensionpack
    - _BONUS!_ [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme) : Equinusocio.vsc-material-theme
-3. Update the `image` field of the .devcontainer/devcontainer.json configuration file to be `<chaos-target>:<chaos-version>`
-4. Press [_F1_] & type ```Remote-Containers: Reopen in Container```, [_Enter_]
+4. Press [_F1_] & type ```Remote-Containers: Rebuild & Reopen in Container```, select the desired target, [_Enter_]
 5. Open the worskspace when prompted to. Should pop in the lower right corner
 6. _Happy Coding !_
 
