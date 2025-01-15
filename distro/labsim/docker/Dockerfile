@@ -273,7 +273,7 @@ ENV TZ=Europe/Paris \
 
 
 # multi stage build
-FROM labsim-base-gcc-bookworm:2.0.1 AS labsim-devcontainer-gcc-bookworm
+FROM labsim-base-gcc-bookworm AS labsim-devcontainer-gcc-bookworm
 
 # prettifyng
 LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 14.1.0" \
@@ -367,7 +367,7 @@ COPY --chown=$USERNAME:$USERNAME distro/labsim/docker/labsim.code-workspace /hom
 
 
 # multi stage build
-FROM labsim-base-llvm-bookworm:2.0.1 AS labsim-devcontainer-llvm-bookworm
+FROM labsim-base-llvm-bookworm AS labsim-devcontainer-llvm-bookworm
 
 # prettifyng
 LABEL description="LABSIM devcontainer distro - Linux Debian 12 & LLVM 19.1.0" \
