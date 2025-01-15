@@ -10,7 +10,6 @@
 ############################################
 
 
-# multi stage build
 FROM labsim-base-gcc-bookworm:2.0.1 AS scheme-gateway-devcontainer-gcc-bookworm
 
 # prettifyng
@@ -103,7 +102,6 @@ COPY --chown=$USERNAME:$USERNAME distro/scheme-gateway/docker/scheme-gateway.cod
 #############################################
 
 
-# multi stage build
 FROM labsim-base-llvm-bookworm:2.0.1 AS scheme-gateway-devcontainer-llvm-bookworm
 
 # prettifyng
