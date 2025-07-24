@@ -183,3 +183,81 @@ RUN \
 # finally, inject the LABSIM SSE VSCode workspace
 #
 COPY --chown=$USERNAME:$USERNAME distro/scheme-gateway/docker/scheme-gateway.code-workspace /home/$USERNAME/dev
+
+
+#############################################
+#                                           #
+# SCHEME-GATEWAY-BUILD-LLVM-BOOKWORM        #
+#                                           #
+# ========================================= #
+# -> labsim-base-llvm-bookworm              #
+#############################################
+
+
+FROM scheme-gateway-devcontainer-llvm-bookworm AS scheme-gateway-build-llvm-bookworm
+
+# prettifyng
+LABEL description="SCHEME-GATEWAY build distro - Linux Debian 12 & LLVM 19.1.0" \
+      maintainer="nawfel.kinani@onera.fr" \
+      version="2.0.1" \
+      org.name="ONERA" \
+      org.department="DTIS" \
+      org.unit="ICNA" \
+      org.laboratory="LABSIM" \
+      org.center="Salon-de-Provence" \
+      license="GNU GPLv3"
+
+#
+# mandatory argument : GAIA + user
+#
+ARG USERNAME=labsim
+
+#
+# default bash mode
+#
+SHELL ["/bin/bash", "-c"]
+
+#
+# setup defaul user
+#
+USER $USERNAME
+WORKDIR /home/$USERNAME/dev
+
+#
+# inject VR-link data package into workspace & untar
+#
+COPY --chown=$USERNAME:$USERNAME data/licensed/vrLink5.9.1-linux64-rhe8-20240920.tar.gz /home/$USERNAME/dev/SCHEME-GATEWAY/third_party/
+RUN tar -xzf /home/$USERNAME/dev/SCHEME-GATEWAY/third_party/vrLink5.9.1-linux64-rhe8-20240920.tar.gz 
+
+#
+# fully build the project SCHEME GATEWAY project container :
+# -> build & install OURANOS
+# -> build & install SCHEME-GATEWAY
+#
+RUN \
+    #
+    # source GAIA
+    #
+    source /home/$USERNAME/dev/titans/GAIA/script/GAIA.bashrc \
+    && gaia \
+    #
+    # configure, build & install OURANOS
+    #
+ && cd /home/$USERNAME/dev/titans/OURANOS \
+ && mkdir build \
+ && cd build \
+ && cmake -DLABSIM_INSTALL_PREFIX:PATH=/home/$USERNAME/prod .. \
+ && cmake --build . --target labsim-clean-deploy \
+    #
+    # configure, build & install SCHEME-GATEWAY
+    #
+ && cd /home/$USERNAME/dev/SCHEME-GATEWAY \
+ && mkdir build \
+ && cd build \
+ && cmake -DLABSIM_INSTALL_PREFIX:PATH=/home/$USERNAME/prod .. \
+ && cmake --build . --target labsim-clean-deploy \
+    #
+    # give all access to labsim
+    #
+ && sudo chown -R $USERNAME /home/$USERNAME/prod \
+ && sudo chgrp -R $USERNAME /home/$USERNAME/prod

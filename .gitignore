@@ -71,3 +71,6 @@ github_username.txt
 github_token.txt
 gitlab_username.txt
 gitlab_password.txt
+
+# inhibit data
+data/licensed/*
