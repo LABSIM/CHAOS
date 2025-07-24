@@ -120,11 +120,15 @@ available `<chaos-target>` for each `<chaos-section>` are :
  1. [LABSIM](distro/labsim/docker/Dockerfile) section (docker multi-stage build) :
     - **labsim-base-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
     - **labsim-devcontainer-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
-    - **labsim-base-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM compiler environment whithout SSE
-    - **labsim-devcontainer-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM compiler environment shipped with the desired SSE
+    - **labsim-base-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang compiler environment whithout SSE
+    - **labsim-devcontainer-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang compiler environment shipped with the desired SSE
  2. [SCHEME-GATEWAY](distro/scheme-gateway/docker/Dockerfile) section (docker multi-stage build) :
     - **scheme-gateway-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
     - **scheme-gateway-devcontainer-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
+    - **scheme-gateway-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang compiler environment whithout SSE
+    - **scheme-gateway-devcontainer-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang compiler environment shipped with the desired SSE
+    - **scheme-gateway-build-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang compiler environment shipped with the desired SSE with the builded SCHEME-GATEWAY project
+    - **scheme-gateway-prod-bookworm** target : a Debian Bookworm Linux distro with the installed SCHEME-GATEWAY project
 
 so now you should have a `<chaos-target>:<chaos-version>` container loaded into your local registry & ready to run ! Launch it with the following :
 
@@ -143,6 +147,10 @@ don't forget to exit our running container :
 ```console
 [user@hostname]$ exit
 ```
+
+>
+> **WARNING** : if you want to expose your internal container to remote access, maybe you should check the procedure [here](https://docs.docker.com/engine/daemon/remote-access/#additional-information)
+>
 
 #### 3.2. Podman stack
 
