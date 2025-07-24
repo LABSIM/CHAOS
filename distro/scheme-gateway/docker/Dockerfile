@@ -190,7 +190,7 @@ COPY --chown=$USERNAME:$USERNAME distro/scheme-gateway/docker/scheme-gateway.cod
 # SCHEME-GATEWAY-BUILD-LLVM-BOOKWORM        #
 #                                           #
 # ========================================= #
-# -> labsim-base-llvm-bookworm              #
+# -> labsim-devcontainer-llvm-bookworm      #
 #############################################
 
 
@@ -218,7 +218,7 @@ ARG USERNAME=labsim
 SHELL ["/bin/bash", "-c"]
 
 #
-# setup defaul user
+# setup default user
 #
 USER $USERNAME
 WORKDIR /home/$USERNAME/dev
