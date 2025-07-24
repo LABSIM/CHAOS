@@ -190,7 +190,7 @@ COPY --chown=$USERNAME:$USERNAME distro/scheme-gateway/docker/scheme-gateway.cod
 # SCHEME-GATEWAY-BUILD-LLVM-BOOKWORM        #
 #                                           #
 # ========================================= #
-# -> labsim-devcontainer-llvm-bookworm      #
+# -> scheme-devcontainer-llvm-bookworm      #
 #############################################
 
 
@@ -227,7 +227,9 @@ WORKDIR /home/$USERNAME/dev
 # inject VR-link data package into workspace & untar
 #
 COPY --chown=$USERNAME:$USERNAME data/licensed/vrLink5.9.1-linux64-rhe8-20240920.tar.gz /home/$USERNAME/dev/SCHEME-GATEWAY/third_party/
-RUN tar -xzf /home/$USERNAME/dev/SCHEME-GATEWAY/third_party/vrLink5.9.1-linux64-rhe8-20240920.tar.gz 
+RUN \
+    cd /home/$USERNAME/dev/SCHEME-GATEWAY/third_party \
+ && tar -xzf vrLink5.9.1-linux64-rhe8-20240920.tar.gz
 
 #
 # fully build the project SCHEME GATEWAY project container :
@@ -239,7 +241,8 @@ RUN \
     # source GAIA
     #
     source /home/$USERNAME/dev/titans/GAIA/script/GAIA.bashrc \
-    && gaia \
+    && ls /home/$USERNAME/dev/SCHEME-GATEWAY/third_party/ \
+   #  && gaia \
     #
     # configure, build & install OURANOS
     #
@@ -261,3 +264,48 @@ RUN \
     #
  && sudo chown -R $USERNAME /home/$USERNAME/prod \
  && sudo chgrp -R $USERNAME /home/$USERNAME/prod
+
+#############################################
+#                                           #
+# SCHEME-GATEWAY-PROD-LLVM-BOOKWORM         #
+#                                           #
+# ========================================= #
+# -> bookworm-slim                          #
+#############################################
+
+
+FROM bookworm-slim AS scheme-gateway-prod-llvm-bookworm
+
+# prettifyng
+LABEL description="SCHEME-GATEWAY prod distro - Linux Debian 12 & LLVM 19.1.0" \
+      maintainer="nawfel.kinani@onera.fr" \
+      version="2.0.1" \
+      org.name="ONERA" \
+      org.department="DTIS" \
+      org.unit="ICNA" \
+      org.laboratory="LABSIM" \
+      org.center="Salon-de-Provence" \
+      license="GNU GPLv3"
+
+#
+# mandatory argument : GAIA + user
+#
+ARG USERNAME=labsim
+
+#
+# default bash mode
+#
+SHELL ["/bin/bash", "-c"]
+
+#
+# setup default user
+#
+USER $USERNAME
+WORKDIR /home/$USERNAME/prod
+
+#
+# COPY prod dir from build
+#
+COPY --from=scheme-gateway-build-llvm-bookworm /home/$USERNAME/prod /home/$USERNAME/prod
+COPY --from=scheme-gateway-build-llvm-bookworm /home/$USERNAME/third_party /home/$USERNAME/third_party
+
