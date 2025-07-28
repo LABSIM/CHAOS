@@ -117,12 +117,12 @@ start by running the following command
 
 available `<chaos-target>` for each `<chaos-section>` are :
 
- 1. [LABSIM](distro/labsim/docker/Dockerfile) section (docker multi-stage build) :
+ 1. [LABSIM](distro/labsim/docker/Dockerfile) (multi-stage build) :
     - **labsim-base-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
     - **labsim-devcontainer-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
     - **labsim-base-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang compiler environment whithout SSE
     - **labsim-devcontainer-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang compiler environment shipped with the desired SSE
- 2. [SCHEME-GATEWAY](distro/scheme-gateway/docker/Dockerfile) section (docker multi-stage build) :
+ 2. [SCHEME-GATEWAY](distro/scheme-gateway/docker/Dockerfile) (multi-stage build) :
     - **scheme-gateway-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
     - **scheme-gateway-devcontainer-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
     - **scheme-gateway-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang compiler environment whithout SSE
@@ -160,7 +160,7 @@ don't forget to exit our running container :
 
 available `<chaos-target>` for each `<chaos-section>` are :
 
- 1. **LABSIM** section :
+ 1. **LABSIM** :
     - [labsim-base-gcc-bookworm](distro/labsim/oci/labsim-base-gcc-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
     - [labsim-devcontainer-gcc-bookworm](distro/labsim/oci/labsim-devcontainer-gcc-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
     - [labsim-base-llvm-bookworm](distro/labsim/oci/labsim-base-llvm-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a LLVM compiler environment whithout SSE
