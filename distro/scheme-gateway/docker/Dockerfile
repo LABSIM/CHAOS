@@ -208,9 +208,11 @@ LABEL description="SCHEME-GATEWAY build distro - Linux Debian 12 & LLVM 19.1.0" 
       license="GNU GPLv3"
 
 #
-# mandatory argument : GAIA + user
+# mandatory argument
 #
 ARG USERNAME=labsim
+ARG VRLINK_VERSION="5.9.1"
+ARG VRLINK_DIST_VERSION="$VRLINK_VERSION-linux64-rhe8-20240920"
 
 #
 # default bash mode
@@ -224,12 +226,14 @@ USER $USERNAME
 WORKDIR /home/$USERNAME/dev
 
 #
-# inject VR-link data package into workspace & untar
+# inject VR-link data package into container
 #
-COPY --chown=$USERNAME:$USERNAME data/licensed/vrLink5.9.1-linux64-rhe8-20240920.tar.gz /home/$USERNAME/dev/SCHEME-GATEWAY/third_party/
-RUN \
-    cd /home/$USERNAME/dev/SCHEME-GATEWAY/third_party \
- && tar -xzf vrLink5.9.1-linux64-rhe8-20240920.tar.gz
+COPY --chown=$USERNAME:$USERNAME data/licensed/vrLink$VRLINK_DIST_VERSION.tar.gz /home/$USERNAME/third_party
+RUN cd /home/$USERNAME/third_party \
+ && tar -xzf vrLink$VRLINK_DIST_VERSION.tar.gz \
+ && mv vrlink$VRLINK_VERSION vrlink-$VRLINK_VERSION \ 
+ && rm -f vrLink$VRLINK_DIST_VERSION.tar.gz
+ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USERNAME/third_party/vrlink-$VRLINK_VERSION/lib64"
 
 #
 # fully build the project SCHEME GATEWAY project container :
@@ -238,11 +242,9 @@ RUN \
 #
 RUN \
     #
-    # source GAIA
+    # source bashrc
     #
     source /home/$USERNAME/dev/titans/GAIA/script/GAIA.bashrc \
-    && ls /home/$USERNAME/dev/SCHEME-GATEWAY/third_party/ \
-   #  && gaia \
     #
     # configure, build & install OURANOS
     #
