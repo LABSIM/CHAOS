@@ -232,6 +232,7 @@ COPY --chown=$USERNAME:$USERNAME data/licensed/vrLink$VRLINK_DIST_VERSION.tar.gz
 RUN cd /home/$USERNAME/third_party \
  && tar -xzf vrLink$VRLINK_DIST_VERSION.tar.gz \
  && mv vrlink$VRLINK_VERSION vrlink-$VRLINK_VERSION \ 
+ && rm -rf vrlink-$VRLINK_VERSION/doc vrlink-$VRLINK_VERSION/data vrlink-$VRLINK_VERSION/exemples vrlink-$VRLINK_VERSION/java \
  && rm -f vrLink$VRLINK_DIST_VERSION.tar.gz
 ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/$USERNAME/third_party/vrlink-$VRLINK_VERSION/lib64"
 
