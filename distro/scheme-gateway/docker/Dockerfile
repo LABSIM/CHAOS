@@ -119,12 +119,51 @@ RUN \
         vrLink$VRLINK_DIST_VERSION.tar.gz
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/$USERNAME/third_party/vrlink-$VRLINK_VERSION/lib64
 
+
+#############################################
+#                                           #
+# SCHEME-GATEWAY-BUILD-LLVM-BOOKWORM        #
+#                                           #
+# ========================================= #
+# -> scheme-devcontainer-llvm-bookworm      #
+#############################################
+
+
+FROM scheme-gateway-devcontainer-llvm-bookworm AS scheme-gateway-build-llvm-bookworm
+
+# prettifyng
+LABEL description="SCHEME-GATEWAY build distro - Linux Debian 12 & LLVM 19.1.0" \
+      maintainer="nawfel.kinani@onera.fr" \
+      version="2.0.1" \
+      org.name="ONERA" \
+      org.department="DTIS" \
+      org.unit="ICNA" \
+      org.laboratory="LABSIM" \
+      org.center="Salon-de-Provence" \
+      license="GNU GPLv3"
+
 #
-# fully build the project SCHEME GATEWAY project container when recquired !
+# mandatory argument
+#
+ARG USERNAME=labsim
+
+#
+# default bash mode
+#
+SHELL ["/bin/bash", "-c"]
+
+#
+# setup default user
+#
+USER $USERNAME
+WORKDIR /home/$USERNAME/dev
+
+#
+# fully build the project SCHEME GATEWAY project container :
 # -> build & install OURANOS
 # -> build & install SCHEME-GATEWAY
 #
-ONBUILD RUN \
+RUN \
     #
     # source bashrc
     #
@@ -153,105 +192,10 @@ ONBUILD RUN \
  && cmake -DLABSIM_INSTALL_PREFIX:PATH=/home/$USERNAME/prod .. \
  && cmake --build . --target labsim-clean-deploy \
     #
-    # give all access to labsim
+    # give all access to labsimx
     #
  && sudo chown -R $USERNAME /home/$USERNAME/prod \
  && sudo chgrp -R $USERNAME /home/$USERNAME/prod
-
-
-# #############################################
-# #                                           #
-# # SCHEME-GATEWAY-BUILD-LLVM-BOOKWORM        #
-# #                                           #
-# # ========================================= #
-# # -> scheme-devcontainer-llvm-bookworm      #
-# #############################################
-
-
-# FROM scheme-gateway-devcontainer-llvm-bookworm AS scheme-gateway-build-llvm-bookworm
-
-# # prettifyng
-# LABEL description="SCHEME-GATEWAY build distro - Linux Debian 12 & LLVM 19.1.0" \
-#       maintainer="nawfel.kinani@onera.fr" \
-#       version="2.0.1" \
-#       org.name="ONERA" \
-#       org.department="DTIS" \
-#       org.unit="ICNA" \
-#       org.laboratory="LABSIM" \
-#       org.center="Salon-de-Provence" \
-#       license="GNU GPLv3"
-
-# #
-# # mandatory argument
-# #
-# ARG USERNAME=labsim
-
-# #
-# # default bash mode
-# #
-# SHELL ["/bin/bash", "-c"]
-
-# #
-# # setup default user
-# #
-# USER $USERNAME
-# WORKDIR /home/$USERNAME/dev
-
-# #
-# # inject VRLink data package into container
-# #
-# COPY --chown=$USERNAME:$USERNAME data/licensed/vrLink$VRLINK_DIST_VERSION.tar.gz /home/$USERNAME/third_party
-# RUN \
-#     cd /home/$USERNAME/third_party \
-#  && tar -xzf vrLink$VRLINK_DIST_VERSION.tar.gz \
-#  && mv vrlink$VRLINK_VERSION vrlink-$VRLINK_VERSION \ 
-#  && rm -rf \
-#         vrlink-$VRLINK_VERSION/doc \
-#         vrlink-$VRLINK_VERSION/data \
-#         vrlink-$VRLINK_VERSION/examples \
-#         vrlink-$VRLINK_VERSION/java \
-#         vrlink-$VRLINK_VERSION/bin64 \
-#         vrLink$VRLINK_DIST_VERSION.tar.gz
-# ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/$USERNAME/third_party/vrlink-$VRLINK_VERSION/lib64
-
-# #
-# # fully build the project SCHEME GATEWAY project container :
-# # -> build & install OURANOS
-# # -> build & install SCHEME-GATEWAY
-# #
-# RUN \
-#     #
-#     # source bashrc
-#     #
-#     source /home/$USERNAME/dev/titans/GAIA/script/GAIA.bashrc \
-#     #
-#     # configure, build & install OURANOS
-#     #
-#  && cd /home/$USERNAME/dev/titans/OURANOS \
-#  && git pull \
-#  && mkdir build \
-#  && cd build \
-#  && cmake -DLABSIM_INSTALL_PREFIX:PATH=/home/$USERNAME/prod .. \
-#  && cmake --build . --target labsim-clean-deploy \
-#     # ===================================================================================== << 
-#     # HACK ! switch SCHEME-GATEWAY-API to commit 0deb29b
-#     # ===================================================================================== << 
-#  && cd /home/$USERNAME/dev/SCHEME-GATEWAY-API \
-#  && git switch --detach 0deb29b \
-#     #
-#     # configure, build & install SCHEME-GATEWAY
-#     #
-#  && cd /home/$USERNAME/dev/SCHEME-GATEWAY \
-#  && git pull \
-#  && mkdir build \
-#  && cd build \
-#  && cmake -DLABSIM_INSTALL_PREFIX:PATH=/home/$USERNAME/prod .. \
-#  && cmake --build . --target labsim-clean-deploy \
-#     #
-#     # give all access to labsimx
-#     #
-#  && sudo chown -R $USERNAME /home/$USERNAME/prod \
-#  && sudo chgrp -R $USERNAME /home/$USERNAME/prod
 
  
 #############################################
@@ -341,8 +285,8 @@ ENV TZ=Europe/Paris \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/$USERNAME/third_party/ares-1.34.3/lib/:/home/$USERNAME/third_party/boost-1.86.0/lib/:/home/$USERNAME/third_party/openssl-3.4.0/lib/:/home/$USERNAME/third_party/perl-5.40.0/lib/:/home/$USERNAME/third_party/vrlink-5.9.1/lib64/:/home/$USERNAME/third_party/xerces-3.3.0/lib/\
-    PATH=$PATH:/home/$USERNAME/third_party/ares-1.34.3/bin/:/home/$USERNAME/third_party/openssl-3.4.0/bin/:/home/$USERNAME/third_party/perl-5.40.0/bin/:/home/$USERNAME/third_party/vrlink-5.9.1/bin64/
-
+    PATH=$PATH:/home/$USERNAME/third_party/ares-1.34.3/bin/:/home/$USERNAME/third_party/openssl-3.4.0/bin/:/home/$USERNAME/third_party/perl-5.40.0/bin/:/home/$USERNAME/third_party/vrlink-5.9.1/bin64/\
+    LABSIM_VERBOSITY_LEVEL=DEBUG
 #
 # setup default user
 #
@@ -350,29 +294,29 @@ USER $USERNAME
 WORKDIR /home/$USERNAME/prod/bin/Release
 
 #
-# inject prod env from onbuild devcontainer
+# inject prod env from build container
 #
 COPY \
    --chown=$USERNAME:$USERNAME \
-   --from=scheme-gateway-devcontainer-llvm-bookworm \
+   --from=scheme-gateway-build-llvm-bookworm \
    /home/$USERNAME/.bashrc \
    /home/$USERNAME/
 COPY \
    --chown=$USERNAME:$USERNAME \
-   --from=scheme-gateway-devcontainer-llvm-bookworm \
+   --from=scheme-gateway-build-llvm-bookworm \
    /home/$USERNAME/perl5 \
    /home/$USERNAME/perl5
 COPY \
    --chown=$USERNAME:$USERNAME \
-   --from=scheme-gateway-devcontainer-llvm-bookworm \
+   --from=scheme-gateway-build-llvm-bookworm \
    --exclude=*/include \
    --exclude=*/share \
    --exclude=cmake* \
-   /home/$USERNAME/third_party/ \
-   /home/$USERNAME/
+   /home/$USERNAME/third_party \
+   /home/$USERNAME/third_party
 COPY \
    --chown=$USERNAME:$USERNAME \
-   --from=scheme-gateway-devcontainer-llvm-bookworm \
+   --from=scheme-gateway-build-llvm-bookworm \
    --exclude=*/include \
    --exclude=*ouranos/bin \
    --exclude=*/bin/grpc* \
@@ -384,25 +328,9 @@ COPY \
    /home/$USERNAME/prod
 COPY \
    --chown=$USERNAME:$USERNAME \
-   --from=scheme-gateway-devcontainer-llvm-bookworm \
+   --from=scheme-gateway-build-llvm-bookworm \
    --exclude=*.git \
    --exclude=*.git* \
    --exclude=*.vscode \
    /home/$USERNAME/dev/titans/GAIA \
    /home/$USERNAME/prod/titans/gaia
-# RUN \
-#     rm -rf \
-#       # /home/$USERNAME/prod/titans/gaia/.git \
-#       # /home/$USERNAME/prod/titans/gaia/.vscode \
-#       # /home/$USERNAME/prod/titans/gaia/.gitignore \
-#       # /home/$USERNAME/prod/titans/ouranos/bin \
-#       # /home/$USERNAME/prod/titans/ouranos/include \
-#       # /home/$USERNAME/prod/include \
-#       # /home/$USERNAME/prod/bin/grpc* \
-#       # /home/$USERNAME/prod/bin/proto* \
-#       # /home/$USERNAME/prod/bin/tec \
-#       # /home/$USERNAME/prod/bin/Debug \
-#       # /home/$USERNAME/prod/lib/static/Debug \
-#       /home/$USERNAME/third_party/*/include \
-#       /home/$USERNAME/third_party/*/share \
-#       /home/$USERNAME/third_party/cmake*
