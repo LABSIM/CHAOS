@@ -35,7 +35,7 @@ ARG VRLINK_VERSION="5.9.1"
 ARG VRLINK_DIST_VERSION="$VRLINK_VERSION-linux64-rhe8-20240920"
 
 #
-# default bash mode
+# default shell mode
 #
 SHELL ["/bin/bash", "-c"]
 
