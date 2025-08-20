@@ -177,11 +177,6 @@ RUN \
  && cd build \
  && cmake -DLABSIM_INSTALL_PREFIX:PATH=/home/$USERNAME/prod .. \
  && cmake --build . --target labsim-clean-deploy \
-    # ===================================================================================== << 
-    # HACK ! switch SCHEME-GATEWAY-API to commit 0deb29b
-    # ===================================================================================== << 
- && cd /home/$USERNAME/dev/SCHEME-GATEWAY-API \
- && git switch --detach 0deb29b \
     #
     # configure, build & install SCHEME-GATEWAY
     #
