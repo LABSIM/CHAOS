@@ -102,7 +102,7 @@ ENV TZ=Europe/Paris \
 FROM docker.io/buildpack-deps:bookworm AS labsim-base-llvm-bookworm
 
 # prettifyng
-LABEL description="LABSIM base distro - Linux Debian 12 & LLVM 19.1.0" \
+LABEL description="LABSIM base distro - Linux Debian 12 & LLVM 21.1.1" \
       maintainer="nawfel.kinani@onera.fr" \
       version="2.0.1" \
       org.name="ONERA" \
