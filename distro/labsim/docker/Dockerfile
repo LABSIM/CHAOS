@@ -117,7 +117,7 @@ LABEL description="LABSIM base distro - Linux Debian 12 & LLVM 19.1.0" \
 # --> ARG because it is not persisted in the final image vs. ENV
 #
 ARG DEBIAN_FRONTEND=noninteractive
-ARG LLVM_VERSION=19
+ARG LLVM_VERSION=21
 
 #
 # update
