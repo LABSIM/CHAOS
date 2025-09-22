@@ -281,7 +281,8 @@ ENV TZ=Europe/Paris \
     LANG=en_US.UTF-8 \
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/$USERNAME/third_party/ares-1.34.3/lib/:/home/$USERNAME/third_party/boost-1.86.0/lib/:/home/$USERNAME/third_party/openssl-3.4.0/lib/:/home/$USERNAME/third_party/perl-5.40.0/lib/:/home/$USERNAME/third_party/vrlink-5.9.1/lib64/:/home/$USERNAME/third_party/xerces-3.3.0/lib/\
     PATH=$PATH:/home/$USERNAME/third_party/ares-1.34.3/bin/:/home/$USERNAME/third_party/openssl-3.4.0/bin/:/home/$USERNAME/third_party/perl-5.40.0/bin/:/home/$USERNAME/third_party/vrlink-5.9.1/bin64/\
-    LABSIM_VERBOSITY_LEVEL=DEBUG
+    LABSIM_VERBOSITY_LEVEL=DEBUG\
+    MAKLMGRD_LICENSE_FILE=@wlabsim0047s.scheme.labsim
 #
 # setup default user
 #
