@@ -3,9 +3,10 @@
 	
 	"name": "[docker stack] SCHEME-GATEWAY - Linux & LLVM",
 
-	"image": "scheme-gateway-devcontainer-llvm-bookworm:2.0.1",
+	"image": "scheme-gateway-devcontainer-llvm-bookworm:0.5.a",
 	
 	"remoteUser": "labsim",
+	"containerUser": "labsim",
 	"userEnvProbe": "loginInteractiveShell",
 
 	"capAdd": [ 
