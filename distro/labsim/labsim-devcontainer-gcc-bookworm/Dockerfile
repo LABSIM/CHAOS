@@ -1,22 +1,21 @@
 # syntax = docker/dockerfile:1.4.3
 
 
-#####################################
-#                                   #
-# LABSIM-DEVCONTAINER-LLVM-BOOKWORM #
-#                                   #
-# ================================= #
-# -> labsim-base-llvm-bookworm      #
-#####################################
+####################################
+#                                  #
+# LABSIM-DEVCONTAINER-GCC-BOOKWORM #
+#                                  #
+# ================================ #
+# -> labsim-base-gcc-bookworm      #
+####################################
 
 
-# multi stage build
-FROM labsim-base-llvm-bookworm:2.0.1 AS labsim-devcontainer-llvm-bookworm
+FROM labsim-base-gcc-bookworm:latest AS labsim-devcontainer-gcc-bookworm
 
 # prettifyng
-LABEL description="LABSIM devcontainer distro - Linux Debian 12 & LLVM 19.1.0" \
+LABEL description="LABSIM devcontainer distro - Linux Debian 12 & GNU GCC 14" \
       maintainer="nawfel.kinani@onera.fr" \
-      version="2.0.1" \
+      version="1.0.0" \
       org.name="ONERA" \
       org.department="DTIS" \
       org.unit="ICNA" \
@@ -25,21 +24,14 @@ LABEL description="LABSIM devcontainer distro - Linux Debian 12 & LLVM 19.1.0" \
       license="GNU GPLv3"
 
 #
-# mandatory argument : 
-# - avoid warnings by switching to noninteractive during build
-# - GAIA specific 
-# - user name/UID/GUID
+# mandatory argument : GAIA + user
 #
-ARG DEBIAN_FRONTEND=noninteractive
-ARG GAIA_TARGET_ECOSYSTEM="2.0.1" 
+ARG GAIA_TARGET_ECOSYSTEM="2.0.1"
 ARG GAIA_ENABLE_FEATURE="dev,sb,sf"
 ARG USERNAME=labsim
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-#
-# rootless mode
-#
 RUN \
     #
     # create the labsim dev user
@@ -94,9 +86,9 @@ RUN \
     # bootstrap & run GAIA
     #
  && cd titans/GAIA \
- && usr/bin/env bash GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+ && /usr/bin/env bash GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
 
 #
 # finally, inject the LABSIM SSE VSCode workspace
 #
-COPY --chown=$USERNAME:$USERNAME distro/labsim/oci/labsim.code-workspace /home/$USERNAME/dev
+COPY --chown=$USERNAME:$USERNAME distro/labsim/docker/labsim.code-workspace /home/$USERNAME/dev

@@ -1,11 +1,12 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json 
 {
 	
-	"name": "[docker stack] LABSIM - Linux & LLVM",
+	"name": "[docker stack] SCHEME-GATEWAY - Linux & LLVM",
 
-	"image": "labsim-devcontainer-llvm-bookworm:2.0.1",
+	"image": "scheme-gateway-devcontainer-llvm-bookworm:latest",
 	
 	"remoteUser": "labsim",
+	"containerUser": "labsim",
 	"userEnvProbe": "loginInteractiveShell",
 
 	"capAdd": [ 
@@ -42,6 +43,7 @@
 				"jeff-hykin.better-shellscript-syntax",
 				"d9705996.perl-toolbox",
 				"eamodio.gitlens",
+				"zxh404.vscode-proto3",
 				"mutantdino.resourcemonitor"
 
 			] /* extensions */

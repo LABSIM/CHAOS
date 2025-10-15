@@ -12,12 +12,12 @@
 ####################################
 
 
-FROM docker.io/buildpack-deps:bookworm as labsim-base-llvm-bookworm
+FROM docker.io/buildpack-deps:bookworm AS labsim-base-llvm-bookworm
 
 # prettifyng
-LABEL description="LABSIM base distro - Linux Debian 12 & LLVM 19.1.0" \
+LABEL description="LABSIM base distro - Linux Debian 12 & LLVM 19" \
       maintainer="nawfel.kinani@onera.fr" \
-      version="2.0.1" \
+      version="1.0.0" \
       org.name="ONERA" \
       org.department="DTIS" \
       org.unit="ICNA" \
@@ -171,6 +171,4 @@ ENV TZ=Europe/Paris \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     CC=/usr/local/bin/clang \
-    CXX=/usr/local/bin/clang++ \
-    CXXFLAGS="-stdlib=libc++" \
-    LDFLAGS="-lc++ -lc++abi"
+    CXX=/usr/local/bin/clang++

@@ -63,8 +63,7 @@ $RECYCLE.BIN/
 ##############################################################################################
 
 # inhibit VSCode rules for labsim dev distro specific shared workspace
-!distro/*/*/labsim.code-workspace 
-!distro/*/*/scheme-gateway.code-workspace 
+!distro/*/*.code-workspace
 
 # protect secret files if someone forget them anywhere under the git scope... 
 github_username.txt

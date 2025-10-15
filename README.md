@@ -88,9 +88,14 @@ by convention, we advise :
 
 - `<chaos-section>` == CHAOS high-level section name containing multiple target foreach *project*
 - `<chaos-target>` == CHAOS specific build target name
-- `<chaos-version>` == CHAOS build version, **a good rule of thumbs should be that it matched the intended GAIA Simulation Software Ecosystem (SSE) version**, see under
+- `<chaos-version>` == CHAOS build version, **a good rule of thumbs should be that it should be consistent with each intended GAIA Simulation Software Ecosystem (SSE) version**, see under
 
-actually, the default GAIA SSE is configured to be the v.`2.0.1` with features `dev,sf,sb`, but they can be configured through theses _additionnal_ args in any of the folowwing container engine :
+actually, the default GAIA SSE are configured to be :
+
+- v.`2.0.1` with features `dev,sf,sb` for Debian Bookworm & all Ubuntu distro
+- v.`2.0.2` with features `dev,sf,sb` for Debian Trixie
+
+but they can be individually configured through theses _additionnal_ args in any of the folowing container engine :
 
 ```console
 --build-arg GAIA_TARGET_ECOSYSTEM=<gaia-sse-version>
@@ -112,22 +117,22 @@ for a complete list of available each `<gaia-sse-version>` & `<gaia-sse-feature>
 start by running the following command
 
 ```console
-[user@hostname]$ docker build --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/<chaos-section>/docker/Dockerfile --target <chaos-target> --tag <chaos-target>:<chaos-version> .
+[user@hostname]$ docker build --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/<chaos-section>/Dockerfile --target <chaos-target> --tag <chaos-target>:<chaos-version> .
 ```
 
 available `<chaos-target>` for each `<chaos-section>` are :
 
- 1. [LABSIM](distro/labsim/docker/Dockerfile) (multi-stage build) :
-    - **labsim-base-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
-    - **labsim-devcontainer-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
-    - **labsim-base-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang compiler environment whithout SSE
-    - **labsim-devcontainer-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang compiler environment shipped with the desired SSE
- 2. [SCHEME-GATEWAY](distro/scheme-gateway/docker/Dockerfile) (multi-stage build) :
-    - **scheme-gateway-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
-    - **scheme-gateway-devcontainer-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
-    - **scheme-gateway-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang compiler environment whithout SSE
-    - **scheme-gateway-devcontainer-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang compiler environment shipped with the desired SSE
-    - **scheme-gateway-build-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang compiler environment shipped with the desired SSE with the builded SCHEME-GATEWAY project
+ 1. [LABSIM](distro/labsim/Dockerfile) (multi-stage build) :
+    - **labsim-base-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC 14 compiler environment whithout SSE
+    - **labsim-base-gcc-trixie** target : a Debian Trixie Linux distro with a GNU GCC 15 compiler environment whithout SSE
+    - **labsim-base-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang 19 compiler environment whithout SSE
+    - **labsim-devcontainer-gcc-bookworm** target : a Debian Bookworm Linux distro with a GNU GCC 14 compiler environment shipped with the v2.0.1 GAIA SSE
+    - **labsim-devcontainer-gcc-trixie** target : a Debian Trixie Linux distro with a GNU GCC 15 compiler environment shipped with the v2.0.2 GAIA SSE
+    - **labsim-devcontainer-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang 19 compiler environment shipped with the v2.0.1 GAIA SSE
+ 2. [SCHEME-GATEWAY](distro/scheme-gateway/Dockerfile) (multi-stage build) :
+    - **scheme-gateway-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang 21 compiler environment whithout SSE
+    - **scheme-gateway-devcontainer-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang 21 compiler environment shipped with the v2.0.1 GAIA SSE
+    - **scheme-gateway-build-llvm-bookworm** target : a Debian Bookworm Linux distro with a LLVM Clang 21 compiler environment shipped with the v2.0.1 GIAIA SSE & the SCHEME-GATEWAY builded project
     - **scheme-gateway-prod-bookworm** target : a Debian Bookworm Linux distro with the installed SCHEME-GATEWAY project
 
 so now you should have a `<chaos-target>:<chaos-version>` container loaded into your local registry & ready to run ! Launch it with the following :
@@ -155,16 +160,16 @@ don't forget to exit our running container :
 #### 3.2. Podman stack
 
 ```console
-[user@hostname]$ podman build --format oci --isolation rootless --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/<chaos-section>/oci/<chaos-target>/Containerfile --tag <chaos-target>:<chaos-version> .
+[user@hostname]$ podman build --format oci --isolation rootless --no-cache --load --secret id=GITHUB_USERNAME,src=your/local/secret/path/github_username.txt --secret id=GITHUB_TOKEN,src=your/local/secret/path/github_token.txt --file distro/<chaos-section>/<chaos-target>/Containerfile --tag <chaos-target>:<chaos-version> .
 ```
 
 available `<chaos-target>` for each `<chaos-section>` are :
 
  1. **LABSIM** :
-    - [labsim-base-gcc-bookworm](distro/labsim/oci/labsim-base-gcc-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a GNU GCC compiler environment whithout SSE
-    - [labsim-devcontainer-gcc-bookworm](distro/labsim/oci/labsim-devcontainer-gcc-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a GNU GCC compiler environment shipped with the desired SSE
-    - [labsim-base-llvm-bookworm](distro/labsim/oci/labsim-base-llvm-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a LLVM compiler environment whithout SSE
-    - [labsim-devcontainer-llvm-bookworm](distro/labsim/oci/labsim-devcontainer-llvm-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a LLVM compiler environment shipped with the desired SSE
+    - [labsim-base-gcc-bookworm](distro/labsim/oci/labsim-base-gcc-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a GNU GCC 14compiler environment whithout SSE
+    - [labsim-devcontainer-gcc-bookworm](distro/labsim/oci/labsim-devcontainer-gcc-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a GNU GCC 14 compiler environment shipped with the v2.0.1 GAIA SSE
+    - [labsim-base-llvm-bookworm](distro/labsim/oci/labsim-base-llvm-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a LLVM 19 compiler environment whithout SSE
+    - [labsim-devcontainer-llvm-bookworm](distro/labsim/oci/labsim-devcontainer-llvm-bookworm/Containerfile) target : a Debian Bookworm Linux distro with a LLVM 19 compiler environment shipped with the v2.0.1 GAIA SSE
 
 so now you should have a `<chaos-target>:<chaos-version>` container loaded into your local registry & ready to run ! Launch it with the following :
 
