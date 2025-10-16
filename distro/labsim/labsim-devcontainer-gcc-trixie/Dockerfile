@@ -85,10 +85,10 @@ RUN \
     #
     # bootstrap & run GAIA
     #
- && cd titans/GAIA 
-#  && /usr/bin/env bash GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+ && cd titans/GAIA \
+ && /usr/bin/env bash GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
 
 #
 # finally, inject the LABSIM SSE VSCode workspace
 #
-COPY --chown=$USERNAME:$USERNAME distro/labsim/docker/labsim.code-workspace /home/$USERNAME/dev
+COPY --chown=$USERNAME:$USERNAME distro/labsim/labsim.code-workspace /home/$USERNAME/dev
