@@ -15,7 +15,7 @@
 FROM docker.io/buildpack-deps:trixie AS labsim-base-llvm-trixie
 
 # prettifyng
-LABEL description="LABSIM base distro - Linux Debian 14 & LLVM 20" \
+LABEL description="LABSIM base distro - Linux Debian 13 & LLVM 20" \
       maintainer="nawfel.kinani@onera.fr" \
       version="1.0.0" \
       org.name="ONERA" \
@@ -75,6 +75,10 @@ RUN \
 && wget https://apt.llvm.org/llvm.sh \
 && chmod +x llvm.sh \
 && ./llvm.sh $LLVM_VERSION all \
+    #
+    # "install" into standard env
+    #
+ && for f in /usr/lib/llvm-$LLVM_VERSION/bin/*; do ln -sf "$f" /usr/local/bin; done \
     #
     # apt cleanup
     #

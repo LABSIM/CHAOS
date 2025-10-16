@@ -13,7 +13,7 @@
 FROM labsim-base-llvm-trixie:latest AS labsim-devcontainer-llvm-trixie
 
 # prettifyng
-LABEL description="LABSIM devcontainer distro - Linux Debian 13 & LLVM 21" \
+LABEL description="LABSIM devcontainer distro - Linux Debian 13 & LLVM 20" \
       maintainer="nawfel.kinani@onera.fr" \
       version="1.0.0" \
       org.name="ONERA" \
