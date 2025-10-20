@@ -69,7 +69,6 @@ RUN \
     zstd \
     cmake \
     ninja-build \
-    libxerces-c-dev \
     #
     # LLVM automatic script repo installation
     #
