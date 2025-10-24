@@ -9,7 +9,7 @@
 		{ "name": "OURANOS", "path": "./titans/OURANOS" },
 		{ "name": "CHAOS",   "path": "./titans/CHAOS"   },
 		{ "name": "GAIA",    "path": "./titans/GAIA"    },
-		{ "name": "ZEUS",    "path": "./olypiens/ZEUS"  }
+		{ "name": "ZEUS",    "path": "./olympiens/ZEUS" }
 
 	], /* folders */
 

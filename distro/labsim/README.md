@@ -8,27 +8,21 @@
 
 ## Independant build targets
 
-1. GCC Toolchain
-   1. **labsim-base-gcc-bookworm**
-      - from [*gcc:14.1.0-bookworm*](https://hub.docker.com/_/gcc)
-         - from [*buildpack-deps:bookworm*](https://hub.docker.com/_/buildpack-deps)
-            - from [*buildpack-deps:bookworm-scm*](https://hub.docker.com/_/buildpack-deps)
-               - from [*buildpack-deps:bookworm-curl*](https://hub.docker.com/_/buildpack-deps)
-                  - base [*Debian:bookworm*](https://hub.docker.com/_/debian)
-   2. **labsim-base-gcc-trixie**
-      - from [*gcc:15.2.0-trixie*](https://hub.docker.com/_/gcc)
-         - from [*buildpack-deps:trixie*](https://hub.docker.com/_/buildpack-deps)
-            - from [*buildpack-deps:trixie-scm*](https://hub.docker.com/_/buildpack-deps)
-               - from [*buildpack-deps:trixie-curl*](https://hub.docker.com/_/buildpack-deps)
-                  - base [*Debian:trixie*](https://hub.docker.com/_/debian)
-   3. **labsim-devcontainer-gcc-bookworm**
-      - from *labsim-base-gcc-bookworm*
-   4. **labsim-devcontainer-gcc-trixie**
-      - from *labsim-base-gcc-trixie*
-2. LLVM Toolchain
-   1. **labsim-base-llvm-bookworm**
-      - from [*buildpack-deps:bookworm-scm*](https://hub.docker.com/_/buildpack-deps)
-         - from [*buildpack-deps:bookworm-curl*](https://hub.docker.com/_/buildpack-deps)
-            - base [*Debian:bookworm*](https://hub.docker.com/_/debian)
-   2. **labsim-devcontainer-llvm-bookworm**
-      - from *labsim-base-llvm-bookworm*
+- base [*Debian:bookworm*](https://hub.docker.com/_/debian)
+  - [*buildpack-deps:bookworm-curl*](https://hub.docker.com/_/buildpack-deps)
+    - [*buildpack-deps:bookworm-scm*](https://hub.docker.com/_/buildpack-deps)
+      - [*buildpack-deps:bookworm*](https://hub.docker.com/_/buildpack-deps)  
+        - => **labsim-base-llvm-bookworm** *(LLVM 19)* 
+          - => **labsim-devcontainer-llvm-bookworm**
+        - [*gcc:14.1.0-bookworm*](https://hub.docker.com/_/gcc)
+          - => **labsim-base-gcc-bookworm**
+            - => **labsim-devcontainer-gcc-bookworm**
+- base [*Debian:trixie*](https://hub.docker.com/_/debian)
+  - from [*buildpack-deps:trixie-curl*](https://hub.docker.com/_/buildpack-deps)
+    - from [*buildpack-deps:trixie-scm*](https://hub.docker.com/_/buildpack-deps)
+      - from [*buildpack-deps:trixie*](https://hub.docker.com/_/buildpack-deps)
+        - => **labsim-base-llvm-trixie** *(LLVM 20)*
+          - => **labsim-devcontainer-llvm-trixie**
+        - from [*gcc:15.2.0-trixie*](https://hub.docker.com/_/gcc)
+          - => **labsim-base-gcc-trixie**
+            - => **labsim-devcontainer-gcc-trixie**
