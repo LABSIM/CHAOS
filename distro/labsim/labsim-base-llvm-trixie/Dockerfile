@@ -47,6 +47,7 @@ RUN \
     #
     # generic package
     #
+    build-essential \
     wget \
     gpg \
     apt-transport-https \
