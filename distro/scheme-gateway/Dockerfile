@@ -10,12 +10,12 @@
 #############################################
 
 
-FROM labsim-base-llvm-bookworm:2.0.1 AS scheme-gateway-devcontainer-llvm-bookworm
+FROM labsim-base-llvm-bookworm:1.0.0 AS scheme-gateway-devcontainer-llvm-bookworm
 
 # prettifyng
 LABEL description="SCHEME-GATEWAY devcontainer distro - Linux Debian 12 & LLVM 19.1.0" \
       maintainer="nawfel.kinani@onera.fr" \
-      version="2.0.1" \
+      version="0.6.a" \
       org.name="ONERA" \
       org.department="DTIS" \
       org.unit="ICNA" \
@@ -100,7 +100,7 @@ RUN \
 #
 # inject the LABSIM SSE VSCode workspace
 #
-COPY --chown=$USERNAME:$USERNAME distro/scheme-gateway/docker/scheme-gateway.code-workspace /home/$USERNAME/dev
+COPY --chown=$USERNAME:$USERNAME distro/scheme-gateway/scheme-gateway.code-workspace /home/$USERNAME/dev
 
 #
 # VRLink specific
@@ -134,7 +134,7 @@ FROM scheme-gateway-devcontainer-llvm-bookworm AS scheme-gateway-build-llvm-book
 # prettifyng
 LABEL description="SCHEME-GATEWAY build distro - Linux Debian 12 & LLVM 19.1.0" \
       maintainer="nawfel.kinani@onera.fr" \
-      version="2.0.1" \
+      version="0.6.a" \
       org.name="ONERA" \
       org.department="DTIS" \
       org.unit="ICNA" \
@@ -207,7 +207,7 @@ FROM docker.io/debian:bookworm-slim AS scheme-gateway-prod-llvm-bookworm
 # prettifyng
 LABEL description="SCHEME-GATEWAY production distro - Linux Debian 12 & LLVM 19.1.0" \
       maintainer="nawfel.kinani@onera.fr" \
-      version="2.0.1" \
+      version="0.6.a" \
       org.name="ONERA" \
       org.department="DTIS" \
       org.unit="ICNA" \
