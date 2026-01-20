@@ -48,11 +48,18 @@ RUN \
     # generic package
     #
     build-essential \
+    linux-libc-dev \
+    curl \
+    zip \ 
+    unzip \
+    tar \
     wget \
     gpg \
     apt-transport-https \
     autoconf \
+    autoconf-archive \
     automake \
+    libtool \
     bison \
     ccache \
     dpkg-dev \

@@ -46,6 +46,7 @@ RUN apt-get --quiet update \
     #
     apt-transport-https \
     autoconf \
+    autoconf-archive \
     automake \
     bison \
     ccache \
@@ -58,10 +59,17 @@ RUN apt-get --quiet update \
     libzstd-dev \
     libncurses-dev \
     libacl1-dev \
+    libtool \
+    linux-libc-dev \
     make \
+    cmake \
     patch \
     wget \
     zstd \
+    curl \
+    zip \ 
+    unzip \
+    tar \
     #
     # GCC specific package
     # - default distro supplied GDB
