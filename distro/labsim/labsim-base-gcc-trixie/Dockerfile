@@ -59,6 +59,7 @@ RUN set -ex; \
     man \
     gdb \
     valgrind \
+    perl \
     #
     # cleanup
     #
