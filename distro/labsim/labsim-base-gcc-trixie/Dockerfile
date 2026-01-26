@@ -64,7 +64,7 @@ RUN set -ex; \
     #
  && apt-get autoremove --purge -y \
  && apt-get clean \
- && apt-get dist-clean
+ && apt-get dist-clean \
  && rm -rf /var/lib/apt/lists/* \
     #
     # then, setup locale
