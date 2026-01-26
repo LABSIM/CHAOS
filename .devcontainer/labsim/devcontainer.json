@@ -3,7 +3,7 @@
 	
 	"name": "[docker stack] LABSIM - Linux & LLVM",
 
-	"image": "labsim-devcontainer-llvm-trixie:latest",
+	"image": "labsim-devcontainer-gcc-trixie:latest",
 	
 	"remoteUser": "labsim",
 	"userEnvProbe": "loginInteractiveShell",

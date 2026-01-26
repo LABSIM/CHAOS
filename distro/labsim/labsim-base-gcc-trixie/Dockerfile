@@ -34,52 +34,37 @@ LABEL description="LABSIM base distro - Linux Debian 13 & GNU GCC 15" \
 ARG DEBIAN_FRONTEND=noninteractive
 
 #
-# update
+# command
 #
-RUN apt-get --quiet update \
+RUN set -ex; \
+	 #
+    # refresh
+ && apt-get --quiet update \
     #
     # install specific tools - yes to every prompt - no recommmended
     #
  && apt-get install --quiet --no-install-recommends --assume-yes \
     #
-    # generic package
+    # packages
     #
-    apt-transport-https \
-    autoconf \
-    autoconf-archive \
-    automake \
-    bison \
-    ccache \
-    dpkg-dev \
-    file \
-    flex \
-    gawk \
-    gnupg2 \
-    locales \
-    libzstd-dev \
-    libncurses-dev \
-    libacl1-dev \
-    libtool \
-    linux-libc-dev \
-    make \
-    cmake \
-    patch \
-    wget \
-    zstd \
-    curl \
-    zip \ 
-    unzip \
+    zip \
     tar \
-    #
-    # GCC specific package
-    # - default distro supplied GDB
-    #
+    gpg \
+    apt-transport-https \
+    locales \
+    ccache \
+    cmake \
+    ninja-build \
+    vim \
+    man \
     gdb \
+    valgrind \
     #
     # cleanup
     #
  && apt-get autoremove --purge -y \
  && apt-get clean \
+ && apt-get dist-clean
  && rm -rf /var/lib/apt/lists/* \
     #
     # then, setup locale

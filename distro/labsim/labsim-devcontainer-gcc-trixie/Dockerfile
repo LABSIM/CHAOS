@@ -26,8 +26,7 @@ LABEL description="LABSIM devcontainer distro - Linux Debian 13 & GNU GCC 15" \
 #
 # mandatory argument : GAIA + user
 #
-ARG GAIA_TARGET_ECOSYSTEM="2.0.2"
-ARG GAIA_ENABLE_FEATURE="dev,sb,sf"
+ARG GAIA_TARGET_ECOSYSTEM="3.0.0"
 ARG USERNAME=labsim
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -81,12 +80,13 @@ RUN \
     # give all access to labsim
     #
 && sudo chown -R $USERNAME /home/$USERNAME \
-&& sudo chgrp -R $USERNAME /home/$USERNAME \
-    #
-    # bootstrap & run GAIA
-    #
- && cd titans/GAIA \
- && /usr/bin/env bash GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+&& sudo chgrp -R $USERNAME /home/$USERNAME 
+# \
+#     #
+#     # bootstrap & run GAIA
+#     #
+#  && cd titans/GAIA \
+#  && /usr/bin/env bash GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
 
 #
 # finally, inject the LABSIM SSE VSCode workspace
