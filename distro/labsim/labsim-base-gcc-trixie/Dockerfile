@@ -36,7 +36,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 #
 # command
 #
-RUN set -ex; \
+RUN set -ex \
 	 #
     # refresh
  && apt-get --quiet update \
@@ -45,7 +45,7 @@ RUN set -ex; \
     #
  && apt-get install --quiet --no-install-recommends --assume-yes \
     #
-    # packages
+    # packages list
     #
     zip \
     tar \
