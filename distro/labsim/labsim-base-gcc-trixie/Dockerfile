@@ -47,6 +47,7 @@ RUN set -ex \
     #
     # packages list
     #
+    autoconf-archive \
     zip \
     tar \
     gpg \
@@ -60,6 +61,7 @@ RUN set -ex \
     gdb \
     valgrind \
     perl \
+    python3.13-venv \
     #
     # cleanup
     #

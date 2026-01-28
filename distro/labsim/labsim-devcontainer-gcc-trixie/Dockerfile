@@ -92,13 +92,15 @@ RUN \
     # give all access to labsim
     #
 && sudo chown -R $USERNAME /home/$USERNAME \
-&& sudo chgrp -R $USERNAME /home/$USERNAME 
-# \
-#     #
-#     # bootstrap & run GAIA
-#     #
-#  && cd titans/GAIA \
-#  && /usr/bin/env bash GAIA-bootstrap --verbosity-level info --target-ecosystem ${GAIA_TARGET_ECOSYSTEM} --enable-feature ${GAIA_ENABLE_FEATURE}
+&& sudo chgrp -R $USERNAME /home/$USERNAME \
+    #
+    # GAIA ecosystem - bootstrap, install & export LABSIM SSE SDK through VCPKG. Then finally, removed temporary installation dir
+    #
+ && cd titans/GAIA/ecosystem/${GAIA_TARGET_ECOSYSTEM}/ \
+ && ../../third_party/vcpkg/bootstrap-vcpkg.sh \
+ && ../../third_party/vcpkg/vcpkg install --clean-after-build \
+ && ../../third_party/vcpkg/vcpkg export --raw --output-dir=/home/$USERNAME --output=third_party \
+ && rm -rf vcpkg_installed
 
 #
 # finally, inject the LABSIM SSE VSCode workspace
