@@ -47,6 +47,7 @@ RUN set -ex \
     #
     # packages list
     #
+    binutils-gold \
     autoconf-archive \
     zip \
     tar \
@@ -55,6 +56,7 @@ RUN set -ex \
     locales \
     ccache \
     cmake \
+    cmake-curses-gui \
     ninja-build \
     vim \
     man \
@@ -73,7 +75,26 @@ RUN set -ex \
     # then, setup locale
     #
  && locale-gen en_US.UTF-8 \
- && localedef -i en_US -f UTF-8 en_US.UTF-8
+ && localedef -i en_US -f UTF-8 en_US.UTF-8 \
+    #
+    # then, setup a PERL env
+    #
+ && cpan App::cpanminus \
+ && cpanm \
+    --verbose \
+    FindBin \
+    Switch \
+    Graph \
+    List::Util \
+    Getopt::Long \
+    Pod::Usage \
+    Pod::Find \
+    File::Copy::Recursive \
+    File::Remove \
+    File::HomeDir \
+    YAML::XS \
+    IPC::System::Simple \
+    XML::SimpleObject::LibXML
 
 # timezone & env locales
 ENV TZ=Europe/Paris \
