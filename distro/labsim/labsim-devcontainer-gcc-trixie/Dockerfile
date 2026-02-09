@@ -62,12 +62,7 @@ RUN \
  && rm -rf /var/lib/apt/lists/* 
 
 #
-# setup the LABSIM Simulation Software Ecosystem (SSE) : 
-# -> default user
-# -> default dev dir
-# -> clone repos
-# -> integrate GAIA features 
-# -> setup VSCode workspace
+# setup the LABSIM Simulation Software Ecosystem (SSE)
 #
 USER $USERNAME
 WORKDIR /home/$USERNAME/dev
@@ -91,11 +86,12 @@ RUN \
     # give all access to labsim
     #
 && sudo chown -R $USERNAME /home/$USERNAME \
-&& sudo chgrp -R $USERNAME /home/$USERNAME \
-    #
-    # Run GAIA => targeting LABSIM SSE v3.0.0
-    #
- && /usr/bin/env bash titans/GAIA/ecosystem/3.0.0/GAIA.sh 
+&& sudo chgrp -R $USERNAME /home/$USERNAME
+
+#
+# Bootstraping GAIA : targeting LABSIM SSE v3.0.0
+#
+RUN /usr/bin/env bash titans/GAIA/ecosystem/3.0.0/GAIA.sh
 
 #
 # finally, inject the LABSIM SSE VSCode workspace
