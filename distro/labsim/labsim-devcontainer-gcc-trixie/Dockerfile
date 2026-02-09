@@ -32,7 +32,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 #
 # mandatory argument : GAIA + user
 #
-ARG GAIA_TARGET_ECOSYSTEM="3.0.0"
 ARG USERNAME=labsim
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -94,14 +93,9 @@ RUN \
 && sudo chown -R $USERNAME /home/$USERNAME \
 && sudo chgrp -R $USERNAME /home/$USERNAME \
     #
-    # GAIA ecosystem - bootstrap, install & export LABSIM SSE SDK through VCPKG. Then finally, remove temporary installation dir & configure .bashrc
+    # Run GAIA => targeting LABSIM SSE v3.0.0
     #
- && cd titans/GAIA/ecosystem/${GAIA_TARGET_ECOSYSTEM}/ \
- && ../../third_party/vcpkg/bootstrap-vcpkg.sh \
- && ../../third_party/vcpkg/vcpkg install --clean-after-build \
- && ../../third_party/vcpkg/vcpkg export --raw --output-dir=/home/$USERNAME --output=third_party \
- && rm -rf vcpkg_installed \
- && echo /home/$USERNAME/dev/titans/GAIA/ecosystem/$GAIA_TARGET_ECOSYSTEM/GAIA.bashrc >> /home/$USERNAME/.bashrc
+ && /usr/bin/env bash titans/GAIA/ecosystem/3.0.0/GAIA.sh 
 
 #
 # finally, inject the LABSIM SSE VSCode workspace
