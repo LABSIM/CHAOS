@@ -91,7 +91,7 @@ RUN \
 #
 # Bootstraping GAIA : targeting LABSIM SSE v3.0.0
 #
-RUN /usr/bin/env bash titans/GAIA/ecosystem/3.0.0/GAIA.sh
+RUN set -ex; cd titans/GAIA/ecosystem/3.0.0; ./GAIA.sh
 
 #
 # finally, inject the LABSIM SSE VSCode workspace
