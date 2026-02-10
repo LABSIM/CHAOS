@@ -86,18 +86,9 @@ RUN \
     # give all access to labsim
     #
 && sudo chown -R $USERNAME /home/$USERNAME \
-&& sudo chgrp -R $USERNAME /home/$USERNAME
-
-#
-# GAIA
-#
-RUN \
+&& sudo chgrp -R $USERNAME /home/$USERNAME \
    #
-   # print command 
-   #
-   set -ex \
-   #
-   # targeting LABSIM SSE v3.0.0
+   # targeting LABSIM SSE v3.0.0 through GAIA
    #
 && cd titans/GAIA/ecosystem/3.0.0 \
 && ./GAIA.sh
