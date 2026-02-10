@@ -38,7 +38,7 @@ ARG USER_GID=$USER_UID
 
 RUN \
     #
-    # print
+    # print command 
     #
     set -ex \
     #
@@ -89,9 +89,18 @@ RUN \
 && sudo chgrp -R $USERNAME /home/$USERNAME
 
 #
-# Bootstraping GAIA : targeting LABSIM SSE v3.0.0
+# GAIA
 #
-RUN set -ex; cd titans/GAIA/ecosystem/3.0.0; ./GAIA.sh
+RUN \
+   #
+   # print command 
+   #
+   set -ex \
+   #
+   # targeting LABSIM SSE v3.0.0
+   #
+&& cd titans/GAIA/ecosystem/3.0.0 \
+&& ./GAIA.sh
 
 #
 # finally, inject the LABSIM SSE VSCode workspace
