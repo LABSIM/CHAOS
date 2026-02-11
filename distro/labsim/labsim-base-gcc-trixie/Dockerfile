@@ -62,6 +62,8 @@ RUN set -ex \
     man \
     gdb \
     valgrind \
+    clang-tidy \
+    clang-format \
     perl \
     python3.13-venv \
     #
@@ -75,26 +77,7 @@ RUN set -ex \
     # then, setup locale
     #
  && locale-gen en_US.UTF-8 \
- && localedef -i en_US -f UTF-8 en_US.UTF-8 \
-    #
-    # then, setup a PERL env
-    #
- && cpan App::cpanminus \
- && cpanm \
-    --verbose \
-    FindBin \
-    Switch \
-    Graph \
-    List::Util \
-    Getopt::Long \
-    Pod::Usage \
-    Pod::Find \
-    File::Copy::Recursive \
-    File::Remove \
-    File::HomeDir \
-    YAML::XS \
-    IPC::System::Simple \
-    XML::SimpleObject::LibXML
+ && localedef -i en_US -f UTF-8 en_US.UTF-8
 
 # timezone & env locales
 ENV TZ=Europe/Paris \
