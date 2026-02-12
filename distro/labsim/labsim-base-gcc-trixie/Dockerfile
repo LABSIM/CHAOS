@@ -65,6 +65,7 @@ RUN set -ex \
     clang-tidy \
     clang-format \
     perl \
+    cpanminus \
     python3.13-venv \
     #
     # cleanup
