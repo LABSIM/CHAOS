@@ -67,6 +67,8 @@ RUN set -ex \
     perl \
     cpanminus \
     python3.13-venv \
+    doxygen \
+    graphviz \
     #
     # cleanup
     #
