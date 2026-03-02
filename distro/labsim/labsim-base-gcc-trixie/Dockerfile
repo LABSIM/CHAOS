@@ -47,8 +47,12 @@ RUN set -ex \
     #
     # packages list
     #
+    autoconf \
+    automake \
+    libtool \
+    libtool-bin \
+    build-essential \
     binutils-gold \
-    autoconf-archive \
     zip \
     tar \
     gpg \
