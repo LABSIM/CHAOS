@@ -70,11 +70,8 @@ RUN set -ex \
     clang-format \
     perl \
     cpanminus \
-    python3.13-venv \
     doxygen \
     graphviz \
-    openmpi-bin \
-    openmpi-common \
     #
     # cleanup
     #
