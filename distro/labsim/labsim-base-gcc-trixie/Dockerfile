@@ -73,6 +73,8 @@ RUN set -ex \
     python3.13-venv \
     doxygen \
     graphviz \
+    openmpi-bin \
+    openmpi-common \
     #
     # cleanup
     #
