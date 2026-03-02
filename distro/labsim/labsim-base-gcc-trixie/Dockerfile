@@ -48,6 +48,7 @@ RUN set -ex \
     # packages list
     #
     autoconf \
+    autoconf-archive \
     automake \
     libtool \
     libtool-bin \
@@ -72,6 +73,7 @@ RUN set -ex \
     cpanminus \
     doxygen \
     graphviz \
+    python3.13-venv \
     #
     # cleanup
     #
