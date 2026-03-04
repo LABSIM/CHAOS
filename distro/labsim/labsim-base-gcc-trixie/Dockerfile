@@ -73,7 +73,8 @@ RUN set -ex \
     cpanminus \
     doxygen \
     graphviz \
-    python3.13-venv \
+    python3-venv \
+    python3-dev \
     #
     # cleanup
     #
