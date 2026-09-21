@@ -3,6 +3,7 @@
 	// setup dev
 	"folders": [
 
+		{ "name": "CHAOS", "path": "./titans/CHAOS" },
 		{ "name": "UMBRELLA", "path": "./project/UMBRELLA" }
 
 	], /* folders */

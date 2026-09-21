@@ -77,6 +77,7 @@ RUN set -ex \
     graphviz \
     python3-venv \
     python3-dev \
+    libusb-1.0-0 \
     #
     # cleanup
     #
@@ -165,11 +166,11 @@ RUN \
     #
     # clone LABSIM repositories
     #
-    # sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/UMBRELLA.git project/UMBRELLA \
+    sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/UMBRELLA.git project/UMBRELLA \
     #
     # give all access to labsim
     #
-    sudo chown -R $USERNAME /home/$USERNAME \
+ && sudo chown -R $USERNAME /home/$USERNAME \
  && sudo chgrp -R $USERNAME /home/$USERNAME 
 
 #
@@ -184,9 +185,9 @@ COPY --chown=$USERNAME:$USERNAME data/licensed/$FSDI_DIST_VERSION.zip /home/$USE
 RUN \
     cd /home/$USERNAME/third_party \
  && unzip -a $FSDI_DIST_VERSION.zip -d forceseat-di-$FSDI_VERSION \
- && rm -rf $FSDI_DIST_VERSION.zip
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/$USERNAME/third_party/forceseat-di-$FSDI_VERSION/lib64
-
+ && rm -rf $FSDI_DIST_VERSION.zip \
+ && echo "export LD_LIBRARY_PATH=/home/$USERNAME/third_party/forceseat-di-$FSDI_VERSION${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}" >> ~/.bashrc \
+ && ln -s /home/$USERNAME/third_party/forceseat-di-$FSDI_VERSION/ForceSeatDI64.LinuxPC.so /home/$USERNAME/third_party/forceseat-di-$FSDI_VERSION/ForceSeatDI64.so
 
 # #############################################
 # #                                           #
