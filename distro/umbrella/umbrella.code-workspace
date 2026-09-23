@@ -4,6 +4,8 @@
 	"folders": [
 
 		{ "name": "CHAOS", "path": "./titans/CHAOS" },
+		{ "name": "GAIA", "path": "./titans/GAIA" },
+		{ "name": "OURANOS", "path": "./titans/OURANOS" },
 		{ "name": "UMBRELLA", "path": "./project/UMBRELLA" }
 
 	], /* folders */

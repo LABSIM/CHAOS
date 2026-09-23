@@ -114,6 +114,7 @@ FROM umbrella-base-gcc-trixie:latest AS umbrella-devcontainer-gcc-trixie
 #
 # mandatory arguments
 #
+ARG GAIA_TARGET_ECOSYSTEM="3.0.0"
 ARG USERNAME=labsim
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -166,12 +167,20 @@ RUN \
     #
     # clone LABSIM repositories
     #
-    sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/UMBRELLA.git project/UMBRELLA \
+    sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/GAIA.git titans/GAIA \
+ && sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/OURANOS.git titans/OURANOS \
+ && sudo git clone --recurse-submodules https://$(cat /run/secrets/GITHUB_USERNAME):$(cat /run/secrets/GITHUB_TOKEN)@github.com/LABSIM/UMBRELLA.git project/UMBRELLA \
     #
     # give all access to labsim
     #
  && sudo chown -R $USERNAME /home/$USERNAME \
- && sudo chgrp -R $USERNAME /home/$USERNAME 
+ && sudo chgrp -R $USERNAME /home/$USERNAME \
+   #
+   # targeting LABSIM SSE through GAIA
+   #
+&& cd titans/GAIA/ecosystem/$GAIA_TARGET_ECOSYSTEM \
+&& ./GAIA.sh
+
 
 #
 # inject the LABSIM SSE VSCode workspace
