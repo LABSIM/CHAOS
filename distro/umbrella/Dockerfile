@@ -16,9 +16,8 @@
 
 FROM docker.io/gcc:16.2.0-trixie AS umbrella-base-gcc-trixie
 
-
 # prettifyng
-LABEL description="UMBRELLAbase distro - Linux Debian 13 & GNU GCC 16" \
+LABEL description="UMBRELLA base distro - Linux Debian 13 & GNU GCC 16" \
       maintainer="nawfel.kinani@onera.fr" \
       version="0.1.a" \
       org.name="ONERA" \
@@ -111,6 +110,17 @@ ENV TZ=Europe/Paris \
 
 FROM umbrella-base-gcc-trixie:latest AS umbrella-devcontainer-gcc-trixie
 
+# prettifyng
+LABEL description="UMBRELLA devcontainer distro - Linux Debian 13 & GNU GCC 16" \
+      maintainer="nawfel.kinani@onera.fr" \
+      version="0.1.a" \
+      org.name="ONERA" \
+      org.department="DTIS" \
+      org.unit="ICNA" \
+      org.laboratory="LABSIM" \
+      org.center="Salon-de-Provence" \
+      license="GNU GPLv3"
+
 #
 # mandatory arguments
 #
@@ -197,3 +207,76 @@ RUN \
  && rm -rf $FSDI_DIST_VERSION.zip \
  && echo "export LD_LIBRARY_PATH=/home/$USERNAME/third_party/forceseat-di-$FSDI_VERSION${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}" >> ~/.bashrc \
  && ln -s /home/$USERNAME/third_party/forceseat-di-$FSDI_VERSION/ForceSeatDI64.LinuxPC.so /home/$USERNAME/third_party/forceseat-di-$FSDI_VERSION/ForceSeatDI64.so
+
+
+#############################################
+#                                           #
+# UMBRELLA-BUILD-GCC-TRIXIE                 #
+#                                           #
+# ========================================= #
+# -> umbrella-devcontainer-gcc-trixie       #
+#############################################
+
+
+FROM umbrella-devcontainer-gcc-trixie AS umbrella-build-gcc-trixie
+
+# prettifyng
+LABEL description="UMBRELLA build distro - Linux Debian 13 & GNU GCC 16" \
+      maintainer="nawfel.kinani@onera.fr" \
+      version="0.1.a" \
+      org.name="ONERA" \
+      org.department="DTIS" \
+      org.unit="ICNA" \
+      org.laboratory="LABSIM" \
+      org.center="Salon-de-Provence" \
+      license="GNU GPLv3"
+
+#
+# mandatory argument
+#
+ARG USERNAME=labsim
+
+#
+# default bash mode
+#
+SHELL ["/bin/bash", "-c"]
+
+#
+# setup default user
+#
+USER $USERNAME
+WORKDIR /home/$USERNAME/dev
+
+#
+# fully build the project UMBRELLA project container :
+# -> build & install OURANOS
+# -> build & install UMBRELLA
+#
+RUN \
+    #
+    # source bashrc
+    #
+    source /home/$USERNAME/dev/titans/GAIA/script/GAIA.bashrc \
+    #
+    # configure, build & install OURANOS
+    #
+ && cd /home/$USERNAME/dev/titans/OURANOS \
+ && git pull \
+ && mkdir build \
+ && cd build \
+ && cmake -DLABSIM_INSTALL_PREFIX:PATH=/home/$USERNAME/prod .. \
+ && cmake --build . --target labsim-clean-deploy \
+    #
+    # configure, build & install UMBRELLA
+    #
+ && cd /home/$USERNAME/dev/project/UMBRELLA \
+ && git pull \
+ && mkdir build \
+ && cd build \
+ && cmake -DLABSIM_INSTALL_PREFIX:PATH=/home/$USERNAME/prod .. \
+ && cmake --build . --target labsim-clean-deploy \
+    #
+    # give all access to labsim
+    #
+ && sudo chown -R $USERNAME /home/$USERNAME/prod \
+ && sudo chgrp -R $USERNAME /home/$USERNAME/prod
